@@ -21,11 +21,40 @@
 	height: 110px;
 }
 
-// we have to add the parent spec to up the score for this selector. CSS details.
-.col-sm-3 .saveLoadPanelButton {
+#saveButton {
 	margin: 10px 30px 0px 0px;  // TRBL
 	width: 100px;
 	height: 40px;
-	font-size: 160%;
+	font-size: 130%;
 }
 
+#deleteButton {
+	margin: 10px 30px 0px 0px;  // TRBL
+	width: 100px;
+	height: 40px;
+	font-size: 130%;
+}
+
+#saveAsSpan {
+	font-size: 130%;
+	padding-top: 15px;
+	text-align: right;
+}
+
+#saveAsNameInputColumn {
+	font-size: 130%;
+	padding-top: 10px;
+}
+
+#loadDraftDropdown {
+	font-size: 130%;
+	margin-top: 10px;
+}
+
+.h4textspan {
+	font-size: 16px;
+	font-weight: normal; // or bold
+	text-align: left;
+	padding-right: 10px;
+	border: 0px;
+}
