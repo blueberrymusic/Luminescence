@@ -43,13 +43,12 @@
 			</div> <!-- column -->
 			<div id="loadSavePanel" class="col-sm-5">
 				<div class="row">
-					<div class="col-sm-2">
-						<button type="button" class="btn btn-success" id="saveButton" onclick="saveButtonFunction()">Save</button>
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-block btn-success" id="saveButton" onclick="saveButtonFunction()">Save</button>
 					</div>
-					<div class="col-sm-3" id="saveAsSpan">Save as:</span></div>
-					<div class="col-sm-7" id="saveAsNameInputColumn">
-						<input type="text" id="saveAsNameInput" class="form-control">
-					</div>
+					<span class="col-sm-2" id="saveAsSpan">Name:</span>
+					<input type="text" class="col-sm-6 input-group" id="saveAsInput" ></input>
+					<div class="col-sm-1"> </div>
 				</div> <!-- row -->
 				<div class="row">
 					<div class="col-sm-9">
@@ -72,7 +71,7 @@
 						</div>
 					</div>
 					<div class="col-sm-3">
-						<button type="button" class="btn btn-warning" id="deleteButton" onclick="deleteButtonFunction()">Delete</button>
+						<button type="button" class="btn btn-block btn-warning" id="deleteButton" onclick="deleteButtonFunction()">Delete</button>
 					</div>
 				</div> <!-- row -->
 			</div> <!-- column -->

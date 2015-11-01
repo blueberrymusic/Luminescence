@@ -37,13 +37,15 @@
 
 #saveAsSpan {
 	font-size: 130%;
-	padding-top: 15px;
+	padding: 0px 10px 0px 0px;
+	margin: 15px 0px 0px 0px;
 	text-align: right;
 }
 
-#saveAsNameInputColumn {
+#saveAsInput {
 	font-size: 130%;
-	padding-top: 10px;
+	margin: 10px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
 }
 
 #loadDraftDropdown {
