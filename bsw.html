@@ -165,9 +165,30 @@
 	<span id="tieUpSpan">Output:</span>
 	</div></div>
 
+	<div class="row"><div class="col-sm-12">
+<form role="form">
+    <label class="radio-inline">
+      <input type="radio" name="optradio">Warp Pattern
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">Weft Pattern
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">Warp Colors
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">Weft Colors
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">Tie-Up
+    </label>
+  </form>
+	</div></div>
+
+
 	<!-- OUTPUT -->
 	<div class="row">
-		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
+		<div class="col-sm-12" style="margin:10px 0px 0px 15px; padding:0px;">
 			<textarea readonly class="form-control" id="AWLOutput"></textarea>
 		</div>
 	</div>
@@ -176,6 +197,9 @@
 
 			<!-- start of canvas section-->
 			<div class="col-sm-6">
+				<div class="row"><div class="col-sm-12"><p> </p></div></div>
+				<div class="row"><div class="col-sm-12"><p> </p></div></div>
+
 				<div class="row">
 					<div class="col-sm-4">
 						<span class="h4textspan">Fabric size:</span>
@@ -194,12 +218,15 @@
 					<div class="col-sm-12"><p style="margin:10px 0px 0px 0px;"> </p></div>
 				</row> <!-- row -->
 				<div class="row">
+					<div class="col-sm-12">
 					<canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;">
 					</canvas> 
-				</div>
+				</div></div>
 				<div class="row">
-					<span id="saveSpan">Right-click the fabric to save it as an image.</span>
-				</div>
+					<div class="col-sm-6"></div>
+					<div class="col-sm-6">
+					<span id="rightClickSpan">Right-click the fabric to save it as an image.</span>
+				</div></div>
 			</div>
 		</div> <!-- row -->
 	</div> <!-- container -->

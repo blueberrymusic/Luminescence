@@ -51,6 +51,10 @@
 	margin-top: 10px;
 }
 
+#rightClickSpan {
+	text-align: right;
+}
+
 .h4textspan {
 	font-size: 16px;
 	font-weight: bold; 
@@ -194,7 +198,7 @@
 #tieUpButton:hover  { background-position: 0px -80px; }
 
 #AWLOutput {
-	width: 460px;
+	width: 530px;
 	height: 80px;
 	padding: 0px;
 	border: 3px solid #cccccc;
