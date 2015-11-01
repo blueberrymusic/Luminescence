@@ -90,20 +90,27 @@
 
 		<div class="row"> <!-- row with text boxes and the canvas -->
 			<!-- start of input section -->
-			<div class="col-sm-6">
-				<div><span class="h4textspan">Patterns:</span></div>
 
-<div class="row">
-	<div class="col-sm-5" style="margin:20px 0px 0px 15px; padding:0px;">
-	<textarea class="form-control" id="warpPatternAWL"></textarea>
+<div class="col-sm-6">
+	<div><span class="h4textspan">Patterns:</span></div>
+
+	<div class="row">
+		<div class="col-sm-10" style="margin:20px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="warpPatternAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:25px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="warpPatternButton" onclick="warpPatternButtonFunction()" name="" value="">
+		</div>
 	</div>
-	<div class="col-sm-1" style="margin:20px 0px 0px 0px; padding: 0px 0px 0px 0px;">
-		<button class="btn btn-info" id="warpPatternButton" onclick="warpPatternButtonFunction()" name="" value="">
+
+	<div class="row">
+		<div class="col-sm-10" style="margin:20px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="weftPatternAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:25px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="weftPatternButton" onclick="weftPatternButtonFunction()" name="" value="">
+		</div>
 	</div>
-	<div class="col-sm-5" style="margin:20px 0px 0px 0px; padding:0px;">
-	<textarea readonly class="form-control" id="warpPatternSequence"></textarea>
-	</div>
-</div>
 
 
 			</div>

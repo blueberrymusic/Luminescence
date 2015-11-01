@@ -59,28 +59,17 @@
 	border: 0px;
 }
 
-#warpPatternAWL {
-	width: 230px;
-	height: 100px;
-	padding: 0px;
-	border: 3px solid #cccccc;
-	font-size: 16pt;
-	resize: none;
-	//background-position: bottom right;
-	//background-repeat: no-repeat;
-	//background-image: url(images/BG-Warp-Pattern-Input.gif); 
-}
 
-#warpPatternSequence {
-	width: 240px;
+#warpPatternAWL {
+	width: 460px;
 	height: 100px;
 	padding: 0px;
 	border: 3px solid #cccccc;
 	font-size: 16pt;
 	resize: none;
-	//background-position: bottom right;
-	//background-repeat: no-repeat;
-	//background-image: url(images/BG-Warp-Pattern-Output.gif); 
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Warp-Pattern-Input.gif); 
 }
 
 #warpPatternButton  {
@@ -92,3 +81,25 @@
 }
 
 #warpPatternButton:hover  { background-position: 0px -80px; }
+
+#weftPatternAWL {
+	width: 460px;
+	height: 100px;
+	padding: 0px;
+	border: 3px solid #cccccc;
+	font-size: 16pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Weft-Pattern-Input.gif); 
+}
+
+#weftPatternButton  {
+	border: none;
+	width: 55px;
+	height: 80px;
+	margin: 10px 0px 0px -8px;
+	background: url(images/WeftButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#weftPatternButton:hover  { background-position: 0px -80px; }
