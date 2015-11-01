@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<!-- The order matters! My stuff, then jQuery, the Bootstrap -->
+
+<!-- My local files come first -->
+<link rel="stylesheet" type="text/css" href="bsw.css">
+<script src="ui.js"> </script>
+<!-- 
+<script src="awl/colors.js"> </script>
+<script src="presets.js"> </script>
+<script src="awl/awl.js"> </script>
+<script src="drawing.js"> </script>
+-->
+
+<!-- jQuery must follow my style and precede Bootstrap -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Bootstrap stuff -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+<!-- make mobile-friendly: http://www.w3schools.com/bootstrap/bootstrap_get_started.asp
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+</head>
+
+<body>
+	<!-- top row -->
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<h1 id="digitalLoomLabel">Digital Loom</h1>
+			</div> <!-- column -->
+			<div id="loadSavePanel" class="col-sm-5">
+				<div class="row">
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-success saveLoadPanelButton" id="saveButton" onclick="saveButtonFunction()">Save</button>
+					</div>
+					<div class="col-sm-3">Save as:</div>
+					<div class="col-sm-6">text box</div>
+				</div> <!-- row -->
+				<div class="row">
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-primary saveLoadPanelButton" id="loadButton" onclick="loadButtonFunction()">Load</button>
+					</div>
+					<div class="col-sm-6">dropdown</div>
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-warning saveLoadPanelButton" id="deleteButton" onclick="deleteButtonFunction()">Delete</button>
+					</div>
+				</div> <!-- row -->
+			</div> <!-- column -->
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-info" id="helpButton" onclick="helpButtonFunction()">Help!</button>
+			</div> <!-- column -->
+			<div class="col-sm-2">
+				<p> </p>
+			</div> <!-- column -->
+		</div> <!-- row -->
+	</div> <!-- container -->
+</body> 
+</html> 

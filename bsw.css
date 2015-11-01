@@ -1,0 +1,31 @@
+#digitalLoomLabel {
+	background-color: #9933cc;
+	color: #ffffff;
+	margin-top: 15px;
+	padding: 35px;  // this aligns the text vertically
+	height: 110px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#helpButton {
+	margin-top: 15px;
+	font-size: 200%;
+	width: 100px;
+	height: 110px;
+}
+
+#loadSavePanel {
+	background-color: #eeeeee;
+	margin-top: 15px;
+	height: 110px;
+}
+
+// we have to add the parent spec to up the score for this selector. CSS details.
+.col-sm-3 .saveLoadPanelButton {
+	margin: 10px 30px 0px 0px;  // TRBL
+	width: 100px;
+	height: 40px;
+	font-size: 160%;
+}
+
