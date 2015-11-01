@@ -1,5 +1,6 @@
 #digitalLoomLabel {
-	background-color: #9933cc;
+	//background-color: #9933cc;
+	background-color: #cccccc;
 	color: #ffffff;
 	margin-top: 15px;
 	padding: 35px;  // this aligns the text vertically
@@ -16,6 +17,7 @@
 }
 
 #loadSavePanel {
+	//background-color: #eeeeee;
 	background-color: #eeeeee;
 	margin-top: 15px;
 	height: 110px;

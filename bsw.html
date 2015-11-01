@@ -37,19 +37,22 @@
 <body>
 	<!-- top row -->
 	<div class="container">
-		<div class="row">
+		<div class="row"> <!-- row with header, IO, help -->
+			<!-- HEADER -->
 			<div class="col-sm-6">
 				<h1 id="digitalLoomLabel">Andrew's Digital Loom</h1>
 			</div> <!-- column -->
+
+			<!-- I/O -->
 			<div id="loadSavePanel" class="col-sm-5">
 				<div class="row">
 					<div class="col-sm-3">
 						<button type="button" class="btn btn-block btn-success" id="saveButton" onclick="saveButtonFunction()">Save</button>
-					</div>
+					</div>  <!-- column 3 -->
 					<span class="col-sm-2" id="saveAsSpan">Name:</span>
 					<input type="text" class="col-sm-6 input-group" id="saveAsInput" ></input>
-				
 				</div> <!-- row -->
+
 				<div class="row">
 					<div class="col-sm-9">
 						<div class="dropdown">
@@ -67,26 +70,27 @@
 								<li><a href="#">CCCCCCCCCCCCCCC</a></li>
 								<li><a href="#">DDDDDDDDDDDDDDDDDD D D D D D</a></li>
 							</ul>
-						</div>
-					</div>
+						</div> <!-- dropdown -->
+					</div> <!-- column 9 -->
 					<div class="col-sm-3">
 						<button type="button" class="btn btn-block btn-warning" id="deleteButton" onclick="deleteButtonFunction()">Delete</button>
-					</div>
+					</div> <!-- column 3 -->
 				</div> <!-- row -->
-			</div> <!-- column -->
+			</div> <!-- column 6 -->
+
+			<!-- HELP BUTTON -->
 			<div class="col-sm-1">
 				<button type="button" class="btn btn-info" id="helpButton" onclick="helpButtonFunction()">Help!</button>
 			</div> <!-- column -->
-			<div class="col-sm-2">
-				<p> </p>
-			</div> <!-- column -->
-		</div> <!-- row -->
+			
+		</div> <!-- top row with header, IO, help-->
 
+		<!-- vertical spacer -->
 		<div class="row">
 			<div class="col-sm-12"><p style="margin-top:20px;"> </p></div>
 		</div>
 
-		<div class="row"> <!-- row with text boxes and the canvas -->
+		<div class="row"> <!-- second row. input boxes on left, canvas on right -->
 			<!-- start of input section -->
 
 <div class="col-sm-6">
@@ -115,6 +119,7 @@
 		</div>
 	</div>
 
+	<!-- spacer -->
 	<div class="row"><div class="col-sm-10"><p> </p></div></div>
 
 	<div class="row"><div class="col-sm-10">
@@ -141,6 +146,7 @@
 		</div>
 	</div>
 
+	<!-- spacer -->
 	<div class="row"><div class="col-sm-10"><p> </p></div></div>
 
 	<div class="row"><div class="col-sm-10">
@@ -157,6 +163,7 @@
 		</div>
 	</div>
 
+	<!-- spacer -->
 	<div class="row"><div class="col-sm-10"><p> </p></div></div>
 
 	<div class="row"><div class="col-sm-10">
