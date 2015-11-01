@@ -1,0 +1,1314 @@
+using System;
+using System.Collections;
+
+//
+// This is a very simple C# parser for 
+// "Andrew's Weaving Language (AWL)"
+// as described in the March/April issue of 
+// IEEE Computer Graphics & Applications.
+// AWL is a generalization of the weaving language found 
+// in Painter, sold by Procreate.
+//
+// To use this, create an instance of the AWL object,
+// and then call ProcessString with a string containing your
+// AWL expression, which is a list of tokens separated
+// by white space.  That returns a string,
+// which is a white-space separated list of tokens that
+// are the result of evaluating the input string.
+//
+// The program works by maintaining a stack.  As words
+// are read in from the user's command, the stack is
+// pushed and popped accordingly.  In a well-formed
+// expression, there will be one element left on top of
+// the stack, and that's what we return.   The only odd
+// thing about this stack is that elements can be lists.
+// So if we have the sequence 1 2 3, then that would all
+// occupy one node on the stack, rather than three separate
+// positions.  In general, if we see a number from the user,
+// and the top of the stack is a number or a list, then
+// we append that number to the list on top of the stack.
+// Commands cause the stack to be modified.  Commands that
+// take several arguments usually pop them off the stack,
+// operate, and push their results back on top.
+//
+// This code was designed for easy reading and modifying,
+// and not for efficiency or elegance.  I know that there
+// are lots of ways to improve this parser.  Feel free
+// to change whatever you like if you wish.  I think 
+// everything here works properly, but I didn't write this
+// object with bullet-proofing in mind, so I haven't 
+// exhaustively tested it.
+//
+// The biggest omission here is that error checking is
+// minimal, or perhaps sub-minimal.  If you pass ProcessString
+// an invalid string, it may survive and return an empty
+// string, but more likely it will crash and cause
+// a run-time error. 
+//
+// A huge improvement would be to add type-checking code
+// to the arguments.  Presently, if I expect an integer or
+// a list of numbers or a string or whatever to be on top
+// of the stack, then I treat the top of the stack as though
+// it was one of those things without confirming that it is.
+// If the user enters a badly-formed expression, this will
+// probably cause an error, or even a crash.  So maintaining
+// some kind of record of the type of each element in the 
+// stack would be very useful.  Probably the easiest way would
+// be to simply maintain a parallel "type stack" that is 
+// updated simultaneously with the normal stack, and it simply
+// tells us the type of the corresponding entries.
+//
+// If you do use this code, or modify it, I would ask
+// that you please leave this comment block intact, and
+// add your comments below.  Please don't write to me
+// about maintainance, bugs, etc. since I am not actively
+// supporting this code.
+//
+// Have fun!
+// -Andrew Glassner
+// andrew_glassner@yahoo.com
+//
+// basic programming: 12 January 2003
+// additional comments: 3 August 2003
+//
+
+/*
+Summary of commands in AWL, Andrew's Weaving Language.  See the column 
+"Andrew Glassner's Notebook" in the January 2003 issue of IEEE 
+Computer Graphics and Applications for details and examples.  The S column 
+provides the symbolic shortcut, if available.  If the R column has a Y,
+the command reshapes its inputs.  
+
+\A and \B are vectors (lists of numbers). \c and \d are single numbers.
+\A_i refers to the i'th element of \A.  Special values are \A_0 for the
+first element of \A, and \A_L for the last element of \A.
+
+command             |  S  | R | summary 
+--------------------+-----+---+----------------------------------
+\A \d extend        |  +  |   | repeat or clip \A to \d elements 
+\A \d repeat        |  *  |   | repeat \A a total of \d times 
+\A    reverse       |  @  |   | reverse the elements of \A 
+\A \d rotatel       |  << |   | rotate \A left by \d steps 
+\A \d rotater       |  >> |   | rotate \A right by \d steps 
+\A \d nth           |     |   | take every \d'th element of \A 
+\A    palindrome    |  |  |   | \A followed by a near-reversal 
+--------------------+-----+---+----------------------------------
+\A \B    down       |   > |   | \A, descending run from \A_L to \B_0, \B 
+\A \B \c downloop   |  >l |   | like  down but include \c runs as well 
+\A \B    downup     |  >u | Y | alternating down and up runs 
+\A \B \c downuploop | >ul | Y | like  downup but include \c runs as well 
+\A \B    up         |   < |   | \A, ascending run from \A_L to \B_0, \B 
+\A \B \c uploop     |  <l |   | like  up but include \c runs as well 
+\A \B    updown     |  <d | Y | alternating up and down runs 
+\A \B \c updownloop | <dl | Y | like  updown but include \c runs as well 
+\A \B    ramp       |   - |   | go up or down as needed to stay in domain 
+\A \B \c ramploop   |  -l |   | like  ramp but include \c runs as well 
+--------------------+-----+---+----------------------------------
+\A       binary1    |     |   | treat \A as lengths of alternating  1s and  0s
+\A       binary0    |     |   | treat \A as lengths of alternating  0s and  1s
+\A \B    block      | #   | Y | each $\A_i$ is repeated \B_i times 
+\A \B    blockpal   | #p  | Y | block with an internal  palindrome \\
+name \c \d eis      |     |   | extract \d elements, starting at \c, from EIS name 
+\A \B    growblock  | =   | Y | interleave \A with growing palindromes of \B 
+\A       iblock     | i#  | Y | like  block but the inputs are interleaved in \A 
+\A       iblockpal  | i#p | Y | iblock with internal  palindrome 
+\A \B    interleave | %   | Y | take alternating elements of \A and \B 
+\A \B    permute    |     |   | use elements of \B to index \A 
+\A \B    pbox       |     |   | shortcut for  \A \B \lena extend permute 
+\A       tartan     |     | Y | like  iblock but repeats are \B_i/2
+\A       tartanpal  |     | Y | tartan with internal  palindrome 
+\A \c \d twillr     | t>> |   | make \c repeats of \A rotating each by \d more 
+\A \c \d twilll     | t<< |   | like  twillr but rotate left 
+\A \B    template   | :   |   | create a sub-articulation using \B as a template 
+--------------------+-----+---+----------------------------------
+clear               |     |   | erase the stack 
+concat              |  ,  |   | concatanate the top two stack elements 
+dup                 |     |   | pop the top of stack and push it back twice 
+pop                 |     |   | discard top of stack 
+push                |  /  |   | consider all since last command a single sequence 
+\c \d domain        |     |   | set the domain to [\c,\d] 
+swap                |     |   | exchange top two stack elements 
+veclen              |     |   | push length of list on top of stack 
+vmax                |     |   | push largest element in sequence on top of stack 
+vmin                |     |   | push smallest element in sequence on top of stack 
+--------------------+-----+---+----------------------------------
+
+*/
+// 
+//
+
+namespace Weaver
+{
+   /// <summary>
+   /// Summary description for AWL.
+   /// </summary>
+   public class AWL
+   {
+      ArrayList aList; // the list of tokens
+      int PatternLen;  // for up, down, etc.
+
+      public AWL() // constructor
+      {
+         aList = new ArrayList();
+         InitStack();
+      }
+
+      // this is the main routine
+      // hand it the string you want to process,
+      // and it returns a tokenized string of digits
+      public String ProcessString(String str)
+      {
+         InitStack();
+         str.Trim();
+         String [] words = str.Split(' ');
+         for (int i=0; i<words.Length; i++) 
+         {
+            words[i].Trim();
+            ProcessToken(words[i]);
+         }
+         String s = (String)PopArrayList();
+         return(s);
+      }
+
+      // end of public stuff
+
+      public void InitStack()
+      {
+         // the stack is set to empty
+         aList.Clear();  
+         // by default, we have 8 threads.  The user can
+         // change this by using the "domain" command
+         PatternLen = 8; 
+      }
+
+      // push one element on top of the stack
+      private void PushArrayList(object element)
+      {
+         aList.Insert(0, element);
+      }
+
+      // rebuild the stack but leave out null elements
+      private void RemoveNulls()
+      {
+         int i;
+         ArrayList newa = new ArrayList();
+         for (i=aList.Count-1; i>=0; i--) 
+         {
+            if (aList[i] != null) 
+            {
+               newa.Insert(0, aList[i]);
+            }
+         }
+         aList = newa;
+      }
+
+      // take an ArrayList off the top of the stack
+      private Object PopArrayList()
+      {
+         Object myobj;
+         RemoveNulls();
+         if (aList.Count == 0) 
+         {
+            return(null);
+         }
+
+         // the following testing isn't necessary thanks to RemoveNulls(), but it's
+         // there for a backstop in case somehow the top element is a null somehow anyway
+         do 
+         {
+            myobj = aList[0];
+            aList.RemoveAt(0);
+         } while ((myobj == null) && (aList.Count > 0));
+
+         return(myobj);
+      }
+
+      // find n such that (na)%b = 0
+      private int FindReps(int a, int b)
+      {
+         int n = 1;
+         do 
+         {
+            if (((n*a)%b) == 0) 
+            {
+               return(n);
+            }
+            n++;
+         } while(n<10000);  // sanity check for runaways
+         return(1);
+      }
+
+      // simple string compare: true iff they're the same
+      private bool Tis(String a, String b)
+      {
+         if (String.Compare(a, b, true) == 0) return(true);
+         return(false);
+      }
+
+      // replace all runs of spaces with a single space
+      public String OneSpace(String str)
+      {
+         if (str == null) return(null);
+         String newstr = str.Trim();
+         do 
+         {
+            newstr = newstr.Replace("  ", " ");
+         } while (newstr.IndexOf("  ") > 0);
+         return(newstr);
+      }
+
+      // return an array at the top of the stack as a list of words
+      private String[] PopStringArray()
+      {
+         String v = (String)PopArrayList();
+         v = OneSpace(v);
+         String[] w = v.Split(' ');
+         return(w);
+      }
+
+      // return the string at the top of the stack
+      private String PopString()
+      {
+         String s = (String)PopArrayList();
+         return(s);
+      }
+
+      // return the integer at the top of the stack
+      private int PopInt()
+      {
+         String s = (String)PopArrayList();
+         int i = Int32.Parse(s);
+         return(i);
+      }
+
+      // this does the "normalization" step I mention in the column.
+      // It pops the top two entries in the stack, both of which
+      // are presumed to be StringArrays (that is, lists of numbers).
+      // Then the shorter one is extended by repetition until it is
+      // as long as the longer one, and then they are both pushed
+      // back onto the stack.  I sometimes also called this "reshaping".
+      private void NormalizeTopTwoOnStack()
+      {
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         int maxlen = Math.Max(Rw.Length, Lw.Length);
+         String newR = null;
+         String newL = null;
+         for (int i=0; i<maxlen; i++) 
+         {
+            newR = newR + " " + Rw[i % Rw.Length];
+            newL = newL + " " + Lw[i % Lw.Length];
+         }
+         newR = OneSpace(newR);
+         newL = OneSpace(newL);
+         PushArrayList(newL);
+         PushArrayList(newR);
+      }
+
+      // the main dispatch table, sending us to the handler for each command
+      private void ProcessToken(String token)
+      {
+         // if this is a command, do it.  Otherwise append to list at top of stack
+         // if a command places a result on the stack, set 'push' to true
+         // if it is indeed a command, set 'cmd' to true
+         bool cmd = false;
+         bool push = false;
+         if (Tis(token, "binary0")    == true) { DoBinary0();    cmd = push = true; }
+         if (Tis(token, "binary1")    == true) { DoBinary1();    cmd = push = true; }
+         if (Tis(token, "block")      == true) { DoBlock();      cmd = push = true; }
+         if (Tis(token, "blockpal")   == true) { DoBlockPal();   cmd = push = true; }
+         if (Tis(token, "clear")      == true) { DoClear();      cmd = true;        }
+         if (Tis(token, "concat")     == true) { DoConcat();     cmd = push = true; }
+         if (Tis(token, "domain")     == true) { DoDomain();     cmd = true;        }
+         if (Tis(token, "down")       == true) { DoDown();       cmd = push = true; }
+         if (Tis(token, "downloop")   == true) { DoDownLoop();   cmd = push = true; }
+         if (Tis(token, "downup")     == true) { DoDownUp();     cmd = push = true; }
+         if (Tis(token, "downuploop") == true) { DoDownUpLoop(); cmd = push = true; }
+         if (Tis(token, "dup")        == true) { DoDup();        cmd = push = true; }
+         if (Tis(token, "eis")        == true) { DoEIS();        cmd = push = true; }
+         if (Tis(token, "extend")     == true) { DoExtend();     cmd = push = true; }
+         if (Tis(token, "growblock")  == true) { DoGrowBlock();  cmd = push = true; }
+         if (Tis(token, "iblock")     == true) { DoIBlock();     cmd = push = true; }
+         if (Tis(token, "iblockpal")  == true) { DoIBlockPal();  cmd = push = true; }
+         if (Tis(token, "interleave") == true) { DoInterleave(); cmd = push = true; }
+         if (Tis(token, "nth")        == true) { DoNth();        cmd = push = true; }
+         if (Tis(token, "palindrome") == true) { DoPalindrome(); cmd = push = true; }
+         if (Tis(token, "permute")    == true) { DoPermute();    cmd = push = true; }
+         if (Tis(token, "pbox")       == true) { DoPbox();       cmd = push = true; }
+         if (Tis(token, "pop")        == true) { DoPopOp();      cmd = true;        }
+         if (Tis(token, "push")       == true) { DoPush();       cmd = true;        }
+         if (Tis(token, "ramp")       == true) { DoRamp();       cmd = push = true; }
+         if (Tis(token, "ramploop")   == true) { DoRampLoop();   cmd = push = true; }
+         if (Tis(token, "repeat")     == true) { DoRepeat();     cmd = push = true; }
+         if (Tis(token, "reverse")    == true) { DoReverse();    cmd = push = true; }
+         if (Tis(token, "rotater")    == true) { DoRotateR();    cmd = push = true; }
+         if (Tis(token, "rotatel")    == true) { DoRotateL();    cmd = push = true; }
+         if (Tis(token, "swap")       == true) { DoSwap();       cmd = push = true; }
+         if (Tis(token, "tartan")     == true) { DoTartan();     cmd = push = true; }
+         if (Tis(token, "tartanpal")  == true) { DoTartanPal();  cmd = push = true; }
+         if (Tis(token, "template")   == true) { DoTemplate();   cmd = push = true; }
+         if (Tis(token, "twillr")     == true) { DoTwillR();     cmd = push = true; }
+         if (Tis(token, "twilll")     == true) { DoTwillL();     cmd = push = true; }
+         if (Tis(token, "up")         == true) { DoUp();         cmd = push = true; }
+         if (Tis(token, "uploop")     == true) { DoUpLoop();     cmd = push = true; }
+         if (Tis(token, "updown")     == true) { DoUpDown();     cmd = push = true; }
+         if (Tis(token, "updownloop") == true) { DoUpDownLoop(); cmd = push = true; }
+         if (Tis(token, "veclen")     == true) { DoVecLen();     cmd = push = true; }
+         if (Tis(token, "vmax")       == true) { DoVmax();       cmd = push = true; }
+         if (Tis(token, "vmin")       == true) { DoVmin();       cmd = push = true; }
+         if (Tis(token, "vvv")        == true) { DoVVV();        cmd = push = true; }
+
+         // shortcuts
+         if (Tis(token, "+")          == true) { DoExtend();     cmd = push = true; }
+         if (Tis(token, "*")          == true) { DoRepeat();     cmd = push = true; }
+         if (Tis(token, "-")          == true) { DoRamp();       cmd = push = true; }
+         if (Tis(token, "-l")         == true) { DoRampLoop();   cmd = push = true; }
+         if (Tis(token, "@")          == true) { DoReverse();    cmd = push = true; }
+         if (Tis(token, "<<")         == true) { DoTwillL();     cmd = push = true; }
+         if (Tis(token, ">>")         == true) { DoTwillR();     cmd = push = true; }
+         if (Tis(token, "|")          == true) { DoPalindrome(); cmd = push = true; }
+         if (Tis(token, ">")          == true) { DoDown();       cmd = push = true; }
+         if (Tis(token, ">l")         == true) { DoDownLoop();   cmd = push = true; }
+         if (Tis(token, ">u")         == true) { DoDownUp();     cmd = push = true; }
+         if (Tis(token, ">ul")        == true) { DoDownUpLoop(); cmd = push = true; }
+         if (Tis(token, "<")          == true) { DoUp();         cmd = push = true; }
+         if (Tis(token, "<l")         == true) { DoUpLoop();     cmd = push = true; }
+         if (Tis(token, "<d")         == true) { DoUpDown();     cmd = push = true; }
+         if (Tis(token, "<dl")        == true) { DoUpDownLoop(); cmd = push = true; }
+         if (Tis(token, "#")          == true) { DoBlock();      cmd = push = true; }
+         if (Tis(token, "#p")         == true) { DoBlockPal();   cmd = push = true; }
+         if (Tis(token, "i#b")        == true) { DoIBlock();     cmd = push = true; }
+         if (Tis(token, "i#p")        == true) { DoIBlockPal();  cmd = push = true; }
+         if (Tis(token, "%")          == true) { DoInterleave(); cmd = push = true; }
+         if (Tis(token, "=")          == true) { DoGrowBlock();  cmd = push = true; }
+         if (Tis(token, ",")          == true) { DoConcat();     cmd = push = true; }
+         if (Tis(token, ":")          == true) { DoTemplate();   cmd = push = true; }
+         if (Tis(token, "t>>")        == true) { DoTwillR();     cmd = push = true; }
+         if (Tis(token, "t<<")        == true) { DoTwillL();     cmd = push = true; }
+
+         if (Tis(token, "/")          == true) { DoPush();       cmd = true; }
+
+         if (cmd == true) 
+         {
+            if (push == true) DoPush();
+            return;
+         }
+
+         // get the top of the stack - but don't use PopArrayList, as that ignores nulls,
+         // and pushing new operands on the stack may go into a null entry, since that's
+         // what's on top after an operation.  Then append the new token to the end of
+         // what was on top, and push the result back on.
+         Object myobj = null;
+         if (aList.Count > 0) 
+         {
+            myobj = aList[0];
+            aList.RemoveAt(0);
+         }
+         String olda = (String)myobj;
+         String newa = olda + " " + token;
+         PushArrayList(newa);
+      }
+
+      // The routines from here on implement AWL commands.  Many are stand-alone, and
+      // just directly implement their function.  Some of the more complicated commands
+      // share code.  For example, the various forms of block, which are the first ones
+      // to appear below, call the routine "doGeneralBlock" with different sets of
+      // parameters.  All the tricky stuff for getting blocks to work just right 
+      // appears just once in "doGeneralBlock", making life a lot easier.  Similarly,
+      // up/down commands call "doGeneralDown" and "doGeneralUpDown".  Most of the
+      // commands are straightforward implementations of their description in the column,
+      // summarized above.
+
+      private void DoBlock()
+      {
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         doGeneralBlock(Lw, Rw, false);
+      }
+
+      private void DoBlockPal()
+      {
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         doGeneralBlock(Lw, Rw, true);
+      }
+
+      void DoIBlock()
+      {
+         String [] W = PopStringArray();
+         String [] Lw = new String[W.Length/2];
+         String [] Rw = new String[W.Length/2];
+         for (int i=0; i<Lw.Length; i++) 
+         {
+            Lw[i] = W[2*i];
+            Rw[i] = W[(2*i)+1];
+         }
+         doGeneralBlock(Lw, Rw, false);
+      }
+
+      void DoIBlockPal()
+      {
+         String [] W = PopStringArray();
+         String [] Lw = new String[W.Length/2];
+         String [] Rw = new String[W.Length/2];
+         for (int i=0; i<Lw.Length; i++) 
+         {
+            Lw[i] = W[2*i];
+            Rw[i] = W[(2*i)+1];
+         }
+         doGeneralBlock(Lw, Rw, true);
+      }
+
+      void DoTartan()
+      {
+         String [] W = PopStringArray();
+         String [] Lw = new String[W.Length/2];
+         String [] Rw = new String[W.Length/2];
+         for (int i=0; i<Lw.Length; i++) 
+         {
+            Lw[i] = W[2*i];
+            int newval = (int)(Int32.Parse(W[(2*i)+1])/2.0);
+            Rw[i] = newval.ToString();
+         }
+         doGeneralBlock(Lw, Rw, false);
+      }
+
+      void DoTartanPal()
+      {
+         String [] W = PopStringArray();
+         String [] Lw = new String[W.Length/2];
+         String [] Rw = new String[W.Length/2];
+         for (int i=0; i<Lw.Length; i++) 
+         {
+            Lw[i] = W[2*i];
+            int newval = (int)(Int32.Parse(W[(2*i)+1])/2.0);
+            Rw[i] = newval.ToString();
+         }
+         doGeneralBlock(Lw, Rw, true);
+      }
+
+      // special for cut-and-paste from Scottish Tartans Society pages
+      void DoVVV()
+      {
+         String v = PopString();
+         // delete commas and reset spacing
+         v = OneSpace(v);
+         do 
+         {
+            v = v.Replace(",", " ");
+         } while (v.IndexOf(",") > 0);
+         v = OneSpace(v);
+         String[] w = v.Split(' ');
+         String [] Lw = new String[w.Length];
+         String [] Rw = new String[w.Length];
+         char [] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+         for (int i=0; i<w.Length; i++) 
+         {
+            int firstNum = w[i].IndexOfAny(digits);
+            if (firstNum >= 0) 
+            {
+               Lw[i] = w[i].Substring(0, firstNum);
+               int count = Int32.Parse(w[i].Substring(firstNum));
+               count = count/2;
+               Rw[i] = count.ToString();
+            }
+         }
+         doGeneralBlock(Lw, Rw, true);
+
+      }
+
+      private void doGeneralBlock(String [] Lw, String [] Rw, bool makePalindrome)
+      {
+         String newString = null;
+         int i, j, reps;
+         for (i=0; i<Rw.Length; i++) 
+         {
+            reps = Int32.Parse(Rw[i]);
+            for (j=0; j<reps; j++) 
+               newString = newString + " " + Lw[i];
+         }
+         if (makePalindrome == true)
+         {
+            i = Rw.Length - 1;
+            while (--i > 0) 
+            {
+               reps = Int32.Parse(Rw[i]);
+               for (j=0; j<reps; j++) 
+                  newString = newString + " " + Lw[i];
+            }
+         }
+
+         newString = OneSpace(newString);
+         PushArrayList(newString);
+      }
+
+
+
+      private void DoClear()
+      {
+         aList.Clear();
+      }
+
+      private void DoDown()
+      {
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalDown(0, Lw, Rw);
+      }
+
+      private void DoDownLoop()
+      {
+         int numLoops = PopInt();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalDown(numLoops, Lw, Rw);
+      }
+
+      private void generalDown(int numLoops, String [] Lw, String [] Rw)
+      {
+         int lend = Int32.Parse(Lw[Lw.Length-1]);
+         int rend = Int32.Parse(Rw[0]);
+         int i, j, r;
+         String newa = null;
+         for (i=0; i<Lw.Length; i++) newa = newa + " " + Lw[i];
+         for (r=0; r<numLoops; r++) 
+         {
+            i = lend-1;
+            for (j=0; j<PatternLen; j++) 
+            {
+               newa = newa + " " + i;
+               if (--i < 0) i = PatternLen-1;
+            }
+         }
+         i = lend-1;
+         while (i != rend) 
+         {
+            newa = newa + " " + i;
+            if (--i < 0) i = PatternLen-1;
+         }
+         for (i=0; i<Rw.Length; i++) newa = newa + " " + Rw[i];
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoDownUp()
+      {
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalDownUp(0, Lw, Rw, true);
+      }
+
+      private void DoDownUpLoop()
+      {
+         int numLoops = PopInt();
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalDownUp(numLoops, Lw, Rw, true);
+      }
+
+      private void DoUpDown()
+      {
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalDownUp(0, Lw, Rw, false);
+      }
+
+      private void DoUpDownLoop()
+      {
+         int numLoops = PopInt();
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalDownUp(numLoops, Lw, Rw, false);
+      }
+
+      private void generalDownUp(int numLoops, String [] Lw, String [] Rw, bool startDownward)
+      {
+         int i, ci, j, r, newVal, lw, rw;
+         bool goingDown = startDownward;
+         String newa = null;
+         int phase = 0;
+         
+         ci = 0;
+         for (i=0; i<2*Lw.Length; i++) 
+         {
+            if ((i==2*Lw.Length-1) && (phase==1)) continue;  // don't do second half of last one
+            if (phase == 0) 
+            {
+               lw = Int32.Parse(Lw[ci]);
+               rw = Int32.Parse(Rw[ci]);
+               phase = 1;
+            }
+            else 
+            {
+               lw = Int32.Parse(Rw[ci]);
+               rw = Int32.Parse(Lw[ci+1]);
+               ci++;
+               phase = 0;
+            }
+
+            if ((i==0) && (phase==1)) 
+            {
+               newa = newa + " " + lw;
+            }
+
+            for (r=0; r<numLoops; r++)
+            {
+               for (j=0; j<PatternLen; j++) 
+               {
+                  if (goingDown) 
+                  {
+                     newVal = lw-1-j;
+                     if (newVal < 0) newVal += PatternLen;
+                  } 
+                  else 
+                  {
+                     newVal = lw+1+j;
+                     if (newVal >= PatternLen) newVal -= PatternLen;
+                  }
+                  newa = newa + " " + newVal;
+               }
+            }
+            if (goingDown)
+            {
+               newVal = lw-1;
+               while (newVal != rw) 
+               {
+                  newa = newa + " " + newVal;
+                  newVal = newVal-1;
+                  if (newVal < 0) newVal = PatternLen-1;
+               }
+            } 
+            else
+            {
+               newVal = lw+1;
+               while (newVal != rw) 
+               {
+                  newa = newa + " " + newVal;
+                  newVal = newVal+1;
+                  if (newVal >= PatternLen) newVal = 0;
+               }
+            }
+            newa = newa + " " + rw;
+            goingDown = !goingDown;
+         }
+
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoRamp()
+      {
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         int rs = Int32.Parse(Rw[0]);
+         int le = Int32.Parse(Lw[Lw.Length-1]);
+         // going from le to rs
+         if (le < rs)
+         {
+            generalUp(0, Lw, Rw);
+         } 
+         else
+         {
+            generalDown(0, Lw, Rw);
+         }
+      }
+
+      private void DoRampLoop()
+      {
+         int numLoops = PopInt();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         int rs = Int32.Parse(Rw[0]);
+         int le = Int32.Parse(Lw[Lw.Length-1]);
+         // going from le to rs
+         if (le < rs)
+         {
+            generalUp(numLoops, Lw, Rw);
+         } 
+         else
+         {
+            generalDown(numLoops, Lw, Rw);
+         }
+      }
+
+      private void DoUp()
+      {
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalUp(0, Lw, Rw);
+      }
+
+      private void DoUpLoop()
+      {
+         int numLoops = PopInt();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         generalUp(numLoops, Lw, Rw);
+      }
+
+      private void generalUp(int numLoops, String [] Lw, String [] Rw)
+      {
+         int lend = Int32.Parse(Lw[Lw.Length-1]);
+         int rend = Int32.Parse(Rw[0]);
+         int i, j, r;
+         String newa = null;
+         for (i=0; i<Lw.Length; i++) newa = newa + " " + Lw[i];
+         for (r=0; r<numLoops; r++) 
+         {
+            i = lend+1;
+            for (j=0; j<PatternLen; j++) 
+            {
+               newa = newa + " " + i;
+               if (++i >= PatternLen) i = 0;
+            }
+         }
+         i = lend+1;
+         while (i != rend) 
+         {
+            newa = newa + " " + i;
+            if (++i >= PatternLen) i = 0;
+         }
+         for (i=0; i<Rw.Length; i++) newa = newa + " " + Rw[i];
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      // names from the Encyclopedia of Integer Sequences
+      private void DoEIS()
+      {
+         String seqName = PopString();
+         int startIndex = PopInt();
+         int numElements = PopInt();
+         String seq = "";
+         
+         if ((Tis(seqName, "A000027") == true) || 
+            (Tis(seqName, "M0472") == true) ||
+            (Tis(seqName, "natural") == true)) 
+         {
+            // natural numbers
+            seq = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 ";
+            seq += "24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 ";
+            seq += "44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 ";
+            seq += "64 65 66 67 68 69 70 71 72 73 74 75 76 77";
+         }
+
+         if ((Tis(seqName, "A000045") == true) || 
+            (Tis(seqName, "M0692") == true) ||
+            (Tis(seqName, "fibonacci") == true))
+         {
+            // fibonacci
+            seq = "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 ";
+            seq += "4181 6765 10946 17711 28657 46368 75025 121393 196418 ";
+            seq += "317811 514229 832040 1346269 2178309 3524578 5702887 ";
+            seq += "9227465 14930352 24157817 39088169";
+         }
+   
+         if ((Tis(seqName, "A000040") == true) || 
+            (Tis(seqName, "M0652") == true) ||
+            (Tis(seqName, "primes") == true))
+         {
+            // primes
+            seq = "2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 ";
+            seq += "79 83 89 97 101 103 107 109 113 127 131 137 139 149 151 157 ";
+            seq += "163 167 173 179 181 191 193 197 199 211 223 227 229 233 239 ";
+            seq += "241 251 257 263 269 271";
+         }
+
+         if ((Tis(seqName, "A000217") == true) || 
+            (Tis(seqName, "M2535") == true) ||
+            (Tis(seqName, "triangular") == true))
+         {
+            // triangular numbers
+            seq = "0 1 3 6 10 15 21 28 36 45 55 66 78 91 105 120 136 153 171 ";
+            seq += "190 210 231 253 276 300 325 351 378 406 435 465 496 528 561 ";
+            seq += "595 630 666 703 741 780 820 861 903 946 990 1035 1081 1128 ";
+            seq += "1176 1225 1275";
+
+         }
+
+         if ((Tis(seqName, "A002024") == true) || 
+            (Tis(seqName, "M0250") == true) ||
+            (Tis(seqName, "multi") == true)) 
+         {
+            // multi sequence
+            seq = "1 2 2 3 3 3 4 4 4 4 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 7 8 8 ";
+            seq += "8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 10 10 10 10 10 10 10 10 10 10 ";
+            seq += "11 11 11 11 11 11 11 11 11 11 11 12 12 12 12 12 12 12 12 12 ";
+            seq += "12 12 12";
+
+         }
+
+         if ((Tis(seqName, "A001608") == true) || 
+            (Tis(seqName, "M0429") == true) ||
+            (Tis(seqName, "perrin") == true))
+         {
+            // perrin sequence
+            seq = "3 0 2 3 2 5 5 7 10 12 17 22 29 39 51 68 90 119 158 209 277 ";
+            seq += "367 486 644 853 1130 1497 1983 2627 3480 4610 6107 8090 ";
+            seq += "10717 14197 18807 24914 33004 43721 57918 76725 101639";
+         }
+
+         if ((Tis(seqName, "A000326") == true) || 
+            (Tis(seqName, "M3818") == true) ||
+            (Tis(seqName, "pentagonal") == true))
+         {
+            // pentagonal numbers
+            seq = "0 1 5 12 22 35 51 70 92 117 145 176 210 247 287 330 376 425 ";
+            seq += "477 532 590 651 715 782 852 925 1001 1080 1162 1247 1335 ";
+            seq += "1426 1520 1617 1717 1820 1926 2035 2147 2262 2380 2501 2625 ";
+            seq += "2752 2882 3015 3151";
+         }
+
+         if ((Tis(seqName, "A000566") == true) || 
+            (Tis(seqName, "M4358") == true) ||
+            (Tis(seqName, "heptagonal") == true))
+         {
+            // heptagonal (7-gon) numbers
+            seq = "0 1 7 18 34 55 81 112 148 189 235 286 342 403 469 540 616 ";
+            seq += "697 783 874 970 1071 1177 1288 1404 1525 1651 1782 1918 ";
+            seq += "2059 2205 2356 2512 2673 2839 3010 3186 3367 3553 3744 3940 ";
+            seq += "4141 4347 4558 4774 4995 5221 5452 5688";
+         }
+
+         if ((Tis(seqName, "A023133") == true) ||
+            (Tis(seqName, "pisig") == true))
+         {
+            // signature of pi
+            seq = "1 2 3 4 1 5 2 6 3 7 4 1 8 5 2 9 6 3 10 7 4 1 11 8 5 2 12 9 ";
+            seq += "6 3 13 10 7 4 1 14 11 8 5 2 15 12 9 6 3 16 13 10 7 4 1 17 ";
+            seq += "14 11 8 5 2 18 15 12 9 6 3 19 16 13 10 7 4 1 20 17 14 11 8 ";
+            seq += "5 2 21 18 15 12 9 6 3";
+         }
+
+         // ignore startIndex and numElements for now
+
+         seq = OneSpace(seq);
+         String[] sw = seq.Split(' ');
+         String newa = "";
+
+         for (int i=0; i<sw.Length; i++) 
+         {
+            sw[i].Trim();
+            int nval = Int32.Parse(sw[i]);
+            nval = nval % PatternLen;
+            newa = newa + " " + nval;
+         }
+
+         PushArrayList(newa);
+      }
+
+      private void DoPush()
+      {
+         String newa = null;
+         PushArrayList(newa);
+      }
+
+      private void DoPopOp()
+      {
+         Object obj = PopArrayList();
+      }
+
+      private void DoDup()
+      {
+         String s = PopString();
+         PushArrayList(s);
+         PushArrayList(s);
+      }
+
+      private void DoBinary0()
+      {
+         String [] w = PopStringArray();
+         DoGeneralBinary(w, 0);
+      }
+
+      private void DoBinary1()
+      {
+         String [] w = PopStringArray();
+         DoGeneralBinary(w, 1);
+      }
+
+      private void DoGeneralBinary(String [] w, int v)
+      {
+         String newa = null;
+         for (int i=0; i<w.Length; i++) 
+         {
+            int c = Int32.Parse(w[i]);
+            for (int j=0; j<c; j++) 
+            {
+               newa += " " + v;
+            }
+            v = 1-v;
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoRepeat()
+      {
+         int repCount = PopInt();
+         String [] Lw = PopStringArray();
+         String newa = "";
+         for (int r=0; r<repCount; r++) 
+         {
+            for (int i=0; i<Lw.Length; i++) 
+            {
+               newa = newa + " " + Lw[i];
+            }
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoGrowBlock()
+      {
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         String newa = null;
+         int i, j, nexta, dir;
+         int b0 = Int32.Parse(Rw[0]);
+         for (i=0; i<Lw.Length; i++) 
+         {
+            // add this Ai
+            newa += " " + Lw[i];
+            // count up or down
+            j = Int32.Parse(Lw[i]);
+            if (j != b0) 
+            {
+               dir = 1;
+               if (j > b0) dir = -1;
+               j += dir;
+               while (j != b0) 
+               {
+                  newa += " " + j;
+                  j += dir;
+               }
+            }
+            // put in the palindrome
+            j = 0;
+            while (j <= i) 
+            {
+               newa += " " + Rw[j];
+               j++;
+            };
+            j -= 2;
+            while (j >= 0) 
+            {
+               newa += " " + Rw[j];
+               j--;
+            }
+            // and count up or down if we're not done
+            if (i < Lw.Length-1) 
+            {
+               nexta = Int32.Parse(Lw[i+1]);
+               if (nexta != b0) 
+               {
+                  j = b0;
+                  dir = 1;
+                  if (j > nexta) dir = -1;
+                  j += dir;
+                  while (j != nexta) 
+                  {
+                     newa += " " + j;
+                     j += dir;
+                  }
+               }
+            }
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoTwillR()
+      {
+         int repCount = PopInt();
+         int shiftCount = PopInt();
+         String [] w = PopStringArray();
+         String newa = "";
+         int i, j, k, index;
+         j = 0;
+         for (i=0; i<repCount; i++) 
+         {
+            for (k=0; k<w.Length; k++ )
+            {
+               index = k + j;
+               while (index < 0) index += w.Length;
+               while (index >= w.Length) index -= w.Length;
+               newa = newa + " " + w[index];
+            }
+            j += shiftCount;
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoTwillL()
+      {
+         int repCount = PopInt();
+         int shiftCount = PopInt();
+         String [] w = PopStringArray();
+         String newa = "";
+         int i, j, k, index;
+         j = 0;
+         for (i=0; i<repCount; i++) 
+         {
+            for (k=0; k<w.Length; k++ )
+            {
+               index = k - j;
+               while (index < 0) index += w.Length;
+               while (index >= w.Length) index -= w.Length;
+               newa = newa + " " + w[index];
+            }
+            j += shiftCount;
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoReverse()
+      {
+         String [] w = PopStringArray();
+         String newa = "";
+         for (int i=0; i<w.Length; i++) 
+         {
+            newa = newa + " " + w[(w.Length-1)-i];
+         }   
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoVecLen()
+      {
+         String [] w = PopStringArray();
+         String newa = w.Length+" ";
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoVmax()
+      {
+         String [] w = PopStringArray();
+         int vmax = Int32.Parse(w[0]);
+         for (int i=0; i<w.Length; i++) 
+         {
+            int v = Int32.Parse(w[i]);
+            if (v > vmax) 
+               vmax = v;
+         }
+         String newa = vmax+" ";
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoVmin()
+      {
+         String [] w = PopStringArray();
+         int vmin = Int32.Parse(w[0]);
+         for (int i=0; i<w.Length; i++) 
+         {
+            int v = Int32.Parse(w[i]);
+            if (v < vmin) 
+               vmin = v;
+         }
+         String newa = vmin+" ";
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoExtend()
+      {
+         int newLen = PopInt();
+         String [] Lw = PopStringArray();
+         String newa = "";
+         for (int i=0; i<newLen; i++) 
+         {
+            newa = newa + " " + Lw[i % Lw.Length];
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoRotateR()
+      {
+         int steps = PopInt();
+         String [] Lw = PopStringArray();
+         String newa = "";
+         for (int i=0; i<Lw.Length; i++) 
+         {
+            int index = i - steps;
+            while (index < 0) index += Lw.Length;
+            while (index >= Lw.Length) index -= Lw.Length;
+            newa = newa + " " + Lw[index];
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoRotateL()
+      {
+         int steps = PopInt();
+         String [] Lw = PopStringArray();
+         String newa = "";
+         for (int i=0; i<Lw.Length; i++) 
+         {
+            int index = i + steps;
+            while (index < 0) index += Lw.Length;
+            while (index >= Lw.Length) index -= Lw.Length;
+            newa = newa + " " + Lw[index];
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoNth()
+      {
+         int n = PopInt();
+         String [] w = PopStringArray();
+         String newa = null;
+         int i = 0;
+         int j = 0;
+         while (i < w.Length) 
+         {
+            if (j == 0) 
+            {
+               newa = newa + " " + w[i];
+            }
+            i++;
+            j++;
+            if (j >= n-1) j = 0;
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoInterleave()
+      {
+         NormalizeTopTwoOnStack();
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         String newa = null;
+         for (int i=0; i<Lw.Length; i++) 
+         {
+            newa = newa + " " + Lw[i] + " " + Rw[i];
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoPalindrome()
+      {
+         String [] w = PopStringArray();
+         String newa = null;
+         int i;
+         for (i=0; i<w.Length; i++) newa = newa + " " + w[i];
+         for (i=w.Length-2; i>0; i--) newa = newa + " " + w[i];
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoConcat()
+      {
+         String Rs = PopString();
+         String Ls = PopString();
+         String newa = Ls + " " + Rs;
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoSwap()
+      {
+         String Rs = PopString();
+         String Ls = PopString();
+         PushArrayList(Ls);
+         PushArrayList(Rs);
+      }
+
+      private void DoDomain()
+      {
+         int hi = PopInt();
+         int lo = PopInt();
+         PatternLen = 1+hi;
+      }
+
+      private void DoPermute()
+      {
+         // first, repeat L until it's an integer multiple of length of R
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+
+         // find how many copies i of L are needed so that i|L| is a multiple of |R|
+         int numCopies = FindReps(Lw.Length, Rw.Length);
+         int newLenofR = numCopies * Lw.Length;
+         String newa = null;
+
+         int i, rval;
+         for (i=0; i<newLenofR; i++) 
+         {
+            rval = Int32.Parse(Rw[i % Rw.Length]);
+            int chunk = (int)Math.Floor(1.0*i/Rw.Length);
+            rval += (chunk * Rw.Length);
+            newa = newa + " " + Lw[rval % Lw.Length];
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoPbox()
+      {
+         // first, repeat L until it's an integer multiple of length of R
+         String [] Rw = PopStringArray();
+         String [] tLw = PopStringArray();
+         String [] Lw = new String[Rw.Length];
+         int j;
+         for (j=0; j<Rw.Length; j++) Lw[j] = tLw[j % tLw.Length];
+
+         // find how many copies i of L are needed so that i|L| is a multiple of |R|
+         int numCopies = FindReps(Lw.Length, Rw.Length);
+         int newLenofR = numCopies * Lw.Length;
+         String newa = null;
+
+         int i, rval;
+         for (i=0; i<newLenofR; i++) 
+         {
+            rval = Int32.Parse(Rw[i % Rw.Length]);
+            int chunk = (int)Math.Floor(1.0*i/Rw.Length);
+            rval += (chunk * Rw.Length);
+            newa = newa + " " + Lw[rval % Lw.Length];
+         }
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+      private void DoTemplate()
+      {
+         String [] Rw = PopStringArray();
+         String [] Lw = PopStringArray();
+         String newa = null;
+         int i, j, d, lval, newv, rstart;
+
+         rstart = Int32.Parse(Rw[0]);
+         for (i=0; i<Lw.Length; i++) 
+         {
+            lval = Int32.Parse(Lw[i]);
+            for (j=0; j<Rw.Length; j++) 
+            {
+               d = Int32.Parse(Rw[j])-rstart;
+               newv = lval + d + rstart;
+               newv = newv % PatternLen;
+               while (newv < 0) newv += PatternLen;
+               newa = newa + " " + newv;
+            }
+         }
+         
+         newa = OneSpace(newa);
+         PushArrayList(newa);
+      }
+
+   }
+}
