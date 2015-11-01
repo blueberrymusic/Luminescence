@@ -59,10 +59,33 @@
 	border: 0px;
 }
 
+#patternSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 40px 40px 40px 400px;
+}
+
+#colorSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 40px 40px 40px 400px;
+}
+
+#tieUpSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 40px 40px 40px 400px;
+}
 
 #warpPatternAWL {
 	width: 460px;
-	height: 100px;
+	height: 80px;
 	padding: 0px;
 	border: 3px solid #cccccc;
 	font-size: 16pt;
@@ -76,7 +99,7 @@
 	border: none;
 	width: 55px;
 	height: 80px;
-	margin: 10px 0px 0px -8px;
+	margin: 0px 0px 0px -8px;
 	background: url(images/WarpButtonPair.gif) 0px 0px no-repeat; 
 }
 
@@ -84,7 +107,7 @@
 
 #weftPatternAWL {
 	width: 460px;
-	height: 100px;
+	height: 80px;
 	padding: 0px;
 	border: 3px solid #cccccc;
 	font-size: 16pt;
@@ -98,8 +121,86 @@
 	border: none;
 	width: 55px;
 	height: 80px;
-	margin: 10px 0px 0px -8px;
+	margin: 0px 0px 0px -8px;
 	background: url(images/WeftButtonPair.gif) 0px 0px no-repeat; 
 }
 
 #weftPatternButton:hover  { background-position: 0px -80px; }
+
+#warpColorAWL {
+	width: 460px;
+	height: 80px;
+	padding: 0px;
+	border: 3px solid #cccccc;
+	font-size: 16pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Warp-Color-Input.gif); 
+}
+
+#warpColorButton  {
+	border: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/WarpButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#warpColorButton:hover  { background-position: 0px -80px; }
+
+#weftColorAWL {
+	width: 460px;
+	height: 80px;
+	padding: 0px;
+	border: 3px solid #cccccc;
+	font-size: 16pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Weft-Color-Input.gif); 
+}
+
+#weftColorButton  {
+	border: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/WeftButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#weftColorButton:hover  { background-position: 0px -80px; }
+
+#tieUpAWL {
+	width: 460px;
+	height: 80px;
+	padding: 0px;
+	border: 3px solid #cccccc;
+	font-size: 16pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Tieup-Input.gif); 
+}
+
+#tieUpButton  {
+	border: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/TieUpButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#tieUpButton:hover  { background-position: 0px -80px; }
+
+#AWLOutput {
+	width: 460px;
+	height: 80px;
+	padding: 0px;
+	border: 3px solid #cccccc;
+	font-size: 16pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-AWL-Output.gif); 
+}

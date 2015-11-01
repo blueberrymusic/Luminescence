@@ -92,28 +92,87 @@
 			<!-- start of input section -->
 
 <div class="col-sm-6">
-	<div><span class="h4textspan">Patterns:</span></div>
 
+	<div class="row"><div class="col-sm-10">
+	<span id="patternSpan">Patterns:</span>
+	</div></div>
+
+	<!-- WARP PATTERN INPUT -->
 	<div class="row">
-		<div class="col-sm-10" style="margin:20px 0px 0px 15px; padding:0px;">
+		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
 			<textarea class="form-control" id="warpPatternAWL"></textarea>
 		</div>
-		<div class="col-sm-1" style="margin:25px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+		<div class="col-sm-1" style="margin:15px 0px 0px 0px; padding: 0px 0px 0px 0px;">
 			<button class="btn btn-info" id="warpPatternButton" onclick="warpPatternButtonFunction()" name="" value="">
 		</div>
 	</div>
 
+	<!-- WEFT PATTERN INPUT -->
 	<div class="row">
-		<div class="col-sm-10" style="margin:20px 0px 0px 15px; padding:0px;">
+		<div class="col-sm-10" style="margin:5px 0px 0px 15px; padding:0px;">
 			<textarea class="form-control" id="weftPatternAWL"></textarea>
 		</div>
-		<div class="col-sm-1" style="margin:25px 0px 0px; padding: 0px 0px 0px 0px;">
+		<div class="col-sm-1" style="margin:10px 0px 0px 0px; padding: 0px 0px 0px 0px;">
 			<button class="btn btn-info" id="weftPatternButton" onclick="weftPatternButtonFunction()" name="" value="">
 		</div>
 	</div>
 
+	<div class="row"><div class="col-sm-10"><p> </p></div></div>
 
-			</div>
+	<div class="row"><div class="col-sm-10">
+	<span id="colorSpan">Colors:</span>
+	</div></div>
+
+	<!-- WARP COLOR INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="warpColorAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:15px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="warpColorButton" onclick="warpColorButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<!-- WEFT COLOR INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:5px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="weftColorAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:10px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="weftColorButton" onclick="weftColorButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<div class="row"><div class="col-sm-10"><p> </p></div></div>
+
+	<div class="row"><div class="col-sm-10">
+	<span id="tieUpSpan">Tie-Up:</span>
+	</div></div>
+
+	<!-- TIE-UP INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="tieUpAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:15px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="tieUpButton" onclick="tieUpButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<div class="row"><div class="col-sm-10"><p> </p></div></div>
+
+	<div class="row"><div class="col-sm-10">
+	<span id="tieUpSpan">Output:</span>
+	</div></div>
+
+	<!-- OUTPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
+			<textarea readonly class="form-control" id="AWLOutput"></textarea>
+		</div>
+	</div>
+
+			</div> <!-- end of column with text areas -->
 
 			<!-- start of canvas section-->
 			<div class="col-sm-6">
