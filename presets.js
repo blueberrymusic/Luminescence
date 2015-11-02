@@ -2,10 +2,11 @@
 
 // name, warp-pattern, weft-pattern, warp-colors, weft-colors, tie-up
 var Presets = [
-[ "Simple Twill MAKE ME AND MAKE ME STARTUP", 
-"3 / 4 > 0 / 7 < 1 * ,", "3 / 4 > 0 / 7 < 2 * ,", 
-"DarkSalmon", "DarkBlue", 
-"0 0 1 1 0 0 1 1 / 1 / 8 t<<",
+[ "Simple Twill 
+"0 1 / 7 updown",
+"0 1 / 7 updown",
+"DeepSkyBlue", "PowderBlue", 
+"1 1 1 1 0 0 0 0 / 1 / 8 t<<",
 120, 8, 8],
 
 [ "Surveillance", 

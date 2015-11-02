@@ -73,15 +73,15 @@ function makeMatrices() {
 }
 
 function getWarpAsList() { 
-	return getTextAreaAsList("#warpPatternSequence", true, [ 0 ]); 
+	return getOutputAsList(WarpPatternOutput, true, [ 0 ]); 
 }
 
 function getWeftAsList() { 
-	return getTextAreaAsList("#weftPatternSequence", true, [ 0 ]); 
+	return getOutputAsList(WeftPatternOutput, true, [ 0 ]); 
 }
 
 function getWarpColorsAsList() {
-	var names = getTextAreaAsList("#warpColorSequence", false, [ "white", "black" ]); 
+	var names = getOutputAsList(WarpColorOutput, false, [ "white", "black" ]); 
 	var rgb = [];
 	for (var i=0; i<names.length; i++) {
 		var rgbString = getColorAsRGBString(names[i]);
@@ -91,7 +91,7 @@ function getWarpColorsAsList() {
 }
 
 function getWeftColorsAsList() {
-	var names = getTextAreaAsList("#weftColorSequence", false, [ "black", "white" ]); 
+	var names = getOutputAsList(WeftColorOutput, false, [ "black", "white" ]); 
 	var rgb = [];
 	for (var i=0; i<names.length; i++) {
 		var rgbString = getColorAsRGBString(names[i]);
@@ -101,11 +101,10 @@ function getWeftColorsAsList() {
 }
 
 function getTieupAsList() { 
-	return getTextAreaAsList("#tieUpSequence", true, [0]); 
+	return getOutputAsList(TieUpOutput, true, [0]); 
 }
 
-function getTextAreaAsList(id, numbers, defaultReturn) {
-	var input = $(id).val()
+function getOutputAsList(input, numbers, defaultReturn) {
 	if (input === "") return defaultReturn;
 	var result = [];
 	var words = input.split(" ");

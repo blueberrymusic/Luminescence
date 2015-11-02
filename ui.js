@@ -19,6 +19,9 @@ $(function(){
 	setupOutputRadioButtons();
 	buildLoadDraftDropdown();
 
+	$('#fabricSizeInput').val(FabricSize);
+	$('#tieUpWidthInput').val(TieUpWidth);
+	$('#tieUpHeightInput').val(TieUpHeight);
 });
 
 
@@ -141,46 +144,51 @@ function loadDraftButtonFunction() {
 }
 
 function fabricSizeInputFunction() {
-	var fs = parseInt($('#fabricSizeInput').val());
-	alert("fabric size input "+fs);
+	FabricSize = parseInt($('#fabricSizeInput').val());
+	drawCanvas();
 }
 
 function tieUpWidthInputFunction() {
-	var fs = parseInt($('#tieUpWidthInput').val());
-	alert("tieup width input "+fs);
+	TieUpWidth = parseInt($('#tieUpWidthInput').val());
+	drawCanvas();
 }
 
 function tieUpHeightInputFunction() {
-	var fs = parseInt($('#tieUpHeightInput').val());
-	alert("tieup height input "+fs);
+	TieUpHeight = parseInt($('#tieUpHeightInput').val());
+	drawCanvas();
 }
 
 function warpPatternButtonFunction() {
 	WarpPatternOutput = AWLtoString('#warpPatternAWL');
 	selectRadioButton("#WarpPatternRadio");
+	drawCanvas();
 	//alert("warp Pattern button used");
 }
 
 function weftPatternButtonFunction() {
 	WeftPatternOutput = AWLtoString('#weftPatternAWL');
 	selectRadioButton("#WeftPatternRadio");
+	drawCanvas();
 	//alert("weft Pattern button used");
 }
 
 function warpColorButtonFunction() {
 	WarpColorOutput = AWLtoString('#warpColorAWL');
 	selectRadioButton("#WarpColorRadio");
+	drawCanvas();
 	//alert("warp Color button used");
 }
 
 function weftColorButtonFunction() {
 	WeftColorOutput = AWLtoString('#weftColorAWL');
 	selectRadioButton("#WeftColorRadio");
+	drawCanvas();
 	//alert("weft Color button used");
 }
 
 function tieUpButtonFunction() {
 	TieUpOutput = AWLtoString('#tieUpAWL');
 	selectRadioButton("#TieUpRadio");
+	drawCanvas();
 	//alert("tieUp button used");
 }

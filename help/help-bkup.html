@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Andrew's Digital Loom Help</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="help for Andrew's digital loom.">
+    <link rel="canonical" href="http://cs231n.github.io/classification/">
+	<script type="text/javascript" async
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js">
+	</script>
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="help.css">
+
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+
+    <!-- Google tracking -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-46895817-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap title-wrap">
+    <a class="site-title" href="/">Help for Andrew's Digital Loom</a>
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1></h1>
+  </header>
+
+  <article class="post-content">
+<p>
+This is a quick-start (or quick-restart) guide to my online
+<a href="http://www.TK">Digital Loom</a>.
+</p>
+
+<p>
+The Digital Loom is a simplified and abstracted version
+of a real loom used for weaving cloth.
+You can set up the loom using patterns published in weaving
+books that are over 100 years old,
+or you can cook up crazy new designs of your own.
+</p>
+
+<p>
+In this document I'm going to take things very fast.
+If you want more information on looms and weaving,
+how to read a draft, and how to use my pattern language,
+you can find much more detailed descriptions in
+two places.  
+First, you can read the original articles
+where I described this project by going to the page with
+<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">all of my CG&A columns</a>,
+and scrolling down to the three entries titled <em>Digital Weaving Part 1, 2,</em> and <em>3</em>.
+(while you're there, you can also check out
+<a href="http://www.glassner.com" target="_blank">other stuff I do</a>).
+Or you can read collected and revised versions of those columns in my book
+<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs,
+Mallards, and Montages: Computer-Aided Imagination</a>,
+which you can buy online or find in your local library.
+</p>
+
+<h2>Super-Quick Start</h2>
+<p>
+Load up some of the presets to see what the loom can do.
+If you want to play with the results,
+don't click on the grids on the right side of the screen:
+they're output only and don't respond to any interaction.
+Instead, type pattern expressions into the boxes at the
+far left, and press the arrow to the right of each box
+to update the loom and re-weave the fabric.
+I discuss the pattern language below,
+but for now, just try making small changes to the numbers
+and see what happens
+(also for now, keep all of your numbers in the range 0 to 7).
+
+<ul>
+<li><a href="#overview">Overview of The Digital Loom</a></li>
+<li><a href="#howtoread">How To Read A Weaving Diagram</a></li>
+<li><a href="#awlIntro">Introduction to AWL</a></li>
+<li><a href="#awl">AWL</a></li>
+<li><a href="#using">How To Use The Digital Loom</a></li>
+<li><a href="#colors">Naming Colors</a>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#reading">Further Reading</a></li>
+</ul>
+
+<p><a name='overview'></a></p>
+<h2>Overview of The Digital Loom</h2>
+
+<p>
+To create a piece of woven fabric, you have to set up the loom with
+weaving instructions.
+Visually, these instructions look like three black-and-white checkerboards.
+When you're using colored yarns for your fabric,
+there is also a row and a column of colors.
+These five elements are called a <em>draft</em>.
+On our simple digital loom,
+once you've filled in these grids in your desired way,
+the fabric immediately weaves itself and you see the results.
+</p>
+<p>
+So there are really only two things to learn about if you 
+want to create your own designs:
+how the draft turns into a fabric,
+and how to set up the draft on the digital loom.
+We'll take these in turn below.
+</p>
+
+<h2>How A Draft Becomes Fabric</h2>
+<p>
+On the digital loom, 
+the draft sits on the right side of the screen,
+as shown in Figure 1.
+The draft is made up of six regions.
+I'll use very simple terminology here to keep things
+brief; real looms are complex machines and there's a
+lot more to them than I'll go into here!
+</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="images/figure.jpg">
+  <div class="figcaption">
+An overview of the Digital Loom.
+</div>
+</div>
+
+<ul>
+<li>The <strong>Warp</strong> is the checkerboard directly
+below the fabric. Each column of the warp is colored in white
+except for exactly one black square.</li>
+<li>The <strong>Warp Colors</strong> is a single row directly
+beneath the warp. It identifies the color of the yarn that
+rises vertically up into each column of the fabric.</li>
+<li>The <strong>Weft</strong> is the checkerboard directly
+to the right of the fabric. Each row of the weft is colored in white
+except for exactly one black square.</li>
+<li>The <strong>Weft Colors</strong> is a single column directly
+right of the weft. It identifies the color of the yarn that
+travels horizontally left into each row of the fabric.</li>
+<li>The <strong>Tie-up</strong> is a rectangular grid
+to the right of the warp and below the weft. It can hold
+an arbitrary arrangement of white and black cells.</li>
+<li>The <strong>Fabric</strong> is the checkerboard in the
+upper left of the draft region. Each cell in the checkerboard
+has a single color. This is either the warp color directly
+below it, or the weft color directly to its right. The
+warp, weft, and tie-up work together to determine which
+of these two colors goes into that cell of the fabric.</li>
+</ul>
+
+<p>
+The job of the loom is to determine what color to place
+in each cell of the fabric's checkerboard.
+The process is straightforward.
+For any given (x,y) cell in the fabric,
+we ask which strand of yarn is on top: the one
+from the warp below, or the weft to the right?
+The upper strand gives its color to the cell.
+</p>
+<p>
+We answer that question in 3 steps:
+</p>
+<ol>
+<li>Look directly to the right of the fabric
+cell to find the corresponding row of the weft.
+There will be exactly one black cell in that row.
+<li>Look directly below the fabric
+cell to find the corresponding column of the warp.
+There will be exactly one black cell in that column.
+<li>From the black cell in the weft's row, imagine
+a line directly down to the tie-up.
+From the black cell in the warp's column,
+imagine a line directly right to the tie-up.
+These two lines meet at a cell in the tie-up.
+If that cell is black, the warp strand is on top,
+otherwise the weft is on top.
+</ol>
+
+<p>
+That 3-step process determines the color
+of every cell in the fabric.
+It might feel somewhat mysterious to you
+just how these three things interact.
+Welcome to the human race!
+Although this process is very simple,
+the way the warp, weft, and tie-up work
+together to form a fabric can get very
+complicated and subtle.
+particularly when their patterns become
+complicated.
+A big part of learning to design fabrics is
+to develop an intuition for drafts,
+and how to assign the black squares in a 
+way that leads to the fabric design you
+have in mind.
+</p>
+
+<h2>The Role of Patterns</h2>
+
+<p>
+Each of the three black-and-white grids
+(the warp, weft, and tie-up)
+needs to be set up correctly.
+That is, one cell in each row of the 
+weft must be marked in black,
+as much one cell in each column of the
+weft. 
+The tie-up can have no black cells,
+all black cells,
+or any mixture you like.
+</p>
+<p>
+When talking about a draft,
+We want to talk about various calumns
+and rows in the grids,
+so it's important that we know in what
+order to count.
+The scheme is a little unusual,
+because each of the four grids gets a
+different corner marked as the origin.
+You're probably used to the origin of
+a grid being in the upper-left or lower-right.
+But using a different origin for each grid
+makes things easier to think about.
+</p>
+<p>
+Consider Figure 3.
+Notice the point <strong>A</strong>
+where all four grids meet.
+Think of this as the overall "origin" for
+the draft.
+Each grid's own origin is at the corner
+closest to A.
+Then to locate a cell
+we count in the usual way,
+horizontally and then vertically
+from the origin.
+</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="images/figure.jpg">
+  <div class="figcaption">
+The origin of each grid is closest to point A.
+</div>
+</div>
+
+<ul>
+<li><strong>The Fabric:</strong> The origin
+is in the bottom right.
+So a cell (x,y) is found by counting x steps
+to the left and y cells up from that corner.</li>
+<li><strong>The Warp:</strong> The origin
+is in the upper right.
+So a cell (x,y) is found by counting x steps
+to the left and y cells down from that corner.</li>
+<li><strong>The Weft:</strong> The origin
+is in the bottom left.
+So a cell (x,y) is found by counting x steps
+to the right and y cells up from that corner.</li>
+<li><strong>The Tie-up:</strong> The origin
+is in the upper left.
+So a cell (x,y) is found by counting x steps
+to the right and y cells down from that corner.</li>
+</ul>
+
+<p>
+Now that we can talk about the coordinates,
+let's look at the simple draft in Figure 4.
+</p>
+
+
+<div class="fig figcenter fighighlight">
+  <img src="images/figure.jpg">
+  <div class="figcaption">
+A simple draft.
+</div>
+</div>
+
+<p>
+Let's start with the warp.
+Remember, a cell at (x,y)
+is x units to the left, 
+and y units below,
+the upper-right corner.
+Each column of the warp must
+be entirely white except for
+a single black cell.
+So we can describe that column
+merely with the y value of 
+that black cell.
+In Figure 4,
+counting to the left and down,
+we get the pattern 0 1 3 2 3.
+You can see that this pattern 
+keeps repeating as it goes left.
+</p>
+<p>
+Similarly,
+we can describe the weft by 
+identifying the horizontal location
+of each black cell.
+Remember that we count the weft
+from the lower left,
+going right and then up.
+The weft has a pattern 1 2 0 3 
+which repeats over and over.
+</p>
+<p>
+The tie-up has any mix of
+black and white cells.
+Remembering that we count the tie-up
+left to right and top down,
+we can write the contents as 
+1 0 0 1 1,
+which again repeats over and over
+as we make our way down through
+the checkerboard.
+</p>
+<p>
+Finally, we can look at the colors.
+The warp color is a simple pattern:
+it's just green the whole way through.
+The weft pattern has three colors
+arranged red, yellow, blue, yellow,
+and that sequence of 4 keeps repeating.
+</p>
+<p>
+As long as our draft is small and the
+patterns are short,
+then writing things down like this is just
+fine. 
+We could summarize the draft this way,
+where it's understood that each little
+pattern is repeated over and over:
+</p>
+
+<ul>
+<li>Warp: 0 1 3 2 3</li>
+<li>Weft: 1 2 0 3</li>
+<li>Tie-Up: 1 0 0 1 1  </li>
+<li>Warp Colors: green </li>
+<li>Weft Colors: red yellow blue yellow </li>
+</ul>
+
+<p>
+This works great for a simple draft.
+But suppose that the warp pattern,
+instead of being just 5 numbers from 0 to 3,
+was 200 numbers ranging from 0 to 15?
+And the weft was a different pattern but
+of the same size?
+Just writing it down would be awful.
+Somehow transcribing that into the loom
+would be a boring, tedious, and error-prone task.
+This is one reason why most traditional drafts
+have not used such huge patterns.
+</p>
+
+<p>
+But huge patterns can produce wonderful,
+complex, rich fabrics.
+And the computer can handle all the tedious
+tasks for us perfectly and without complaint.
+Still, writing down all those numbers would
+be a terrible chore, and then adjusting them
+to tweak the resulting fabric would be just
+as awful.
+So instead, the Digital Loom lets you create
+rich and interesting patterns of numbers
+(and colors) using a <em>weaving language</em>.
+</em>
+
+
+<h2>Andrew's Weaving Language</h2>
+
+<p>
+As we saw, 
+when drafts get large,
+tweaking them can become complicated and
+time-consuming.
+You might think it would be best to just click
+in the cells of a  draft to change their color.
+But when your patterns become big,
+that quickly becomes tedious.
+</p>
+<p>
+In the Digital Loom, we take a
+different approach.
+Instead of clicking on cells,
+you write little expressions in a custom
+pattern-making language designed explicitly
+for creating patterns that help you make
+interesting fabrics.
+These expressions are usually short,
+but they can result in patterns that are
+hundreds of numbers long,
+containing lots of complicated sub-patterns
+that interact to make a visually rich fabric.
+</p>
+<p>
+Each of the five elements in the draft has
+its own little box for typing in a pattern.
+You type (or edit) an expression in one of
+the boxes,
+then you press the arrow to its right.
+That immediately updates the box to the
+right of the arrow (showing you the pattern
+your expression turns into), 
+then the pattern is used to fill in the
+corresponding part of the draft,
+and then the fabric is immediately re-woven.
+This way you can easily and quickly tweak
+and tune your patterns,
+and experiment with whole new ideas,
+very quickly and easily.
+</p>
+<p>
+The way it works is that you type or paste
+or edit the plain text in one of the leftmost
+text boxes.
+In AWL you write an expression as a long list
+of words, where each word is separated from the
+others by spaces (here, numbers count as "words").
+So you type in some stuff and then hit the arrow.
+</p>
+<p>
+AWL is a <em>stack-based</em> language.
+If we want to add 5 and 3,
+we can write "5+3".
+In a stack-based language,
+we write "5 3 +".
+The idea is that we take the 5 and
+<em>push</em> it on top of a stack
+of numbers (the stack starts out empty),
+then we push the 3 on top of that,
+and then the + operator 
+</em>pops</em> the 3 off the top,
+then it pops the 5,
+adds them to get 8,
+and pushes 8 back onto the top of
+of this now-empty stack.
+When we're done with an expression,
+the stack has one element in it which
+holds our result.
+Note that sometimes order matters:
+"5 10 /" results in 0.5,
+while "10 5 /" results in 2.
+There is much, much more on stack languages
+available on the web and in my papers and
+book chapter mentioned at the start of this document.
+</p>
+<p>
+AWL is just a little different than the
+calculator example,
+because instead of thinking of a single number
+as our fundamental object,
+AWL thinks of <em>lists</em> as the basic object.
+In AWL, lists can be made up of numbers or colors.
+For now, we'll stick just to numbers.
+</p>
+<p>
+A list is any list of numbers separated by spaces.
+<code>3 4 5</code> is a list.
+<code>4</code> is also a list, though a very short one.
+As AWL reads each number from your input area,
+it appends it to the end of the growing list on the
+top of the stack.
+This means that if you want to start a new list,
+or even just put one number on the stack,
+you have to tell AWL that you're done appending
+to the current top of the stack.
+You can do this easily by saying <code>push</code>.
+If you have a growing list on the stack when you 
+call </code>push</code>,
+AWL pushes a new, blank list on top of the stack.
+</p>
+<p>
+For example,
+suppose you want to repeat the sequence <code>5 6 7</code>
+a total of <code>3</code> times.
+You find the command <code>repeat</code>
+which takes two arguments:
+first, a list, and second, a number of times to repeat that list.
+So the stack should have at least two things on it when you call 
+<code>repeat</code>:
+the list you want to repeat,
+and on top of that,
+the number of repeats.
+In our example, then, you'd write <code>5 6 7 push 3 repeat</code>,
+and you'd get back
+<code>5 6 7 5 6 7 5 6 7</code>.
+</p>
+<p>
+Note that this would fail if you left out the <code>push</code>,
+writing only <code>5 6 7 3 repeat</code>.
+Remember that <code>repeat</code> wants to pop two things
+off the stack, and if you wrote this most recent string
+you'd just have the list <code>5 6 7 3</code>.
+You might argue that <code>repeat</code> should be smart enough
+to be able to figure this out and use the last element in
+the list as the repeat count,
+but it turns out that this is just asking for trouble.
+Allowing for this sort of thing just invites a world of errors
+and mistakes.
+</p>
+<p>
+So just get in the habit of separating the end of one
+list and the start of another 
+with <code>push</code>.
+</p>
+<p>
+Like many AWL commands, both 
+<code>repeat</code>
+and
+<code>push</code>
+have shortcuts to make typing easier.
+<code>repeat</code>
+may be written simply as
+<code>*</code>
+and
+<code>push</code>
+is abbreviated
+<code>/</code>.
+So our most recent example could be written
+<code>5 6 7 / 3 *</code>.
+You can use the full names any time you want to,
+of course,
+but I suggest getting used to the shortcuts.
+You'll get used to seeing idioms that you'll
+be using over and over,
+and the shorter expression makes it easier to
+take it all in at a glance.
+</p>
+
+<p>
+I mentioned before that AWL supports lists of colors.
+These are for the boxes where you create inputs for the
+warp and weft colors.
+You can refer to a color simply by giving its name,
+hex value, or rgb values
+(see the section on colors later).
+When you're building up a list, AWL treats the colors
+just like numbers.
+Note, though, that you can't use a color when AWL
+is expecting a number.
+For example, if you want to repeat the list
+<code>green orange</code> three times,
+you need to make the second argument the number <code>3</code>,
+so it would appear <code>green orange / 3 *</code>.
+Trying to repeat the list <code>purple</code> times
+wouldn't make any sense, and you'd get an error.
+Generally speaking, you can use a color anywhere except
+where AWL is explicitly expecting a number.
+Like the other lists,
+each list of colors gets automatically repeated as many
+times as necessary to create your fabric.
+</p>
+
+<p>
+So you'll write expressions that
+produce patterns of numbers for the warp and weft,
+patterns of colors for the warp and weft colors,
+and patterns of 0's and 1's for the tie-up.
+The computer will use your patterns to fill in
+the corresponding part of the draft,
+and then keep repeating it as needed to make
+the entire fabric.
+</p>
+
+<p>
+AWL has a bit more than 40 commands. I won't run through
+them all here.
+You can find a discussion of each one in Part 2 of my CG&A
+Digital Weaving series,
+which again you can read for free by going to my
+list of
+<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns</a>,
+or read in 
+<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">my book</a>
+that collects those columns.
+</p>
+<p>
+While re-writing AWL for this website, I made a few changes
+from the version in those references.
+Below is a summary of the AWL commands available to you online,
+and below that is a short summary of what's different about
+what's here from what was in the columns.
+</p>
+<p>
+In the following,
+A and B refer to lists.
+The letters c and d refer to single numbers.
+Remember that each argument,
+whether a list or a number,
+must be in its own element on the stack.
+A0 and AL refer to the first
+and last elements of list A (and B0 and BL do the
+same for list B).
+Ai refers to the i'th element of A,
+and Bi is the same for B.
+
+<h2>AWL Summary</h2>
+
+<table id="awlsummary">
+<tr>
+	<th>Command</th>
+	<th>Shortcut</th>
+	<th>Norm</th>
+	<th>Summary</th>
+</tr>
+<tr>
+	<td><b>A</b> binary0</td>
+	<td> </td>
+	<td> </td>
+	<td>Treat <b>A</b> as alternating runs of 0s and 1s</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> binary1</td>
+	<td> </td>
+	<td> </td>
+	<td>Treat <b>A</b> as alternating runs of 1s and 0s</td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> block</td>
+	<td>#</td>
+	<td>Y</td>
+	<td>Each <b>A</b>i is repeated <b>B</b>i times</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> blockpal</td>
+	<td>#p</td>
+	<td>Y</td>
+	<td>block with internal palindrome</td>
+</tr>
+<tr>
+	<td>clear</td>
+	<td> </td>
+	<td> </td>
+	<td>Erase the stack</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> concat</td>
+	<td>,</td>
+	<td> </td>
+	<td>Concatenate the top two stack elements</td>
+</tr>
+<tr>
+	<td><em>c</em> <em>d</em> domain</td>
+	<td> </td>
+	<td> </td>
+	<td>Set the domain to [<em>c</em>, <em>d</em>]</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> down</td>
+	<td>&gt;</td>
+	<td> </td>
+	<td><b>A</b>, descending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> <em>c</em> downloop</td>
+	<td>&gt;l</td>
+	<td> </td>
+	<td>Like down, but includes <em>c</em> runs as well</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> downup</td>
+	<td>&gt;u</td>
+	<td>Y</td>
+	<td>Alternating down and up runs. <strong>A</strong> may be 1 longer than <strong>B</strong
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> <em>c</em> downuploop</td>
+	<td>&gt;ul</td>
+	<td>Y</td>
+	<td>Like downup but include <em>c</em> runs as well</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> dup</td>
+	<td> </td>
+	<td> </td>
+	<td>Pop the top of the stack and push it back twice</td>
+</tr>
+<tr>
+	<td><strong>A</strong> <em>d</em> extend</td>
+	<td>+</td>
+	<td> </td>
+	<td>repeat or clip <b>A</b> to <em>d</em> elements</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> growblock</td>
+	<td>=</td>
+	<td>Y</td>
+	<td>Interleave <b>A</b> with growing palindromes of <b>B</b></td>
+</tr>
+<tr>
+	<td><b>A</b> iblock</td>
+	<td>i#</td>
+	<td>Y</td>
+	<td>Like block but the inputs are interleaved in <b>A</b></td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> iblockpal</td>
+	<td>i#p</td>
+	<td>Y</td>
+	<td>iblock with internal palindrome</td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> interleave</td>
+	<td>%</td>
+	<td>Y</td>
+	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <em>d</em> nth</td>
+	<td> </td>
+	<td> </td>
+	<td>take ever <em>d</em>'th element of <b>A</b></td>
+</tr>
+<tr>
+	<td><b>A</b> palindrome</td>
+	<td>|</td>
+	<td> </td>
+	<td><b>A</b> followed by its near reversal</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> pbox</td>
+	<td> </td>
+	<td> </td>
+	<td>Shortcut for <b> A B A </b> veclen extend permute</td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> permute</td>
+	<td> </td>
+	<td> </td>
+	<td>Use elements of <b>B</b> to index <b>A</b></td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> pop</td>
+	<td> </td>
+	<td> </td>
+	<td>Discard top of the stack</td>
+</tr>
+<tr>
+	<td>push</td>
+	<td>/</td>
+	<td> </td>
+	<td>Consider all since last command a single list</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> ramp</td>
+	<td>-</td>
+	<td> </td>
+	<td>Go up or down as needed to stay in domain</td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> <em>c</em> ramploop</td>
+	<td>-l</td>
+	<td> </td>
+	<td>Like ramp but include <em>c</em> runs as well</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <em>d</em> repeat</td>
+	<td>*</td>
+	<td> </td>
+	<td>repeat <b>A</b> a total of <em>d</em> times</td>
+</tr>
+<tr>
+	<td><strong>A</strong> reverse</td>
+	<td>@</td>
+	<td> </td>
+	<td>reverse the elements of <strong>A</strong></td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <em>d</em> rotatel</td>
+	<td><<</td>
+	<td> </td>
+	<td>rotate <b>A</b> left by <em>d</em> steps</td>
+</tr>
+<tr>
+	<td><b>A</b> <em>d</em> rotater</td>
+	<td>>></td>
+	<td> </td>
+	<td>rotate <b>A</b> right by <em>d</em> steps</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> swap</td>
+	<td> </td>
+	<td> </td>
+	<td>Exchange the top two stack elements</td>
+</tr>
+<tr>
+	<td><b>A</b> tartan</td>
+	<td> </td>
+	<td>Y</td>
+	<td>Like iblock but repeats are half length</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> tartanpal</td>
+	<td> </td>
+	<td>Y</td>
+	<td>tartan with internal palindrome</td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> template</td>
+	<td>:</td>
+	<td> </td>
+	<td>Create a subarticulation using <b>B</b> as a template</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <em>c</em> <em>d</em> twilll</td>
+	<td>t&lt;&lt;</td>
+	<td> </td>
+	<td>Rotate left by <em>c</em> steps, <em>d</em> times</td>
+</tr>
+<tr>
+	<td><b>A</b> <em>c</em> <em>d</em> twillr</td>
+	<td>t&gt;&gt;</td>
+	<td> </td>
+	<td>Rotate right by <em>c</em> steps, <em>d</em> times</td>
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> up</td>
+	<td>&lt;</td>
+	<td> </td>
+	<td><b>A</b>, ascending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> updown</td>
+	<td>&lt;d</td>
+	<td>Y</td>
+	<td>Alternating up and down runs. <strong>A</strong> may be 1 longer than <strong>B</strong
+</tr>
+<tr class="alt">
+	<td><b>A</b> <b>B</b> <em>c</em> updownloop</td>
+	<td>&lt;dl</td>
+	<td> </td>
+	<td>Like updown but include <em>c</em> runs as well</td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> <em>c</em> uploop</td>
+	<td>&lt;l</td>
+	<td> </td>
+	<td>Like up, but includes <em>c</em> runs as well</td>
+</tr>
+<tr class="alt">
+	<td>veclen</td>
+	<td> </td>
+	<td> </td>
+	<td>Push the length of the list at the top of the stack</td>
+</tr>
+<tr>
+	<td>vmax</td>
+	<td> </td>
+	<td> </td>
+	<td>Push largest element in list at top of stack</td>
+</tr>
+<tr class="alt">
+	<td>vmin</td>
+	<td> </td>
+	<td> </td>
+	<td>Push smallest element in list at top of stack</td>
+</tr>
+</table>
+
+
+<h2>Notes on AWL</h2>
+
+<p>
+Here are the key differences between what's in 
+<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns</a>
+and
+<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">my book</a>,
+and what's implemented here.
+</p>
+
+<ul>
+<li><strong>template:</strong> Templates are no longer automatically made relative to the
+first number in the second list. So the values you add to each
+number in your starting list are simply the numbers you provide.
+For example, <code>3 4 : 1 2 3</code> will add the values <code>1 2 3</code>
+to <code>3</code> and then to <code>4</code>, producing <code>4 5 6 5 6 7</code>.</li>
+<li><strong>updown, updownloop, downup, downuploop:</strong> These four
+commands normally reshape the two input lists so they have the same size.
+Introduced to the online version, this resizing won't happen if
+the first list can have 1 more element than the second one. This way
+you can make nice repeating patterns of up and down ramps.
+For example, <code>0 1 / 4 updown</code> has two elements in the first
+list (<code>0 1</code>)and only one in the second (<code>7</code>).
+These lists won't be resized, so the result goes up from <code>0</code>
+to <code>4</code>, then back down to <code>1</code>,
+giving you the nice up-down sequence <code>0 1 2 3 4 3 2 1</code>.
+When this automatically repeats you'll get a nice triangle wave 
+repeating forever (a perfect starting point for twills).</li>
+<li><strong>twillr, twilll:</strong> These commands got a little 
+confused. Here's how they work now.
+<ol>
+<li>
+I implemented them backwards in the original code,
+so they rotated in the directions opposite to their names.
+That's fixed now (and the examples have been updated
+to reflect that).</li>
+<li>
+Both commands take as input a list <code>A</code>
+and two numbers
+<code>c</code>
+and 
+<code>d</code>,
+in that order.
+The list gets repeated <code>d</code> times.
+The first time it appears just as given.
+The second time it's rotated right (or left) by <code>c</code>
+steps.
+The next time that most recent version gets rotated right
+(or left) by another <code>c</code> steps, and so on.
+So for example,
+<code>0 1 2 3 / 1 / 4 twillr</code>
+will produce the list
+<code>0 1 2 3</code>,
+then it gets rotated right once to produce
+<code>1 2 3 0</code>,
+then
+<code>2 3 0 1</code>,
+and then a fourth time to produce
+<code>3 0 1 2</code>,
+giving a final result of
+<code>0 1 2 3 1 2 3 0 2 3 0 1 3 0 1 2</code>.
+</li>
+</ol>
+</li>
+</ul>
+
+<p>
+Here are some helpful hints to keep in mind.
+</p>
+
+<ul>
+</li>Start simple, and add small bits of complexity one step at a time</li>
+</li>The output window will always show you what's on top of the stack. Feel free
+to ignore the fabric while you experiment with AWL commands and see what they turn into.</li>
+<li>Make sure to keep track of your domain. It starts at [0,7] for both warp and
+weft, so if you change that, remember your change or set it back to [0,7].</li>
+<li>Make sure you have the tie-up sizes set the way you like. The tie-up doesn't
+automatically re-size to fit your warp or weft (that would make it much harder
+to experiment with your drafts).</li>
+<li>When in doubt, just list your elements explicitly as a list;
+not everything has to be a clever AWL construction.</li>
+</ul>
+
+<h2>A Worked Example</h2>
+
+<p>
+I find that I almost never draw out a draft
+before typing it in.
+Instead, I start with something simple and
+then modify it, following my intution,
+as it starts to develop into something interesting.
+Here's an exmaple of that process.
+</p>
+
+<p>
+A nice starting point is a simple twill.
+We just put triangle waves in both the warp and weft,
+and diagonal stripes in the tie-up.
+I'll just pick a couple of constant colors for
+both the warp and weft for now.
+See Figure 4.
+</p>
+<ul>
+<li><strong>Warp:</strong> <code>0 1 / 7 updown</code></li>
+<li><strong>Weft:</strong> <code>0 1 / 7 updown</code></li>
+<li><strong>Warp colors:</strong> <code>LightSeaGreen</code> </li>
+<li><strong>Weft colors:</strong> <code>Navy </code></li>
+<li><strong>Tie-up:</strong> <code>1 1 1 1 0 0 0 0 / 1 / 8 t>></code></li>
+</ul>
+
+<div class="fig figcenter fighighlight">
+  <img src="images/figure.jpg">
+  <div class="figcaption">
+Making a draft, Step 1.
+</div>
+</div>
+
+<strong>more steps</strong>
+
+<p><a name="faq"></a></p>
+<h2>FAQ</h2>
+
+<p><strong>How do I save and recall my drafts?</strong></p>
+<p>
+zxxx
+</p>
+<p><strong>How do I save and recall the woven fabric image?</strong></p>
+<p>
+</p>
+<p><strong>While is all this file stuff so weird?</strong></p>
+<p>
+<p>
+Actually, it's kind of remarkable that we can manage to save and recall anything at all.
+Here are the technical details.
+</p>
+<p>
+Browsers are very deliberately designed to be unable to talk to your local computer's
+hard drive (this is to protect you, and it's one of the reasons the web has succeeded
+the way it has). But there are a few little loopholes to that policy. For example, you
+probably know about cookies: these are tiny files on your hard drive, written and read
+by the browser, that save preferences and other information for web pages. That's an
+example of the browser reading from, and writing to, your computer's hard drive.
+The Digital Loom doesn't use cookies, but it uses the other two possible exceptions
+(these are both perfectly safe: they're part of the offical, international standards 
+that all browsers follow in order to work on the web).
+</p>
+<p>
+The first one lets you save your fabric by right-clicking on it and saving it as a picture.
+We manage that by telling the browser that the drawing we made is just a normal photograph 
+that can be saved in that usual way.
+</p>
+<p>
+The second trick is called LocalStorage, and that's where we store your drafts.
+But this is a very constrained way to save things. Each URL (that is, each web page)
+can save up to 5MB total, without exception (that's not enough for pictures!).
+And each browser manages its own LocalStorage, so the drafts you save on Firefox,
+say, will not be available in Chrome, and vice-versa. This is true for each type
+of browser. The files are saved to your hard drive, so if you're using a friend's
+computer, your saved files will not be there. Finally, these aren't really files at
+all, so don't go looking for them on your disk. They're actually saved inside a
+database managed by the browser.
+</p>
+</p>
+<p><strong>How do I debug my AWL?</strong></p>
+<p>
+</p>
+<p><strong>AWL isn't much of a language. Where are the variables, loops, procedures, etc.?</strong></p>
+<p>
+</p>
+
+<p>
+Save + Recall of drafts.
+Saving images.
+Debugging.
+variables.
+making samples.
+</p>
+
+</article>
+</div>
+</div>
+</div>
+
+<p><a name=#reading"></a></p>
+<h2>Further Reading</h2>
+
+online
+Pinter ref
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>Motivation</strong>. In this section we will introduce the Image Classification problem, which is the task of assigning an input image one label from a fixed set of categories. This is one of the core problems in Computer Vision that, despite its simplicity, has a large variety of practical applications. Moreover, as we will see later in the course, many other seemingly distinct Computer Vision tasks (such as object detection, segmentation) can be reduced to image classification.</p>
+
+<p><strong>Example</strong>. For example, in the image below an image classification model takes a single image and assigns probabilities to 4 labels, <em>{cat, dog, hat, mug}</em>. As shown in the image, keep in mind that to a computer an image is represented as one large 3-dimensional array of numbers. In this example, the cat image is 248 pixels wide, 400 pixels tall, and has three color channels Red,Green,Blue (or RGB for short). Therefore, the image consists of 248 x 400 x 3 numbers, or a total of 297,600 numbers. Each number is an integer that ranges from 0 (black) to 255 (white). Our task is to turn this quarter of a million numbers into a single label, such as <em>&quot;cat&quot;</em>.</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/classify.png">
+  <div class="figcaption">The task in Image Classification is to predict a single label (or a distribution over labels as shown here to indicate our confidence) for a given image. Images are 3-dimensional arrays of integers from 0 to 255, of size Width x Height x 3. The 3 represents the three color channels Red, Green, Blue.</div>
+</div>
+
+<p><strong>Challenges</strong>. Since this task of recognizing a visual concept (e.g. cat) is relatively trivial for a human to perform, it is worth considering the challenges involved from the perspective of a Computer Vision algorithm. As we present (an inexhaustive) list of challenges below, keep in mind the raw representation of images as a 3-D array of brightness values:</p>
+
+<ul>
+<li><strong>Viewpoint variation</strong>. A single instance of an object can be oriented in many ways with respect to the camera.</li>
+<li><strong>Scale variation</strong>. Visual classes often exhibit variation in their size (size in the real world, not only in terms of their extent in the image).</li>
+<li><strong>Deformation</strong>. Many objects of interest are not rigid bodies and can be deformed in extreme ways.</li>
+<li><strong>Occlusion</strong>. The objects of interest can be occluded. Sometimes only a small portion of an object (as little as few pixels) could be visible.</li>
+<li><strong>Illumination conditions</strong>. The effects of illumination are drastic on the pixel level.</li>
+<li><strong>Background clutter</strong>. The objects of interest may <em>blend</em> into their environment, making them hard to identify.</li>
+<li><strong>Intra-class variation</strong>. The classes of interest can often be relatively broad, such as <em>chair</em>. There are many different types of these objects, each with their own appearance.</li>
+</ul>
+
+<p>A good image classification model must be invariant to the cross product of all these variations, while simultaneously retaining sensitivity to the inter-class variations.</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/challenges.jpeg">
+  <div class="figcaption"></div>
+</div>
+
+<p><strong>Data-driven approach</strong>. How might we go about writing an algorithm that can classify images into distinct categories? Unlike writing an algorithm for, for example, sorting a list of numbers, it is not obvious how one might write an algorithm for identifying cats in images. Therefore, instead of trying to specify what every one of the categories of interest look like directly in code, the approach that we will take is not unlike one you would take with a child: we&#39;re going to provide the computer with many examples of each class and then develop learning algorithms that look at these examples and learn about the visual appearance of each class. This approach is referred to as a <em>data-driven approach</em>, since it relies on first accumulating a <em>training dataset</em> of labeled images. Here is an example of what such a dataset might look like:</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/trainset.jpg">
+  <div class="figcaption">An example training set for four visual categories. In practice we may have thousands of categories and hundreds of thousands of images for each category.</div>
+</div>
+
+<p><strong>The image classification pipeline</strong>. We&#39;ve seen that the task in Image Classification is to take an array of pixels that represents a single image and assign a label to it. Our complete pipeline can be formalized as follows:</p>
+
+<ul>
+<li><strong>Input:</strong> Our input consists of a set of <em>N</em> images, each labeled with one of <em>K</em> different classes. We refer to this data as the <em>training set</em>.</li>
+<li><strong>Learning:</strong> Our task is to use the training set to learn what every one of the classes looks like. We refer to this step as <em>training a classifier</em>, or <em>learning a model</em>.</li>
+<li><strong>Evaluation:</strong> In the end, we evaluate the quality of the classifier by asking it to predict labels for a new set of images that it has never seen before. We will then compare the true labels of these images to the ones predicted by the classifier. Intuitively, we&#39;re hoping that a lot of the predictions match up with the true answers  (which we call the <em>ground truth</em>).</li>
+</ul>
+
+<p><a name='nn'></a></p>
+
+<h3>Nearest Neighbor Classifier</h3>
+
+<p>As our first approach, we will develop what we call a <strong>Nearest Neighbor Classifier</strong>. This classifier has nothing to do with Convolutional Neural Networks and it is very rarely used in practice, but it will allow us to get an idea about the basic approach to an image classification problem. </p>
+
+<p><strong>Example image classification dataset: CIFAR-10.</strong> One popular toy image classification dataset is the <a href="http://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10 dataset</a>. This dataset consists of 60,000 tiny images that are 32 pixels high and wide. Each image is labeled with one of 10 classes (for example <em>&quot;airplane, automobile, bird, etc&quot;</em>). These 60,000 images are partitioned into a training set of 50,000 images and a test set of 10,000 images. In the image below you can see 10 random example images from each one of the 10 classes:</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nn.jpg">
+  <div class="figcaption">Left: Example images from the <a href="http://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10 dataset</a>. Right: first column shows a few test images and next to each we show the top 10 nearest neighbors in the training set according to pixel-wise difference.</div>
+</div>
+
+<p>Suppose now that we are given the CIFAR-10 training set of 50,000 images (5,000 images for every one of the labels), and we wish to label the remaining 10,000. The nearest neighbor classifier will take a test image, compare it to every single one of the training images, and predict the label of the closest training image. In the image above and on the right you can see an example result of such a procedure for 10 example test images. Notice that in only about 3 out of 10 examples an image of the same class is retrieved, while in the other 7 examples this is not the case. For example, in the 8th row the nearest training image to the horse head is a red car, presumably due to the strong black background. As a result, this image of a horse would in this case be mislabeled as a car.</p>
+
+<p>You may have noticed that we left unspecified the details of exactly how we compare two images, which in this case are just two blocks of 32 x 32 x 3. One of the simplest possibilities is to compare the images pixel by pixel and add up all the differences. In other words, given two images and representing them as vectors \( I_1, I_2 \) , a reasonable choice for comparing them might be the <strong>L1 distance</strong>:</p>
+
+<p>$$
+d_1 (I_1, I_2) = \sum_{p} \left| I^p_1 - I^p_2 \right|
+$$</p>
+
+<p>Where the sum is taken over all pixels. Here is the procedure visualized:</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/nneg.jpeg">
+  <div class="figcaption">An example of using pixel-wise differences to compare two images with L1 distance (for one color channel in this example). Two images are subtracted elementwise and then all differences are added up to a single number. If two images are identical the result will be zero. But if the images are very different the result will be large.</div>
+</div>
+
+<p>Let&#39;s also look at how we might implement the classifier in code. First, let&#39;s load the CIFAR-10 data into memory as 4 arrays: the training data/labels and the test data/labels. In the code below, <code>Xtr</code> (of size 50,000 x 32 x 32 x 3) holds all the images in the training set, and a corresponding 1-dimensional array <code>Ytr</code> (of length 50,000) holds the training labels (from 0 to 9):</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="s">&#39;data/cifar10/&#39;</span><span class="p">)</span> <span class="c"># a magic function we provide</span>
+<span class="c"># flatten out all images to be one-dimensional</span>
+<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># Xtr_rows becomes 50000 x 3072</span>
+<span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># Xte_rows becomes 10000 x 3072</span>
+</code></pre></div>
+<p>Now that we have all images stretched out as rows, here is how we could train and evaluate a classifier:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span> <span class="c"># create a Nearest Neighbor classifier class</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span> <span class="c"># train the classifier on the training images and labels</span>
+<span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">)</span> <span class="c"># predict labels on the test images</span>
+<span class="c"># and now print the classification accuracy, which is the average number</span>
+<span class="c"># of examples that are correctly predicted (i.e. label matches)</span>
+<span class="k">print</span> <span class="s">&#39;accuracy: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span> <span class="p">)</span>
+</code></pre></div>
+<p>Notice that as an evaluation criterion, it is common to use the <strong>accuracy</strong>, which measures the fraction of predictions that were correct. Notice that all classifiers we will build satisfy this one common API: they have a <code>train(X,y)</code> function that takes the data and the labels to learn from. Internally, the class should build some kind of model of the labels and how they can be predicted from the data. And then there is a <code>predict(X)</code> function, which takes new data and predicts the labels. Of course, we&#39;ve left out the meat of things - the actual classifier itself. Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">NearestNeighbor</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+  <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; X is N x D where each row is an example. Y is 1-dimension of size N &quot;&quot;&quot;</span>
+    <span class="c"># the nearest neighbor classifier simply remembers all the training data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; X is N x D where each row is an example we wish to predict label for &quot;&quot;&quot;</span>
+    <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c"># lets make sure that the output type matches the input type</span>
+    <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+    <span class="c"># loop over all test rows</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+      <span class="c"># find the nearest training image to the i&#39;th test image</span>
+      <span class="c"># using the L1 distance (sum of absolute value differences)</span>
+      <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="c"># get the index with smallest distance</span>
+      <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span> <span class="c"># predict the label of the nearest example</span>
+
+    <span class="k">return</span> <span class="n">Ypred</span>
+</code></pre></div>
+<p>If you ran this code, you would see that this classifier only achieves <strong>38.6%</strong> on CIFAR-10. That&#39;s more impressive than guessing at random (which would give 10% accuracy since there are 10 classes), but nowhere near human performance (which is <a href="http://karpathy.github.io/2011/04/27/manually-classifying-cifar10/">estimated at about 94%</a>) or near state-of-the-art Convolutional Neural Networks that achieve about 95%, matching human accuracy (see the <a href="http://www.kaggle.com/c/cifar-10/leaderboard">leaderboard</a> of a recent Kaggle competition on CIFAR-10).</p>
+
+<p><strong>The choice of distance.</strong> 
+There are many other ways of computing distances between vectors. Another common choice could be to instead use the <strong>L2 distance</strong>, which has the geometric interpretation of computing the euclidean distance between two vectors. The distance takes the form:</p>
+
+<p>$$
+d_2 (I_1, I_2) = \sqrt{\sum_{p} \left( I^p_1 - I^p_2 \right)^2}
+$$</p>
+
+<p>In other words we would be computing the pixelwise difference as before, but this time we square all of them, add them up and finally take the square root. In numpy, using the code from above we would need to only replace a single line of code. The line that computes the distances:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<p>Note that I included the <code>np.sqrt</code> call above, but in a practical nearest neighbor application we could leave out the square root operation because square root is a <em>monotonic function</em>. That is, it scales the absolute sizes of the distances but it preserves the ordering, so the nearest neighbors with or without it are identical. If you ran the Nearest Neighbor classifier on CIFAR-10 with this distance, you would obtain <strong>35.4%</strong> accuracy (slightly lower than our L1 distance result).</p>
+
+<p><strong>L1 vs. L2.</strong> It is interesting to consider differences between the two metrics. In particular, the L2 distance is much more unforgiving than the L1 distance when it comes to differences between two vectors. That is, the L2 distance prefers many medium disagreements to one big one. L1 and L2 distances (or equivalently the L1/L2 norms of the differences between a pair of images) are the most commonly used special cases of a <a href="http://planetmath.org/vectorpnorm">p-norm</a>.</p>
+
+<p><a name='knn'></a></p>
+
+<h3>k - Nearest Neighbor Classifier</h3>
+
+<p>You may have noticed that it is strange to only use the label of the nearest image when we wish to make a prediction. Indeed, it is almost always the case that one can do better by using what&#39;s called a <strong>k-Nearest Neighbor Classifier</strong>. The idea is very simple: instead of finding the single closest image in the training set, we will find the top <strong>k</strong> closest images, and have them vote on the label of the test image. In particular, when <em>k = 1</em>, we recover the Nearest Neighbor classifier. Intuitively, higher values of <strong>k</strong> have a smoothing effect that makes the classifier more resistant to outliers:</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/knn.jpeg">
+  <div class="figcaption">An example of the difference between Nearest Neighbor and a 5-Nearest Neighbor classifier, using 2-dimensional points and 3 classes (red, blue, green). The colored regions show the <b>decision boundaries</b> induced by the classifier with an L2 distance. The white regions show points that are ambiguously classified (i.e. class votes are tied for at least two classes). Notice that in the case of a NN classifier, outlier datapoints (e.g. green point in the middle of a cloud of blue points) create small islands of likely incorrect predictions, while the 5-NN classifier smooths over these irregularities, likely leading to better <b>generalization</b> on the test data (not shown).</div>
+</div>
+
+<p>In practice, you will almost always want to use k-Nearest Neighbor. But what value of <em>k</em> should you use? We turn to this problem next.</p>
+
+<p><a name='val'></a></p>
+
+<h3>Validation sets for Hyperparameter tuning</h3>
+
+<p>The k-nearest neighbor classifier requires a setting for <em>k</em>. But what number works best? Additionally, we saw that there are many different distance functions we could have used: L1 norm, L2 norm, there are many other choices we didn&#39;t even consider (e.g. dot products). These choices are called <strong>hyperparameters</strong> and they come up very often in the design of many Machine Learning algorithms that learn from data. It&#39;s often not obvious what values/settings one should choose.</p>
+
+<p>You might be tempted to suggest that we should try out many different values and see what works best. That is a fine idea and that&#39;s indeed what we will do, but this must be done very carefully. In particular, <strong>we cannot use the test set for the purpose of tweaking hyperparameters</strong>. Whenever you&#39;re designing Machine Learning algorithms, you should think of the test set as a very precious resource that should ideally never be touched until one time at the very end. Otherwise, the very real danger is that you may tune your hyperparameters to work well on the test set, but if you were to deploy your model you could see a significantly reduced performance. In practice, we would say that you <strong>overfit</strong> to the test set. Another way of looking at it is that if you tune your hyperparameters on the test set, you are effectively using the test set as the training set, and therefore the performance you achieve on it will be too optimistic with respect to what you might actually observe when you deploy your model. But if you only use the test set once at end, it remains a good proxy for measuring the <strong>generalization</strong> of your classifier (we will see much more discussion surrounding generalization later in the class).</p>
+
+<blockquote>
+<p>Evaluate on the test set only a single time, at the very end.</p>
+</blockquote>
+
+<p>Luckily, there is a correct way of tuning the hyperparameters and it does not touch the test set at all. The idea is to split our training set in two: a slightly smaller training set, and what we call a <strong>validation set</strong>. Using CIFAR-10 as an example, we could for example use 49,000 of the training images for training, and leave 1,000 aside for validation. This validation set is essentially used as a fake test set to tune the hyper-parameters.</p>
+
+<p>Here is what this might look like in the case of CIFAR-10:</p>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
+<span class="c"># recall Xtr_rows is 50,000 x 3072 matrix</span>
+<span class="n">Xval_rows</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">1000</span><span class="p">,</span> <span class="p">:]</span> <span class="c"># take first 1000 for validation</span>
+<span class="n">Yval</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[</span><span class="mi">1000</span><span class="p">:,</span> <span class="p">:]</span> <span class="c"># keep last 49,000 for train</span>
+<span class="n">Ytr</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
+
+<span class="c"># find hyperparameters that work best on the validation set</span>
+<span class="n">validation_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]:</span>
+
+  <span class="c"># use a particular value of k and evaluation on validation data</span>
+  <span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span>
+  <span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span>
+  <span class="c"># here we assume a modified NearestNeighbor class that can take a k as input</span>
+  <span class="n">Yval_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xval_rows</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">)</span>
+  <span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yval_predict</span> <span class="o">==</span> <span class="n">Yval</span><span class="p">)</span>
+  <span class="k">print</span> <span class="s">&#39;accuracy: </span><span class="si">%f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">acc</span><span class="p">,)</span>
+
+  <span class="c"># keep track of what works on the validation set</span>
+  <span class="n">validation_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span>
+</code></pre></div>
+<p>By the end of this procedure, we could plot a graph that shows which values of <em>k</em> work best. We would then stick with this value and evaluate once on the actual test set.</p>
+
+<blockquote>
+<p>Split your training set into training set and a validation set. Use validation set to tune all hyperparameters. At the end run a single time on the test set and report performance.</p>
+</blockquote>
+
+<p><strong>Cross-validation</strong>.
+In cases where the size of your training data (and therefore also the validation data) might be small, people sometimes use a more sophisticated technique for hyperparameter tuning called <strong>cross-validation</strong>. Working with our previous example, the idea is that instead of arbitrarily picking the first 1000 datapoints to be the validation set and rest training set, you can get a better and less noisy estimate of how well a certain value of <em>k</em> works by iterating over different validation sets and averaging the performance across these. For example, in 5-fold cross-validation, we would split the training data into 5 equal folds, use 4 of them for training, and 1 for validation. We would then iterate over which fold is the validation fold, evaluate the performance, and finally average the performance across the different folds.</p>
+
+<div class="fig figleft fighighlight">
+  <img src="/assets/cvplot.png">
+  <div class="figcaption">Example of a 5-fold cross-validation run for the parameter <b>k</b>. For each value of <b>k</b> we train on 4 folds and evaluate on the 5th. Hence, for each <b>k</b> we receive 5 accuracies on the validation fold (accuracy is the y-axis, each result is a point). The trend line is drawn through the average of the results for each <b>k</b> and the error bars indicate the standard deviation. Note that in this particular case, the cross-validation suggests that a value of about <b>k</b> = 7 works best on this particular dataset (corresponding to the peak in the plot). If we used more than 5 folds, we might expect to see a smoother (i.e. less noisy) curve.</div>
+  <div style="clear:both"></div>
+</div>
+
+<p><strong>In practice</strong>. In practice, people prefer to avoid cross-validation in favor of having a single validation split, since cross-validation can be computationally expensive. The splits people tend to use is between 50%-90% of the training data for training and rest for validation. However, this depends on multiple factors: For example if the number of hyperparameters is large you may prefer to use bigger validation splits. If the number of examples in the validation set is small (perhaps only a few hundred or so), it is safer to use cross-validation. Typical number of folds you can see in practice would be 3-fold, 5-fold or 10-fold cross-validation.</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/crossval.jpeg">
+  <div class="figcaption">Common data splits. A training and test set is given. The training set is split into folds (for example 5 folds here). The folds 1-4 become the training set. One fold (e.g. fold 5 here in yellow) is denoted as the Validation fold and is used to tune the hyperparameters. Cross-validation goes a step further iterates over the choice of which fold is the validation fold, separately from 1-5. This would be referred to as 5-fold cross-validation. In the very end once the model is trained and all the best hyperparameters were determined, the model is evaluated a single time on the test data (red).</div>
+</div>
+
+<p><a name='procon'></a>
+<strong>Pros and Cons of Nearest Neighbor classifier.</strong></p>
+
+<p>It is worth considering some advantages and drawbacks of the Nearest Neighbor classifier. Clearly, one advantage is that it is very simple to implement and understand. Additionally, the classifier takes no time to train, since all that is required is to store and possibly index the training data. However, we pay that computational cost at test time, since classifying a test example requires a comparison to every single training example. This is backwards, since in practice we often care about the test time efficiency much more than the efficiency at training time. In fact, the deep neural networks we will develop later in this class shift this tradeoff to the other extreme: They are very expensive to train, but once the training is finished it is very cheap to classify a new test example. This mode of operation is much more desirable in practice.</p>
+
+<p>As an aside, the computational complexity of the Nearest Neighbor classifier is an active area of research, and several <strong>Approximate Nearest Neighbor</strong> (ANN) algorithms and libraries exist that can accelerate the nearest neighbor lookup in a dataset (e.g. <a href="http://www.cs.ubc.ca/research/flann/">FLANN</a>). These algorithms allow one to trade off the correctness of the nearest neighbor retrieval with its space/time complexity during retrieval, and usually rely on a pre-processing/indexing stage that involves building a kdtree, or running the k-means algorithm.</p>
+
+<p>The Nearest Neighbor Classifier may sometimes be a good choice in some settings (especially if the data is low-dimensional), but it is rarely appropriate for use in practical image classification settings. One problem is that images are high-dimensional objects (i.e. they often contain many pixels), and distances over high-dimensional spaces can be very counter-intuitive. The image below illustrates the point that the pixel-based L2 similarities we developed above are very different from perceptual similarities:</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/samenorm.png">
+  <div class="figcaption">Pixel-based distances on high-dimensional data (and images especially) can be very unintuitive. An original image (left) and three other images next to it that are all equally far away from it based on L2 pixel distance. Clearly, the pixel-wise distance does not correspond at all to perceptual or semantic similarity.</div>
+</div>
+
+<p>Here is one more visualization to convince you that using pixel differences to compare images is inadequate. We can use a visualization technique called <a href="http://homepage.tudelft.nl/19j49/t-SNE.html">t-SNE</a> to take the CIFAR-10 images and embed them in two dimensions so that their (local) pairwise distances are best preserved. In this visualization, images that are shown nearby are considered to be very near according to the L2 pixelwise distance we developed above:</p>
+
+<div class="fig figcenter fighighlight">
+  <img src="/assets/pixels_embed_cifar10.jpg">
+  <div class="figcaption">CIFAR-10 images embedded in two dimensions with t-SNE. Images that are nearby on this image are considered to be close based on the L2 pixel distance. Notice the strong effect of background rather than semantic class differences. Click <a href="/assets/pixels_embed_cifar10_big.jpg">here</a> for a bigger version of this visualization.</div>
+</div>
+
+<p>In particular, note that images that are nearby each other are much more a function of the general color distribution of the images, or the type of background rather than their semantic identity. For example, a dog can be seen very near a frog since both happen to be on white background. Ideally we would like images of all of the 10 classes to form their own clusters, so that images of the same class are nearby to each other regardless of irrelevant characteristics and variations (such as the background). However, to get this property we will have to go beyond raw pixels.</p>
+
+<p><a name='summary'></a></p>
+
+<h3>Summary</h3>
+
+<p>In summary:</p>
+
+<ul>
+<li>We introduced the problem of <strong>Image Classification</strong>, in which we are given a set of images that are all labeled with a single category. We are then asked to predict these categories for a novel set of test images and measure the accuracy of the predictions.</li>
+<li>We introduced a simple classifier called the <strong>Nearest Neighbor classifier</strong>. We saw that there are multiple hyper-parameters (such as value of k, or the type of distance used to compare examples) that are associated with this classifier and that there was no obvious way of choosing them.</li>
+<li> We saw that the correct way to set these hyperparameters is to split your training data into two: a training set and a fake test set, which we call <strong>validation set</strong>. We try different hyperparameter values and keep the values that lead to the best performance on the validation set.</li>
+<li>If the lack of training data is a concern, we discussed a procedure called <strong>cross-validation</strong>, which can help reduce noise in estimating which hyperparameters work best.</li>
+<li>Once the best hyperparameters are found, we fix them and perform a single <strong>evaluation</strong> on the actual test set.</li>
+<li>We saw that Nearest Neighbor can get us about 40% accuracy on CIFAR-10. It is simple to implement but requires us to store the entire training set and it is expensive to evaluate on a test image. </li>
+<li>Finally, we saw that the use of L1 or L2 distances on raw pixel values is not adequate since the distances correlate more strongly with backgrounds and color distributions of images than with their semantic content.</li>
+</ul>
+
+<p>In next lectures we will embark on addressing these challenges and eventually arrive at solutions that give 90% accuracies, allow us to completely discard the training set once learning is complete, and they will allow us to evaluate a test image in less than a millisecond.</p>
+
+<p><a name='summaryapply'></a></p>
+
+<h3>Summary: Applying kNN in practice</h3>
+
+<p>If you wish to apply kNN in practice (hopefully not on images, or perhaps as only a baseline) proceed as follows:</p>
+
+<ol>
+<li>Preprocess your data: Normalize the features in your data (e.g. one pixel in images) to have zero mean and unit variance. We will cover this in more detail in later sections, and chose not to cover data normalization in this section because pixels in images are usually homogeneous and do not exhibit widely different distributions, alleviating the need for data normalization.</li>
+<li>If your data is very high-dimensional, consider using a dimensionality reduction technique such as PCA (<a href="http://en.wikipedia.org/wiki/Principal_component_analysis">wiki ref</a>, <a href="http://cs229.stanford.edu/notes/cs229-notes10.pdf">CS229ref</a>, <a href="http://www.bigdataexaminer.com/understanding-dimensionality-reduction-principal-component-analysis-and-singular-value-decomposition/">blog ref</a>) or even <a href="http://scikit-learn.org/stable/modules/random_projection.html">Random Projections</a>.</li>
+<li>Split your training data randomly into train/val splits. As a rule of thumb, between 70-90% of your data usually goes to the train split. This setting depends on how many hyperparameters you have and how much of an influence you expect them to have. If there are many hyperparameters to estimate, you should err on the side of having larger validation set to estimate them effectively. If you are concerned about the size of your validation data, it is best to split the training data into folds and perform cross-validation. If you can afford the computational budget it is always safer to go with cross-validation (the more folds the better, but more expensive).</li>
+<li>Train and evaluate the kNN classifier on the validation data (for all folds, if doing cross-validation) for many choices of <strong>k</strong> (e.g. the more the better) and across different distance types (L1 and L2 are good candidates)</li>
+<li>If your kNN classifier is running too long, consider using an Approximate Nearest Neighbor library (e.g. <a href="http://www.cs.ubc.ca/research/flann/">FLANN</a>) to accelerate the retrieval (at cost of some accuracy).</li>
+<li>Take note of the hyperparameters that gave the best results. There is a question of whether you should use the full training set with the best hyperparameters, since the optimal hyperparameters might change if you were to fold the validation data into your training set (since the size of the data would be larger). In practice it is cleaner to not use the validation data in the final classifier and consider it to be <em>burned</em> on estimating the hyperparameters. Evaluate the best model on the test set. Report the test set accuracy and declare the result to be the performance of the kNN classifier on your data.</li>
+</ol>
+
+<p><a name='reading'></a></p>
+
+<h4>Further Reading</h4>
+
+<p>Here are some (optional) links you may find interesting for further reading:</p>
+
+<ul>
+<li><p><a href="http://homes.cs.washington.edu/%7Epedrod/papers/cacm12.pdf">A Few Useful Things to Know about Machine Learning</a>, where especially section 6 is related but the whole paper is a warmly recommended reading.</p></li>
+<li><p><a href="http://people.csail.mit.edu/torralba/shortCourseRLOC/index.html">Recognizing and Learning Object Categories</a>, a short course of object categorization at ICCV 2005.</p></li>
+</ul>
+
+  </article>
+
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <div class="footer-col-1 column">
+      <ul>
+        
+        <li>
+          <a href="https://github.com/cs231n">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">cs231n</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/cs231n">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">cs231n</span>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:karpathy@cs.stanford.edu">karpathy@cs.stanford.edu</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+        
+    </div>
+
+    <div class="footer-col-3 column">
+      
+    </div>
+
+  </div>
+
+</footer>
+
+
+</html>
