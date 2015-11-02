@@ -70,3 +70,23 @@ function tieUpHeightInputFunction() {
 	var fs = parseInt($('#tieUpHeightInput').val());
 	alert("tieup height input "+fs);
 }
+
+function warpPatternButtonFunction() {
+	alert("warp Pattern button used");
+}
+
+function weftPatternButtonFunction() {
+	alert("weft Pattern button used");
+}
+
+function warpColorButtonFunction() {
+	alert("warp Color button used");
+}
+
+function weftColorButtonFunction() {
+	alert("weft Color button used");
+}
+
+function tieUpButtonFunction() {
+	alert("tieUp button used");
+}
