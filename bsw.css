@@ -14,6 +14,13 @@
 	font-size: 200%;
 	width: 100px;
 	height: 110px;
+	background-image:none; 
+	background-color: #cccccc;
+}
+
+#helpButton:hover  { 
+	background-image:none; 
+	background-color: #aaaaaa;
 }
 
 #loadSavePanel {
@@ -28,6 +35,16 @@
 	width: 100px;
 	height: 40px;
 	font-size: 130%;
+	//border: 1px;
+	//border-style: solid;
+	//border-color: #999999;
+	//background-image:none; 
+	//background-color: #dddddd;
+}
+
+#saveButton:hover  { 
+	//background-image:none; 
+	//background-color: #cccccc;
 }
 
 #loadDraftDropdownButton {
@@ -42,6 +59,16 @@
 	width: 100px;
 	height: 40px;
 	font-size: 130%;
+	//border: 1px;
+	//border-style: solid;
+	//border-color: #999999;
+	//background-image:none; 
+	//background-color: #dddddd;
+}
+
+#XdeleteButton:hover  { 
+	//background-image:none; 
+	//background-color: #cccccc;
 }
 
 #saveAsSpan {
