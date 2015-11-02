@@ -44,7 +44,7 @@
 
 #saveButton:hover  { 
 	//background-image:none; 
-	//background-color: #cccccc;
+	background-color: #cccccc;
 }
 
 #loadDraftDropdownButton {
@@ -52,6 +52,11 @@
 	width: 180px;
 	height: 40px;
 	font-size: 130%;
+}
+
+#loadDraftDropdownButton:hover {
+	//background-image:none; 
+	background-color: #cccccc;
 }
 
 #deleteButton {
@@ -66,9 +71,9 @@
 	//background-color: #dddddd;
 }
 
-#XdeleteButton:hover  { 
+#deleteButton:hover  { 
 	//background-image:none; 
-	//background-color: #cccccc;
+	background-color: #cccccc;
 }
 
 #saveAsSpan {
