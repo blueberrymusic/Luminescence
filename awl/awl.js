@@ -82,7 +82,7 @@ function pushList(list) {
 
 function popList() {
 	if (stackIsEmpty()) {
-		showAlert("ERROR: popList: Cannot pop empty stack.");
+		showAlert("popList: Cannot pop empty stack.");
 		return;
 	}
 	var top = AATheStack.pop();
@@ -110,6 +110,7 @@ function stackIsEmpty() {
 function showAlert(msg) {
 	alert("ERROR: "+msg+" Read so far: "+ParsedSoFar);
 	Alerted = true;
+	throw new Error(); // stop processing, let user try again
 }
 
 function stackToText() {
