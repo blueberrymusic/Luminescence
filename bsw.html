@@ -174,8 +174,8 @@
 	<!-- spacer -->
 	<div class="row"><div class="col-sm-10"><p> </p></div></div>
 
-	<div class="row"><div class="col-sm-10">
-	<span id="tieUpSpan">Output:</span>
+	<div class="row"><div class="col-sm-10" style="height:33px;">
+	<span id="outputSpan">Output:</span>
 	</div></div>
 
 	<div class="row"><div class="col-sm-12">
@@ -232,22 +232,26 @@
 
 			<!-- start of canvas section-->
 			<div class="col-sm-6">
+
 				<div class="row"><div class="col-sm-12"><p> </p></div></div>
 				<div class="row"><div class="col-sm-12"><p> </p></div></div>
 
 				<div class="row">
-					<div class="col-sm-4">
-						<span class="h4textspan">Fabric size:</span>
-<input type="number" id="fabricSizeInput" style="font-size:16px; width:50px;" min="10" max="600" onchange="fabricSizeInputFunction()">
-					</div>
-					<div class="col-sm-4">
-						<span class="h4textspan">Tie-up w:</span>
-<input type="number" id="tieUpWidthInput" style="font-size:16px; width:50px;" min="10" max="50" onchange="tieUpWidthInputFunction()">
-					</div>
-					<div class="col-sm-4">
-						<span class="h4textspan">Tie-up h:</span>
-<input type="number" id="tieUpHeightInput" style="font-size:16px; width:50px;" min="10" max="50" onchange="tieUpHeightInputFunction()">
-					</div>
+
+<div class="form-inline">
+<div class="form-group">
+    <label >Fabric size:</label>
+	<input type="number" id="fabricSizeInput" min="10" max="600" onchange="fabricSizeInputFunction()">
+  </div>
+  <div class="form-group">
+    <label style="margin-left:30px;">Tie-up Width:</label>
+	<input type="number" id="tieUpWidthInput" min="10" max="50" onchange="tieUpWidthInputFunction()">
+  </div>
+  <div class="form-group">
+    <label style="margin-left:20px;">Tie-up Height:</label>
+	<input type="number" id="tieUpHeightInput" min="10" max="50" onchange="tieUpHeightInputFunction()">
+  </div>
+</div>
 				</div> <!-- row -->
 				<div class="row">
 					<div class="col-sm-12"><p style="margin:10px 0px 0px 0px;"> </p></div>

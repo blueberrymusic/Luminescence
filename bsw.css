@@ -93,7 +93,15 @@
 	font-weight: bold; 
 	text-align: right;
 	padding: 0px;
-	border: 40px 40px 40px 400px;
+	border: 0px;
+}
+
+#outputSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 0px;
 }
 
 #warpPatternAWL {
@@ -217,3 +225,29 @@
 	background-repeat: no-repeat;
 	background-image: url(images/BG-AWL-Output.gif); 
 }
+
+#fabricSizeInput {
+	font-size:16px; 
+	width: 80px; 
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
+#tieUpWidthInput {
+	font-size:16px; 
+	width: 80px; 
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
+#tieUpHeightInput {
+	font-size:16px; 
+	width: 80px; 
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;

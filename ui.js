@@ -55,3 +55,18 @@ function draftNameInputFunction() {
 function loadDraftButtonFunction() {
 	alert("load draft button used");
 }
+
+function fabricSizeInputFunction() {
+	var fs = parseInt($('#fabricSizeInput').val());
+	alert("fabric size input "+fs);
+}
+
+function tieUpWidthInputFunction() {
+	var fs = parseInt($('#tieUpWidthInput').val());
+	alert("tieup width input "+fs);
+}
+
+function tieUpHeightInputFunction() {
+	var fs = parseInt($('#tieUpHeightInput').val());
+	alert("tieup height input "+fs);
+}
