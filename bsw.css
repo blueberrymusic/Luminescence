@@ -30,6 +30,13 @@
 	font-size: 130%;
 }
 
+#loadDraftDropdownButton {
+	margin: 10px 30px 0px 0px;  // TRBL
+	width: 180px;
+	height: 40px;
+	font-size: 130%;
+}
+
 #deleteButton {
 	margin: 10px 30px 0px 0px;  // TRBL
 	width: 100px;
@@ -50,13 +57,11 @@
 	padding: 0px 5px 0px 5px;
 }
 
-#loadDraftDropdown {
+#loadDraftButton {
+	margin: 10px 30px 0px 0px;  // TRBL
+	width: 100px;
+	height: 40px;
 	font-size: 130%;
-	margin-top: 10px;
-}
-
-#rightClickSpan {
-	text-align: right;
 }
 
 .h4textspan {

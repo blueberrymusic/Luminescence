@@ -5,11 +5,9 @@
 
 <!-- The order matters! My stuff, then jQuery, the Bootstrap -->
 
-<!-- My local files come first -->
+<!-- My local css comes first -->
 <link rel="stylesheet" type="text/css" href="bsw.css">
-<script src="ui.js"> </script>
-<script src="awl/awl.js"> </script>
-<script src="awl/colors.js"> </script>
+
 <!-- 
 <script src="presets.js"> </script>
 <script src="drawing.js"> </script>
@@ -17,6 +15,10 @@
 
 <!-- jQuery must follow my style and precede Bootstrap -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="ui.js"> </script>
+<script src="awl/awl.js"> </script>
+<script src="awl/colors.js"> </script>
 
 <!-- Bootstrap stuff -->
 <!-- Latest compiled and minified CSS -->
@@ -50,27 +52,33 @@
 						<button type="button" class="btn btn-block btn-success" id="saveButton" onclick="saveButtonFunction()">Save</button>
 					</div>  <!-- column 3 -->
 					<span class="col-sm-2" id="saveAsSpan">Name:</span>
-					<input type="text" class="col-sm-6 input-group" id="saveAsInput" ></input>
+					<input type="text" class="col-sm-6 input-group" id="saveAsInput" onchange="draftNameInputFunction()" ></input>
 				</div> <!-- row -->
 
 				<div class="row">
 					<div class="col-sm-9">
-						<div class="dropdown">
-							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="loadDraftDropdown">Load Draft <span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<!-- this list gets rewritten dynamically on page load and after saves -->
-								<li class="dropdown-header">Your drafts</li>
-								<li><a href="#">apples</a></li>
-								<li><a href="#">bbb</a></li>
-								<li><a href="#">cccccc</a></li>
-								<li class="divider"></li>
-								<li class="dropdown-header">Demos</li>
-								<li><a href="#">AAAAAAA</a></li>
-								<li><a href="#">BBBBBBBBBBB</a></li>
-								<li><a href="#">CCCCCCCCCCCCCCC</a></li>
-								<li><a href="#">DDDDDDDDDDDDDDDDDD D D D D D</a></li>
-							</ul>
-						</div> <!-- dropdown -->
+
+
+<div class="btn-group" id="loadDraftButtonGroup">
+   
+   <button type="button" class="btn btn-default dropdown-toggle" id="loadDraftDropdownButton" data-toggle="dropdown">
+      Load Draft  
+      <span class = "caret"></span>
+   </button>
+   
+   <ul class = "dropdown-menu" id="loadDraftMenuItems" role = "menu">
+      <li><a href = "#">Action</a></li>
+      <li><a href = "#">Another action</a></li>
+      <li><a href = "#">Something else here</a></li>
+      
+      <li class = "divider"></li>
+      <li><a href = "#">Separated link</a></li>
+   </ul>
+</div>
+
+
+
+
 					</div> <!-- column 9 -->
 					<div class="col-sm-3">
 						<button type="button" class="btn btn-block btn-warning" id="deleteButton" onclick="deleteButtonFunction()">Delete</button>
