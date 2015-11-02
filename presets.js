@@ -1,8 +1,29 @@
 "use strict";
 
+var Presets;
+
+function makePresets() {
+	Presets = [];
+	for (var i=0; i<RawPresets.length; i++) {
+		var preset = RawPresets[i];
+		var draft = [];
+		draft.push({ "field": "Name",         "val": preset[0] });
+		draft.push({ "field": "WarpAWL",      "val": preset[1] });
+		draft.push({ "field": "WeftAWL",      "val": preset[2] });
+		draft.push({ "field": "WarpColorAWL", "val": preset[3] });
+		draft.push({ "field": "WeftColorAWL", "val": preset[4] });
+		draft.push({ "field": "TieUpAWL",     "val": preset[5] });
+		draft.push({ "field": "FabricSize",   "val": preset[6] });
+		draft.push({ "field": "TieUpWidth",   "val": preset[7] });
+		draft.push({ "field": "TieUpHeight",  "val": preset[8] });
+		var JSONDraft = JSON.stringify(draft);
+		Presets.push(JSONDraft);
+	}
+}
+
 // name, warp-pattern, weft-pattern, warp-colors, weft-colors, tie-up
-var Presets = [
-[ "Simple Twill 
+var RawPresets = [
+[ "Simple Twill",
 "0 1 / 7 updown",
 "0 1 / 7 updown",
 "DeepSkyBlue", "PowderBlue", 
@@ -10,7 +31,8 @@ var Presets = [
 120, 8, 8],
 
 [ "Surveillance", 
-"3 / 4 > 0 / 7 < 1 * ,", "3 / 4 > 0 / 7 < 2 * ,", 
+"3 / 4 > 0 / 7 < 1 * ,", 
+"3 / 4 > 0 / 7 < 2 * ,", 
 "DarkSalmon", "DarkBlue", 
 "0 0 1 1 0 0 1 1 / 1 / 8 t<<",
 120, 8, 8],
@@ -224,8 +246,6 @@ var Presets = [
 "B 22 K 2 B 2 K 2 B 2 K 16 G 16 K 2 G 16 K 16 B 16 K 2 B 2 tartan",
 "1 1 0 0 / 1 / 4 t<<",
 300, 4, 4],
-
-
 ];
 
 

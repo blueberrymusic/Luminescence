@@ -6,6 +6,9 @@ var WarpColorOutput = "";
 var WeftColorOutput = "";
 var TieUpOutput = "";
 
+var LocalStorageAvailable = false;
+var DraftName = "";
+
 var SelectedOutputRadioButton = "WarpPatternRadio";
 
 ///////////////////////////////////////////////////////////////////////////
@@ -15,9 +18,11 @@ var SelectedOutputRadioButton = "WarpPatternRadio";
 // on page load
 $(function(){
 
+	makePresets();
 	setupRemoveBGPrompts();
 	setupOutputRadioButtons();
 	buildLoadDraftDropdown();
+	LocalStorageAvailable = localStorageTest();
 
 	$('#fabricSizeInput').val(FabricSize);
 	$('#tieUpWidthInput').val(TieUpWidth);
@@ -63,23 +68,17 @@ function setupOutputRadioButtons() {
 	}); 
 }
 
-// Build responders to items in the load draft dropdown. I couldn't figure out how to get
-// the chosen element back using Boostrap's Dropdown Events model. So instead we
-// go around the back door and respond directly when the elements receive a click.
-// Thank you (yet again) Stack Overflow! So easy once you know exactly what to do.
-// http://stackoverflow.com/questions/17127572/bootstrap-dropdown-get-value-of-selected-item
-function buildLoadDraftDropdown() {
-	var loadMenu = $('#loadDraftMenuItems');
-	loadMenu.find('li').remove().end();
-	loadMenu.append("<li><a href='#'>"+"item 1"+"</a></li>");
-	loadMenu.append("<li><a href='#'>"+"item 2"+"</a></li>");
-	loadMenu.append("<li><a href='#'>"+"item 3"+"</a></li>");
-	$("#loadDraftMenuItems > li > a").click(function(){
-		var selText = $(this).text();
-		alert("got "+selText);
-		// assign result to parent
-		//$(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
-	});
+
+///////////////////////////////////////////////////////////////////////////
+// localStorage Utilities
+///////////////////////////////////////////////////////////////////////////
+
+function localStorageTest() {
+  try {
+    return 'localStorage' in window && window['localStorage'] !== null;
+  } catch(e){
+    return false;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -114,33 +113,13 @@ function showChosenOutput(choice) {
 	$('#AWLOutput').val(outString);
 }
 
-
 ///////////////////////////////////////////////////////////////////////////
-// UI element responders
+// Button input element responders
 ///////////////////////////////////////////////////////////////////////////
 	
 function helpButtonFunction() {
 	alert("help button");
 	//window.open("http://www.glassner.com");
-}
-function saveButtonFunction() {
-	alert("save Button");
-}
-
-function loadButtonFunction() {
-	alert("load Button");
-}
-
-function deleteButtonFunction() {
-	alert("delete Button");
-}
-
-function draftNameInputFunction() {
-	alert("name changed");
-}
-
-function loadDraftButtonFunction() {
-	alert("load draft button used");
 }
 
 function fabricSizeInputFunction() {
@@ -191,4 +170,106 @@ function tieUpButtonFunction() {
 	selectRadioButton("#TieUpRadio");
 	drawCanvas();
 	//alert("tieUp button used");
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Draft saving and loading 
+///////////////////////////////////////////////////////////////////////////
+
+function saveButtonFunction() {
+	alert("save Button");
+}
+
+function deleteButtonFunction() {
+	alert("delete Button");
+}
+
+function draftNameInputFunction() {
+	var target = $("input[name='draftNameInput']");
+	var name = target.val();
+	name = name.trim();
+	name = name.replace(/\s\s+/g, ' '); // all whitespace becomes one space
+	name = name.replace(/\s/g, '-'); // all spaces become one dash
+	DraftName = name;
+	target.val(DraftName);
+}
+
+function buildLoadDraftDropdown() {
+	var loadMenu = $('#loadDraftMenuItems');
+	// clear the menu
+	loadMenu.find('li').remove().end();
+	//loadMenu.append("<li class='dropdown-header'>Dropdown header 1</li>");
+	//loadMenu.append("<li><a href='#'>"+"item 1"+"</a></li>");
+	//loadMenu.append("<li class='divider'></li>");
+
+	if (LocalStorageAvailable) {
+		loadMenu.append("<li class='dropdown-header'>Local Saves 1</li>");
+ 		for (var i = 0; i < localStorage.length; i++){
+			var key = localStorage.key(i);
+			var value = localStorage.getItem(key); // or localStorage[key];
+			loadMenu.append("<li><a href='#'>"+key+"</a></li>");
+		}
+		loadMenu.append("<li class='divider'></li>");
+	}
+	loadMenu.append("<li class='dropdown-header'>Presets</li>");
+	for (var i=0; i<Presets.length; i++) {
+		var psi = Presets[i];
+		var text = JSON.parse(psi);
+		for (var j=0; j<text.length; j++) {
+			var field = text[j].field;
+			var val = text[j].val;
+			if (field === "Name") {
+ 				loadMenu.append("<li><a href='#'>"+val+"</a></li>");
+			}
+		}
+	}
+
+	// I couldn't figure out how to respond to the drop-down selection event and get access
+	// to the chosen item using Boostrap's Dropdown Events model. So instead we
+	// attach a responder that sends the name of the selection to a handler.
+	// Thank you (yet again) Stack Overflow! So easy once you know exactly what to do.
+	// http://stackoverflow.com/questions/17127572/bootstrap-dropdown-get-value-of-selected-item
+	$("#loadDraftMenuItems > li > a").click(function(){
+		var selText = $(this).text();
+		loadDraft(selText);
+		//alert("got "+selText);
+	});
+}
+
+function loadDraft(draftName) {
+	alert("loading "+draftName);
+}
+
+function saveDraftButtonFunction() {
+	// hand-code everything for now. 
+	// see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+
+	if (DraftName === "") {
+		alert("cannot save a draft with no name!");
+		return;
+	}
+	var draft = [];
+	draft.push({ "WarpAWL": $('#warpPatternAWL').val()});
+	draft.push({ "WeftAWL": $('#weftPatternAWL').val()});
+	draft.push({ "WarpColorAWL": $('#warpColorAWL').val()});
+	draft.push({ "WeftColorAWL": $('#weftColorAWL').val()});
+	draft.push({ "TieUpAWL": $('#tieUpAWL').val()});
+	draft.push({ "TieUpWidth": TieUpWidth });
+	draft.push({ "TieUpHeight": TieUpHeight });
+	draft.push({ "FabricSize": FabricSize });
+
+	var JSONDraft = JSON.stringify(draft);
+	try {
+		localStorage.setItem(DraftName, JSONDraft);
+	}
+	catch (e) {
+		alert("Sorry! You're out of local storage space. Try deleting some drafts to make room for new ones.");
+	}
+
+	rebuildDraftSelector();
+
+	// This will put a file in Downloads, but with some random name
+	//var canvas = document.getElementById("myCanvas");
+	//var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  
+	//window.location.href=image; // it will save locally
 }
