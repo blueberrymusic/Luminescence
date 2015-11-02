@@ -139,17 +139,18 @@
 #warpPatternAWL {
 	width: 460px;
 	height: 80px;
-	padding: 0px;
+	padding: 5px;
 	border: 3px solid #cccccc;
-	font-size: 16pt;
+	font-size: 12pt;
 	resize: none;
 	background-position: bottom right;
 	background-repeat: no-repeat;
 	background-image: url(images/BG-Warp-Pattern-Input.gif); 
 }
 
-#warpPatternButton  {
+#warpPatternButton {
 	border: none;
+	outline: none;
 	width: 55px;
 	height: 80px;
 	margin: 0px 0px 0px -8px;
@@ -161,9 +162,9 @@
 #weftPatternAWL {
 	width: 460px;
 	height: 80px;
-	padding: 0px;
+	padding: 4px;
 	border: 3px solid #cccccc;
-	font-size: 16pt;
+	font-size: 12pt;
 	resize: none;
 	background-position: bottom right;
 	background-repeat: no-repeat;
@@ -172,6 +173,7 @@
 
 #weftPatternButton  {
 	border: none;
+	outline: none;
 	width: 55px;
 	height: 80px;
 	margin: 0px 0px 0px -8px;
@@ -183,9 +185,9 @@
 #warpColorAWL {
 	width: 460px;
 	height: 80px;
-	padding: 0px;
+	padding: 5px;
 	border: 3px solid #cccccc;
-	font-size: 16pt;
+	font-size: 12pt;
 	resize: none;
 	background-position: bottom right;
 	background-repeat: no-repeat;
@@ -194,6 +196,7 @@
 
 #warpColorButton  {
 	border: none;
+	outline: none;
 	width: 55px;
 	height: 80px;
 	margin: 0px 0px 0px -8px;
@@ -205,9 +208,9 @@
 #weftColorAWL {
 	width: 460px;
 	height: 80px;
-	padding: 0px;
+	padding: 4px;
 	border: 3px solid #cccccc;
-	font-size: 16pt;
+	font-size: 12pt;
 	resize: none;
 	background-position: bottom right;
 	background-repeat: no-repeat;
@@ -216,6 +219,7 @@
 
 #weftColorButton  {
 	border: none;
+	outline: none;
 	width: 55px;
 	height: 80px;
 	margin: 0px 0px 0px -8px;
@@ -227,9 +231,9 @@
 #tieUpAWL {
 	width: 460px;
 	height: 80px;
-	padding: 0px;
+	padding: 5px;
 	border: 3px solid #cccccc;
-	font-size: 16pt;
+	font-size: 12pt;
 	resize: none;
 	background-position: bottom right;
 	background-repeat: no-repeat;
@@ -238,6 +242,7 @@
 
 #tieUpButton  {
 	border: none;
+	outline: none;
 	width: 55px;
 	height: 80px;
 	margin: 0px 0px 0px -8px;
@@ -249,9 +254,9 @@
 #AWLOutput {
 	width: 530px;
 	height: 80px;
-	padding: 0px;
+	padding: 5px;
 	border: 3px solid #cccccc;
-	font-size: 16pt;
+	font-size: 12pt;
 	resize: none;
 	background-position: bottom right;
 	background-repeat: no-repeat;
