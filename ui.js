@@ -3,17 +3,23 @@
 // on page load
 $(function(){
 
-// Respond to a click in the load draft dropdown. I couldn't figure out how to get
+// Build responders to items in the load draft dropdown. I couldn't figure out how to get
 // the chosen element back using Boostrap's Dropdown Events model. So instead we
 // go around the back door and respond directly when the elements receive a click.
 // Thank you (yet again) Stack Overflow! So easy once you know exactly what to do.
 // http://stackoverflow.com/questions/17127572/bootstrap-dropdown-get-value-of-selected-item
+var loadMenu = $('#loadDraftMenuItems');
+loadMenu.find('li').remove().end();
+loadMenu.append("<li><a href='#'>"+"item 1"+"</a></li>");
+loadMenu.append("<li><a href='#'>"+"item 2"+"</a></li>");
+loadMenu.append("<li><a href='#'>"+"item 3"+"</a></li>");
 $("#loadDraftMenuItems > li > a").click(function(){
 	var selText = $(this).text();
 	alert("got "+selText);
 	// assign result to parent
 	//$(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
 });
+
 
 
 });
