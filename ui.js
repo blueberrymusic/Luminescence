@@ -20,6 +20,14 @@ $("#loadDraftMenuItems > li > a").click(function(){
 	//$(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
 });
 
+$('.outputRadioButton').on('click', function(){
+    var thisID = ($(this).find('input').attr('id'));
+	if (thisID === "WarpPatternRadio") alert("was WarpPatternRadio");
+	if (thisID === "WeftPatternRadio") alert("was WeftPatternRadio");
+	if (thisID === "WarpColorRadio") alert("was WarpColorRadio");
+	if (thisID === "WeftColorRadio") alert("was WeftColorRadio");
+	if (thisID === "TieUpRadio") alert("was TieUpRadio");
+}); 
 
 
 });
