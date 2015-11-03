@@ -18,11 +18,12 @@ var SelectedOutputRadioButton = "WarpPatternRadio";
 // on page load
 $(function(){
 
+	LocalStorageAvailable = localStorageTest();
+
 	makePresets();
 	setupRemoveBGPrompts();
 	setupOutputRadioButtons();
 	buildLoadDraftDropdown();
-	LocalStorageAvailable = localStorageTest();
 
 	$('#fabricSizeInput').val(FabricSize);
 	$('#tieUpWidthInput').val(TieUpWidth);
@@ -176,10 +177,6 @@ function tieUpButtonFunction() {
 // Draft saving and loading 
 ///////////////////////////////////////////////////////////////////////////
 
-function saveButtonFunction() {
-	alert("save Button");
-}
-
 function deleteButtonFunction() {
 	alert("delete Button");
 }
@@ -189,7 +186,7 @@ function draftNameInputFunction() {
 	var name = target.val();
 	name = name.trim();
 	name = name.replace(/\s\s+/g, ' '); // all whitespace becomes one space
-	name = name.replace(/\s/g, '-'); // all spaces become one dash
+	//name = name.replace(/\s/g, '-'); // all spaces become one dash
 	DraftName = name;
 	target.val(DraftName);
 }
@@ -233,27 +230,27 @@ function buildLoadDraftDropdown() {
 
 function loadDraft(draftName) {
 	var jsonData = "";
-	var foundit = false;
+	var foundIt = false;
 	if (LocalStorageAvailable) {
- 		for (var i = 0; i < localStorage.length; i++){
+ 		for (var i = 0; (i < localStorage.length) && (!foundIt); i++){
 			var key = localStorage.key(i);
 			if (key === draftName) {
 				jsonData = localStorage.getItem(key); // or localStorage[key];
-				foundit = true;
+				foundIt = true;
 			}
 		}
 	}
-	if (!foundit) {
-		for (var i=0; i<Presets.length; i++) {
+	if (!foundIt) {
+		for (var i=0; (i<Presets.length) && (!foundIt); i++) {
 			var psi = Presets[i];
 			var name = psi[0];
 			if (name === draftName) {
 				jsonData = psi[1];
-				foundit = true;
+				foundIt = true;
 			}
 		}
 	}
-	if (!foundit) {
+	if (!foundIt) {
 		alert("I couldn't find draft "+draftName+" to load. Sorry!");
 		return;
 	}
@@ -291,28 +288,37 @@ function loadDraft(draftName) {
 			return;
 		}
 	}
+	DraftName = draftName;
+	$("input[name='draftNameInput']").val(DraftName);
 	drawCanvas();
 }
 
-function saveDraftButtonFunction() {
-	// hand-code everything for now. 
-	// see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
-
+function saveButtonFunction() {
 	if (DraftName === "") {
-		alert("cannot save a draft with no name!");
+		alert("Please provide a name for the draft, then try saving again");
 		return;
 	}
-	var draft = [];
-	draft.push({ "WarpAWL": $('#warpPatternAWL').val()});
-	draft.push({ "WeftAWL": $('#weftPatternAWL').val()});
-	draft.push({ "WarpColorAWL": $('#warpColorAWL').val()});
-	draft.push({ "WeftColorAWL": $('#weftColorAWL').val()});
-	draft.push({ "TieUpAWL": $('#tieUpAWL').val()});
-	draft.push({ "TieUpWidth": TieUpWidth });
-	draft.push({ "TieUpHeight": TieUpHeight });
-	draft.push({ "FabricSize": FabricSize });
 
+	var warpPatternString = $('#warpPatternAWL').val();
+	var weftPatternString = $('#weftPatternAWL').val();
+	var warpColorString = $('#warpColorAWL').val();
+	var weftColorString = $('#weftColorAWL').val();
+	var tieUpString = $('#tieUpAWL').val();
+	var fabricSizeString = $('#fabricSizeInput').val();
+	var tieUpWidthString = $('#tieUpWidthInput').val();
+	var tieUpHeightString = $('#tieUpHeightInput').val();
+
+	var draft = [];
+	draft.push({ "field": "WarpAWL",      "value": warpPatternString });
+	draft.push({ "field": "WeftAWL",      "value": weftPatternString });
+	draft.push({ "field": "WarpColorAWL", "value": warpColorString });
+	draft.push({ "field": "WeftColorAWL", "value": weftColorString });
+	draft.push({ "field": "TieUpAWL",     "value": tieUpString });
+	draft.push({ "field": "FabricSize",   "value": fabricSizeString });
+	draft.push({ "field": "TieUpWidth",   "value": tieUpWidthString });
+	draft.push({ "field": "TieUpHeight",  "value": tieUpHeightString });
 	var JSONDraft = JSON.stringify(draft);
+
 	try {
 		localStorage.setItem(DraftName, JSONDraft);
 	}
@@ -320,10 +326,5 @@ function saveDraftButtonFunction() {
 		alert("Sorry! You're out of local storage space. Try deleting some drafts to make room for new ones.");
 	}
 
-	rebuildDraftSelector();
-
-	// This will put a file in Downloads, but with some random name
-	//var canvas = document.getElementById("myCanvas");
-	//var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  
-	//window.location.href=image; // it will save locally
+	buildLoadDraftDropdown(); // rebuild the drop-down to include this new entry
 }
