@@ -825,8 +825,8 @@ function handlePermute(aList, bList) {
 }
 
 function handleRamp(leftList, rightList, numLoops) {
-	var leftEnd = Number(leftList[leftList.length-1]);
-	var rightStart = Number(rightList[0]);
+	var leftEnd = toDomain(Number(leftList[leftList.length-1]));
+	var rightStart = toDomain(Number(rightList[0]));
 	var newList = leftList;
 	var goDown = true;
 	if (leftEnd < rightStart) goDown = false;

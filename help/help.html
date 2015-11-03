@@ -632,12 +632,14 @@ and Bi is the same for B.
 <tr>
 	<th>Command</th>
 	<th>Shortcut</th>
-	<th>Norm</th>
+	<th>Wrap</th>
+	<th>Resize</th>
 	<th>Summary</th>
 </tr>
 <tr>
 	<td><b>A</b> binary0</td>
 	<td>b0</td>
+	<td> </td>
 	<td> </td>
 	<td>Treat <b>A</b> as alternating runs of 0s and 1s</td>
 </tr>
@@ -645,22 +647,26 @@ and Bi is the same for B.
 	<td><b>A</b> binary1</td>
 	<td>b1</td>
 	<td> </td>
+	<td> </td>
 	<td>Treat <b>A</b> as alternating runs of 1s and 0s</td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> block</td>
 	<td>#</td>
+	<td> </td>
 	<td>Y</td>
 	<td>Each <b>A</b>i is repeated <b>B</b>i times</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> <b>B</b> blockpal</td>
 	<td>#p</td>
+	<td> </td>
 	<td>Y</td>
 	<td>block with internal palindrome</td>
 </tr>
 <tr>
 	<td>clear</td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Erase the stack</td>
@@ -669,10 +675,12 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> concat</td>
 	<td>,</td>
 	<td> </td>
+	<td> </td>
 	<td>Concatenate the top two stack elements</td>
 </tr>
 <tr>
 	<td><em>c</em> <em>d</em> domain</td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Set the domain to [<em>c</em>, <em>d</em>]</td>
@@ -680,12 +688,14 @@ and Bi is the same for B.
 <tr class="alt">
 	<td><b>A</b> <b>B</b> down</td>
 	<td>&gt;</td>
+	<td>Y</td>
 	<td> </td>
 	<td><b>A</b>, descending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <em>c</em> downloop</td>
 	<td>&gt;l</td>
+	<td>Y</td>
 	<td> </td>
 	<td>Like down, but includes <em>c</em> runs as well</td>
 </tr>
@@ -693,16 +703,19 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> downup</td>
 	<td>&gt;u</td>
 	<td>Y</td>
-	<td>Alternating down and up runs. <strong>A</strong> may be 1 longer than <strong>B</strong
+	<td>Y*</td>
+	<td>Alternating down and up runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <em>c</em> downuploop</td>
 	<td>&gt;ul</td>
 	<td>Y</td>
+	<td>Y*</td>
 	<td>Like downup but include <em>c</em> runs as well</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> dup</td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Pop the top of the stack and push it back twice</td>
@@ -711,29 +724,34 @@ and Bi is the same for B.
 	<td><strong>A</strong> <em>d</em> extend</td>
 	<td>+</td>
 	<td> </td>
+	<td> </td>
 	<td>repeat or clip <b>A</b> to <em>d</em> elements</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> <b>B</b> growblock</td>
 	<td>=</td>
+	<td> </td>
 	<td>Y</td>
 	<td>Interleave <b>A</b> with growing palindromes of <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> iblock</td>
 	<td>i#</td>
+	<td> </td>
 	<td>Y</td>
 	<td>Like block but the inputs are interleaved in <b>A</b></td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> iblockpal</td>
 	<td>i#p</td>
+	<td> </td>
 	<td>Y</td>
 	<td>iblock with internal palindrome</td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> interleave</td>
 	<td>%</td>
+	<td> </td>
 	<td>Y</td>
 	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
 </tr>
@@ -741,16 +759,19 @@ and Bi is the same for B.
 	<td><b>A</b> <em>d</em> nth</td>
 	<td> </td>
 	<td> </td>
-	<td>take ever <em>d</em>'th element of <b>A</b></td>
+	<td> </td>
+	<td>Take every <em>d</em>'th element of <b>A</b></td>
 </tr>
 <tr>
 	<td><b>A</b> palindrome</td>
 	<td>|</td>
 	<td> </td>
+	<td> </td>
 	<td><b>A</b> followed by its near reversal</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> <b>B</b> pbox</td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Shortcut for <b> A B A </b> veclen extend permute</td>
@@ -759,10 +780,12 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> permute</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
 	<td>Use elements of <b>B</b> to index <b>A</b></td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> pop</td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Discard top of the stack</td>
@@ -771,17 +794,20 @@ and Bi is the same for B.
 	<td>push</td>
 	<td>/</td>
 	<td> </td>
+	<td> </td>
 	<td>Consider all since last command a single list</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> <b>B</b> ramp</td>
 	<td>-</td>
+	<td>Y</td>
 	<td> </td>
 	<td>Go up or down as needed to stay in domain</td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <em>c</em> ramploop</td>
 	<td>-l</td>
+	<td>Y</td>
 	<td> </td>
 	<td>Like ramp but include <em>c</em> runs as well</td>
 </tr>
@@ -789,11 +815,13 @@ and Bi is the same for B.
 	<td><b>A</b> <em>d</em> repeat</td>
 	<td>*</td>
 	<td> </td>
+	<td> </td>
 	<td>repeat <b>A</b> a total of <em>d</em> times</td>
 </tr>
 <tr>
 	<td><strong>A</strong> reverse</td>
 	<td>@</td>
+	<td> </td>
 	<td> </td>
 	<td>reverse the elements of <strong>A</strong></td>
 </tr>
@@ -801,11 +829,13 @@ and Bi is the same for B.
 	<td><b>A</b> <em>d</em> rotatel</td>
 	<td><<</td>
 	<td> </td>
+	<td> </td>
 	<td>rotate <b>A</b> left by <em>d</em> steps</td>
 </tr>
 <tr>
 	<td><b>A</b> <em>d</em> rotater</td>
 	<td>>></td>
+	<td> </td>
 	<td> </td>
 	<td>rotate <b>A</b> right by <em>d</em> steps</td>
 </tr>
@@ -813,16 +843,19 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> swap</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
 	<td>Exchange the top two stack elements</td>
 </tr>
 <tr>
 	<td><b>A</b> tartan</td>
+	<td> </td>
 	<td> </td>
 	<td>Y</td>
 	<td>Like iblock but repeats are half length</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> tartanpal</td>
+	<td> </td>
 	<td> </td>
 	<td>Y</td>
 	<td>tartan with internal palindrome</td>
@@ -831,11 +864,13 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> template</td>
 	<td>:</td>
 	<td> </td>
+	<td> </td>
 	<td>Create a subarticulation using <b>B</b> as a template</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> <em>c</em> <em>d</em> twilll</td>
 	<td>t&lt;&lt;</td>
+	<td> </td>
 	<td> </td>
 	<td>Rotate left by <em>c</em> steps, <em>d</em> times</td>
 </tr>
@@ -843,11 +878,13 @@ and Bi is the same for B.
 	<td><b>A</b> <em>c</em> <em>d</em> twillr</td>
 	<td>t&gt;&gt;</td>
 	<td> </td>
+	<td> </td>
 	<td>Rotate right by <em>c</em> steps, <em>d</em> times</td>
 </tr>
 <tr class="alt">
 	<td><b>A</b> <b>B</b> up</td>
 	<td>&lt;</td>
+	<td>Y</td>
 	<td> </td>
 	<td><b>A</b>, ascending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
 </tr>
@@ -855,22 +892,26 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> updown</td>
 	<td>&lt;d</td>
 	<td>Y</td>
-	<td>Alternating up and down runs. <strong>A</strong> may be 1 longer than <strong>B</strong
+	<td>Y*</td>
+	<td>Alternating up and down runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
 <tr class="alt">
 	<td><b>A</b> <b>B</b> <em>c</em> updownloop</td>
 	<td>&lt;dl</td>
-	<td> </td>
+	<td>Y</td>
+	<td>Y*</td>
 	<td>Like updown but include <em>c</em> runs as well</td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <em>c</em> uploop</td>
 	<td>&lt;l</td>
+	<td>Y</td>
 	<td> </td>
 	<td>Like up, but includes <em>c</em> runs as well</td>
 </tr>
 <tr class="alt">
 	<td>veclen</td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Push the length of the list at the top of the stack</td>
@@ -879,10 +920,12 @@ and Bi is the same for B.
 	<td>vmax</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
 	<td>Push largest element in list at top of stack</td>
 </tr>
 <tr class="alt">
 	<td>vmin</td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Push smallest element in list at top of stack</td>
