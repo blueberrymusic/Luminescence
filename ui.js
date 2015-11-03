@@ -25,10 +25,6 @@ $(function(){
 	setupOutputRadioButtons();
 	buildLoadDraftDropdown();
 
-	//$('#fabricSizeInput').val(FabricSize);
-	//$('#tieUpWidthInput').val(TieUpWidth);
-	//$('#tieUpHeightInput').val(TieUpHeight);
-
 	var defaultName = Presets[0][0];
 	loadDraft(defaultName);
 });

@@ -7,6 +7,8 @@ var CanvasSize;        // pixels on each side
 var DrawGrid = false;  // see the underlying grid, for debuggin
 var TieUpWidth = 8;    // width of tie-up
 var TieUpHeight = 8;   // height of tie-up
+var FabricRight;       // right side of fabric grid
+var FabricBottom;      // bottom of fabric grid
 
 /* 
 We use the matrix form of the weaving equation on page 113 of
@@ -28,9 +30,15 @@ function drawCanvas() {
 
 	CanvasSize  = Math.min(c.width, c.height);
 	getDomainSizes();
-	var maxRange = Math.max(WarpDRange, WeftDRange);
-	var numSquares = FabricSize + maxRange + 5; // 4 pads and 1 color
+	var rightSquares = Math.max(TieUpWidth+2, WeftDMax+1+4);
+	var bottomSquares = Math.max(TieUpHeight+2, WarpDMax+1+4);
+	var maxGap = Math.max(rightSquares, bottomSquares);
+	var numSquares = FabricSize + maxGap + 1;
+
 	SqSize = CanvasSize / numSquares;
+
+	FabricRight = CanvasSize - (rightSquares* SqSize);
+	FabricBottom = CanvasSize - (bottomSquares * SqSize);
 
 	makeMatrices();
 	drawWarp();
@@ -116,13 +124,11 @@ function getOutputAsList(input, numbers, defaultReturn) {
 }
 
 function drawWarp() { 
-	var localS = S;
-	var localClrs = WarpColors;
-	var right = CanvasSize - ((WeftDRange+4) * SqSize);
-	var top = CanvasSize - ((WarpDRange+3) * SqSize);
+	var right = FabricRight;
+	var top = FabricBottom + SqSize;
 	var left = right - (FabricSize * SqSize);
-	var bottom = top + (WarpDRange * SqSize);
-	var colorTop = CanvasSize - (2 * SqSize);
+	var bottom = top + ((WarpDMax+1) * SqSize);
+	var colorTop = top + ((WarpDMax+2) * SqSize);
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box
@@ -133,25 +139,11 @@ function drawWarp() {
 		Ctx.lineTo(left, bottom);
 		Ctx.lineTo(left, top);
 		Ctx.stroke();
-	if (DrawGrid) {
-		for (var col=1; col<FabricSize; col++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left+(col*SqSize), top);
-			Ctx.lineTo(left+(col*SqSize), bottom);
-			Ctx.stroke();
-		}
-		for (var row=1; row<WarpDRange; row++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left,  top+(row*SqSize));
-			Ctx.lineTo(right, top+(row*SqSize));
-			Ctx.stroke();
-		}
-	}
 	// draw the filled-in boxes in the grid
 	Ctx.fillStyle = "rgb(0, 0, 0)";
 	for (var col=0; col<FabricSize; col++) {  
 		var cellNum = S[col % S.length];
-		cellNum = toWarpDomain(cellNum)-WarpDMin;
+		cellNum = toWarpDomain(cellNum);
 		Ctx.fillRect(right-((col+1)*SqSize), top+(cellNum*SqSize), SqSize, SqSize);
 	}
 	// draw the colors
@@ -163,13 +155,11 @@ function drawWarp() {
 }
 
 function drawWeft() {
-	var localR = R;
-	var localClrs = WeftColors;
-	var bottom = CanvasSize - ((WarpDRange+4) * SqSize);
-	var left = CanvasSize - ((WeftDRange+3) * SqSize);
+	var bottom = FabricBottom;
+	var left = FabricRight + SqSize;
 	var top = bottom - (FabricSize * SqSize);
-	var right = left + (WeftDRange * SqSize);
-	var colorLeft = CanvasSize - (2 * SqSize);
+	var right = left + ((WeftDMax+1) * SqSize);
+	var colorLeft = left + ((WeftDMax+2) * SqSize);
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box
@@ -181,7 +171,7 @@ function drawWeft() {
 		Ctx.lineTo(left, top);
 		Ctx.stroke();
 	if (DrawGrid) {
-		for (var col=1; col<WeftDRange; col++) {  
+		for (var col=1; col<WeftDMax; col++) {  
 			Ctx.beginPath();
 			Ctx.moveTo(left+(col*SqSize), top);
 			Ctx.lineTo(left+(col*SqSize), bottom);
@@ -198,7 +188,7 @@ function drawWeft() {
 	Ctx.fillStyle = "rgb(0, 0, 0)";
 	for (var row=0; row<FabricSize; row++) {  
 		var cellNum = R[row % R.length];
-		cellNum = toWeftDomain(cellNum)-WeftDMin;
+		cellNum = toWeftDomain(cellNum);
 		Ctx.fillRect(left+(cellNum*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
 	}
 	// draw the colors
@@ -210,9 +200,8 @@ function drawWeft() {
 }
 
 function drawTieUp() {
-	var localT = T;
-	var left = CanvasSize - ((WeftDRange+3) * SqSize);
-	var top = CanvasSize - ((WarpDRange+3) * SqSize);
+	var left = FabricRight + SqSize;
+	var top = FabricBottom + SqSize;
 	var right = left + (TieUpWidth * SqSize);
 	var bottom = top + (TieUpHeight * SqSize);
 	Ctx.strokeStyle = "#000000";
@@ -253,8 +242,8 @@ function drawTieUp() {
 }
 
 function drawFabric() {
-	var right = CanvasSize - ((WeftDRange+4) * SqSize);
-	var bottom = CanvasSize - ((WarpDRange+4) * SqSize);
+	var right = FabricRight;
+	var bottom = FabricBottom;
 	var left = right - (FabricSize * SqSize);
 	var top = bottom - (FabricSize * SqSize);
 	Ctx.strokeStyle = "#000000";
@@ -268,13 +257,13 @@ function drawFabric() {
 		Ctx.lineTo(left, top);
 		Ctx.stroke();
 	if (DrawGrid) {
-		for (var col=1; col<WarpDRange; col++) {  
+		for (var col=1; col<WarpDMax; col++) {  
 			Ctx.beginPath();
 			Ctx.moveTo(left+(col*SqSize), top);
 			Ctx.lineTo(left+(col*SqSize), bottom);
 			Ctx.stroke();
 		}
-		for (var row=1; row<WeftDRange; row++) {  
+		for (var row=1; row<WeftDMax; row++) {  
 			Ctx.beginPath();
 			Ctx.moveTo(left,  top+(row*SqSize));
 			Ctx.lineTo(right, top+(row*SqSize));
