@@ -92,9 +92,8 @@ function AWLtoString(inputID) {
 	return output;
 }
 	
-function selectRadioButton(choice) { //"TieUpRadio");
+function selectRadioButton(choice) { 
 	var target = $(choice);
-	//$(choice).prop('checked', true);
 	target.closest('.btn').button('toggle');
 	showChosenOutput(choice);
 }
@@ -134,30 +133,35 @@ function tieUpHeightInputFunction() {
 }
 
 function warpPatternButtonFunction() {
+	$('#warpPatternAWL').css("background-color", "#ffffff");
 	WarpPatternOutput = AWLtoString('#warpPatternAWL');
 	selectRadioButton("#WarpPatternRadio");
 	drawCanvas();
 }
 
 function weftPatternButtonFunction() {
+	$('#weftPatternAWL').css("background-color", "#ffffff");
 	WeftPatternOutput = AWLtoString('#weftPatternAWL');
 	selectRadioButton("#WeftPatternRadio");
 	drawCanvas();
 }
 
 function warpColorButtonFunction() {
+	$('#warpColorAWL').css("background-color", "#ffffff");
 	WarpColorOutput = AWLtoString('#warpColorAWL');
 	selectRadioButton("#WarpColorRadio");
 	drawCanvas();
 }
 
 function weftColorButtonFunction() {
+	$('#weftColorAWL').css("background-color", "#ffffff");
 	WeftColorOutput = AWLtoString('#weftColorAWL');
 	selectRadioButton("#WeftColorRadio");
 	drawCanvas();
 }
 
 function tieUpButtonFunction() {
+	$('#tieUpAWL').css("background-color", "#ffffff");
 	TieUpOutput = AWLtoString('#tieUpAWL');
 	selectRadioButton("#TieUpRadio");
 	drawCanvas();
@@ -274,8 +278,13 @@ function loadDraft(draftName) {
 			return;
 		}
 	}
+	// update the output area by forcing it to switch to WarpPattern
+	selectRadioButton("#WarpPatternRadio");
+
+	// update the name variable and display
 	DraftName = draftName;
 	$("input[name='draftNameInput']").val(DraftName);
+
 	drawCanvas();
 }
 

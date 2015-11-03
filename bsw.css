@@ -259,9 +259,9 @@
 	background-color: #eeeeee;
 	font-size: 12pt;
 	resize: none;
-	background-position: bottom right;
-	background-repeat: no-repeat;
-	background-image: url(images/BG-AWL-Output.gif); 
+	//background-position: bottom right;
+	//background-repeat: no-repeat;
+	//background-image: url(images/BG-AWL-Output.gif); 
 }
 
 #fabricSizeInput {
