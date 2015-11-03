@@ -25,9 +25,12 @@ $(function(){
 	setupOutputRadioButtons();
 	buildLoadDraftDropdown();
 
-	$('#fabricSizeInput').val(FabricSize);
-	$('#tieUpWidthInput').val(TieUpWidth);
-	$('#tieUpHeightInput').val(TieUpHeight);
+	//$('#fabricSizeInput').val(FabricSize);
+	//$('#tieUpWidthInput').val(TieUpWidth);
+	//$('#tieUpHeightInput').val(TieUpHeight);
+
+	var defaultName = Presets[0][0];
+	loadDraft(defaultName);
 });
 
 
@@ -347,4 +350,39 @@ function deleteButtonFunction() {
 		}
 	}
 	alert("Sorry! I could not delete "+DraftName+" because I couldn't find it in your local storage.");
+}
+
+// handle the modal dialog popup to confirm delete
+// http://www.codeproject.com/Tips/891309/Custom-Confirmation-Box-using-Bootstrap-Modal-Dial
+function AsyncConfirmYesNo(title, msg, yesFn, noFn) {
+    var $confirm = $("#modalConfirmYesNo");
+    $confirm.modal('show');
+    $("#lblTitleConfirmYesNo").html(title);
+    $("#lblMsgConfirmYesNo").html(msg);
+    $("#btnYesConfirmYesNo").off('click').click(function () {
+        yesFn();
+        $confirm.modal("hide");
+    });
+    $("#btnNoConfirmYesNo").off('click').click(function () {
+        noFn();
+        $confirm.modal("hide");
+    });
+}
+function showDeleteConfirmationModal() {
+	if (DraftName === "") {
+		alert("Please choose a draft from the list so I know what to delete.");
+		return;
+	}
+	AsyncConfirmYesNo(
+		"Delete Confirmation",
+		"Are you sure you want to delete draft "+DraftName+"?",
+		DeleteModalYesFunction,
+		DeleteModalNoFunction
+	);
+}
+function DeleteModalYesFunction() {
+	deleteButtonFunction();
+}
+function DeleteModalNoFunction() {
+	// nothing to do
 }

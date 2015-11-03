@@ -3,6 +3,8 @@
 
 <head>
 
+<title>Andrew's Digital Loom</title>
+
 <!-- The order matters! My stuff, then jQuery, the Bootstrap -->
 
 <!-- My local css comes first -->
@@ -80,7 +82,8 @@
 
 					</div> <!-- column 9 -->
 					<div class="col-sm-3">
-						<button type="button" class="btn btn-block btn-default" id="deleteButton" onclick="deleteButtonFunction()">Delete</button>
+						<!-- <button type="button" class="btn btn-block btn-default" id="deleteButton" onclick="deleteButtonFunction()">Delete</button> -->
+						<button type="button" class="btn btn-block btn-default" id="deleteButton" onclick="showDeleteConfirmationModal()">Delete</button> 
 					</div> <!-- column 3 -->
 				</div> <!-- row -->
 			</div> <!-- column 6 -->
@@ -249,5 +252,35 @@
 			</div>
 		</div> <!-- row -->
 	</div> <!-- container -->
+
+<!-- modal popup to confirm delete
+http://www.codeproject.com/Tips/891309/Custom-Confirmation-Box-using-Bootstrap-Modal-Dial
+-->
+<div id="modalConfirmYesNo" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" 
+                class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 id="lblTitleConfirmYesNo" class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p id="lblMsgConfirmYesNo"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="btnYesConfirmYesNo" 
+                type="button" class="btn btn-primary">Yes</button>
+                <button id="btnNoConfirmYesNo" 
+                type="button" class="btn btn-default">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 </body> 
 </html> 
