@@ -118,8 +118,8 @@ function getOutputAsList(input, numbers, defaultReturn) {
 function drawWarp() { 
 	var localS = S;
 	var localClrs = WarpColors;
-	var right = CanvasSize - ((TieUpWidth+4) * SqSize);
-	var top = CanvasSize - ((TieUpHeight+3) * SqSize);
+	var right = CanvasSize - ((WeftDRange+4) * SqSize);
+	var top = CanvasSize - ((WarpDRange+3) * SqSize);
 	var left = right - (FabricSize * SqSize);
 	var bottom = top + (WarpDRange * SqSize);
 	var colorTop = CanvasSize - (2 * SqSize);
@@ -165,8 +165,8 @@ function drawWarp() {
 function drawWeft() {
 	var localR = R;
 	var localClrs = WeftColors;
-	var bottom = CanvasSize - ((TieUpHeight+4) * SqSize);
-	var left = CanvasSize - ((TieUpWidth+3) * SqSize);
+	var bottom = CanvasSize - ((WarpDRange+4) * SqSize);
+	var left = CanvasSize - ((WeftDRange+3) * SqSize);
 	var top = bottom - (FabricSize * SqSize);
 	var right = left + (WeftDRange * SqSize);
 	var colorLeft = CanvasSize - (2 * SqSize);
@@ -211,8 +211,8 @@ function drawWeft() {
 
 function drawTieUp() {
 	var localT = T;
-	var left = CanvasSize - ((TieUpWidth+3) * SqSize);
-	var top = CanvasSize - ((TieUpHeight+3) * SqSize);
+	var left = CanvasSize - ((WeftDRange+3) * SqSize);
+	var top = CanvasSize - ((WarpDRange+3) * SqSize);
 	var right = left + (TieUpWidth * SqSize);
 	var bottom = top + (TieUpHeight * SqSize);
 	Ctx.strokeStyle = "#000000";
@@ -253,8 +253,8 @@ function drawTieUp() {
 }
 
 function drawFabric() {
-	var right = CanvasSize - ((TieUpWidth+4) * SqSize);
-	var bottom = CanvasSize - ((TieUpHeight+4) * SqSize);
+	var right = CanvasSize - ((WeftDRange+4) * SqSize);
+	var bottom = CanvasSize - ((WarpDRange+4) * SqSize);
 	var left = right - (FabricSize * SqSize);
 	var top = bottom - (FabricSize * SqSize);
 	Ctx.strokeStyle = "#000000";

@@ -187,7 +187,7 @@ function buildLoadDraftDropdown() {
 	//loadMenu.append("<li class='divider'></li>");
 
 	if (LocalStorageAvailable) {
-		loadMenu.append("<li class='dropdown-header'>Local Saves 1</li>");
+		loadMenu.append("<li class='dropdown-header'>Local Saves</li>");
  		for (var i = 0; i < localStorage.length; i++){
 			var key = localStorage.key(i);
 			var value = localStorage.getItem(key); // or localStorage[key];
