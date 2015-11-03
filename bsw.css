@@ -1,5 +1,10 @@
+
+
 #digitalLoomLabel {
 	//background-color: #9933cc;
+	font-family: Ubuntu;
+	font-size: 37px;
+	//font-weight: bold;
 	background-color: #cccccc;
 	color: #ffffff;
 	margin-top: 15px;
@@ -12,6 +17,8 @@
 #helpButton {
 	margin-top: 15px;
 	font-size: 200%;
+	font-family: Ubuntu;
+	//font-weight: bold;
 	width: 100px;
 	height: 110px;
 	border: 2px solid #bbbbbb;
