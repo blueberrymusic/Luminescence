@@ -214,14 +214,9 @@ function buildLoadDraftDropdown() {
 	loadMenu.append("<li class='dropdown-header'>Presets</li>");
 	for (var i=0; i<Presets.length; i++) {
 		var psi = Presets[i];
-		var text = JSON.parse(psi);
-		for (var j=0; j<text.length; j++) {
-			var field = text[j].field;
-			var val = text[j].val;
-			if (field === "Name") {
- 				loadMenu.append("<li><a href='#'>"+val+"</a></li>");
-			}
-		}
+		var name = psi[0];
+		var json = psi[1];
+ 		loadMenu.append("<li><a href='#'>"+name+"</a></li>");
 	}
 
 	// I couldn't figure out how to respond to the drop-down selection event and get access
@@ -237,7 +232,66 @@ function buildLoadDraftDropdown() {
 }
 
 function loadDraft(draftName) {
-	alert("loading "+draftName);
+	var jsonData = "";
+	var foundit = false;
+	if (LocalStorageAvailable) {
+ 		for (var i = 0; i < localStorage.length; i++){
+			var key = localStorage.key(i);
+			if (key === draftName) {
+				jsonData = localStorage.getItem(key); // or localStorage[key];
+				foundit = true;
+			}
+		}
+	}
+	if (!foundit) {
+		for (var i=0; i<Presets.length; i++) {
+			var psi = Presets[i];
+			var name = psi[0];
+			if (name === draftName) {
+				jsonData = psi[1];
+				foundit = true;
+			}
+		}
+	}
+	if (!foundit) {
+		alert("I couldn't find draft "+draftName+" to load. Sorry!");
+		return;
+	}
+	var weaveData = JSON.parse(jsonData);
+	for (var i=0; i<weaveData.length; i++) {
+		var datum = weaveData[i];
+		var fieldName = datum['field'];
+		var value = datum['value'];
+		if (fieldName === "WarpAWL") {
+			$('#warpPatternAWL').val(value);
+			WarpPatternOutput = AWLtoString('#warpPatternAWL');
+		} else if (fieldName === "WeftAWL") {
+			$('#weftPatternAWL').val(value);
+			WeftPatternOutput = AWLtoString('#weftPatternAWL');
+		} else if (fieldName === "WarpColorAWL") {
+			$('#warpColorAWL').val(value);
+			WarpColorOutput = AWLtoString('#warpColorAWL');
+		} else if (fieldName === "WeftColorAWL") {
+			$('#weftColorAWL').val(value);
+			WeftColorOutput = AWLtoString('#weftColorAWL');
+		} else if (fieldName === "TieUpAWL") {
+			$('#tieUpAWL').val(value);
+			TieUpOutput = AWLtoString('#tieUpAWL');
+		} else if (fieldName === "FabricSize") {
+			FabricSize = Number(value);
+			$('#fabricSizeInput').val(FabricSize);
+		} else if (fieldName === "TieUpWidth") {
+			TieUpWidth = Number(value);
+			$('#tieUpWidthInput').val(TieUpWidth);
+		} else if (fieldName === "TieUpHeight") {
+			TieUpHeight = Number(value);
+			$('#tieUpHeightInput').val(TieUpHeight);
+		} else {
+			alert("Reading draft "+draftName+" I found an unknown field named ["+fieldName+"]");
+			return;
+		}
+	}
+	drawCanvas();
 }
 
 function saveDraftButtonFunction() {

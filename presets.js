@@ -7,17 +7,16 @@ function makePresets() {
 	for (var i=0; i<RawPresets.length; i++) {
 		var preset = RawPresets[i];
 		var draft = [];
-		draft.push({ "field": "Name",         "val": preset[0] });
-		draft.push({ "field": "WarpAWL",      "val": preset[1] });
-		draft.push({ "field": "WeftAWL",      "val": preset[2] });
-		draft.push({ "field": "WarpColorAWL", "val": preset[3] });
-		draft.push({ "field": "WeftColorAWL", "val": preset[4] });
-		draft.push({ "field": "TieUpAWL",     "val": preset[5] });
-		draft.push({ "field": "FabricSize",   "val": preset[6] });
-		draft.push({ "field": "TieUpWidth",   "val": preset[7] });
-		draft.push({ "field": "TieUpHeight",  "val": preset[8] });
+		draft.push({ "field": "WarpAWL",      "value": preset[1] });
+		draft.push({ "field": "WeftAWL",      "value": preset[2] });
+		draft.push({ "field": "WarpColorAWL", "value": preset[3] });
+		draft.push({ "field": "WeftColorAWL", "value": preset[4] });
+		draft.push({ "field": "TieUpAWL",     "value": preset[5] });
+		draft.push({ "field": "FabricSize",   "value": preset[6] });
+		draft.push({ "field": "TieUpWidth",   "value": preset[7] });
+		draft.push({ "field": "TieUpHeight",  "value": preset[8] });
 		var JSONDraft = JSON.stringify(draft);
-		Presets.push(JSONDraft);
+		Presets.push([preset[0], JSONDraft]);
 	}
 }
 
@@ -104,7 +103,7 @@ var RawPresets = [
 "0 / 7 - 1 1 2 3 6 5 3 2 # 0 4 :",
 "0 / 7 - 1 1 1 1 2 3 4 3 # 0 4 :",
 "black white", "white black",
-"0 0 0 1 1 1 1 0 / 1 / 8 t<<",
+"0 0 0 1 1 1 1 0 / 1 / 8 t>>",
 220, 8, 8],
 
 [ "Fly's Eye",
