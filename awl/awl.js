@@ -110,7 +110,7 @@ function stackIsEmpty() {
 function showAlert(msg) {
 	alert("ERROR: "+msg+" Read so far: "+ParsedSoFar);
 	Alerted = true;
-	throw new Error(); // stop processing, let user try again
+	//throw new Error(); // stop processing, let user try again
 }
 
 function stackToText() {
