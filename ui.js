@@ -35,23 +35,23 @@ function setupRemoveBGPrompts() {
 	// trick to remove background prompt when somone's typed, using jquery
 	// thanks to https://css-tricks.com/textarea-tricks/
 	$('#warpPatternAWL')
-  	.focus(function() { $(this).css("background", "none"); })
+  	.focus(function() { $(this).css("background", "none"); $(this).css("background-color", "#ffeeee"); })
   	.blur(function() { if ($(this)[0].value === '') { 
 			$(this).css("background", "url(images/BG-Warp-Pattern-Input.gif) bottom right no-repeat") } });
 	$('#weftPatternAWL')
-  	.focus(function() { $(this).css("background", "none") })
+  	.focus(function() { $(this).css("background", "none"); $(this).css("background-color", "#ffeeee"); })
   	.blur(function() { if ($(this)[0].value === '') { 
 			$(this).css("background", "url(images/BG-Weft-Pattern-Input.gif) bottom right no-repeat") } });
 	$('#warpColorAWL')
-  	.focus(function() { $(this).css("background", "none") })
+  	.focus(function() { $(this).css("background", "none"); $(this).css("background-color", "#ffeeee"); })
   	.blur(function() { if ($(this)[0].value === '') { 
 			$(this).css("background", "url(images/BG-Warp-Color-Input.gif) bottom right no-repeat") } });
 	$('#weftColorAWL')
-  	.focus(function() { $(this).css("background", "none") })
+  	.focus(function() { $(this).css("background", "none"); $(this).css("background-color", "#ffeeee"); })
   	.blur(function() { if ($(this)[0].value === '') { 
 			$(this).css("background", "url(images/BG-Weft-Color-Input.gif) bottom right no-repeat") } });
 	$('#tieUpAWL')
-  	.focus(function() { $(this).css("background", "none") })
+  	.focus(function() { $(this).css("background", "none"); $(this).css("background-color", "#ffeeee"); })
   	.blur(function() { if ($(this)[0].value === '') { 
 			$(this).css("background", "url(images/BG-Tieup-Input.gif) bottom right no-repeat") } });
 }
