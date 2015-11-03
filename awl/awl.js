@@ -236,6 +236,8 @@ var Dispatch = [
 	[ "vmin", DoVmin ],
 
 	// shortcuts 
+	[ "b0", DoBinary0 ],
+	[ "b1", DoBinary1 ],
 	[ "#", DoBlock ],
 	[ "#p", DoBlockPal ],
 	[ ",", DoConcat ],
