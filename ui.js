@@ -61,11 +61,6 @@ function setupOutputRadioButtons() {
 		var thisID = ($(this).find('input').attr('id'));
 		SelectedOutputRadioButton = thisID;
 		showChosenOutput('#'+thisID);
-		//if (thisID === "WarpPatternRadio") alert("chose WarpPatternRadio");
-		//if (thisID === "WeftPatternRadio") alert("chose WeftPatternRadio");
-		//if (thisID === "WarpColorRadio") alert("chose WarpColorRadio");
-		//if (thisID === "WeftColorRadio") alert("chose WeftColorRadio");
-		//if (thisID === "TieUpRadio") alert("chose TieUpRadio");
 	}); 
 }
 
@@ -142,44 +137,36 @@ function warpPatternButtonFunction() {
 	WarpPatternOutput = AWLtoString('#warpPatternAWL');
 	selectRadioButton("#WarpPatternRadio");
 	drawCanvas();
-	//alert("warp Pattern button used");
 }
 
 function weftPatternButtonFunction() {
 	WeftPatternOutput = AWLtoString('#weftPatternAWL');
 	selectRadioButton("#WeftPatternRadio");
 	drawCanvas();
-	//alert("weft Pattern button used");
 }
 
 function warpColorButtonFunction() {
 	WarpColorOutput = AWLtoString('#warpColorAWL');
 	selectRadioButton("#WarpColorRadio");
 	drawCanvas();
-	//alert("warp Color button used");
 }
 
 function weftColorButtonFunction() {
 	WeftColorOutput = AWLtoString('#weftColorAWL');
 	selectRadioButton("#WeftColorRadio");
 	drawCanvas();
-	//alert("weft Color button used");
 }
 
 function tieUpButtonFunction() {
 	TieUpOutput = AWLtoString('#tieUpAWL');
 	selectRadioButton("#TieUpRadio");
 	drawCanvas();
-	//alert("tieUp button used");
 }
 
 ///////////////////////////////////////////////////////////////////////////
 // Draft saving and loading 
 ///////////////////////////////////////////////////////////////////////////
 
-function deleteButtonFunction() {
-	alert("delete Button");
-}
 
 function draftNameInputFunction() {
 	var target = $("input[name='draftNameInput']");
@@ -224,7 +211,6 @@ function buildLoadDraftDropdown() {
 	$("#loadDraftMenuItems > li > a").click(function(){
 		var selText = $(this).text();
 		loadDraft(selText);
-		//alert("got "+selText);
 	});
 }
 
@@ -251,7 +237,7 @@ function loadDraft(draftName) {
 		}
 	}
 	if (!foundIt) {
-		alert("I couldn't find draft "+draftName+" to load. Sorry!");
+		alert("I couldn't find draft "+draftName+" to load either in local storage or as a built-in preset. Sorry!");
 		return;
 	}
 	var weaveData = JSON.parse(jsonData);
@@ -327,4 +313,29 @@ function saveButtonFunction() {
 	}
 
 	buildLoadDraftDropdown(); // rebuild the drop-down to include this new entry
+}
+
+function deleteButtonFunction() {
+	if (DraftName === "") {
+		alert("Please choose a draft from the list so I know what to delete.");
+		return;
+	}
+	if (!LocalStorageAvailable) {
+		alert("Sorry, I can only delete from local storage, and your browser doesn't support that.");
+		return;
+	}
+	for (var i = 0; i < localStorage.length; i++){
+		var key = localStorage.key(i);
+		if (key === DraftName) {
+			try {
+				localStorage.removeItem(key);
+				buildLoadDraftDropdown(); // rebuild the drop-down since this entry's gone
+			}
+			catch (e) {
+				alert("Sorry! I found "+DraftName+" but got an error trying to delete it.");
+			}
+			return;
+		}
+	}
+	alert("Sorry! I could not delete "+DraftName+" because I couldn't find it in your local storage.");
 }
