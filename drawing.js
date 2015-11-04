@@ -144,6 +144,7 @@ function drawWarp() {
 	for (var col=0; col<FabricSize; col++) {  
 		var cellNum = S[col % S.length];
 		cellNum = toWarpDomain(cellNum);
+		if (cellNum < 0) cellNum = 0;
 		Ctx.fillRect(right-((col+1)*SqSize), top+(cellNum*SqSize), SqSize, SqSize);
 	}
 	// draw the colors
@@ -189,6 +190,7 @@ function drawWeft() {
 	for (var row=0; row<FabricSize; row++) {  
 		var cellNum = R[row % R.length];
 		cellNum = toWeftDomain(cellNum);
+		if (cellNum < 0) cellNum = 0;
 		Ctx.fillRect(left+(cellNum*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
 	}
 	// draw the colors

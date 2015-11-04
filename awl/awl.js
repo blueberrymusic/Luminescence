@@ -221,6 +221,7 @@ var Dispatch = [
 	[ "reverse", DoReverse ], 
 	[ "rotatel", DoRotateL ],
 	[ "rotater", DoRotateR ],
+	[ "stencil", DoStencil ],
 	[ "swap", DoSwap ],
 	[ "tartan", DoTartan ],
 	[ "tartanpal", DoTartanPal ],
@@ -319,6 +320,8 @@ function DoConcat() {
 function DoDomain() { 
 	DomainMax = popInt();
 	DomainMin = popInt();
+	if (DomainMin < 0) DomainMin = 0;
+	if (DomainMax <= DomainMin) DomainMax = DomainMin+1;
 }
 
 function DoDown() { 
@@ -513,6 +516,22 @@ function DoRotateR() {
 	var count = popInt();
 	var list = popList();
 	handleRotation(list, -1*count);
+}
+
+function DoStencil() {
+	var skip = popInt();
+	var list = popList();
+	if (skip <= 1) {
+		pushList(list);
+		return;
+	}
+	var newList = [];
+	for (var i=0; i<list.length; i++) {
+		if (i%skip != 0) {
+			newList.push(list[i]);
+		}
+	}
+	pushList(newList);
 }
 
 function DoSwap() {

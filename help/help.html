@@ -1290,6 +1290,13 @@ and Bi is the same for B.
 	<td> </td>
 	<td>Exchange the top two stack elements</td>
 </tr>
+<tr class="alt">
+	<td><b>A</b> <em>d</em> stencil</td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td><em>d>1</em>: skip <b>A</b>0, keep the next <em>d-1</em> entries, skip the next, repeat</td>
+</tr>
 <tr>
 	<td><b>A</b> tartan</td>
 	<td> </td>
@@ -1388,6 +1395,8 @@ and what's implemented here.
 </p>
 
 <ul>
+<li>domain min clamped to 0. max is >= min+1 </li>
+<li>On output, negative warp and weft values are 0</li>
 <li><strong>template:</strong> Templates are no longer automatically made relative to the
 first number in the second list. So the values you add to each
 number in your starting list are simply the numbers you provide.
@@ -1530,6 +1539,10 @@ which you can buy online or find in your local library.
 <p><a name="faq"></a></p>
 <h2>FAQ</h2>
 
+<p><strong>Where's + and - etc.?</strong></p>
+<p>
+TK answer here
+</p>
 <p><strong>How do I save and load my drafts?</strong></p>
 <p>
 To <strong>save</strong> a draft, enter the name you want to use in the text box to

@@ -91,10 +91,16 @@
 	text-align: right;
 }
 
+#draftNameAddOn {
+	font-size: 130%;
+	padding: 0px 5px 0px 5px;
+}
+
 #draftNameInput {
 	font-size: 110%;
-	margin: 15px 10px 0px 0px;
 	padding: 0px 5px 0px 5px;
+	width: 240px;
+	height:40px;
 }
 
 #loadDraftButton {

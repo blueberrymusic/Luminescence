@@ -52,8 +52,15 @@
 					<div class="col-sm-3">
 						<button type="button" class="btn btn-block btn-default" id="saveButton" onclick="saveButtonFunction()">Save</button>
 					</div>  <!-- column 3 -->
-					<span class="col-sm-2" id="saveAsSpan">Name:</span>
-					<input type="text" class="col-sm-6 input-group" name="draftNameInput" id="draftNameInput" onchange="draftNameInputFunction()" ></input>
+					<!--<span class="col-sm-2" id="saveAsSpan">Name:</span>
+					<input type="text" class="col-sm-6 input-group" name="draftNameInput" id="draftNameInput" onchange="draftNameInputFunction()" ></input>-->
+
+<div class="input-group" style="margin-top:10px;">
+<span class="input-group-addon" id="draftNameAddOn">Draft Name:</span>
+<input type="text" class="col-sm-6 input-group" name="draftNameInput" id="draftNameInput" onchange="draftNameInputFunction()" ></input>
+</div>
+
+
 				</div> <!-- row -->
 
 				<div class="row">
