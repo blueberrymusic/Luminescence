@@ -40,6 +40,12 @@
 			margin-bottom: 20px;
 		}
 
+		h4 {
+			font-family: "Ubuntu", Arial, sans-serif;
+			margin-top: 40px;
+			margin-bottom: 20px;
+		}
+
 		figure {
 			margin-top: 40px;
 		}
@@ -66,7 +72,7 @@
 
 
 <p>
-This is a quick-start (or quick-restart) guide to my online
+This is a quick-start guide to my online
 <a href="http://www.TK">Digital Loom</a>.
 </p>
 
@@ -79,7 +85,7 @@ or you can cook up crazy new designs of your own.
 </p>
 
 <p>
-In this document I'm going to take things very fast.
+This document moves quickly.
 For more information on everything, 
 take a look at the 
 <a href="#furtherReading">Further Reading</a>
@@ -97,13 +103,15 @@ the fabric on the right,
 because they're not interactive.
 Instead, you can change the fabric size
 using the text box above the fabric,
-or change what's in the five text boxes
-on the left.
+or change the pattern of the fabric
+by altering what's in any of the five text boxes
+on the left (and then pressing the arrow
+to that box's right).
 Start by changing colors (you can probably
 guess at some reasonable color names for now),
-and try fiddling with some of the numbers
-(you'll probably get crazy results!).
-For now, keep all of your numbers in the range 0 to 7.
+and try fiddling with some of the numbers.
+For now, keep all of your numbers in the range 0 to 7,
+but you'll probably still get crazy results!
 In the sections below you'll come to know
 everything that's going on here.
 </p>
@@ -120,7 +128,7 @@ everything that's going on here.
 <li><a href="#awlIntro">Introduction to AWL</a></li>
 <li><a href="#awl">AWL</a></li>
 <li><a href="#using">How To Use The Digital Loom</a></li>
-<li><a href="#colors">Naming Colors</a>
+<li><a href="#colors">Colors</a></li>
 <li><a href="#faq">FAQ</a></li>
 <li><a href="#furtherReading">Further Reading</a></li>
 </ul>
@@ -148,7 +156,16 @@ press the arrow to its right to copy the
 results onto the right side of the window.
 </p>
 
-<h3>The Right Side: The <strong>Draft</strong></h3>
+<p>
+In this document I'll use very casual language
+for the loom and its components;
+see the references in the
+<a href="#furtherReading">Further Reading</a>
+section for more careful descriptions of the 
+loom's elements and their names.
+</p>
+
+<h2>The Right Side: The Draft</h2>
 
 <p>
 The right side of the window is 
@@ -159,20 +176,17 @@ and the final fabric that results.
 The fabric is automatically re-woven each
 time you change one of the input expressions.
 The draft is not interactive:
-clicking on the right side of the screen has no effect.
-</p>
-<p>
-In this document I'll use very casual language
-for the loom and its components;
-see the references in the
-<a href="#furtherReading">Further Reading</a>
-section for more careful descriptions of the 
-loom's elements and their names.
+clicking on the draft and fabric has no effect.
 </p>
 <p>
 Think of the fabric as a grid.
-Along the bottom and right of the grid are
-two checkerboards.
+We want to know the color of each cell
+in that grid.
+To find it,
+we look at the three checkerboards
+below and to the right of the grid,
+and the row and column of colors 
+just outside them.
 </p>
 <p>
 The checkerboard on the right is
@@ -211,7 +225,7 @@ we use one more checkerboard.
 </p>
 <p>
 The checkerboard below and to the right of
-the fabric is called the </strong>tie-up</strong>.
+the fabric is called the <strong>tie-up</strong>.
 Unlike the warp and weft,
 the tie-up can have any arrangement of white
 and black cells
@@ -267,372 +281,583 @@ on the left hand side;
 we'll turn to those now.
 </p>
 
-<h3>The Left Side: AWL Input (and Output)</h3>
+<h2>The Bridge: Patterns</h2>
 
 <p>
-fdjkg
+The trick to describing a draft is to 
+fill in the black and white squares the
+way you want.
+The historical way to to do this is to
+use patterns of numbers.
+We use this tradition here, 
+as it allows you to immediately use any
+of the countless drafts that have been
+collected and published,
+and it lets you communicate with other weavers.
+</p>
 
+<p>
+Each of the five elements of the draft
+gets filled in with its own pattern.
+The three checkerboards use lists of numbers,
+while the two colors sources use lists
+of colors.
+Each of these five grids has a slightly
+different rule for how you convert its list
+to grid contents,
+so we'll cover each one.
+In all cases,
+we start counting at 0.
+</p>
 
+<p>
+First, the weft: the checkerboard immediately
+to the right of the fabric.
+As we saw above,
+the weaving process depends on
+each row of the weft having exactly one black square.
+So we can describe the weft by simply identifying
+the location of that square in each row.
+We do this by starting at the <strong>bottom</strong>
+of the weft checkerboard,
+and working our way up.
+As we read each number from our list,
+we count starting at the <strong>left</strong>
+and going right.
+Look at the weft grid in Figure 3a.
+If the leftmost cell is black, we'd write 
+that as 0.
+If the cell to its right is black, 
+that's a 1, and so on.
+So on the bottom row, we'd write 2.
+The next row up we'd write 1,
+then 3, then 0.
+The pattern then repeats after that.
+So this weft is described by the 
+sequence 2  1 3 0.
+</p>
 
+<figure class="figure ">
+  <img src="http://placehold.it/600x400" class="img-rounded center-block" alt="A generic square placeholder image with rounded corners in a figure.">
+  <figcaption class="figure-caption text-center">
+Figure 3: Two drafts. See the text for the
+lists that describe them.
+</figcaption>
+</figure>
 
+<p>
+Let's now look at the warp in Figure 3a.
+Recall the each column of the warp is white
+except for one black cell,
+so again we only need to know the location
+of that cell.
+For the warp, we start at the
+<strong>right</strong> and work our way
+to the left,
+and we count from the <strong>top</strong>
+and go down.
+So if the black cell is in the topmost row,
+we'd call it 0.
+If it's one down from that,
+we'd call it a 1, 
+and so on.
+The warp pattern in Figure 3a is
+then 4 3 2 1 0
+which repeats forever
+(note that the warp has 5 rows, while
+the weft has only 4;
+this is perfectly fine).
 </p>
 <p>
-Thus each cell of the fabric
-
-
-
-
-
-of your AWL expressions
-The draft is not interactive;
-nothing will respond if you click here.
-
-
-To create a piece of woven fabric, you have to set up the loom with
-weaving instructions.
-These instructions can be written with numbers,
-or illustrated graphically.
-You get both versions in the Digital Loom.
-On the left side of the screen
-Visually, these instructions look like three black-and-white checkerboards.
-When you're using colored yarns for your fabric,
-there is also a row and a column of colors.
-These five elements are called a <em>draft</em>.
-On our simple digital loom,
-once you've filled in these grids in your desired way,
-the fabric immediately weaves itself and you see the results.
+The colors are easy.
+For both the warp and the weft,
+we simply make a list of the colors
+and repeat that list as needed.
+Much of the time we'll use a very
+simple list with just one color,
+so all the thread will be that color.
+In Figure 3a,
+the list for the weft colors
+is just <em>red</em>,
+and the list for the warp colors 
+is just <em>white</em>.
 </p>
 <p>
-So there are really only two things to learn about if you 
-want to create your own designs:
-how the draft turns into a fabric,
-and how to set up the draft on the digital loom.
-We'll take these in turn below.
+Finally, the tie-up.
+Since the tie-up can have any arrangement
+of black and while cells,
+we just read them off starting at the
+top left,
+then moving to the right,
+and then down a row,
+like reading a book.
+White cells are 1, and black cells are 0.
+So in Figure 3a,
+the first row of the tie-up is 0 0 1 1,
+the second row is 0 1 1 0,
+and so on.
+Combining all the rows one after the other
+gives us a list of (in this case) 20 
+0's and 1's.
+TK Replace the numbers above and those in the
+list below  with actual values from the figure
 </p>
-
-<h2>How A Draft Becomes Fabric</h2>
 <p>
-On the digital loom, 
-the draft sits on the right side of the screen,
-as shown in Figure 1.
-The draft is made up of six regions.
-I'll use very simple terminology here to keep things
-brief; real looms are complex machines and there's a
-lot more to them than I'll go into here!
+To summarize, the following list completely
+summarizes the draft in Figure 3a,
+and thus also completely specifies the pattern
+of the fabric it leads to.
+If you want to share your draft with other weavers,
+this is all you need to give them,
+and it's all you need to know from them to
+recreate their drafts on your own loom.
 </p>
-
-<div class="fig figcenter fighighlight">
-  <img src="images/figure.jpg">
-  <div class="figcaption">
-TK TK An overview of the Digital Loom.
-</div>
-</div>
-
 <ul>
-<li>The <strong>Warp</strong> is the checkerboard directly
-below the fabric. Each column of the warp is colored in white
-except for exactly one black square.</li>
-<li>The <strong>Warp Colors</strong> is a single row directly
-beneath the warp. It identifies the color of the yarn that
-rises vertically up into each column of the fabric.</li>
-<li>The <strong>Weft</strong> is the checkerboard directly
-to the right of the fabric. Each row of the weft is colored in white
-except for exactly one black square.</li>
-<li>The <strong>Weft Colors</strong> is a single column directly
-right of the weft. It identifies the color of the yarn that
-travels horizontally left into each row of the fabric.</li>
-<li>The <strong>Tie-up</strong> is a rectangular grid
-to the right of the warp and below the weft. It can hold
-an arbitrary arrangement of white and black cells.</li>
-<li>The <strong>Fabric</strong> is the checkerboard in the
-upper left of the draft region. Each cell in the checkerboard
-has a single color. This is either the warp color directly
-below it, or the weft color directly to its right. The
-warp, weft, and tie-up work together to determine which
-of these two colors goes into that cell of the fabric.</li>
+<li><strong>Warp pattern:</strong> TK 0 3 2 1 5 2 </li>
+<li><strong>Weft pattern:</strong> TK 0 3 2 1 5 2 </li>
+<li><strong>Warp colors:</strong> TK red </li>
+<li><strong>Weft colors:</strong> TK yellow blue </li>
+<li><strong>Tie-up:</strong> TK 1 1 0 0 0 0 0 1 1 0 </li>
 </ul>
-
 <p>
-The job of the loom is to determine what color to place
-in each cell of the fabric's checkerboard.
-The process is straightforward.
-For any given (x,y) cell in the fabric,
-we ask which strand of yarn is on top: the one
-from the warp below, or the weft to the right?
-The upper strand gives its color to the cell.
+Figure 3b offers another draft.
+Try to write down the five lists that
+describe the five sections of the draft
+before you read the list below:
 </p>
-<p>
-We answer that question in 3 steps:
-</p>
-<ol>
-<li>Look directly to the right of the fabric
-cell to find the corresponding row of the weft.
-There will be exactly one black cell in that row.
-<li>Look directly below the fabric
-cell to find the corresponding column of the warp.
-There will be exactly one black cell in that column.
-<li>From the black cell in the weft's row, imagine
-a line directly down to the tie-up.
-From the black cell in the warp's column,
-imagine a line directly right to the tie-up.
-These two lines meet at a cell in the tie-up.
-If that cell is black, the warp strand is on top,
-otherwise the weft is on top.
-</ol>
-
-<p>
-That 3-step process determines the color
-of every cell in the fabric.
-It might feel somewhat mysterious to you
-just how these three things interact.
-Welcome to the human race!
-Although this process is very simple,
-the way the warp, weft, and tie-up work
-together to form a fabric can get very
-complicated and subtle.
-particularly when their patterns become
-complicated.
-A big part of learning to design fabrics is
-to develop an intuition for drafts,
-and how to assign the black squares in a 
-way that leads to the fabric design you
-have in mind.
-</p>
-
-<h2>The Role of Patterns</h2>
-
-<p>
-Each of the three black-and-white grids
-(the warp, weft, and tie-up)
-needs to be set up correctly.
-That is, one cell in each row of the 
-weft must be marked in black,
-as much one cell in each column of the
-weft. 
-The tie-up can have no black cells,
-all black cells,
-or any mixture you like.
-</p>
-<p>
-When talking about a draft,
-We want to talk about various calumns
-and rows in the grids,
-so it's important that we know in what
-order to count.
-The scheme is a little unusual,
-because each of the four grids gets a
-different corner marked as the origin.
-You're probably used to the origin of
-a grid being in the upper-left or lower-right.
-But using a different origin for each grid
-makes things easier to think about.
-</p>
-<p>
-Consider Figure 3.
-Notice the point <strong>A</strong>
-where all four grids meet.
-Think of this as the overall "origin" for
-the draft.
-Each grid's own origin is at the corner
-closest to A.
-Then to locate a cell
-we count in the usual way,
-horizontally and then vertically
-from the origin.
-</p>
-
-<div class="fig figcenter fighighlight">
-  <img src="images/figure.jpg">
-  <div class="figcaption">
-TK TK The origin of each grid is closest to point A.
-</div>
-</div>
-
 <ul>
-<li><strong>The Fabric:</strong> The origin
-is in the bottom right.
-So a cell (x,y) is found by counting x steps
-to the left and y cells up from that corner.</li>
-<li><strong>The Warp:</strong> The origin
-is in the upper right.
-So a cell (x,y) is found by counting x steps
-to the left and y cells down from that corner.</li>
-<li><strong>The Weft:</strong> The origin
-is in the bottom left.
-So a cell (x,y) is found by counting x steps
-to the right and y cells up from that corner.</li>
-<li><strong>The Tie-up:</strong> The origin
-is in the upper left.
-So a cell (x,y) is found by counting x steps
-to the right and y cells down from that corner.</li>
+<li><strong>Warp pattern:</strong> TK 0 3 2 1 5 2 </li>
+<li><strong>Weft pattern:</strong> TK 0 3 2 1 5 2 </li>
+<li><strong>Warp colors:</strong> TK red </li>
+<li><strong>Weft colors:</strong> TK yellow blue </li>
+<li><strong>Tie-up:</strong> TK 1 1 0 0 0 0 0 1 1 0 </li>
 </ul>
-
 <p>
-Now that we can talk about the coordinates,
-let's look at the simple draft in Figure 4.
-</p>
-
-
-<div class="fig figcenter fighighlight">
-  <img src="images/figure.jpg">
-  <div class="figcaption">
-TK TK A simple draft.
-</div>
-</div>
-
-<p>
-Let's start with the warp.
-Remember, a cell at (x,y)
-is x units to the left, 
-and y units below,
-the upper-right corner.
-Each column of the warp must
-be entirely white except for
-a single black cell.
-So we can describe that column
-merely with the y value of 
-that black cell.
-In Figure 4,
-counting to the left and down,
-we get the pattern 0 1 3 2 3.
-You can see that this pattern 
-keeps repeating as it goes left.
+When we weave the fabric,
+we just repeat the warp and weft
+patterns and colors as needed.
+The tie-up we only have to make once,
+but if the input pattern is shorter than
+the size of the tie-up grid,
+we just use the input pattern over and over until
+the grid is filled up,
+as in the last example.
 </p>
 <p>
-Similarly,
-we can describe the weft by 
-identifying the horizontal location
-of each black cell.
-Remember that we count the weft
-from the lower left,
-going right and then up.
-The weft has a pattern 1 2 0 3 
-which repeats over and over.
-</p>
-<p>
-The tie-up has any mix of
-black and white cells.
-Remembering that we count the tie-up
-left to right and top down,
-we can write the contents as 
-1 0 0 1 1,
-which again repeats over and over
-as we make our way down through
-the checkerboard.
-</p>
-<p>
-Finally, we can look at the colors.
-The warp color is a simple pattern:
-it's just green the whole way through.
-The weft pattern has three colors
-arranged red, yellow, blue, yellow,
-and that sequence of 4 keeps repeating.
-</p>
-<p>
-As long as our draft is small and the
-patterns are short,
-then writing things down like this is just
-fine. 
-We could summarize the draft this way,
-where it's understood that each little
-pattern is repeated over and over:
+Now that we know how lists of numbers
+let us build a draft,
+we'll see how to easily
+make big lists of numbers that
+lead to beautiful fabrics.
 </p>
 
-<ul>
-<li>Warp: 0 1 3 2 3</li>
-<li>Weft: 1 2 0 3</li>
-<li>Tie-Up: 1 0 0 1 1  </li>
-<li>Warp Colors: green </li>
-<li>Weft Colors: red yellow blue yellow </li>
-</ul>
+<h2>The Left Side: AWL Input (and Output)</h2>
 
 <p>
-This works great for a simple draft.
-But suppose that the warp pattern,
-instead of being just 5 numbers from 0 to 3,
-was 200 numbers ranging from 0 to 15?
-And the weft was a different pattern but
-of the same size?
-Just writing it down would be awful.
-Somehow transcribing that into the loom
-would be a boring, tedious, and error-prone task.
-This is one reason why most traditional drafts
-have not used such huge patterns.
-</p>
-
-<p>
-But huge patterns can produce wonderful,
-complex, rich fabrics.
-And the computer can handle all the tedious
-tasks for us perfectly and without complaint.
-Still, writing down all those numbers would
-be a terrible chore, and then adjusting them
-to tweak the resulting fabric would be just
-as awful.
-So instead, the Digital Loom lets you create
-rich and interesting patterns of numbers
-(and colors) using a <em>weaving language</em>.
-</em>
-
-
-<h2>Andrew's Weaving Language</h2>
-
-<p>
-As we saw, 
-when drafts get large,
-tweaking them can become complicated and
-time-consuming.
-You might think it would be best to just click
-in the cells of a  draft to change their color.
-But when your patterns become big,
-that quickly becomes tedious.
+The job of the left side of the window
+is to make patterns of numbers and colors.
+The problem will use these
+to fill in the draft.
 </p>
 <p>
-In the Digital Loom, we take a
-different approach.
-Instead of clicking on cells,
-you write little expressions in a custom
-pattern-making language designed explicitly
-for creating patterns that help you make
-interesting fabrics.
-These expressions are usually short,
-but they can result in patterns that are
-hundreds of numbers long,
-containing lots of complicated sub-patterns
-that interact to make a visually rich fabric.
+There are five text input boxes,
+one for each of the five sections of the draft.
+You can type an expression in a special pattern-making
+language into each box,
+and then press the arrow to the right of the box
+to translate your expression into a list.
+The list is immediately copied into the draft
+(that is, the grids are updated)
+and the fabric is immediately re-woven.
 </p>
 <p>
-Each of the five elements in the draft has
-its own little box for typing in a pattern.
-You type (or edit) an expression in one of
-the boxes,
-then you press the arrow to its right.
-That immediately updates the box to the
-right of the arrow (showing you the pattern
-your expression turns into), 
-then the pattern is used to fill in the
-corresponding part of the draft,
-and then the fabric is immediately re-woven.
-This way you can easily and quickly tweak
-and tune your patterns,
-and experiment with whole new ideas,
-very quickly and easily.
+It's often useful to see the output of your expressions
+so you can make sure you're creating the pattern you want.
+At the bottom of the left side there's a region that
+holds the output of any one of the five input areas.
+Click one of the buttons above to choose which output
+you want to see.
+When you press one of the arrows,
+the output region automatically switches to the 
+draft element you just entered.
+Note that you can't type into the output area.
 </p>
 <p>
-The way it works is that you type or paste
-or edit the plain text in one of the leftmost
-text boxes.
-In AWL you write an expression as a long list
-of words, where each word is separated from the
-others by spaces (here, numbers count as "words").
-So you type in some stuff and then hit the arrow.
+So what goes into the boxes on the left?
+You write little expressions in a custom language
+designed for making cool number patterns.
+We'll see that language in the next section.
+For now, you can just type in a sequence of
+numbers (or colors) and then press the arrow.
+</p>
+<p>
+<h3>Important Note</h3> 
+If you want to play around with the inputs before
+you learn the pattern languages,
+try to stick to the following rules.
+Your sequences 
+for the warp and weft patterns must
+be made up only of numbers from 0 to 7, and they must
+be separated by spaces (don't use commas
+or periods or anything else).
+Your sequences for warp and weft colors
+must consist only of color names,
+separated by spaces 
+(for a list of color names, see the section on
+<a href="#colors">Colors</a>).
+Finally,
+the tie-up input should contain just the
+two numbers 0 and 1 in whatever sequence you like,
+again separated only by spaces.
+These rules are just for the moment,
+so you can play around with
+the inputs before you get to know the pattern language.
+</p>
+
+<h1>Making Patterns: The AWL Language</h1>
+
+<p>
+A digital loom lets us create large, complicated patterns
+in our draft and see their results almost instantly.
+You might think that the best way to do this would be
+direct interaction: 
+just click on the cells of a draft to turn them on and off.
+But when patterns become big (like 50 or 200)
+elements long, then modifying them by hand becomes
+tedious and error-prone.
+</p>
+<p>
+Instead, we use a pattern-making language.
+Rather than typing (or clicking) in your pattern,
+you type in a short sequence of instructions
+that make the pattern for you.
+This makes it fast and easy to experiment with big
+changes to your draft,
+and to explore possibilities by just experimenting
+and following your intuition -
+or even just messing around at random!
+</p>
+<p>
+Our pattern-making language is called AWL
+(Andrew's Weaving Language).
+It's loosely based on an undocumented weaving language
+that shipped with early versions of the Painter program.
+I modified and extended that program to produce AWL.
+</p>
+<p>
+As we've seen, you create your draft by typing
+AWL into an input box.
+Then you press the arrow for that box,
+which converts your AWL into a sequence of numbers
+(or colors),
+which are then copied into the loom.
+The fabric is then automatically updated.
+If you want to see the output sequence for any of the
+five boxes,
+then after you've entered it and pressed the arrow,
+choose the corresponding button in the output area
+at the bottom of the left side.
+Let's now look at the structure of AWL.
 </p>
 <p>
 AWL is a <em>stack-based</em> language.
-If we want to add 5 and 3,
-we can write "5+3".
-In a stack-based language,
-we write "5 3 +".
+The traditional way to think about this
+is to picture a <strong>stack</strong>
+of cafeteria trays,
+sitting one on top of the other.
+We can write something on each tray:
+a number, a string, a list of numbers,
+whatever we decide.
+We restrict ourselves to only two
+operations on this stack:
+we can <strong>push</strong> a new
+tray onto the top,
+or we can <strong>pop</strong> the
+topmost tray off the stack.
+That's it.
+Of course, if we push a tray we no
+longer have it in our hands;
+it's on the stack.
+And if we pop a tray it's no longer
+on the stack,
+but it's on our hands where we can
+read its value and do something with it.
+We'll say that if there are no trays,
+we have an <strong>empty stack</strong>
+(the thinking is that the stack is still
+there in an abstract way,
+there's just nothing in it).
+We'll make the rule that it's illegal
+to try to pop the top tray off an empty
+stack (since there are no trays to pop).
+</p>
+<p>
+To add 5 and 3 we usually write <code>5+3</code>.
+But in a stack-based language,
+we write <code>5 3 +</code>.
+Let's read this left to right.
+We'll treat this as a string of
+<em>words</em>, separated by white space.
+There are two kinds of words:
+<strong>data</strong> and <strong>commands</strong>.
+Basically, anything that isn't a command
+is presumed to be data.
+</p>
+<p>
+So let's read <code>5 3 +</code>.
+We start with an empty stack.
+The first word is <code>5</code>.
+That's not a command,
+we we push it onto the stack,
+which now has just one element,
+the number 5.
+The next word is <code>3</code>.
+That's also not a command, so again
+we push it.
+Now our stack has two items on it:
+the number 5 (on the bottom) 
+and the number 3 (on the top).
+The next word is <code>+</code>.
+Aha, that's a command!
+And we know it takes two values:
+the left and right side of the 
+addition symbol.
+Since we want two pieces of data,
+we'll pop the stack twice.
+The first time we pop it,
+we get the number 3, since that
+was on top.
+By convention, we'll treat that as
+the data on the right side of the addition
+sign, 
+so now we're considering the
+result of <em>something</em> plus 3.
+We pop the stack again,
+getting 5,
+and that goes on the left side
+of our traditional expression <code>5+3</code>.
+Note that the stack is now emptyh.
+So we evalute our two pieces of data using
+the addition command,
+getting the result <code>8</code>.
+By convention,
+all operators push their results back
+onto the stack.
+Since the stack was empty once we
+popped the 5,
+when we push the 8 onto the top of the
+stack it's now the only element on the stack.
+</p>
+<p>
+That's the basic idea in a nutshell
+(see the
+<a href="#furtherReading">Further Reading</a>
+section if you crave more details).
+The calculator example we gave above is
+a famous way to illustrate a stack language.
+And it's almost right for AWL,
+but with a twist.
+Our pieces of data are not number,
+but <strong>lists</strong>.
+They can be lists of number or lists of
+colors, but either way they're always lists.
+In AWL, 
+a list has to have at least one element
+(that is, at least one number or color),
+but they can be as long as you like.
+In fact, much of the power of AWL is that
+you can create very big lists with just a
+few commands.
+Since our lists get turned into the 
+checkerboards of the warp, weft, and tie-up
+(and the colors for the warp and weft),
+having really long lists with lots of
+interesting internal patterns can produce
+large visual patterns with tons of interesting
+structure and detail.
+</p>
+
+<h2>Understanding AWL Commands</h2>
+<p>
+AWL commands are also called <strong>operators</strong>,
+and the data they use are also called <strong>arguments</strong>.
+We call any item on a list an <strong>element</strong>,
+so in AWL any element is either a number or a color.
+All of the elements in any list must be the same,
+either all colors or all numbers.
+</p>
+<p>
+To push a list onto the stack,
+you just give its values.
+So whether your list has one element
+(a number or color), or ten of them,
+you just name them all.
+As always, 
+each list item  must be a single string of
+characters with no spaces,
+and each element must be 
+separated from the others with a space.
+</p>
+<p>
+But what if you want to push two lists
+in a row?
+Many AWL commands take two lists,
+so they expect to pop a list off the stack,
+and then another.
+Suppose your first list is 
+<code>1 2 3</code> and your second is <code>9 8 7 6</code>.
+If you typed <code>1 2 3 9 8 7 6</code> into
+the input box,
+you'd be creating one list with seven elements.
+The trick is to call <code>push</code>
+between one list and another:
+<code>1 2 3 push 9 8 7 6</code> does the trick.
+Now the stack holds two new elements
+(on top of whatever might have been there before):
+one entry with the list <code>1 2 3</code>,
+and on top of that (and on top of the stack)
+is the list <code>9 8 7 6</code>.
+Forgetting to push between two lists is a common
+mistake.
+You'll often see this kind of thing written
+<code>1 2 3 / 9 8 7 6</code> because
+<code>/</code> is a shortcut for <code>push</code>.
+</p>
+<p>
+This situation is the pretty much the only 
+time you'll ever need to explicitly push something
+onto the stack,
+because
+the rest of the time the system manages all the
+pushes for you.
+In particular, if you name a list and then
+follow it with a command name,
+the system will automatically push the list
+onto the stack for you.
+So if we imagine a command named <code>floop</code>
+that takes one list as an argument,
+<code>1 2 3 floop</code>
+is the same as <code>1 2 3 push floop</code>
+or <code>1 2 3 / floop</code>.
+Since it's good to keep your AWL as simple
+as possible (so it's easy to understand and modify),
+I suggest leaving out those extraneous push
+commands (in my expressions, I always leave them out).
+</p>
+<p>
+All the commands in the AWL language are
+given in a big table below.
+Before we get to that,
+let's see how to interpret the table entries.
+Along the way we'll cover some fundamental
+concepts that AWL depends on.
+An important convention in the table is that
+capital letters <b>A</b> and <b>B</b>
+stand for lists,
+and lower-case letters
+<var>c</var> and <var>d</var>
+stand for single numbers
+(technically, a single number is a list,
+but here we mean to indicate that this
+list must have only one element).
+Also remember that every command that 
+produces a new result will push that result
+back onto the stack when it's done.
+</p>
+<p>
+Let's look at the entry for
+<code>reverse</code>.
+</p>
+
+<table class="table table-striped table-bordered table-condensed">
+    <thead>
+		<tr>
+			<td>Command</td>
+			<td>Shortcut</td>
+			<td>Wrap</td>
+			<td>Resize</td>
+			<td>Summary</td>
+		</tr>
+    </thead>
+    <tbody>
+      <tr>
+			<td><strong>A</strong> reverse</td>
+			<td>@</td>
+			<td> </td>
+			<td> </td>
+			<td>reverse the elements of <strong>A</strong></td>
+      </tr>
+	</tbody>
+</table>
+
+<p>
+The first column summarizes the command.
+This tells us that the command
+<code>reverse</code> takes one
+argument: a list.
+That means that when the computer
+encounters the command <code>reverse</code>,
+it will pop one list off the top of the stack
+(if the stack is empty, you'll get an error).
+The next column tells us that we can just
+type the shortcut <code>@</code> instead
+of the word <code>reverse</code> if we want.
+Let's ignore the next two columns for now.
+Finally, the summary tells us that 
+the operator reverses the elements of 
+<b>A</b>
+(and, by convention, pushes the result back onto the stack).
+</p>
+<p>
+For example,
+<code>3 4 5 6 reverse</code>
+(remember this is the same as
+<code>3 4 5 6 push reverse</code>),
+will read the <code>3</code>,
+push it onto the top of the stack,
+then read the <code>4</code> and append
+it to the growing list on top of the stack,
+and the same for the next two numbers,
+so eventually the top of the stack has
+the list <code>3 4 5 6</code>.
+Now the computer gets the word
+<code>reverse</code> which it recognizes
+as a command that needs one list.
+So it pops the stack,
+getting the list <code>3 4 5 6</code>,
+and it reverses the elements.
+It then pushes the result back onto the stack,
+so the stack has the list
+<code>6 5 4 3</code> on top.
+</p>
+<p>
+Let's look at another command, <code>ramp</code>:
+</p>
+
+<table class="table table-striped table-bordered table-condensed">
+    <thead>
+		<tr>
+			<td>Command</td>
+			<td>Shortcut</td>
+			<td>Wrap</td>
+			<td>Resize</td>
+			<td>Summary</td>
+		</tr>
+    </thead>
+    <tbody>
+      <tr>
+			<td><b>A</b> <b>B</b> ramp</td>
+			<td>-</td>
+			<td>Y</td>
+			<td> </td>
+			<td><b>A</b>, up or down as needed to stay in domain, <b>B</b></td>
+      </tr>
+	</tbody>
+</table>
+
+<h1>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</h1>
+
+
 The idea is that we take the 5 and
 <em>push</em> it on top of a stack
 of numbers (the stack starts out empty),
@@ -804,6 +1029,34 @@ Ai refers to the i'th element of A,
 and Bi is the same for B.
 
 <h2>AWL Summary</h2>
+
+
+<table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
 
 <table id="awlsummary">
 <tr>
@@ -979,7 +1232,7 @@ and Bi is the same for B.
 	<td>-</td>
 	<td>Y</td>
 	<td> </td>
-	<td>Go up or down as needed to stay in domain</td>
+   <td><b>A</b>, up or down as needed to stay in domain, <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <em>c</em> ramploop</td>
@@ -1087,25 +1340,25 @@ and Bi is the same for B.
 	<td>Like up, but includes <em>c</em> runs as well</td>
 </tr>
 <tr class="alt">
-	<td>veclen</td>
+	<td><b>A</b> veclen</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Push the length of the list at the top of the stack</td>
+	<td>Push <b>A</b> back ont the stack, then the length of <b>A</b></td>
 </tr>
 <tr>
-	<td>vmax</td>
+	<td><b>A</b> vmax</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Push largest element in list at top of stack</td>
+	<td>Push <b>A</b> back ont the stack, then the largest element in <b>A</b></td>
 </tr>
 <tr class="alt">
-	<td>vmin</td>
+	<td><b>A</b> vmin</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Push smallest element in list at top of stack</td>
+	<td>Push <b>A</b> back ont the stack, then the smallest element in <b>A</b></td>
 </tr>
 </table>
 
