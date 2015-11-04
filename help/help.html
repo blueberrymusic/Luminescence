@@ -12,53 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600' rel='stylesheet'>
 	<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
-
-	<style>
-
-		body {
-			padding-top: 20px;
-			font-size: 16px;
-			font-family: "Open Sans",serif;
-		}
-
-		h1 {
-			font-family: "Ubuntu", Arial, sans-serif;
-			font-weight: 800;
-			font-size: 40px;
-			margin-bottom: 30px;
-		}
-
-		h2 {
-			font-family: "Ubuntu", Arial, sans-serif;
-			margin-top: 40px;
-			margin-bottom: 20px;
-		}
-
-		h3 {
-			font-family: "Ubuntu", Arial, sans-serif;
-			margin-top: 40px;
-			margin-bottom: 20px;
-		}
-
-		h4 {
-			font-family: "Ubuntu", Arial, sans-serif;
-			margin-top: 40px;
-			margin-bottom: 20px;
-		}
-
-		figure {
-			margin-top: 40px;
-		}
-
-		figcaption {
-			margin-bottom: 40px;
-		}
-
-		.margin-base-vertical {
-			margin: 40px 0;
-		}
-
-	</style>
+	<link href="help.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -74,6 +28,8 @@
 <p>
 This is a quick-start guide to my online
 <a href="http://www.TK">Digital Loom</a>.
+Here's a shortcut to the
+<a href="#commands">commands summary</a>.
 </p>
 
 <p>
@@ -120,14 +76,17 @@ everything that's going on here.
 <p><a name='toc'></a></p>
 <h2>Table of Contents</h2>
 <ul>
-<li><strong>TK This list is all just placeholders right now TK</strong></li>
 <li><a href="#quickStart">Quick Start</a></li>
 <li><a href="#toc">Table of Contents</a></li>
 <li><a href="#overview">Overview of The Digital Loom</a></li>
-<li><a href="#howtoread">How To Read A Weaving Diagram</a></li>
-<li><a href="#awlIntro">Introduction to AWL</a></li>
-<li><a href="#awl">AWL</a></li>
-<li><a href="#using">How To Use The Digital Loom</a></li>
+<li><a href="#rightSide">The Right Side: The Draft</a></li>
+<li><a href="#bridge">The Bridge: Patterns</a></li>
+<li><a href="#leftSide">The Left Side: AWL Input (and Output)</a></li>
+<li><a href="#makingPatterns">Making Patterns: The AWL Language</a></li>
+<li><a href="#concepts">AWL Concepts</a></li>
+<li><a href="#commands">The AWL Commands</a></li>
+<li><a href="#notes">Notes on This Version of AWL</a></li>
+<li><a href="#interface">The Rest of the Interface</a></li>
 <li><a href="#colors">Colors</a></li>
 <li><a href="#faq">FAQ</a></li>
 <li><a href="#furtherReading">Further Reading</a></li>
@@ -165,6 +124,7 @@ section for more careful descriptions of the
 loom's elements and their names.
 </p>
 
+<p><a name='rightSide'></a></p>
 <h2>The Right Side: The Draft</h2>
 
 <p>
@@ -281,6 +241,7 @@ on the left hand side;
 we'll turn to those now.
 </p>
 
+<p><a name='bridge'></a></p>
 <h2>The Bridge: Patterns</h2>
 
 <p>
@@ -451,6 +412,7 @@ make big lists of numbers that
 lead to beautiful fabrics.
 </p>
 
+<p><a name='leftSide'></a></p>
 <h2>The Left Side: AWL Input (and Output)</h2>
 
 <p>
@@ -514,6 +476,7 @@ so you can play around with
 the inputs before you get to know the pattern language.
 </p>
 
+<p><a name='makingPatterns'></a></p>
 <h1>Making Patterns: The AWL Language</h1>
 
 <p>
@@ -677,19 +640,58 @@ large visual patterns with tons of interesting
 structure and detail.
 </p>
 
-<h1>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</h1>
-
+<p><a name='concepts'></a></p>
 <h2>AWL Concepts</h2>
+
 <p>
 AWL commands are also called <strong>operators</strong>,
 and the data they use are also called <strong>arguments</strong>.
 We call any item on a list an <strong>element</strong>,
 so in AWL any element is either a number or a color.
-All of the elements in any list must be the same,
-either all colors or all numbers.
+Any command that produces a result automatically
+pushes that result onto the stack when it's done.
 </p>
+
 <h3>Numbers and Lists</h3>
-<h3>Lists of Numbers or Colors</h3>
+<p>
+AWL lists can be made up of either numbers or colors,
+but you can't mix them.
+Many commands don't care what kind of list they get.
+For example, <code>reverse</code>
+simply pops a list off the stack,
+reverses the order of its elements,
+and pushes the result back on.
+You can give <code>reverse</code> a list
+of numbers or colors, and it will happilyd
+do its job.
+</p>
+<p>
+On the other hand, some commands require
+lists of numbers. 
+For example,
+<code>block</code> takes two lists
+(we'll call them <b>A</b> and <b>B</b>).
+It makes a new list by repeating each
+element of <b>B</b> the number of times
+given by the corresponding element of <b>A</b>.
+<code><b>A</b>=2 3 4</code>
+and
+<code><b>B</b>=1 5 8</code>,
+the result of block would be
+<code>1 1 5 5 5 8 8 8 8</code>.
+If <code><b>B</b>=yellow blue red</code>,
+the result of block would be
+<code>yellow yellow blue blue blue red red red red</code>.
+So for the <code>block</code> command,
+list <b>A</b> has to contain numbers,
+while list <b>B</b> can hold either numbers or colors.
+</p>
+<p>
+The table identifies whether each 
+list must be made up of all numbers,
+or all colors,
+or either.
+</p>
 
 <h3>How To Enter Two Lists In A Row</h3>
 <p>
@@ -750,20 +752,144 @@ as possible (so it's easy to understand and modify),
 I suggest leaving out those extraneous push
 commands (in my expressions, I always leave them out).
 </p>
+
 <h3>Results Get Pushed Automatically</h3>
+<p>
+Any command that produces a result will push
+that result back onto the stack automatically.
+If you start providing numbers or colors,
+they are presumed to be part of a new list,
+and are not tacked on to the end of the
+list that was just pushed as the result
+of the command.
+</p>
+<p>
+For exmaple, the expression
+<code>1 2 3 reverse 4 5</code>
+will produce a stack with two elements.
+On the bottom is the list <code>3 2 1</code>,
+and above it, 
+on the top of the stack,
+is the list <code>4 5</code>.
+</p>
+
 <h3>The Domain</h3>
+<p>
+When you have 8 threads in your warp
+and weft (the starting default),
+then your pattern can only contain the
+numbers 0 through 7.
+This range [0,7] is called the <strong>domain</strong>.
+</p>
+<p>
+The domain is most important when you're using
+counting commands.
+For example, <code>up</code>
+takes two lists as input 
+(as usual, we'll call them <b>A</b> and <b>B</b>).
+The result of <code>up</code> is the list <b>A</b>,
+followed by an ascending list of numbers that starts
+with the last value of <b>A</b> and ends at the
+first value of <b>B</b>, then the list <b>B</b>.
+For example, 
+<code>1 2 3 / 6 7 up</code>
+will produce
+<code>1 2 3 4 5 6 7</code>.
+In this example, <code>up</code> is counting
+upwards from 3 to 6,
+and including all the values in between 
+(4 and 5) in the output.
+But what should be in response to
+<code>3 5 6 / 2 2 up</code>?
+The answer is that the program still counts
+upward,
+but it respects the domain.
+When it gets to 8,
+which is outside the domain,
+that <em>wraps around</em> to the
+start of the domain, which is 0,
+and the counting continues.
+So the result of that expression is
+<code>3 5 6 7 0 1 2 2</code>.
+</p>
+<p>
+The same principle applies to counting down.
+For example,
+<code>3 5 6 / 2 2 down</code>
+produces
+<code>3 5 6 5 4 3 2 2</code>,
+while
+<code>2 3 / 6 5 down</code>
+produces
+<code>2 3 2 1 0 7 6 5</code>,
+where <code>down</code> inserted
+the short run <code> 2 1 0 7</code>
+as it tried to count dowwards from 3 to 6.
+</p>
+<p>
+You can set the two ends of the domain
+with the <code>domain</code> command,
+allowing you to change it mid-expression.
+For example, if your warp has only 4 threads,
+you probably want to wrap around your up counts
+after 3. 
+Consider this expression:
+<code>1 2 / 1 2 up</code>.
+Using the default domain, 
+you'd get back
+<code>1 2 3 4 5 6 7 0 1 2</code>.
+But if you want to use a domain from 0 to 3,
+you'd write
+<code>0 / 3 domain 1 2 / 1 2 up</code>,
+which would produce
+<code>1 2 3 0 1 2</code>.
+Keep in mind that your new domain will remain
+in effect until you change it again.
+Each input box maintains its own domain,
+and it always starts out with the range [0,7].
+</p>
+
 <h3>Automatic Resizing</h3>
 
-<h3>Table Conventions</h3>
 <p>
-All the commands in the AWL language are
-given in a big table below.
-Before we get to that,
-let's see how to interpret the table entries.
-Along the way we'll cover some fundamental
-concepts that AWL depends on.
-An important convention in the table is that
-capital letters <b>A</b> and <b>B</b>
+Some commands require both lists to have
+the same length.
+For exmaple, we saw above that <code>block</code>
+takes two lists, <b>A</b> and <b>B</b>.
+It takes the first number in <b>A</b>,
+and repeats the first element of <b>B</b> that
+many times.
+Then it gets the second number in <b>A</b>,
+and repeats the second element of <b>B</b> that
+many times.
+Because the elements of the two lists are
+matched up one to one,
+both lists need to have the same length,
+or the same number of elements.
+</p>
+<p>
+All of the commands that have this requirement
+will automatically <em>resize</em> the input
+lists for you by repeating the shorter one
+as needed until it's as long as the longer
+list (if the repeated list gets too long,
+we just drop the extraneous elements at the end).
+This doesn't change your input lists,
+and it all happens under the hood.
+But we identify which commands automatically
+resize for you,
+so you won't have to spend effort doing it yourself.
+</p>
+
+<p><a name='commands'></a></p>
+<h2>The AWL Commands</h2>
+
+<p>
+Here we'll collect all the AWL commands 
+together in a big table.
+In this table,
+the
+bold capital letters <b>A</b> and <b>B</b>
 stand for lists,
 and lower-case letters
 <var>c</var> and <var>d</var>
@@ -771,244 +897,31 @@ stand for single numbers
 (technically, a single number is a list,
 but here we mean to indicate that this
 list must have only one element).
-Also remember that every command that 
-produces a new result will push that result
-back onto the stack when it's done.
-</p>
-<h2>AWL Commands</h2>
-<h2>Examples</h2>
-<h3>Reverse</h3>
-<p>
-Let's look at the entry for
-<code>reverse</code>.
-</p>
-
-<table class="table table-striped table-bordered table-condensed">
-    <thead>
-		<tr>
-			<td>Command</td>
-			<td>Shortcut</td>
-			<td>Wrap</td>
-			<td>Resize</td>
-			<td>Summary</td>
-		</tr>
-    </thead>
-    <tbody>
-      <tr>
-			<td><strong>A</strong> reverse</td>
-			<td>@</td>
-			<td> </td>
-			<td> </td>
-			<td>reverse the elements of <strong>A</strong></td>
-      </tr>
-	</tbody>
-</table>
-
-<p>
-The first column summarizes the command.
-This tells us that the command
-<code>reverse</code> takes one
-argument: a list.
-That means that when the computer
-encounters the command <code>reverse</code>,
-it will pop one list off the top of the stack
-(if the stack is empty, you'll get an error).
-The next column tells us that we can just
-type the shortcut <code>@</code> instead
-of the word <code>reverse</code> if we want.
-Let's ignore the next two columns for now.
-Finally, the summary tells us that 
-the operator reverses the elements of 
-<b>A</b>
-(and, by convention, pushes the result back onto the stack).
+A0 and AL refer to the first
+and last elements of list A (and B0 and BL do the
+same for list B).
+Ai refers to the i'th element of A,
+and Bi is the same for B.
 </p>
 <p>
-For example,
-<code>3 4 5 6 reverse</code>
-(remember this is the same as
-<code>3 4 5 6 push reverse</code>),
-will read the <code>3</code>,
-push it onto the top of the stack,
-then read the <code>4</code> and append
-it to the growing list on top of the stack,
-and the same for the next two numbers,
-so eventually the top of the stack has
-the list <code>3 4 5 6</code>.
-Now the computer gets the word
-<code>reverse</code> which it recognizes
-as a command that needs one list.
-So it pops the stack,
-getting the list <code>3 4 5 6</code>,
-and it reverses the elements.
-It then pushes the result back onto the stack,
-so the stack has the list
-<code>6 5 4 3</code> on top.
+The column headings can be interpreted this way:
 </p>
-<h3>Ramp</h3>
-<p>
-Let's look at another command, <code>ramp</code>:
-</p>
-
-<table class="table table-striped table-bordered table-condensed">
-    <thead>
-		<tr>
-			<td>Command</td>
-			<td>Shortcut</td>
-			<td>Wrap</td>
-			<td>Resize</td>
-			<td>Summary</td>
-		</tr>
-    </thead>
-    <tbody>
-      <tr>
-			<td><b>A</b> <b>B</b> ramp</td>
-			<td>-</td>
-			<td>Y</td>
-			<td> </td>
-			<td><b>A</b>, up or down as needed to stay in domain, <b>B</b></td>
-      </tr>
-	</tbody>
-</table>
-
-
-
-The idea is that we take the 5 and
-<em>push</em> it on top of a stack
-of numbers (the stack starts out empty),
-then we push the 3 on top of that,
-and then the + operator 
-</em>pops</em> the 3 off the top,
-then it pops the 5,
-adds them to get 8,
-and pushes 8 back onto the top of
-of this now-empty stack.
-When we're done with an expression,
-the stack has one element in it which
-holds our result.
-Note that sometimes order matters:
-"5 10 /" results in 0.5,
-while "10 5 /" results in 2.
-There is much, much more on stack languages
-available on the web and in my papers and
-book chapter mentioned at the start of this document.
-</p>
-<p>
-AWL is just a little different than the
-calculator example,
-because instead of thinking of a single number
-as our fundamental object,
-AWL thinks of <em>lists</em> as the basic object.
-In AWL, lists can be made up of numbers or colors.
-For now, we'll stick just to numbers.
-</p>
-<p>
-A list is any list of numbers separated by spaces.
-<code>3 4 5</code> is a list.
-<code>4</code> is also a list, though a very short one.
-As AWL reads each number from your input area,
-it appends it to the end of the growing list on the
-top of the stack.
-This means that if you want to start a new list,
-or even just put one number on the stack,
-you have to tell AWL that you're done appending
-to the current top of the stack.
-You can do this easily by saying <code>push</code>.
-If you have a growing list on the stack when you 
-call </code>push</code>,
-AWL pushes a new, blank list on top of the stack.
-</p>
-<p>
-For example,
-suppose you want to repeat the sequence <code>5 6 7</code>
-a total of <code>3</code> times.
-You find the command <code>repeat</code>
-which takes two arguments:
-first, a list, and second, a number of times to repeat that list.
-So the stack should have at least two things on it when you call 
-<code>repeat</code>:
-the list you want to repeat,
-and on top of that,
-the number of repeats.
-In our example, then, you'd write <code>5 6 7 push 3 repeat</code>,
-and you'd get back
-<code>5 6 7 5 6 7 5 6 7</code>.
-</p>
-<p>
-Note that this would fail if you left out the <code>push</code>,
-writing only <code>5 6 7 3 repeat</code>.
-Remember that <code>repeat</code> wants to pop two things
-off the stack, and if you wrote this most recent string
-you'd just have the list <code>5 6 7 3</code>.
-You might argue that <code>repeat</code> should be smart enough
-to be able to figure this out and use the last element in
-the list as the repeat count,
-but it turns out that this is just asking for trouble.
-Allowing for this sort of thing just invites a world of errors
-and mistakes.
-</p>
-<p>
-So just get in the habit of separating the end of one
-list and the start of another 
-with <code>push</code>.
-</p>
-<p>
-Like many AWL commands, both 
-<code>repeat</code>
-and
-<code>push</code>
-have shortcuts to make typing easier.
-<code>repeat</code>
-may be written simply as
-<code>*</code>
-and
-<code>push</code>
-is abbreviated
-<code>/</code>.
-So our most recent example could be written
-<code>5 6 7 / 3 *</code>.
-You can use the full names any time you want to,
-of course,
-but I suggest getting used to the shortcuts.
-You'll get used to seeing idioms that you'll
-be using over and over,
-and the shorter expression makes it easier to
-take it all in at a glance.
-</p>
-
-<p>
-I mentioned before that AWL supports lists of colors.
-These are for the boxes where you create inputs for the
-warp and weft colors.
-You can refer to a color simply by giving its name,
-hex value, or rgb values
-(see the section on colors later).
-When you're building up a list, AWL treats the colors
-just like numbers.
-Note, though, that you can't use a color when AWL
-is expecting a number.
-For example, if you want to repeat the list
-<code>green orange</code> three times,
-you need to make the second argument the number <code>3</code>,
-so it would appear <code>green orange / 3 *</code>.
-Trying to repeat the list <code>purple</code> times
-wouldn't make any sense, and you'd get an error.
-Generally speaking, you can use a color anywhere except
-where AWL is explicitly expecting a number.
-Like the other lists,
-each list of colors gets automatically repeated as many
-times as necessary to create your fabric.
-</p>
-
-<p>
-So you'll write expressions that
-produce patterns of numbers for the warp and weft,
-patterns of colors for the warp and weft colors,
-and patterns of 0's and 1's for the tie-up.
-The computer will use your patterns to fill in
-the corresponding part of the draft,
-and then keep repeating it as needed to make
-the entire fabric.
-</p>
+<ul>
+<li><strong>Command:</strong>  The command name
+</li>
+<li><strong>Short:</strong> The command's shortcut, if it has one
+</li>
+<li><strong>List A:</strong>  N if <b>A</b> must be numbers, C if <b>A</b> must be colors
+</li>
+<li><strong>List B:</strong>  N if <b>B</b> must be numbers, C if <b>B</b> must be colors
+</li>
+<li><strong>Wrap:</strong> does this command produces numbers that might wrap around the domain
+</li>
+<li><strong>Resize:</strong>  does this command make both lists the same size by repeating the shorter list
+</li>
+<li><strong>Summary:</strong> A short description of what the command does
+</li>
+</ul>
 
 <p>
 AWL has a bit more than 40 commands. I won't run through
@@ -1021,75 +934,50 @@ list of
 or read in 
 <a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">my book</a>
 that collects those columns.
+Note that this version of AWL is a bit different than
+what's described in those references.
+After the table is a summary of the differences.
 </p>
 <p>
-While re-writing AWL for this website, I made a few changes
-from the version in those references.
-Below is a summary of the AWL commands available to you online,
-and below that is a short summary of what's different about
-what's here from what was in the columns.
+Remember that the first thing popped off the stack is the
+most recent thing pushed.
+So for example, the commmand summarized
+<code><b>A</b> <b>B</b> <var>c</va> ramploop</code>
+expects three elements on the stack:
+on top (and most recently pushed) is the number <var>c</var>,
+under it (and pushed just before <var>c</var>) is the list <b>B</b>,
+and on the bottom (and first thing pushed in this group) is the list <b>A</b>.
 </p>
-<p>
-In the following,
-A and B refer to lists.
-The letters c and d refer to single numbers.
-Remember that each argument,
-whether a list or a number,
-must be in its own element on the stack.
-A0 and AL refer to the first
-and last elements of list A (and B0 and BL do the
-same for list B).
-Ai refers to the i'th element of A,
-and Bi is the same for B.
-
-<h2>AWL Summary</h2>
 
 
-<table class="table table-striped table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
+<table id="awlsummary" class="table table-striped table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th>Command</th>
+			<th>Short</th>
+			<th>List <b>A</b></th>
+			<th>List <b>B</b></th>
+			<th>Wrap</th>
+			<th>Resize</th>
+			<th>Summary</th>
+		</tr>
+	</thead>
+	<tbody>
 
-<table id="awlsummary">
-<tr>
-	<th>Command</th>
-	<th>Shortcut</th>
-	<th>Wrap</th>
-	<th>Resize</th>
-	<th>Summary</th>
-</tr>
 <tr>
 	<td><b>A</b> binary0</td>
 	<td>b0</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Treat <b>A</b> as alternating runs of 0s and 1s</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> binary1</td>
 	<td>b1</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Treat <b>A</b> as alternating runs of 1s and 0s</td>
@@ -1098,12 +986,16 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> block</td>
 	<td>#</td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Each <b>A</b>i is repeated <b>B</b>i times</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> blockpal</td>
 	<td>#p</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td>Y</td>
 	<td>block with internal palindrome</td>
@@ -1113,67 +1005,87 @@ and Bi is the same for B.
 	<td> </td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Erase the stack</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> concat</td>
 	<td>,</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Concatenate the top two stack elements</td>
 </tr>
 <tr>
-	<td><em>c</em> <em>d</em> domain</td>
+	<td><var>c</var> <var>d</var> domain</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Set the domain to [<em>c</em>, <em>d</em>]</td>
+	<td> </td>
+	<td> </td>
+	<td>Set the domain to [<var>c</var>, <var>d</var>]</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> down</td>
 	<td>&gt;</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td> </td>
 	<td><b>A</b>, descending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <em>c</em> downloop</td>
+	<td><b>A</b> <b>B</b> <var>c</var> downloop</td>
 	<td>&gt;l</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td> </td>
-	<td>Like down, but includes <em>c</em> runs as well</td>
+	<td>Like down, but includes <var>c</var> runs as well</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> downup</td>
 	<td>&gt;u</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Y*</td>
 	<td>Alternating down and up runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <em>c</em> downuploop</td>
+	<td><b>A</b> <b>B</b> <var>c</var> downuploop</td>
 	<td>&gt;ul</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Y*</td>
-	<td>Like downup but include <em>c</em> runs as well</td>
+	<td>Like downup but include <var>c</var> runs as well</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> dup</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Pop the top of the stack and push it back twice</td>
 </tr>
 <tr>
-	<td><strong>A</strong> <em>d</em> extend</td>
+	<td><strong>A</strong> <var>d</var> extend</td>
 	<td>+</td>
 	<td> </td>
 	<td> </td>
-	<td>repeat or clip <b>A</b> to <em>d</em> elements</td>
+	<td> </td>
+	<td> </td>
+	<td>repeat or clip <b>A</b> to <var>d</var> elements</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> growblock</td>
 	<td>=</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td>Y</td>
 	<td>Interleave <b>A</b> with growing palindromes of <b>B</b></td>
@@ -1182,12 +1094,16 @@ and Bi is the same for B.
 	<td><b>A</b> iblock</td>
 	<td>i#</td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Like block but the inputs are interleaved in <b>A</b></td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> iblockpal</td>
 	<td>i#p</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td>Y</td>
 	<td>iblock with internal palindrome</td>
@@ -1196,25 +1112,33 @@ and Bi is the same for B.
 	<td><b>A</b> <b>B</b> interleave</td>
 	<td>%</td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
 </tr>
-<tr class="alt">
-	<td><b>A</b> <em>d</em> nth</td>
+<tr>
+	<td><b>A</b> <var>d</var> nth</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Take every <em>d</em>'th element of <b>A</b></td>
+	<td> </td>
+	<td> </td>
+	<td>Take every <var>d</var>'th element of <b>A</b></td>
 </tr>
 <tr>
 	<td><b>A</b> palindrome</td>
 	<td>|</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td><b>A</b> followed by its near reversal</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> pbox</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
@@ -1225,10 +1149,14 @@ and Bi is the same for B.
 	<td> </td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Use elements of <b>B</b> to index <b>A</b></td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> pop</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
@@ -1239,73 +1167,95 @@ and Bi is the same for B.
 	<td>/</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Consider all since last command a single list</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> ramp</td>
 	<td>-</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td> </td>
    <td><b>A</b>, up or down as needed to stay in domain, <b>B</b></td>
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <em>c</em> ramploop</td>
+	<td><b>A</b> <b>B</b> <var>c</var> ramploop</td>
 	<td>-l</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td> </td>
-	<td>Like ramp but include <em>c</em> runs as well</td>
+	<td>Like ramp but include <var>c</var> runs as well</td>
 </tr>
-<tr class="alt">
-	<td><b>A</b> <em>d</em> repeat</td>
+<tr>
+	<td><b>A</b> <var>d</var> repeat</td>
 	<td>*</td>
 	<td> </td>
 	<td> </td>
-	<td>repeat <b>A</b> a total of <em>d</em> times</td>
+	<td> </td>
+	<td> </td>
+	<td>repeat <b>A</b> a total of <var>d</var> times</td>
 </tr>
 <tr>
 	<td><strong>A</strong> reverse</td>
 	<td>@</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>reverse the elements of <strong>A</strong></td>
 </tr>
-<tr class="alt">
-	<td><b>A</b> <em>d</em> rotatel</td>
+<tr>
+	<td><b>A</b> <var>d</var> rotatel</td>
 	<td><<</td>
 	<td> </td>
 	<td> </td>
-	<td>rotate <b>A</b> left by <em>d</em> steps</td>
+	<td> </td>
+	<td> </td>
+	<td>rotate <b>A</b> left by <var>d</var> steps</td>
 </tr>
 <tr>
-	<td><b>A</b> <em>d</em> rotater</td>
+	<td><b>A</b> <var>d</var> rotater</td>
 	<td>>></td>
 	<td> </td>
 	<td> </td>
-	<td>rotate <b>A</b> right by <em>d</em> steps</td>
+	<td> </td>
+	<td> </td>
+	<td>rotate <b>A</b> right by <var>d</var> steps</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> swap</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Exchange the top two stack elements</td>
 </tr>
-<tr class="alt">
-	<td><b>A</b> <em>d</em> stencil</td>
+<tr>
+	<td><b>A</b> <var>d</var> stencil</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td><em>d>1</em>: skip <b>A</b>0, keep the next <em>d-1</em> entries, skip the next, repeat</td>
+	<td> </td>
+	<td> </td>
+	<td><var>d>1</var>: skip <b>A</b>0, keep the next <var>d-1</var> entries, skip the next, repeat</td>
 </tr>
 <tr>
 	<td><b>A</b> tartan</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Like iblock but repeats are half length</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> tartanpal</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Y</td>
@@ -1316,25 +1266,33 @@ and Bi is the same for B.
 	<td>:</td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Create a subarticulation using <b>B</b> as a template</td>
 </tr>
-<tr class="alt">
-	<td><b>A</b> <em>c</em> <em>d</em> twilll</td>
+<tr>
+	<td><b>A</b> <var>c</var> <var>d</var> twilll</td>
 	<td>t&lt;&lt;</td>
 	<td> </td>
 	<td> </td>
-	<td>Rotate left by <em>c</em> steps, <em>d</em> times</td>
+	<td> </td>
+	<td> </td>
+	<td>Rotate left by <var>c</var> steps, <var>d</var> times</td>
 </tr>
 <tr>
-	<td><b>A</b> <em>c</em> <em>d</em> twillr</td>
+	<td><b>A</b> <var>c</var> <var>d</var> twillr</td>
 	<td>t&gt;&gt;</td>
 	<td> </td>
 	<td> </td>
-	<td>Rotate right by <em>c</em> steps, <em>d</em> times</td>
+	<td> </td>
+	<td> </td>
+	<td>Rotate right by <var>c</var> steps, <var>d</var> times</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> <b>B</b> up</td>
 	<td>&lt;</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td> </td>
 	<td><b>A</b>, ascending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
@@ -1342,26 +1300,34 @@ and Bi is the same for B.
 <tr>
 	<td><b>A</b> <b>B</b> updown</td>
 	<td>&lt;d</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Y*</td>
 	<td>Alternating up and down runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
-<tr class="alt">
-	<td><b>A</b> <b>B</b> <em>c</em> updownloop</td>
+<tr>
+	<td><b>A</b> <b>B</b> <var>c</var> updownloop</td>
 	<td>&lt;dl</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td>Y*</td>
-	<td>Like updown but include <em>c</em> runs as well</td>
+	<td>Like updown but include <var>c</var> runs as well</td>
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <em>c</em> uploop</td>
+	<td><b>A</b> <b>B</b> <var>c</var> uploop</td>
 	<td>&lt;l</td>
+	<td> </td>
+	<td> </td>
 	<td>Y</td>
 	<td> </td>
-	<td>Like up, but includes <em>c</em> runs as well</td>
+	<td>Like up, but includes <var>c</var> runs as well</td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> veclen</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
@@ -1372,19 +1338,26 @@ and Bi is the same for B.
 	<td> </td>
 	<td> </td>
 	<td> </td>
+	<td> </td>
+	<td> </td>
 	<td>Push <b>A</b> back ont the stack, then the largest element in <b>A</b></td>
 </tr>
-<tr class="alt">
+<tr>
 	<td><b>A</b> vmin</td>
+	<td> </td>
+	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td>Push <b>A</b> back ont the stack, then the smallest element in <b>A</b></td>
 </tr>
-</table>
+    </tbody>
+  </table>
 
 
-<h2>Notes on AWL</h2>
+
+<p><a name='notes'></a></p>
+<h2>Notes on This Version of AWL</h2>
 
 <p>
 Here are the key differences between what's in 
@@ -1395,8 +1368,6 @@ and what's implemented here.
 </p>
 
 <ul>
-<li>domain min clamped to 0. max is >= min+1 </li>
-<li>On output, negative warp and weft values are 0</li>
 <li><strong>template:</strong> Templates are no longer automatically made relative to the
 first number in the second list. So the values you add to each
 number in your starting list are simply the numbers you provide.
@@ -1448,6 +1419,11 @@ and then a fourth time to produce
 giving a final result of
 <code>0 1 2 3 3 0 1 2 2 3 0 1 1 2 3 0</code>.
 </li>
+<li>The domain minimum is set to 0 if you try to make it negative.
+The domain maximum is always 1 more than the minimum.</li>
+<li>When the warp and weft patterns are copied to the draft,
+any values less than 0 are set to 0.</li>
+<li>The <code>stencil</code> command is new.</li>
 </ol>
 </li>
 </ul>
@@ -1457,12 +1433,19 @@ Here are some helpful hints to keep in mind.
 </p>
 
 <ul>
-<li>Start simple, and add small bits of complexity one step at a time</li>
-</li>The output window will always show you what's on top of the stack. Feel free
-to ignore the fabric while you experiment with AWL commands and see what they turn into.</li>
+<li>AWL expressions can get complicated very quickly if you let them.
+Start simple, and add small bits of complexity one step at a time.</li>
+<li>The output window will always show you what's left on top of the stack
+when your expression has been evaluated. </li>
+<li>A good way to experiment with AWL commands and get a feeling for them
+is to ignore the loom and the fabric. Just write little expressions in one
+of the input windows and press the arrow,
+and see what it generates by looking at the output window below.
+</li>
 <li>Remember to push between lists! This is an easy thing to forget.</li>
 <li>Make sure to keep track of your domain. It starts at [0,7] for both warp and
-weft, so if you change that, remember your change or set it back to [0,7].</li>
+weft. If you change it, that change stays in effect for the rest of that
+expression. You can always set it back to [0,7] if you want.
 <li>Make sure you have the tie-up sizes set the way you like. The tie-up doesn't
 automatically re-size to fit your warp or weft (that would make it much harder
 to experiment with your drafts).</li>
@@ -1470,147 +1453,205 @@ to experiment with your drafts).</li>
 not everything has to be a clever AWL construction.
 For example, if you want the pattern <code>0 1 3 5 2</code>,
 it's probably easiest to just type that directly into the text area
-and move on.</li>
+and move on.
+This is particularly useful for colors,
+where the lists are frequently just a single color.
+</li>
 </ul>
 
-<h2>A Worked Example</h2>
+<p><a name='interface'></a></p>
+<h2>The Rest of the Interface</h2>
 
-<p>
-I find that I almost never draw out a draft
-before typing it in.
-Instead, I start with something simple and
-then modify it, following my intution,
-as it starts to develop into something interesting.
-Here's an exmaple of that process.
-</p>
+Here's what the rest of the controls do.
 
+<h3>Fabric and Tie-up Size</h3>
 <p>
-A nice starting point is a simple twill.
-We just put triangle waves in both the warp and weft,
-and diagonal stripes in the tie-up.
-I'll just pick a couple of constant colors for
-both the warp and weft for now.
-See Figure 4.
+Just above the fabric there are three boxes for you to type in numbers.
 </p>
 <ul>
-<li><strong>Warp:</strong> <code>0 1 / 7 updown</code></li>
-<li><strong>Weft:</strong> <code>0 1 / 7 updown</code></li>
-<li><strong>Warp colors:</strong> <code>LightSeaGreen</code> </li>
-<li><strong>Weft colors:</strong> <code>Navy </code></li>
-<li><strong>Tie-up:</strong> <code>1 1 1 1 0 0 0 0 / 1 / 8 t>></code></li>
+<li><strong>Fabric size:</strong> The fabric is always a square. This tells
+the program how big that square should be. The warp and weft patterns and
+colors are simply repeated as necessary to match the fabric's size.
+</li>
+<li><strong>Tie-up width:</strong> </li>
+<li><strong>Tie-up height:</strong> You can make the tie-up any size you
+like, as long as each dimension is at least 2 units.
+The data in the tie-up AWL input is used to fill in the grid
+starting at the top left and going right,
+then down a row and repeating left to right,
+and so on.
+If there's more data in the tie-up pattern than is needed,
+the extra is just ignored.
+If the tie-up pattern isn't long enough to fill up the grid,
+it's repeated as needed.
 </ul>
 
-<div class="fig figcenter fighighlight">
-  <img src="images/figure.jpg">
-  <div class="figcaption">
-TK TK Making a draft, Step 1.
-</div>
-</div>
+<h3>Saving and Loading</h3>
 
-<strong>more steps go here TK TK TK TK TK</strong>
+<h4>Saving The Fabric</h4>
 
-start with simple start twill
-<code>0 1 / 7 updown </code>
-<code>0 1 / 7 updown </code>
-<code>DeepSkyBlue </code>
-<code>PowderBlue </code>
-<code>1 1 1 1 0 0 0 0 / 1 / 8 t<< </code>
-try changing the tiup to 
-<code>1 1 0 1 0 0 1 0 / 1 / 8 t<< </code>
-
-<p><a name="furtherReading"></a></p>
-</h2>Further Reading</h2>
-If you want more information on looms and weaving,
-how to read a draft, and how to use my pattern language,
-you can find much more detailed descriptions in
-two places.  
-First, you can read the original articles
-where I described this project by going to the page with
-<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">all of my CG&A columns</a>,
-and scrolling down to the three entries titled <em>Digital Weaving Part 1, 2,</em> and <em>3</em>.
-(while you're there, you can also check out
-<a href="http://www.glassner.com" target="_blank">other stuff I do</a>).
-Or you can read collected and revised versions of those columns in my book
-<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs,
-Mallards, and Montages: Computer-Aided Imagination</a>,
-which you can buy online or find in your local library.
+<p>
+To save the image of the fabric,
+just right-click on it.
+You should get a pop-up menu that
+offers you a few options.
+One of these will be <em>Save Image As...</em>
+(or something close to that).
+Choose that,
+and you'll get a standard dialog box
+letting you put the image where you want it.
+The image is saved in the standard PNG format,
+which offers the highest quality.
+You can change that to JPG or anything else
+using almost any image editing program.
 </p>
+
+<h4>Saving and Loading The Draft</h4>
+
+<p>
+To save your draft,
+give it a name by typing
+in the text box at the very 
+top of the window,
+and then press the <strong>Save</strong> button.
+</p>
+<p>
+Note that you will <em>not</em> get a file
+dialog box!
+So where does your draft go?
+It goes into some private storage that's controlled
+by the browser.
+The downsides of this technique are that this storage
+is per-browser,
+so for exmaple if you use the program in Firefox and 
+save a bunch of drafts,
+they'll be visible to Firefox,
+but not to Chrome or Safari.
+Each of these browsers will have its own private
+collection of drafts, and you can't share them
+between browsers or even with other people.
+I know this is pretty lousy,
+but all browsers are
+<em>deliberately</em> prevented from talking to
+your computer's local disk.
+So this is the best solution I could come up with.
+See the FAQ for more technical details.
+<p>
+
+
+<p>
+To load a draft, click on the <strong>Load Draft:</strong>
+button.
+You'll see a list with two parts.
+The top part lists all of the drafts you've saved using
+this browser (the list will vary for each browser,
+as discussed above).
+Under that, you'll see a list about 25 presets,
+or demos.
+</p>
+
+<p>
+Finally, you can delete a draft from your local
+storage by choosing it with the <strong>Load Draft:</strong>
+button (or just typing its name into the draft name box)
+and then pressing the <strong>Delete</strong> button.
+</p>
+
+<p>
+Note that you can save new copies of the built-in presets,
+using even the very same names.
+The system always looks for your personal drafts before
+it looks at the presets, so if you use the same name as a
+preset you'll always get your version.
+You can't delete the presets.
+</p>
+
+<p><a name="colors"></a></p>
+<h2>Colors</h2>
 
 <p><a name="faq"></a></p>
 <h2>FAQ</h2>
 
-<p><strong>Where's + and - etc.?</strong></p>
+<h3>The table is way too cryptic. What do these commands do?</h3>
 <p>
-TK answer here
-</p>
-<p><strong>How do I save and load my drafts?</strong></p>
-<p>
-To <strong>save</strong> a draft, enter the name you want to use in the text box to
-the right of the Save button, and then press the Save button.
-If a draft of that name already exists, you'll be propted to confirm
-you want to over-write it.
-The demos at the bottom are built-in and you can't over-write them,
-but you can make new versions of your own with the same names.
-</p>
-<p>
-To <strong>load</strong> a draft, just select it from the drop-down list.
-</p>
-<p>
-To <strong>delete</strong> a draft, press the Delete button. It will attempt to delete
-the draft named in the text box next to the Save button,
-and confirm with you that you really want to delete it.
-</p>
-<p>
-The drafts are not saved as little files, so you don't
-need a file extension (like .txt) after their names.
-</p>
-<p><strong>How do I save my fabric image?</strong></p>
-<p>
-Right-click on fabric and you should get a pop-up menu. Choose "Save Image As..."
-(or whatever is closest to that), and you should get your standard file save
-dialog box, letting you put the image anywhere you want. It's saved in PNG
-format for best quality; you can turn this into JPG or GIF or anything else
-you like with any photo editing program.
-</p>
-<p><strong>How do I share my drafts?</strong></p>
+The table is just a quick reference.
+You can find a description of each 
+command in Part 2 of my 3-part column
+on Digital Weaving.
+You can find an online PDF in my big list of
+<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns</a>.
+You can also find those columns,
+collected and revised, in my book
+<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs, 
+Mallards, and Montages</a>
+If you prefer to learn by doing,
+try experimenting.
+Just type in stuff and see what comes out.
+
+<h3>How do I share my drafts?</strong></h3>
 <p>
 Right now, it's a hassle (other questions here go into the reasons).
-Until browsers catch up with their aspirations,
+As I discussed in the section on saving your draft,
+your files go into a special file that's maintained by the
+browser, and you can't get at it.
+This is scheduled to change someday soon,
+and you'll be able to save and open files from your
+local disk as usual (though with some restrictions).
+Until that day arrives,
 here's the best way to save a draft so you can share 
 it with someone else.
 Open a text editor and make a new, blank file.
-Type the words "warp pattern:".
+Copy the following eight lines and paste them
+into your text editor.
+It wouldn't hurt to enter a few blank lines
+after each of these.
+</p>
+
+<ul>
+<li>Warp Pattern:</li>
+<li>Weft Pattern:</li>
+<li>Warp Colors:</li>
+<li>Weft Colors:</li>
+<li>Tie-Up:</li>
+<li>Fabric Size:</li>
+<li>Tie-up Width:</li>
+<li>Tie-up Height:</li>
+</ul>
+
+<p>
 Now click in your browser,
-copy the text in the warp pattern input box,
-and paste that into the your file.
-Still in the text file,
-type "weft pattern:",
-then click in the browser,
-copy the text in the input box for the weft pattern,
-and paste that into the text file.
-Follow the same thing for the warp and weft colors,
-and the tie-up.
-At the bottom, type "Tie-up sizes" and type in the values
-that you have the tie-up size set to (see the boxes directly
-above the fabric).
-If you want to save the fabric size,
-give that a line in the text file as well.
-Now you have a file with the AWL for your draft,
-plus the tie-up and fabric sizes.
-Save that file.
+click on the "Warp Pattern" button just above the output area,
+copy the text in the output box,
+and paste that into the your file
+under "Warp Pattern:".
+Repeat this for the four other input areas.
+Then type into your text file the current
+values for the fabric size, tie-up width, and tie-up height.
 </p>
 <p>
+Now you have a file with the AWL that
+completely describes your draft.
+Save the file from your text editor.
 Since that's a normal text file, you can copy it or
 back it up or share it or do whatever you like with it.
+You can even give it to someone with a real loom,
+and they'll be able to weave your fabric!
+(Actually, they'd probably prefer a file in the
+standard weaving format known as WIF;
+see the question on WIF below).
+</p>
+<p>
 Unfortunately, 
 the program can't read that file,
-so to get the information back into the Digital Loom
+so for you or your friends
+to get the information back into the Digital Loom
 you need to reverse the process.
 Open the file in a text editor,
-then one field at a time,
-copy the text from the text file (just the AWL expressions,
+then work one field at a time,
+copying the text from the text file (just the AWL expressions,
 not your labels - those are just there so you know which is which)
-and paste that text into the text boxes.
+and paste that text into the text boxes
+(remember to press the corresponding arrow after each paste).
 Then set the tie-up sizes and fabric size if necessary.
 Remember you need to press the arrow button to the right
 of <em>each</em> input field to 
@@ -1627,7 +1668,7 @@ only you'd copy the <em>output</em> fields instead.
 Those hold the pattern data that you'd then use to
 set up a real, physical loom to weave your design.
 </p>
-<p><strong>Why is all this file stuff so awkward?</strong></p>
+<he>Why is all this file stuff so awkward?</h3>
 <p>
 Actually, it's kind of remarkable that we can manage to save and recall anything at all.
 The reasons are technical. If you're into that, read on.
@@ -1663,7 +1704,8 @@ database managed by the browser (that's why we can't use this method to save fil
 you can share with other people (that's why we can't use this method to save files
 you can share with other people)).
 </p>
-<p><strong>Can I save my draft in the WIF weaving-file format to share with other weavers, or use to set up a real loom?</strong></p>
+
+<h3>Can I save my draft in the WIF weaving-file format to share with other weavers, or use to set up a real loom?</h3>
 <p>
 Oh, how I wish the answer was "yes", but it's not. In fact, I have written all
 the code to support reading and writing WIF files.
@@ -1683,7 +1725,8 @@ as the current international spec calls upon them to do,
 then I'll very happily change the draft saving and loading 
 to use WIF files by defaultt.
 </p>
-<p><strong>Why am I getting a really weird error when my AWL looks fine?</strong></p>
+
+<he>Why am I getting a really weird error when my AWL looks fine?</h3>
 <p>
 A very frequent cause of weird errors is messing up the spacing rule.
 Remember that each <em>word</em> in AWL must be surrounded by space.
@@ -1695,7 +1738,9 @@ you'd write <code>, , ,</code> with a space between each comma.
 Leaving out those spaces, or including extra ones where they don't belong,
 is an easy mistake to make.
 </p>
-<p><strong>How do I debug my AWL?</strong></p>
+
+
+<h3>How do I debug my AWL?</h3>
 <p>
 If things are going wrong, I find it easiest to write down the whole
 expression I'm working on, and then build it up again one step at a time.
@@ -1703,11 +1748,13 @@ Type in one new piece of stuff to build the pattern, hit the button,
 and see what's on top of the stack. If that looks right, continue.
 If it doesn't, tune up what you have there until it does.
 </p>
-<p><strong>You said there should be just one thing left on the stack at the end, but I have more. Is that a problem?</strong></p>
+
+<h3>You said there should be just one thing left on the stack at the end, but I have more. Is that a problem?</h3>
 <p>
 Not necessarily, if what's on top is the result you want. But usually that indicates a problem. A common cause of this comes from building up your expression in pieces, but then forgetting to concatenate them together into one big pattern when you're done. A lot of complicated expressions end with a bunch of commas (the concatenation shortcut) to glue together all the intermediate results sitting on the stack.
 </p>
-<p><strong>AWL isn't much of a language. Where are the variables, loops, procedures, etc.?</strong></p>
+
+<h3>AWL isn't much of a language. Where are the variables, loops, procedures, etc.?</h3>
 <p>
 AWL isn't a general-purpose programming language, and it doesn't need all that stuff.
 It's been designed for one thing only: to help you make cool patterns of numbers
@@ -1721,7 +1768,16 @@ Hit the arrow and it will simply copy over into the output box.
 Or, if you're feeling fancy, you can use your program to write AWL expressions
 that you copy and paste the same way.
 </p>
-<p><strong>Hey! You crashed my browser!</strong></p>
+
+<h3>It still seems pretty weak. You don't even have addition or subtraction!</h3>
+<p>
+AWL was designed to make patterns,
+not to calculate with numbers.
+If you find yourself really needing addition and subtraction,
+you can fake them with the <code>template</code> command.
+</p>
+
+<h3>Hey! You crashed my browser!</h3>
 <p>Sorry! 
 The truth is that there are a lot of ways that things can go
 wrong when we turn your AWL into a pattern.
@@ -1742,6 +1798,12 @@ closer to the problem.
 Then when it does crash,
 you'll be able to send me email and simply paste the
 offending AWL right into the body of the mail.
+</p>
+
+<p><a name="furtherReading"></a></p>
+<h2>Further Reading</h2>
+<p>
+TK stuff goes here
 </p>
 
 			</div> <!-- column 10 -->
