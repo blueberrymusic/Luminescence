@@ -1,70 +1,59 @@
-
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Help for Andrew's Digital Loom</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Andrew's Digital Loom Help</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="help for Andrew's digital loom.">
+    <link rel="canonical" href="http://cs231n.github.io/classification/">
+	<script type="text/javascript" async
+		src="https://cdn.mathjax.org/mathjax/latest/MathJax.js">
+	</script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link href='http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600' rel='stylesheet'>
-	<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
 
-	<style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="help.css">
 
-		body {
-			padding-top: 20px;
-			font-size: 16px;
-			font-family: "Open Sans",serif;
-		}
+    <!-- Google fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
-		h1 {
-			font-family: "Ubuntu", Arial, sans-serif;
-			font-weight: 800;
-			font-size: 40px;
-			margin-bottom: 30px;
-		}
+    <!-- Google tracking -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-		h2 {
-			font-family: "Ubuntu", Arial, sans-serif;
-			margin-top: 40px;
-			margin-bottom: 20px;
-		}
+      ga('create', 'UA-46895817-2', 'auto');
+      ga('send', 'pageview');
 
-		h3 {
-			font-family: "Ubuntu", Arial, sans-serif;
-			margin-top: 40px;
-			margin-bottom: 20px;
-		}
-
-		figure {
-			margin-top: 40px;
-		}
-
-		figcaption {
-			margin-bottom: 40px;
-		}
-
-		.margin-base-vertical {
-			margin: 40px 0;
-		}
-
-	</style>
-
+    </script>
+    
 </head>
-<body>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-
-				<div class="page-header">
-<h1>Andrew's Digital Loom Help <small>Improved and Online!</small> </h1>
 
 
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap title-wrap">
+    <a class="site-title" href="/">Help for Andrew's Digital Loom</a>
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1></h1>
+  </header>
+
+  <article class="post-content">
 <p>
 This is a quick-start (or quick-restart) guide to my online
 <a href="http://www.TK">Digital Loom</a>.
@@ -80,41 +69,38 @@ or you can cook up crazy new designs of your own.
 
 <p>
 In this document I'm going to take things very fast.
-For more information on everything, 
-take a look at the 
-<a href="#furtherReading">Further Reading</a>
-section.
+If you want more information on looms and weaving,
+how to read a draft, and how to use my pattern language,
+you can find much more detailed descriptions in
+two places.  
+First, you can read the original articles
+where I described this project by going to the page with
+<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">all of my CG&A columns</a>,
+and scrolling down to the three entries titled <em>Digital Weaving Part 1, 2,</em> and <em>3</em>.
+(while you're there, you can also check out
+<a href="http://www.glassner.com" target="_blank">other stuff I do</a>).
+Or you can read collected and revised versions of those columns in my book
+<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs,
+Mallards, and Montages: Computer-Aided Imagination</a>,
+which you can buy online or find in your local library.
 </p>
 
-<p><a name='quickStart'></a></p>
 <h2>Super-Quick Start</h2>
 <p>
-Click on the <em>Load Draft</em> button
-near the top-middle of the screen and 
-take a look at the built-in presets.
-Don't bother clicking on the grids or
-the fabric on the right,
-because they're not interactive.
-Instead, you can change the fabric size
-using the text box above the fabric,
-or change what's in the five text boxes
-on the left.
-Start by changing colors (you can probably
-guess at some reasonable color names for now),
-and try fiddling with some of the numbers
-(you'll probably get crazy results!).
-For now, keep all of your numbers in the range 0 to 7.
-In the sections below you'll come to know
-everything that's going on here.
-</p>
+Load up some of the presets to see what the loom can do.
+If you want to play with the results,
+don't click on the grids on the right side of the screen:
+they're output only and don't respond to any interaction.
+Instead, type pattern expressions into the boxes at the
+far left, and press the arrow to the right of each box
+to update the loom and re-weave the fabric.
+I discuss the pattern language below,
+but for now, just try making small changes to the numbers
+and see what happens
+(also for now, keep all of your numbers in the range 0 to 7).
 
-
-<p><a name='toc'></a></p>
-<h2>Table of Contents</h2>
 <ul>
 <li><strong>TK This list is all just placeholders right now TK</strong></li>
-<li><a href="#quickStart">Quick Start</a></li>
-<li><a href="#toc">Table of Contents</a></li>
 <li><a href="#overview">Overview of The Digital Loom</a></li>
 <li><a href="#howtoread">How To Read A Weaving Diagram</a></li>
 <li><a href="#awlIntro">Introduction to AWL</a></li>
@@ -122,178 +108,15 @@ everything that's going on here.
 <li><a href="#using">How To Use The Digital Loom</a></li>
 <li><a href="#colors">Naming Colors</a>
 <li><a href="#faq">FAQ</a></li>
-<li><a href="#furtherReading">Further Reading</a></li>
+<li><a href="#reading">Further Reading</a></li>
 </ul>
 
 <p><a name='overview'></a></p>
 <h2>Overview of The Digital Loom</h2>
 
-<figure class="figure ">
-  <img src="http://placehold.it/600x400" class="img-rounded center-block" alt="A generic square placeholder image with rounded corners in a figure.">
-  <figcaption class="figure-caption text-center">
-Figure 1: The Digital Loom with major sections labeled.
-</figcaption>
-</figure>
-
 <p>
-Figure 1 shows the Digital Loom,
-with the major components labeled.
-To create a piece of woven fabric,
-you type expressions in the AWL language
-(described below) into the five input
-boxes on the left.
-After you've typed an expression in one of
-the boxes,
-press the arrow to its right to copy the
-results onto the right side of the window.
-</p>
-
-<h3>The Right Side: The <strong>Draft</strong></h3>
-
-<p>
-The right side of the window is 
-collectively called the <strong>draft</strong>.
-This shows you the results of your AWL
-expressions,
-and the final fabric that results.
-The fabric is automatically re-woven each
-time you change one of the input expressions.
-The draft is not interactive:
-clicking on the right side of the screen has no effect.
-</p>
-<p>
-In this document I'll use very casual language
-for the loom and its components;
-see the references in the
-<a href="#furtherReading">Further Reading</a>
-section for more careful descriptions of the 
-loom's elements and their names.
-</p>
-<p>
-Think of the fabric as a grid.
-Along the bottom and right of the grid are
-two checkerboards.
-</p>
-<p>
-The checkerboard on the right is
-called the <strong>weft</strong>.
-Each row of the weft is white except for
-exactly one black square.
-To the right of the weft is a column
-of colors,
-collectively called the <strong>weft colors</strong>.
-Imagine that each cell in the weft colors
-array is the source of a thread of colored
-yarn that runs to the left pefectly horizontally,
-passing through each cell of the fabric to its left.
-</p>
-<p>
-The checkerboard below the fabric
-called the <strong>warp</strong>.
-Each column of the warp is white except for
-exactly one black square.
-Below the warp is a row
-of colors,
-collectively called the <strong>warp colors</strong>.
-Imagine that each cell in the warp colors
-array is the source of a thread of colored
-yarn that runs vertically upwards,
-passing through each cell of the fabric above it.
-</p>
-<p>
-Thus each cell in the fabric has two threads
-passing through it.
-One of these threads will be on top, while
-the other passes under it.
-The cell will have the color of the thread on top.
-To determine which thread is on top,
-we use one more checkerboard.
-</p>
-<p>
-The checkerboard below and to the right of
-the fabric is called the </strong>tie-up</strong>.
-Unlike the warp and weft,
-the tie-up can have any arrangement of white
-and black cells
-(it can even be all white or all black,
-though that would make a pretty boring fabric).
-</p>
-<p>
-To determine which thread is on top of any given
-cell in the fabric,
-we follow a simple process,
-illustrated in Figure 2:
-</p>
-
-<figure class="figure ">
-  <img src="http://placehold.it/600x400" class="img-rounded center-block" alt="A generic square placeholder image with rounded corners in a figure.">
-  <figcaption class="figure-caption text-center">
-Figure 2: Finding the color of a cell in the fabric.
-</figcaption>
-</figure>
-
-<ol>
-<li>Look directly to the right, and find the black
-cell in the weft for this row.</li>
-<li>Look directly below, and find the black cell
-in the warp for this column.</li>
-<li>Look below the black weft cell, and to the
-right of the black warp cell, to find a cell
-in the tie-up. If that cell is black, the
-warp thread is on top. Otherwise, the weft 
-thread is on top.
-</ol>
-
-<p>
-Although it's easy to state,
-understanding how the warp, weft, and tie-up interact
-to produce a design is anything but obvious!
-You'll find that as you experiment with these three grids,
-your intuition will grow,
-and you'll get better at predicting what a particular
-type of change will do to your design.
-But part of the pleasure of having a digital loom at your
-disposal is that it's easy to experiment,
-and experiment again!
-Just play and have fun,
-and see what you can discover.
-</p>
-<p>
-But if you can't click on the draft,
-how do you set it up?
-The answer is that the draft is created as a result
-of the expressions you type into the input boxes
-on the left hand side;
-we'll turn to those now.
-</p>
-
-<h3>The Left Side: AWL Input (and Output)</h3>
-
-<p>
-fdjkg
-
-
-
-
-</p>
-<p>
-Thus each cell of the fabric
-
-
-
-
-
-of your AWL expressions
-The draft is not interactive;
-nothing will respond if you click here.
-
-
 To create a piece of woven fabric, you have to set up the loom with
 weaving instructions.
-These instructions can be written with numbers,
-or illustrated graphically.
-You get both versions in the Digital Loom.
-On the left side of the screen
 Visually, these instructions look like three black-and-white checkerboards.
 When you're using colored yarns for your fabric,
 there is also a row and a column of colors.
@@ -1242,24 +1065,6 @@ start with simple start twill
 try changing the tiup to 
 <code>1 1 0 1 0 0 1 0 / 1 / 8 t<< </code>
 
-<p><a name="furtherReading"></a></p>
-</h2>Further Reading</h2>
-If you want more information on looms and weaving,
-how to read a draft, and how to use my pattern language,
-you can find much more detailed descriptions in
-two places.  
-First, you can read the original articles
-where I described this project by going to the page with
-<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">all of my CG&A columns</a>,
-and scrolling down to the three entries titled <em>Digital Weaving Part 1, 2,</em> and <em>3</em>.
-(while you're there, you can also check out
-<a href="http://www.glassner.com" target="_blank">other stuff I do</a>).
-Or you can read collected and revised versions of those columns in my book
-<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs,
-Mallards, and Montages: Computer-Aided Imagination</a>,
-which you can buy online or find in your local library.
-</p>
-
 <p><a name="faq"></a></p>
 <h2>FAQ</h2>
 
@@ -1464,10 +1269,11 @@ you'll be able to send me email and simply paste the
 offending AWL right into the body of the mail.
 </p>
 
-			</div> <!-- column 10 -->
-		</div> <!-- row -->
-	</div> <!-- container -->
+</article>
+</div>
+</div>
+</div>
 
-</body>
+
+
 </html>
-
