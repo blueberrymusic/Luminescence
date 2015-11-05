@@ -222,6 +222,7 @@ var Dispatch = [
 	[ "rotatel", DoRotateL ],
 	[ "rotater", DoRotateR ],
 	[ "stencil", DoStencil ],
+	[ "split", DoSplit ],
 	[ "swap", DoSwap ],
 	[ "tartan", DoTartan ],
 	[ "tartanpal", DoTartanPal ],
@@ -520,18 +521,32 @@ function DoRotateR() {
 
 function DoStencil() {
 	var skip = popInt();
+	var start = popInt();
 	var list = popList();
-	if (skip <= 1) {
+	if (skip < 1) {
 		pushList(list);
 		return;
 	}
 	var newList = [];
 	for (var i=0; i<list.length; i++) {
-		if (i%skip != 0) {
+		if ((i < start) || ((i-start) % (skip+1) != 0)) {
 			newList.push(list[i]);
 		}
 	}
 	pushList(newList);
+}
+
+function DoSplit() {
+	var cutPoint = popInt();
+	var list = popList();
+	var leftList = [];
+	var rightList = [];
+	for (var i=0; i<list.length; i++) {
+		if (i < cutPoint) leftList.push(list[i]);
+		else rightList.push(list[i]);
+	}
+	if (leftList.length > 0) pushList(leftList);
+	if (rightList.length > 0) pushList(rightList);
 }
 
 function DoSwap() {

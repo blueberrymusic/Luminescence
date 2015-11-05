@@ -960,7 +960,14 @@ on top (and most recently pushed) is the number <var>c</var>,
 under it (and pushed just before <var>c</var>) is the list <b>B</b>,
 and on the bottom (and first thing pushed in this group) is the list <b>A</b>.
 </p>
-
+<p>
+Also remember that each command will push its result back on the stack
+when it's done.
+If the command makes one or more lists,
+it will not push any lists that are empty
+(for example, calling <code>0 1 2 / 5 split</code> will push only
+the "left side" of the split, or list <code>0 1 2</code>,
+because there is no right side).
 
 <table id="awlsummary" class="table table-striped table-bordered table-condensed">
 	<thead>
@@ -1247,13 +1254,22 @@ and on the bottom (and first thing pushed in this group) is the list <b>A</b>.
 	<td>Exchange the top two stack elements</td>
 </tr>
 <tr>
-	<td><b>A</b> <var>d</var> stencil</td>
+	<td><b>A</b> <var>c</var> <var>d</var> stencil</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td><var>d>1</var>: skip <b>A</b>0, keep the next <var>d-1</var> entries, skip the next, repeat</td>
+	<td>Remove entry <var>c</var>, include the next <var>d</var> entries, repeat</td>
+</tr>
+<tr>
+	<td><b>A</b> <var>c</var> split</td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td>Cut <b>A</b> after element <var>c</var>, then push the left then right lists</td>
 </tr>
 <tr>
 	<td><b>A</b> tartan</td>
@@ -1436,6 +1452,7 @@ The domain maximum is always 1 more than the minimum.</li>
 <li>When the warp and weft patterns are copied to the draft,
 any values less than 0 are set to 0.</li>
 <li>The <code>stencil</code> command is new.</li>
+<li>The <code>split</code> command is new.</li>
 </ol>
 </li>
 </ul>
