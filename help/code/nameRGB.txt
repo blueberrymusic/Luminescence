@@ -167,8 +167,8 @@ CadmiumGreen 0 107 60
 CadmiumOrange 237 135 45
 CadmiumRed 227 0 34
 CadmiumYellow 255 246 0
-CaféAuLait 166 123 91
-CaféNoir 75 54 33
+CafeAuLait 166 123 91
+CafeNoir 75 54 33
 CalPolyGreen 30 77 43
 CambridgeBlue 163 193 173
 Camel 193 154 107
@@ -281,7 +281,7 @@ Dandelion 240 225 48
 DarkBlue 0 0 139
 DarkBlue-gray 102 102 153
 DarkBrown 101 67 33
-DarkBrown-tangelo 136 101 78
+DarkBrownTan 136 101 78
 DarkByzantium 93 57 84
 DarkCandyAppleRed 164 0 0
 DarkCerulean 8 69 126
@@ -820,7 +820,7 @@ OperaMauve 183 132 167
 Orange 251 153 2
 Orange(Crayola) 255 117 56
 Orange(Pantone) 255 88 0
-Orange(colorWheel) 255 127 0
+Orange(wheel) 255 127 0
 Orange(web) 255 165 0
 Orange-red 255 69 0
 Orange-yellow 248 213 104
@@ -1158,7 +1158,7 @@ TealBlue 54 117 136
 TealDeer 153 230 179
 TealGreen 0 130 127
 Telemagenta 207 52 118
-Tenné 205 87 0
+Tenne 205 87 0
 TerraCotta 226 114 91
 Thistle 216 191 216
 ThulianPink 222 111 161
@@ -1231,7 +1231,7 @@ VeryPaleOrange 255 223 191
 VeryPaleYellow 255 255 191
 Violet 143 0 255
 Violet(RYB) 134 1 175
-Violet(colorWheel) 127 0 255
+Violet(wheel) 127 0 255
 Violet(web) 238 130 238
 Violet-blue 50 74 178
 Violet-red 247 83 148

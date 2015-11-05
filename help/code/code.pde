@@ -1,5 +1,6 @@
 
 void setup() {
+  //makeHBSRGBname();
   makeBrowseByColor();
   exit();
 }
@@ -21,7 +22,7 @@ void makeHBSRGBname() {
      int hueval = int(hue(clr));
      int satval = int(saturation(clr));
      int brtval = int(brightness(clr));
-     PW.println(nf(hueval, 3)+" "+nf(brtval, 3)+" "+nf(satval, 3)+" "+nf(redval, 3)+" "+nf(grnval, 3)+" "+nf(bluval, 3)+" "+name);
+     PW.println(nf(hueval, 3)+" "+nf(satval, 3)+" "+nf(brtval, 3)+" "+nf(redval, 3)+" "+nf(grnval, 3)+" "+nf(bluval, 3)+" "+name);
   }
   PW.flush();
   PW.close();
