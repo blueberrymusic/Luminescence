@@ -1,13 +1,14 @@
 
 void setup() {
   //makeHBSRGBname();
-  makeBrowseByColor();
+  //makeBrowseByColor();
+  makeBrowseByName();
   exit();
 }
 
 
 void makeHBSRGBname() {
-  PrintWriter PW = createWriter("HSBRGBname.txt");
+  PrintWriter PW = createWriter("HBSRGBname.txt");
   String lines[] = loadStrings("nameRGB.txt");
   for (int i=0; i<lines.length; i++) {
     String line = lines[i];
@@ -49,8 +50,8 @@ class ColorSet {
 }
 
 void makeBrowseByColor() {
-  PrintWriter PW = createWriter("BrowseByColorTable.txt");
-  String lines[] = loadStrings("sortedHSBRGBname.txt");
+  PrintWriter PW = createWriter("OutputByColor.txt");
+  String lines[] = loadStrings("sortedHBSRGBname.txt");
   ColorSet[] allColors = new ColorSet[lines.length];
   for (int i=0; i<lines.length; i++) {
     String line = lines[i];
@@ -71,13 +72,23 @@ void makeBrowseByColor() {
     ColorSet thisColor = allColors[targetIndex];
     PW.println("<div class=\"col-md-2\"><p class=\"colorCell\" style=\"background-color:#"+thisColor.hexColor+";\"></p>");
     PW.print("<p class=\"colorName\" >"+thisColor.name);
-    // peek ahead
+    // peek ahead and keep adding names as long as the colors are the same
+    boolean reachedAhead = false;
+    do {
+      reachedAhead = false;
+      if (targetIndex < allColors.length-1) {
+        ColorSet nextColor = allColors[targetIndex+1];
+        if ((thisColor.redval == nextColor.redval) &&
+            (thisColor.grnval == nextColor.grnval) &&
+            (thisColor.bluval == nextColor.bluval)) {
+              reachedAhead = true;
+              targetIndex++;
+              PW.println("<br/>"+nextColor.name);
+        }
+      }
+    } while (reachedAhead && (targetIndex < allColors.length));
     PW.println("</p></div>");
     
-    //println("<div class=\"col-md-2\"><p class=\"colorCell\" style=\"background-color:#"+hexColor+";\"></p><p class=\"colorName\" >"+name+"</p></div>");
-    //println("<div class=\"col-md-2\"><p class=\"colorCell\" style=\"background-color:#"+hexColor+";\"></p><p class=\"colorName\" >"+name+"</p></div>");
-    //println("<div class=\"col-md-2\"><p class=\"colorCell\" style=\"background-color:#"+hexColor+";\"></p><p class=\"colorName\" >"+name+"</p></div>");
-
     targetIndex++;
     if (++rowLengthSoFar == 6) {
       rowLengthSoFar = 0;
@@ -91,66 +102,32 @@ void makeBrowseByColor() {
 }
 
 
-/*
-void readsorthsb() {
+
+void makeBrowseByName() {
+  PrintWriter PW = createWriter("OutputByName.txt");
+  String lines[] = loadStrings("nameRGB.txt");
   
-  String lines[] = loadStrings("SortedByHSB.txt");
-  int lastR = -1;
-  int lastG = -1;
-  int lastB = -1;
-  int entryCount = 0;
-  println("<div class=\"row\">");
-  for (int i = 0 ; i < lines.length; i++) {
+  int rowLengthSoFar = 0;
+  PW.println("<div class=\"row\">");
+  for (int i=0; i<lines.length; i++) {
+    String line = lines[i];
      String words[] = split(lines[i], ' ');
-     int hu = int(words[0]);
-     int satS = int(words[1]);
-     int brtS = int(words[2]);
-     int redS = int(words[3]);
-     int grnS = int(words[4]);
-     int bluS = int(words[5]);
-     String name = words[6];
-     if ((redS == lastR) && (grnS == lastG) && (bluS == lastB)) {
-       println("REPEAT "+name);
-     } else {
-       color clr = color(redS, grnS, bluS);
-       String hexColor = hex(clr, 6);  // Prints "FFCC00"
-       println("<div class=\"col-md-2\"><p class=\"colorCell\" style=\"background-color:#"+hexColor+";\"></p><p class=\"colorName\" >"+name+"</p></div>");
-       if (++entryCount == 6) {
-         entryCount = 0;
-         println("</div>");
-         println("<div class=\"row\">");
-       }
-     }
-     lastR = redS;
-     lastG = grnS;
-     lastB = bluS;
+     String name = words[0];
+     int redval = int(words[1]);
+     int grnval = int(words[2]);
+     int bluval = int(words[3]);
+     colorMode(RGB);
+     color clr = color(redval, grnval, bluval);
+     String hexColor = hex(clr, 6);  // Prints "FFCC00"
+    PW.println("<div class=\"col-md-2\"><p class=\"colorCell\" style=\"background-color:#"+hexColor+";\"></p>");
+    PW.print("<p class=\"colorName\" >"+name+"</p></div>");
+    if (++rowLengthSoFar == 6) {
+      rowLengthSoFar = 0;
+      PW.println("</div>");
+      PW.println("<div class=\"row\">");
+    }
   }
-  println("</div>");
+  PW.println("</div>");
+  PW.flush();
+  PW.close();
 }
-
-
-void readraw() {
-  String lines[] = loadStrings("v4.txt");
-  for (int i = 0 ; i < lines.length; i++) {
-    String words[] = split(lines[i], ' ');
-    String name = words[0];
-    int redval = int(words[1]);
-    int grnval = int(words[2]);
-    int bluval = int(words[3]);
-    // convert to hsb
-    colorMode(RGB);
-    color clr = color(redval, grnval, bluval);
-    colorMode(HSB);
-    int hueval = int(hue(clr));
-    int satval = int(saturation(clr));
-    int brtval = int(brightness(clr));
-    println(nf(hueval,3)+" "+nf(satval,3)+" "+nf(brtval,3)+" "+redval+" "+grnval+" "+bluval+" "+name);
-    color c2 = color(hueval, satval, brtval);
-    colorMode(RGB);
-    int r2 = int(red(c2));
-    int g2 = int(green(c2));
-    int b2 = int(blue(c2));
-    //if ((redval!=r2) || (grnval!=g2) || (bluval!=b2)) println(redval-r2, grnval-g2, bluval-b2);
-    //println(r,r2+"   "+g,g2+"   "+b,b2);
-  }
-  */

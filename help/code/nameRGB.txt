@@ -71,7 +71,7 @@ BeauBlue 188 212 230
 Beaver 159 129 112
 Beige 245 245 220
 Belgion 173 216 230
-BigDipO’ruby 156 37 66
+BigDipOruby 156 37 66
 BigFootFeet 232 142 90
 Bisque 255 228 196
 Bistre 61 43 31
