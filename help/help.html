@@ -100,6 +100,7 @@ everything that's going on here.
 <li><a href="#commands">The AWL Commands</a></li>
 <li><a href="#notes">Notes on This Version of AWL</a></li>
 <li><a href="#interface">The Rest of the Interface</a></li>
+<li><a href="#savingAndLoading">Saving and Loading</a></li>
 <li><a href="#faq">FAQ</a></li>
 <li><a href="#furtherReading">Further Reading</a></li>
 </ul>
@@ -586,13 +587,16 @@ You can also name your colors using red,
 green, and blue values from 0 to 255.
 Start with the string <code>rgb(</code>
 and then list your values in the order
-red, green, blue, separated by commas,
-ending with a closing parentheses.
+red, green, blue, separated by commas (<code>,</code>),
+ending with a closing parentheses (<code>)</code>).
 In this form, Harvest Gold would be
 written <code>rgb(217,145,0)</code>.
 Remember, as always, there can be 
 <em>no spaces</em> anywhere in this 
 string (not even after the commas).
+If you're a programmer, don't let your
+fingers automatically add a semicolon
+at the end!
 </p>
 
 <p><a name='makingPatterns'></a></p>
@@ -1073,8 +1077,11 @@ when it's done.
 If the command makes one or more lists,
 it will not push any lists that are empty
 (for example, calling <code>0 1 2 / 5 split</code> will push only
-the "left side" of the split, or list <code>0 1 2</code>,
-because there is no right side).
+the "left side" of the split, or the list <code>0 1 2</code>,
+because this split point is past the end if the input list,
+yielding no new list after the split).
+
+<div style="margin-top:50px;"></div>
 
 <table id="awlsummary" class="table table-striped table-bordered table-condensed">
 	<thead>
@@ -1554,6 +1561,7 @@ and then a fourth time to produce
 giving a final result of
 <code>0 1 2 3 3 0 1 2 2 3 0 1 1 2 3 0</code>.
 </li>
+</ol>
 <li>The domain minimum is set to 0 if you try to make it negative.
 The domain maximum is always 1 more than the minimum.</li>
 <li>When the warp and weft patterns are copied to the draft,
@@ -1622,6 +1630,7 @@ If the tie-up pattern isn't long enough to fill up the grid,
 it's repeated as needed.
 </ul>
 
+<p><a name='savingAndLoading'></a></p>
 <h3>Saving and Loading</h3>
 
 <h4>Saving The Fabric</h4>
@@ -1717,24 +1726,48 @@ You can find an online PDF in my big list of
 You can also find those columns,
 collected and revised, in my book
 <a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs, 
-Mallards, and Montages</a>
+Mallards, and Montages</a>.
 If you prefer to learn by doing,
 try experimenting.
 Just type in stuff and see what comes out.
 
+<h3>How do I save my fabric and draft?</strong></h3>
+<p>
+See the section on
+<a href='#savingAndLoading'>Saving and Loading</a> above.
+
+</p>
 <h3>How do I share my drafts?</strong></h3>
 <p>
-Right now, it's a hassle (other questions here go into the reasons).
-As I discussed in the section on saving your draft,
-your files go into a special file that's maintained by the
-browser, and you can't get at it.
-This is scheduled to change someday soon,
-and you'll be able to save and open files from your
-local disk as usual (though with some restrictions).
-Until that day arrives,
-here's the best way to save a draft so you can share 
-it with someone else.
-Open a text editor and make a new, blank file.
+Right now, it's a hassle (other questions in this FAQ go into the reasons).
+Until browsers can all write files to your local drive,
+you have two options:
+a screenshot or a text file.
+</p>
+<p>
+<strong>A screenshot:</strong> 
+The screenshot is the easiest way to go. When you have a
+draft that you like, 
+just take a picture of your screen
+(every operating system has a free, built-in way
+to do this;
+search online for "screen capture" and your system.
+You can buy a fancy screen grab program, 
+but the free built-in version is fine).
+This will typically give you a picture on your
+hard drive that you can treat just like any other photo,
+so you can email it or post it to social media.
+For you or someone else to load your draft,
+just open up the photo in its own window,
+read what's in the AWL input boxes,
+and type that into the AWL input boxes in 
+the Digital Loom
+(because it's a photo, you can't copy and paste the text).
+</p>
+<p>
+<strong>A text file:</strong> 
+To go the text file route,
+open a text editor and make a new, blank file.
 Copy the following eight lines and paste them
 into your text editor.
 It wouldn't hurt to enter a few blank lines
@@ -1754,8 +1787,9 @@ after each of these.
 
 <p>
 Now click in your browser,
-click on the "Warp Pattern" button just above the output area,
-copy the text in the output box,
+click in the text field where you 
+entered your Warp Pattern AWL expression,
+copy the text,
 and paste that into the your file
 under "Warp Pattern:".
 Repeat this for the four other input areas.
@@ -1767,17 +1801,13 @@ Now you have a file with the AWL that
 completely describes your draft.
 Save the file from your text editor.
 Since that's a normal text file, you can copy it or
-back it up or share it or do whatever you like with it.
-You can even give it to someone with a real loom,
-and they'll be able to weave your fabric!
-(Actually, they'd probably prefer a file in the
-standard weaving format known as WIF;
-see the question on WIF below).
+back it up or email it or do whatever you like with it.
 </p>
 <p>
 Unfortunately, 
-the program can't read that file,
-so for you or your friends
+the browser also can't read your local
+disk in order to load the file.
+So for you or your friends
 to get the information back into the Digital Loom
 you need to reverse the process.
 Open the file in a text editor,
@@ -1801,8 +1831,10 @@ it into the text file,
 only you'd copy the <em>output</em> fields instead.
 Those hold the pattern data that you'd then use to
 set up a real, physical loom to weave your design.
+A weaver would probably prefer a file in the
+standard .WIF format; see the question on that below.
 </p>
-<he>Why is all this file stuff so awkward?</h3>
+<h3>Why is all this file stuff so awkward?</h3>
 <p>
 Actually, it's kind of remarkable that we can manage to save and recall anything at all.
 The reasons are technical. If you're into that, read on.
@@ -1815,7 +1847,9 @@ hard drive (this is to protect you, and it's one of the reasons the web has succ
 the way it has). But there are a few little loopholes to that policy. For example, you
 probably know about cookies: these are tiny files on your hard drive, written and read
 by the browser, that save preferences and other information for web pages. That's an
-example of the browser reading from, and writing to, your computer's hard drive.
+example of the browser reading from, and writing to, your computer's hard drive,
+but cookies must be very small files and the computer can
+only read and write them from one special place.
 The Digital Loom doesn't use cookies, but it uses the other two possible exceptions
 (these are both perfectly safe: they're part of the offical, international standards 
 that all browsers follow in order to work on the web).
@@ -1835,8 +1869,16 @@ of browser. The files are saved to your hard drive, so if you're using a friend'
 computer, your saved files will not be there. Finally, these aren't really files at
 all, so don't go looking for them on your disk. They're actually saved inside a
 database managed by the browser (that's why we can't use this method to save files
-you can share with other people (that's why we can't use this method to save files
-you can share with other people)).
+you can share with other people).
+</p>
+<p>
+Someday all browsers will be able to read and write to a safe region
+of your hard drive using techniques that are now an official part of 
+the HTML5 specification. 
+When all (or even most) browsers support this feature,
+I'll happily add normal file saving and loading,
+and we'll even do it using industry-standard .WIF format files.
+Until then, we have this weird compromise.
 </p>
 
 <h3>Can I save my draft in the WIF weaving-file format to share with other weavers, or use to set up a real loom?</h3>
@@ -1846,21 +1888,10 @@ the code to support reading and writing WIF files.
 But that's useless now,
 because browsers are forbidden from writing files to your
 local file system. 
-This means the browser can't write a WIF file to your disk.
-There are a few ways to save files, but all the ones I know of have major drawbacks:
-you can run a local server, but that's a technical task that most people are not prepared to do;
-you can use a commercial remote server, but that means either you or I pay money to buy space;
-or
-you can use a free remote server, but all the ones I've looked into require a prohibitive amount
-of time and work from me to support.
-When browsers finally allow us to read and write to 
-carefully blocked-off parts of your local file system,
-as the current international spec calls upon them to do,
-then I'll very happily change the draft saving and loading 
-to use WIF files by defaultt.
-</p>
+When they can do that (see the previous answer),
+I'll provide .WIF reading and writing support.
 
-<he>Why am I getting a really weird error when my AWL looks fine?</h3>
+<h3>Why am I getting a really weird error when my AWL looks fine?</h3>
 <p>
 A very frequent cause of weird errors is messing up the spacing rule.
 Remember that each <em>word</em> in AWL must be surrounded by space.
@@ -1903,7 +1934,7 @@ Or, if you're feeling fancy, you can use your program to write AWL expressions
 that you copy and paste the same way.
 </p>
 
-<h3>It still seems pretty weak. You don't even have addition or subtraction!</h3>
+<h3>AWL still seems pretty weak. You don't even have addition or subtraction!</h3>
 <p>
 AWL was designed to make patterns,
 not to calculate with numbers.
@@ -1927,7 +1958,8 @@ well,
 the browser's crashed.
 So if you can,
 try to immediately re-load the page and recreate the problem.
-Copy the text in your input box frequently each time you get
+Copy the text in your input box (or take a screen shot)
+frequently each time you get
 closer to the problem.
 Then when it does crash,
 you'll be able to send me email and simply paste the
