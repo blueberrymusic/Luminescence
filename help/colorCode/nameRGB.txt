@@ -142,7 +142,6 @@ Brown 150 75 0
 Brown(web) 165 42 42
 Brown-nose 107 68 35
 BrownSugar 175 110 77
-BrownSugar 175 110 77
 BrownYellow 204 153 102
 BrunswickGreen 27 77 62
 BubbleGum 255 193 204
@@ -183,7 +182,7 @@ CaputMortuum 89 39 32
 Cardinal 196 30 58
 CaribbeanGreen 0 204 153
 Carmine 150 0 24
-Carmine 215 0 64
+CarmineAlt 215 0 64
 CarminePink 235 76 66
 CarmineRed 255 0 56
 CarnationPink 255 166 201
@@ -296,7 +295,7 @@ DarkGreen 1 50 32
 DarkGreen(X11) 0 100 0
 DarkGunmetal 31 38 42
 DarkImperialBlue 0 20 126
-DarkImperialBlue 0 65 106
+DarkImperialBlueAlt 0 65 106
 DarkJungleGreen 26 36 33
 DarkKhaki 189 183 107
 DarkLava 72 60 50
@@ -862,7 +861,7 @@ PastelYellow 253 253 150
 Patriarch 128 0 128
 Payne'sGrey 83 104 120
 Peach 255 203 164
-Peach 255 229 180
+PeachAlt 255 229 180
 Peach-orange 255 204 153
 Peach-yellow 250 223 173
 PeachPuff 255 218 185
@@ -893,7 +892,7 @@ PiggyPink 253 221 230
 PineGreen 1 121 111
 Pineapple 86 60 13
 Pink 215 72 148
-Pink 255 192 203
+PinkAlt 255 192 203
 Pink-orange 255 153 102
 PinkFlamingo 252 116 253
 PinkLace 255 221 244
@@ -905,7 +904,7 @@ Pistachio 147 197 114
 PixiePowder 57 18 133
 Platinum 229 228 226
 Plum 142 69 133
-Plum 221 160 221
+PlumAlt 221 160 221
 PlumpPurple 89 70 178
 PolishedPine 93 164 147
 PompAndPower 134 96 142
@@ -1002,7 +1001,7 @@ RossoCorsa 212 0 0
 RosyBrown 188 143 143
 RoyalAzure 0 56 168
 RoyalBlue 0 35 102
-RoyalBlue 65 105 225
+RoyalBlueAlt 65 105 225
 RoyalFuchsia 202 44 146
 RoyalPurple 120 81 169
 RoyalYellow 250 218 94
@@ -1040,7 +1039,7 @@ SapphireBlue 0 103 165
 SasquatchSocks 255 70 129
 SatinSheenGold 203 161 53
 Scarlet 253 14 53
-Scarlet 255 36 0
+ScarletAlt 255 36 0
 SchaussPink 255 145 175
 SchoolBusYellow 255 216 0
 Screamin'Green 102 255 102
@@ -1132,7 +1131,7 @@ Taupe 72 60 50
 TaupeGray 139 133 137
 TeaGreen 208 240 192
 TeaRose 244 194 194
-TeaRose 248 131 121
+TeaRoseAlt 248 131 121
 Teal 0 128 128
 TealBlue 54 117 136
 TealDeer 153 230 179
@@ -1201,7 +1200,7 @@ VegasGold 197 179 88
 VenetianRed 200 8 21
 Verdigris 67 179 174
 Vermilion 217 56 30
-Vermilion 227 66 52
+VermilionAlt 227 66 52
 Veronica 160 32 240
 VeryLightAzure 116 187 251
 VeryLightBlue 102 102 255
