@@ -3,18 +3,30 @@
 <html>
 <head>
 	<title>Help for Andrew's Digital Loom</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<!-- Bootstrap -->
 
+<!-- jQuery must follow my style and precede Bootstrap -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Bootstrap stuff -->
+<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	<link href='http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600' rel='stylesheet'>
-	<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
-	<link href="help.css" rel="stylesheet" type="text/css">
+<!-- make mobile-friendly: http://www.w3schools.com/bootstrap/bootstrap_get_started.asp
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Just for grins, use Ubuntu here and there -->
+<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" type="text/css" href="help.css">
 </head>
+
 <body>
 
 	<div class="container">
@@ -1568,6 +1580,72 @@ You can't delete the presets.
 
 <p><a name="colors"></a></p>
 <h2>Colors</h2>
+
+<p>
+You can name your colors in three ways,
+and you can even mix and match these in a
+single expression.
+</p>
+
+<h4>By Name</h4>
+<p>
+This is probably the easiest option. The Digital Loom
+knows about 1283 different color names,
+gathered from a variety of sources.
+The names include those that are standard with
+Microsoft's .NET computer environment,
+colors that are used by Pantone,
+and colors drawn from traditional Scottish tartans.
+Probably any color name you know is in the list.
+You can browse the list TK By Name TK or 
+TK visually grouped bhy color TK.
+Note that some colors have multiple names.
+I've retained all these names because some might
+be more familiar to you than others.
+</p>
+<p>
+For example, a nice middle brown is
+<code>HarvestGold</code>.
+While some names may include parentheses
+or dashes, make sure that your color name
+is a single word with <em>no spaces</em>.
+If you accidentally type a space,
+AWL will read it as two separate
+colors in a row to build a pattern
+(and it probably won't find both,
+of those words in the list of colors;
+it usually won't even find one of them).
+
+<h4>By Hex</h4>
+<p>
+If you're familiar with the hex notation used by
+browsers and some drawing programs,
+you can use that.
+Simply start your color with a hash mark (#)
+and follow it with six hex digits
+(the numbers 0 to 9, and the letters a to f or A to F).
+Remember there cannot be a space between the
+hash mark and the hex digits.
+The color Harvest Gold can be named
+in hex as <code>#DA9100</code>
+(case doesn't matter, so <code>#da9100</code>
+works just as well).
+</p>
+
+<h4>By RGB</h4>
+<p>
+You can also name your colors using red,
+green, and blue values from 0 to 255.
+Start with the string <code>rgb(</code>
+and then list your values in the order
+red, green, blue, separated by commas,
+ending with a closing parentheses.
+In this form, Harvest Gold would be
+written <code>rgb(217,145,0)</code>.
+Remember, as always, there can be 
+<em>no spaces</em> anywhere in this 
+string (not even after the commas).
+</p>
 
 <p><a name="faq"></a></p>
 <h2>FAQ</h2>
