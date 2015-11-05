@@ -1,3 +1,32 @@
+/*
+To use:
+1) The file nameRGB.txt needs to exist. Each entry is of the form
+  colorname R G B
+separated each by one space, and no trailing spaces at the end.
+The list must be sorted alphabetically by name,
+and there should be no duplicated colornames.
+(though it's fine to have many colors with the same RGB).
+
+2) Run this program using
+  makeHBSRGBname()
+This will make the file HBSRGBname.txt,
+which contains the original data in that order. 
+
+3) In a shell, rRun
+  cat HBSRGBname.txt | sort > sortedHSBRGBname.txt
+to make the sorted version (by hue, then saturation, then brightness).
+
+4) Run this program again, using
+  makeBrowseByColor()
+This will make the output file OutputByColor.txt,
+appropriate for pasting into the table portion of the HTML page.
+
+5) Run this program again, using
+  makeBrowseByName();
+This will make the file OutputByName.txt,
+again appropriate for apsting into the table portion of that HTML page.
+
+*/
 
 void setup() {
   //makeHBSRGBname();
