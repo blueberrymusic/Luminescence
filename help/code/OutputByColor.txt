@@ -2618,7 +2618,7 @@
 <div class="col-md-2"><p class="colorCell" style="background-color:#CC8899;"></p>
 <p class="colorName" >Puce</p></div>
 <div class="col-md-2"><p class="colorCell" style="background-color:#9C2542;"></p>
-<p class="colorName" >BigDipO’ruby</p></div>
+<p class="colorName" >BigDipOruby</p></div>
 <div class="col-md-2"><p class="colorCell" style="background-color:#C32148;"></p>
 <p class="colorName" >BrightMaroon<br/>Maroon(Crayola)
 </p></div>

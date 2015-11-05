@@ -3,7 +3,8 @@ To use:
 1) The file nameRGB.txt needs to exist. Each entry is of the form
   colorname R G B
 separated each by one space, and no trailing spaces at the end.
-The list must be sorted alphabetically by name,
+The list must be sorted alphabetically by name using sort -f
+so that it's case-insensitive in the sort,
 and there should be no duplicated colornames.
 (though it's fine to have many colors with the same RGB).
 
