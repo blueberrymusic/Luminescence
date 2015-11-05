@@ -132,13 +132,7 @@ function drawWarp() {
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box
-	Ctx.beginPath();
-		Ctx.moveTo(left, top);
-		Ctx.lineTo(right, top);
-		Ctx.lineTo(right, bottom);
-		Ctx.lineTo(left, bottom);
-		Ctx.lineTo(left, top);
-		Ctx.stroke();
+	Ctx.strokeRect(left, top, right-left, bottom-top);
 	// draw the filled-in boxes in the grid
 	Ctx.fillStyle = "rgb(0, 0, 0)";
 	for (var col=0; col<FabricSize; col++) {  
@@ -152,6 +146,8 @@ function drawWarp() {
 		var rgb = WarpColors[col % WarpColors.length];
 		Ctx.fillStyle = rgb;
 		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
+		Ctx.strokeStyle = rgb;
+		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
 	}
 }
 
@@ -164,13 +160,7 @@ function drawWeft() {
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box
-	Ctx.beginPath();
-		Ctx.moveTo(left, top);
-		Ctx.lineTo(right, top);
-		Ctx.lineTo(right, bottom);
-		Ctx.lineTo(left, bottom);
-		Ctx.lineTo(left, top);
-		Ctx.stroke();
+	Ctx.strokeRect(left, top, right-left, bottom-top);
 	if (DrawGrid) {
 		for (var col=1; col<WeftDMax; col++) {  
 			Ctx.beginPath();
@@ -198,6 +188,8 @@ function drawWeft() {
 		var rgb = WeftColors[row % WeftColors.length];
 		Ctx.fillStyle = rgb;
 		Ctx.fillRect(colorLeft, bottom-((row+1)*SqSize), SqSize, SqSize);
+		Ctx.strokeStyle = rgb;
+		Ctx.strokeRect(colorLeft, bottom-((row+1)*SqSize), SqSize, SqSize);
 	}
 }
 
@@ -209,13 +201,7 @@ function drawTieUp() {
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box
-	Ctx.beginPath();
-		Ctx.moveTo(left, top);
-		Ctx.lineTo(right, top);
-		Ctx.lineTo(right, bottom);
-		Ctx.lineTo(left, bottom);
-		Ctx.lineTo(left, top);
-		Ctx.stroke();
+	Ctx.strokeRect(left, top, right-left, bottom-top);
 	if (DrawGrid) {
 		for (var col=1; col<TieUpHeight; col++) {  
 			Ctx.beginPath();
@@ -237,6 +223,7 @@ function drawTieUp() {
 		for (var col=0; col<TieUpWidth; col++) {
 			if (T[index % T.length] !== 0) {
 				Ctx.fillRect(left+(col*SqSize), top+(row*SqSize), SqSize, SqSize);
+				Ctx.strokeRect(left+(col*SqSize), top+(row*SqSize), SqSize, SqSize);
 			}
 			index++;
 		}
