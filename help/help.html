@@ -94,18 +94,18 @@ everything that's going on here.
 <li><a href="#rightSide">The Right Side: The Draft</a></li>
 <li><a href="#bridge">The Bridge: Patterns</a></li>
 <li><a href="#leftSide">The Left Side: AWL Input (and Output)</a></li>
+<li><a href="#colors">Colors</a></li>
 <li><a href="#makingPatterns">Making Patterns: The AWL Language</a></li>
 <li><a href="#concepts">AWL Concepts</a></li>
 <li><a href="#commands">The AWL Commands</a></li>
 <li><a href="#notes">Notes on This Version of AWL</a></li>
 <li><a href="#interface">The Rest of the Interface</a></li>
-<li><a href="#colors">Colors</a></li>
 <li><a href="#faq">FAQ</a></li>
 <li><a href="#furtherReading">Further Reading</a></li>
 </ul>
 
 <p><a name='overview'></a></p>
-<h2>Overview of The Digital Loom</h2>
+<h1>Overview of The Digital Loom</h1>
 
 <figure class="figure ">
   <img src="http://placehold.it/600x400" class="img-rounded center-block" alt="A generic square placeholder image with rounded corners in a figure.">
@@ -465,27 +465,134 @@ For now, you can just type in a sequence of
 numbers (or colors) and then press the arrow.
 </p>
 <p>
-<h3>Important Note</h3> 
-If you want to play around with the inputs before
-you learn the pattern languages,
-try to stick to the following rules.
+<h3>Important Note </h3> 
+If you're new to the syatem and 
+you want to play around with the inputs before
+you learn the pattern language,
+that's fine;
+messing around is a big part of the fun.
+You'll find that things will go best if
+you stick to the following rules for now
+(later, when you learn the language,
+of course you can do whatever you like!).
 Your sequences 
 for the warp and weft patterns must
 be made up only of numbers from 0 to 7, and they must
 be separated by spaces (don't use commas
 or periods or anything else).
-Your sequences for warp and weft colors
-must consist only of color names,
+In the warp and weft color fields
+just type in a list of color names,
 separated by spaces 
-(for a list of color names, see the section on
+(for a list of all available color names, see the section on
 <a href="#colors">Colors</a>).
 Finally,
 the tie-up input should contain just the
 two numbers 0 and 1 in whatever sequence you like,
 again separated only by spaces.
-These rules are just for the moment,
-so you can play around with
-the inputs before you get to know the pattern language.
+</p>
+
+<p><a name="colors"></a></p>
+<h2>Colors</h2>
+
+<p>
+Colors are a vital part of weaving,
+and two of the AWL input areas on the left
+are devoted to creating patterns of colors.
+You create these patterns by creating
+AWL expressions that combine commands,
+numbers, and colors.
+You can name your colors in three ways,
+and you can even mix and match these in a
+single expression.
+</p>
+
+<h4>By Name</h4>
+<p>
+This is probably the easiest option. The Digital Loom
+knows 1303 different color names,
+gathered from a wide variety of sources.
+Probably any color name you know is in the list.
+You can browse the colors 
+<a href="browseColorsByName.html" target="_blank">sorted by name</a>
+or
+<a href="browseColorsByColor.html" target="_blank">sorted by hue</a>
+using the links below.
+Note that if a given color has multiple names,
+I've retained all of them because some names might
+be more familiar to you than others.
+</p>
+<ul>
+<li><a href="browseColorsByName.html" target="_blank">Page of colors sorted by name</a></li>
+<li><a href="browseColorsByColor.html" target="_blank">Page of colors sorted by hue</a></li>
+</ul>
+<p>
+For example, a nice middle brown is
+<code>HarvestGold</code>.
+You don't have to worry about upper and
+lower case letters.
+You can write this color as
+<code>harvestgold</code>
+or <code>HARVESTGOLD</code> or even <code>haRVesTgoLd</code>,
+and they'd all identify the same color.
+</p>
+<p>
+Some names include characters
+like parentheses,
+digits, apostrophes, and dashes. 
+These are all part of the name,
+so be sure to include them.
+But always make sure that you type 
+in each color name
+a single word with <em>no spaces</em>.
+If you accidentally type a space,
+AWL will read it as two separate
+colors in a row to build a pattern
+For example, if you put a space in 
+<em>HarvestGold</em>, the system would look for a
+color named <em>Harvest</em> and it wouldn't find
+it, giving you black as a default.
+Then it would search for <em>Gold</em>
+and find it, since that's
+an existing color.
+So instead of a single brownish color,
+you'd have a list of two colors,
+black and gold, which probably would not
+going to look the way you intended.
+The moral is to make sure all of your
+colors are single words without spaces!
+
+<h4>By Hex</h4>
+<p>
+If you're familiar with the hex notation used by
+browsers and some drawing programs,
+you can use that.
+Simply start your color with a hash mark (#)
+and follow it with six hex digits
+(the numbers 0 to 9, and the letters a to f or A to F).
+Remember there cannot be a space between the
+hash mark and the hex digits.
+The color <em>HarvestGold</em> can be named
+in hex as <code>#DA9100</code>
+(case doesn't matter, so <code>#da9100</code>
+works just as well).
+You can also use the eight-digit form of a
+hex color, but the first two digits
+(which describe opacity) are ignored.
+</p>
+
+<h4>By RGB</h4>
+<p>
+You can also name your colors using red,
+green, and blue values from 0 to 255.
+Start with the string <code>rgb(</code>
+and then list your values in the order
+red, green, blue, separated by commas,
+ending with a closing parentheses.
+In this form, Harvest Gold would be
+written <code>rgb(217,145,0)</code>.
+Remember, as always, there can be 
+<em>no spaces</em> anywhere in this 
+string (not even after the commas).
 </p>
 
 <p><a name='makingPatterns'></a></p>
@@ -1595,83 +1702,9 @@ preset you'll always get your version.
 You can't delete the presets.
 </p>
 
-<p><a name="colors"></a></p>
-<h2>Colors</h2>
-
-<p>
-You can name your colors in three ways,
-and you can even mix and match these in a
-single expression.
-</p>
-
-<h4>By Name</h4>
-<p>
-This is probably the easiest option. The Digital Loom
-knows 1303 different color names,
-gathered from a wide variety of sources.
-Probably any color name you know is in the list.
-You can browse the colors visually 
-<a href="browseColorsByName.html" target="_blank">sorted by name</a>,
-or
-<a href="browseColorsByColor.html" target="_blank">sorted by hue</a>.
-using the links below.
-Note that if a given color has multiple names,
-I've retained all of them because some names might
-be more familiar to you than others.
-</p>
-<ul>
-<li><a href="browseColorsByName.html" target="_blank">Page of colors sorted by name</a></li>
-<li><a href="browseColorsByColor.html" target="_blank">Page of colors sorted by hue</a></li>
-</ul>
-<p>
-For example, a nice middle brown is
-<code>HarvestGold</code>.
-While some names may include parentheses
-or dashes, make sure that your color name
-is a single word with <em>no spaces</em>.
-If you accidentally type a space,
-AWL will read it as two separate
-colors in a row to build a pattern
-(and it probably won't find both,
-of those words in the list of colors;
-it usually won't even find one of them).
-
-<h4>By Hex</h4>
-<p>
-If you're familiar with the hex notation used by
-browsers and some drawing programs,
-you can use that.
-Simply start your color with a hash mark (#)
-and follow it with six hex digits
-(the numbers 0 to 9, and the letters a to f or A to F).
-Remember there cannot be a space between the
-hash mark and the hex digits.
-The color Harvest Gold can be named
-in hex as <code>#DA9100</code>
-(case doesn't matter, so <code>#da9100</code>
-works just as well).
-You can also use the eight-digit form of a
-hex color, but the first two digits
-(which describe opacity) are ignored.
-</p>
-
-<h4>By RGB</h4>
-<p>
-You can also name your colors using red,
-green, and blue values from 0 to 255.
-Start with the string <code>rgb(</code>
-and then list your values in the order
-red, green, blue, separated by commas,
-ending with a closing parentheses.
-In this form, Harvest Gold would be
-written <code>rgb(217,145,0)</code>.
-Remember, as always, there can be 
-<em>no spaces</em> anywhere in this 
-string (not even after the commas).
-</p>
 
 <p><a name="faq"></a></p>
-<h2>FAQ</h2>
+<h1>FAQ</h1>
 
 <h3>The table is way too cryptic. What do these commands do?</h3>
 <p>
@@ -1902,9 +1935,12 @@ offending AWL right into the body of the mail.
 </p>
 
 <p><a name="furtherReading"></a></p>
-<h2>Further Reading</h2>
+<h1>Further Reading</h1>
 <p>
 TK stuff goes here
+books and cga columns
+refs from cga
+online sites
 </p>
 
 			</div> <!-- column 10 -->

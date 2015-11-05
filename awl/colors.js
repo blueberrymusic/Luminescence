@@ -19,7 +19,8 @@ function getColorAsRGBString(name) {
 		return "rgb("+red+", "+green+", "+blue+")";
 	}
 	// is it rgb(#,#,#)?
-	if (name.slice(0,3) === "rgb") {
+	var first3 = name.slice(0,3).toLowerCase();
+	if (first3 === "rgb") {
 		var vals = name.slice(4, name.length-1);
 		var words = vals.split(",");
 		var red = parseInt(words[0]);
