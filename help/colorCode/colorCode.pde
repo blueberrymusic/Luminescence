@@ -1,6 +1,32 @@
+
 void setup() {
-  readsorthsb();
+  makeHBSRGBname();
+
 }
+
+
+void makeHBSRGBname() {
+  PrintWriter PW = createWriter("HSBRGBname.txt");
+  String lines[] = loadStrings("nameRGB.txt");
+  for (int i=0; i<lines.length; i++) {
+    String line = lines[i];
+     String words[] = split(lines[i], ' ');
+     String name = words[0];
+     int rval = int(words[1]);
+     int gval = int(words[2]);
+     int bval = int(words[3]);
+     colorMode(RGB);
+     color clr = color(rval, gval, bval);
+     colorMode(HSB);
+     int hueval = int(hue(clr));
+     int satval = int(saturation(clr));
+     int brtval = int(brightness(clr));
+     PW.println(nf(hueval, 3), nf(brtval, 3), nf(satval, 3), nf(rval, 3), nf(gval, 3), nf(bval, 3), name);
+  }
+  PW.flush();
+  PW.close();
+}
+
 
 void readsorthsb() {
   
