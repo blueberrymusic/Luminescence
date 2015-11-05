@@ -2,14 +2,7 @@
 
 function getColorAsRGBString(name) {
 	var nameLC = name.toLowerCase();
-	for (var i=0; i<AllColorsRGB.length; i++) {
-		var entry = AllColorsRGB[i];
-		var procLC = entry[3].toLowerCase();
-		if (nameLC === procLC) {
-			return "rgb("+entry[0]+", "+entry[1]+", "+entry[2]+")";
-		}
-	}
-	// is it hex?
+	// is it hex6?
 	var hex6 = /#[0-9a-fA-F]{6}/;
 	if (hex6.test(name)) {
 		var red = parseInt(name.slice(1,3), 16);
@@ -17,6 +10,7 @@ function getColorAsRGBString(name) {
 		var blue = parseInt(name.slice(5,7), 16);
 		return "rgb("+red+", "+green+", "+blue+")";
 	}
+	// is it hex8?
 	var hex8 = /#[0-9a-fA-F]{8}/;
 	if (hex8.test(name)) {
 		var red = parseInt(name.slice(3,5), 16);
@@ -33,10 +27,23 @@ function getColorAsRGBString(name) {
 		var blue = parseInt(words[2]);
 		return "rgb("+red+", "+green+", "+blue+")";
 	}
-	return "rgb(0, 0, 0)";  // default
+	// is it a named color?
+	var entry = getColorRGB(nameLC);
+	return "rgb("+entry[0]+", "+entry[1]+", "+entry[2]+")";
 }
 
-function getColorRGB(name) {
+function getColorEntry(name) {
+		for (var i=0; i<AllColorsRGB.length; i++) {
+			var entry = AllColorsRGB[i];
+			var procLC = entry[3].toLowerCase();
+			if (nameLC === procLC) {
+				return "rgb("+entry[0]+", "+entry[1]+", "+entry[2]+")";
+			}
+		}
+}
+
+/* linear search = slow but reliable */
+function getColorRGBLinearSearch(name) {
 	var nameLC = name.toLowerCase();
 	for (var i=0; i<AllColorsRGB.length; i++) {
 		var entry = AllColorsRGB[i];
@@ -48,6 +55,40 @@ function getColorRGB(name) {
 	return [0, 0, 0];
 }
 
+/* subdivision search = fast but slightly more complex */
+function getColorRGB(name) {
+	var nameLC = name.toLowerCase();
+	var leftIndex = 0;
+	var rightIndex = AllColorsRGB.length-1;
+	return getColorRGBSub(nameLC, leftIndex, rightIndex);
+}
+
+function getColorRGBSub(nameLC, leftIndex, rightIndex) {
+	var leftEntry = AllColorsRGB[leftIndex];
+	var leftLC = leftEntry[3].toLowerCase();
+	if (nameLC === leftLC) {
+		return [ leftEntry[0], leftEntry[1], leftEntry[2] ];
+	}
+	var rightEntry = AllColorsRGB[rightIndex];
+	var rightLC = rightEntry[3].toLowerCase();
+	if (nameLC === rightLC) {
+		return [ rightEntry[0], rightEntry[1], rightEntry[2] ];
+	}
+	if (rightIndex === leftIndex+1) {
+		return [0, 0, 0];
+	}
+	var midIndex = Math.floor((leftIndex+rightIndex)/2);
+	var midEntry = AllColorsRGB[midIndex];
+	var midLC = midEntry[3].toLowerCase();
+	if (nameLC === midLC) {
+		return [ midEntry[0], midEntry[1], midEntry[2] ];
+	}
+	if (nameLC < midLC) {
+		return getColorRGBSub(nameLC, leftIndex, midIndex);
+	} 
+	return getColorRGBSub(nameLC, midIndex, rightIndex);
+}
+	
 function getColorIndex(name) {
 	var nameLC = name.toLowerCase();
 	for (var i=0; i<AllColorsRGB.length; i++) {
