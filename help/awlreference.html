@@ -110,14 +110,21 @@ This is an overview of AWL
 
 <h2>binary0</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code><b>A</b> binary0</code></dd>
+<dt>Shortcut:</dt><dd><code>b0</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-Produce A0 0's, then A1 1's, then A2 0's, and so on.
+Produce a list of 0's and 1's, usually for the tie-up.
+The elements of <b>A</b> tell how many times each digit
+should be repated.
+The list starts with 0's
+(compare to <code>binary1</code> which starts with 0's).
+Entries in <b>A</b> that are less than zero
+are considered to be zero.
 </p>
 
 <div class="bs-example">
@@ -128,68 +135,58 @@ Produce A0 0's, then A1 1's, then A2 0's, and so on.
 0 0 0 1 0 0 1 1 0
 </pre></div>
 
-<p><a name="binary0"></a></p>
-<h2>binary0</h2>
-<dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
-</dl>
-<p>
-TK description
-</p>
-<div class="bs-example">
-TK input
-</div>
-<div class="highlight">
-<pre>
-TK output
-</pre></div>
-
-
-
 <p><a name="binary1"></a></p>
 <h2>binary1</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code><b>A</b> binary1</code></dd>
+<dt>Shortcut:</dt><dd><code>b1</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Produce a list of 0's and 1's, usually for the tie-up.
+The elements of <b>A</b> tell how many times each digit
+should be repated.
+The list starts with 0's
+(compare to <code>binary0</code> which starts with 0's).
+Entries in <b>A</b> that are less than zero
+are considered to be zero.
 </p>
 <div class="bs-example">
-TK input
+3 1 2 2 1 binary1
 </div>
 <div class="highlight">
 <pre>
-TK output
+1 1 1 0 1 1 0 0 1
 </pre></div>
-
 
 
 <p><a name="block"></a></p>
 <h2>block</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> block</code></dd>
+<dt>Shortcut:</dt><dd><code>#</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
 </dl>
 <p>
-TK description
+Expand list <b>A</b> by repeating each element
+<b>A</b>i a total of <b>B</b>i times.
+Note that if <b>B</b>i is 0, then that element
+of <b>A</b> is not repeated at all.
+Entries in <b>B</b> that are less than zero
+are considered to be zero.
 </p>
 <div class="bs-example">
-TK input
+1 2 3 4 / 3 0 4 2 #
 </div>
 <div class="highlight">
 <pre>
-TK output
+1 1 1 3 3 3 3 4 4 
 </pre></div>
 
 
@@ -197,55 +194,85 @@ TK output
 <p><a name="blockpal"></a></p>
 <h2>blockpal</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> blockpal</code></dd>
+<dt>Shortcut:</dt><dd><code>#p</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
 </dl>
 <p>
-TK description
+Similar to <code>block</code>,
+but the input list is considered a near-palindrome.
+That is, the input list is extended with a reversed
+copy of itself, only without the first element.
+The appended elements are repeated as many times as the
+originals.
 </p>
 <div class="bs-example">
-TK input
+1 3 2 4 5 / 2 4 2 3 2 blockpal
 </div>
 <div class="highlight">
 <pre>
-TK output
+1 1 3 3 3 3 2 2 4 4 4 5 5 4 4 4 2 2 3 3 3 3
 </pre></div>
+<p>
+The first part is the same as
+that produced by <code>block</code>:
+the elements of <b>A</b> were each
+repeated by the corresponding number in <b>B</b>.
+But then that whole result is reversed 
+and appended, except for the first element of <b>A</b>.
+Note that this is subtly different than using
+<code>block</code> followed by <code>palindrome</code>.
+In this case,
+the latter would have one more 5 in the middle,
+and one more 1 at the end.
 
 
 
 <p><a name="cipher"></a></p>
 <h2>cipher</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
 </dl>
 <p>
-TK description
+Each element <b>A</b>i in <b>A</b> is replaced
+with element <b>B</>i.
+This is like the first "secret code" you came up with
+your friends in school to pass notes:
+A goes to F, B goes to G, C goes to H, and so on.
+In AWL, we usually use numbers for both lists.
 </p>
 <div class="bs-example">
-TK input
+3 5 2 5 0 / 7 6 5 4 3 1 cipher
 </div>
 <div class="highlight">
-<pre>
-TK output
+4 1 5 1 7
 </pre></div>
+<p>
+Here the 3 in <b>A</b> was mapped to element 3 of <b>B</b>,
+producing 4 (remember we start counting with 0).
+Then we appended the 5th element of <b>B</b>, or 1,
+and so on.
+</p>
 
 
 
 <p><a name="clear"></a></p>
 <h2>clear</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -263,11 +290,12 @@ TK output
 <p><a name="concat"></a></p>
 <h2>concat</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -285,11 +313,12 @@ TK output
 <p><a name="domain"></a></p>
 <h2>domain</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -307,11 +336,12 @@ TK output
 <p><a name="down"></a></p>
 <h2>down</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -329,11 +359,12 @@ TK output
 <p><a name="downloop"></a></p>
 <h2>downloop</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -351,11 +382,12 @@ TK output
 <p><a name="downup"></a></p>
 <h2>downup</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -373,11 +405,12 @@ TK output
 <p><a name="downuploop"></a></p>
 <h2>downuploop</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -395,11 +428,12 @@ TK output
 <p><a name="dup"></a></p>
 <h2>dup</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -417,11 +451,12 @@ TK output
 <p><a name="extend"></a></p>
 <h2>extend</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -439,11 +474,12 @@ TK output
 <p><a name="growblock"></a></p>
 <h2>growblock</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -461,11 +497,12 @@ TK output
 <p><a name="iblock"></a></p>
 <h2>iblock</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -483,11 +520,12 @@ TK output
 <p><a name="iblockpal"></a></p>
 <h2>iblockpal</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -505,11 +543,12 @@ TK output
 <p><a name="interleave"></a></p>
 <h2>interleave</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -527,11 +566,12 @@ TK output
 <p><a name="nth"></a></p>
 <h2>nth</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -549,11 +589,12 @@ TK output
 <p><a name="palindrome"></a></p>
 <h2>palindrome</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -571,11 +612,12 @@ TK output
 <p><a name="pbox"></a></p>
 <h2>pbox</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -593,11 +635,12 @@ TK output
 <p><a name="permute"></a></p>
 <h2>permute</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -615,11 +658,12 @@ TK output
 <p><a name="pop"></a></p>
 <h2>pop</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -637,11 +681,12 @@ TK output
 <p><a name="push"></a></p>
 <h2>push</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -659,11 +704,12 @@ TK output
 <p><a name="ramp"></a></p>
 <h2>ramp</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -681,11 +727,12 @@ TK output
 <p><a name="ramploop"></a></p>
 <h2>ramploop</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -703,11 +750,12 @@ TK output
 <p><a name="repeat"></a></p>
 <h2>repeat</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -725,11 +773,12 @@ TK output
 <p><a name="reverse"></a></p>
 <h2>reverse</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -747,11 +796,12 @@ TK output
 <p><a name="rotatel"></a></p>
 <h2>rotatel</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -769,11 +819,12 @@ TK output
 <p><a name="rotater"></a></p>
 <h2>rotater</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -791,11 +842,12 @@ TK output
 <p><a name="swap"></a></p>
 <h2>swap</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -813,11 +865,12 @@ TK output
 <p><a name="stencil"></a></p>
 <h2>stencil</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -835,11 +888,12 @@ TK output
 <p><a name="split"></a></p>
 <h2>split</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -857,11 +911,12 @@ TK output
 <p><a name="tartan"></a></p>
 <h2>tartan</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -879,11 +934,12 @@ TK output
 <p><a name="tartanpal"></a></p>
 <h2>tartanpal</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -901,11 +957,12 @@ TK output
 <p><a name="template"></a></p>
 <h2>template</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -923,11 +980,12 @@ TK output
 <p><a name="twilll"></a></p>
 <h2>twilll</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -945,11 +1003,12 @@ TK output
 <p><a name="twillr"></a></p>
 <h2>twillr</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -967,11 +1026,12 @@ TK output
 <p><a name="up"></a></p>
 <h2>up</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -989,11 +1049,12 @@ TK output
 <p><a name="uploop"></a></p>
 <h2>uploop</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -1011,11 +1072,12 @@ TK output
 <p><a name="updown"></a></p>
 <h2>updown</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -1033,11 +1095,12 @@ TK output
 <p><a name="updownloop"></a></p>
 <h2>updownloop</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -1055,11 +1118,12 @@ TK output
 <p><a name="veclen"></a></p>
 <h2>veclen</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -1077,11 +1141,12 @@ TK output
 <p><a name="vmax"></a></p>
 <h2>vmax</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description
@@ -1099,11 +1164,12 @@ TK output
 <p><a name="vmin"></a></p>
 <h2>vmin</h2>
 <dl class="dl-horizontal">
-<dt>Shortcut:</dt><dd>b0</dd>
+<dt>Usage:</dt><dd><code>TK</code></dd>
+<dt>Shortcut:</dt><dd><code>TK</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 TK description

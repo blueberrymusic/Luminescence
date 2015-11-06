@@ -46,7 +46,7 @@ var RawPresets = [
 [ "House Of Cards", 
 "4 5 / 1 * 4 5 0 1 2 3 2 1 / 1 3 1 3 1 3 1 1 #p ,",
 "4 5 / 1 * 4 5 0 1 2 3 2 1 / 1 3 1 3 1 3 1 1 #p ,",
-"Green", "Yellow", 
+"LightGreen", "DarkYellow", 
 "1 3 2 3 1 4 1 1 1 2 1 2 1 1 1 1 2 1 2 3 1 1 binary0",
 120, 6, 6],
 

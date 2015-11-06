@@ -701,7 +701,7 @@ function doGeneralBlock(leftList, rightList, isPalindrome) {
 		}
 	}
 	if (isPalindrome) { // repeat as before but backwards
-		var i = rightList.length-1;
+		var i = rightList.length-2;
 		while (i > 0)
 		{
 			var reps = Number(rightList[i]);
