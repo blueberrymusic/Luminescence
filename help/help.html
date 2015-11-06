@@ -312,7 +312,7 @@ sequence 2  1 3 0.
 </p>
 
 <figure class="figure ">
-  <img src="http://placehold.it/600x400" class="img-rounded center-block" alt="A generic square placeholder image with rounded corners in a figure.">
+  <img src="images/TwoDrafts.jpg" width="800" class="img-rounded center-block" alt="Two drafts.">
   <figcaption class="figure-caption text-center">
 Figure 3: Two drafts. See the text for the
 lists that describe them.
@@ -335,29 +335,68 @@ we'd call it 0.
 If it's one down from that,
 we'd call it a 1, 
 and so on.
-The warp pattern in Figure 3a is
-then 4 3 2 1 0
-which repeats forever
-(note that the warp has 5 rows, while
-the weft has only 4;
-this is perfectly fine).
+In the warp of Figure 3a,
+the cell in the rightmost column indeed
+is at the top,
+so the pattern starts out as <strong>0</strong>
+Moving left, the next black cell is one
+step down, so we append a <strong>1</strong>
+and our pattern becomes 
+<strong>0 1</strong>.
+Moving left, we find black dots at locations
+2, 3, then 2, and 1 again.
+Using these six colums, we've got
+the pattern <strong>0 1 2 3 2 1</strong>.
 </p>
 <p>
-The colors are easy.
-For both the warp and the weft,
-we simply make a list of the colors
-and repeat that list as needed.
-Much of the time we'll use a very
-simple list with just one color,
-so all the thread will be that color.
-In Figure 3a,
-the list for the weft colors
-is just <em>red</em>,
-and the list for the warp colors 
-is just <em>white</em>.
+You can see that this pattern repeats,
+so this first section is all we need.
+Notice that we don't repeat the starting
+0 at the end, or we'd get two 0's in a row
+when we repeated the pattern.
+</p>
+<p>
+Let's now look at the warp colors,
+directly under the warp.
+Again, we start at the far right
+and work our way left.
+Here I see a kind of tan color,
+then brown,
+and then the pattern repeats.
+So our warp color pattern is
+<strong>tan brown</strong>.
+</p>
+<p>
+Now we'll look at the weft.
+We start at the bottom and work our
+way up,
+counting cells from the left.
+This is another up-down triangle
+wave just lie the warp.
+The first cell is 0, then 1, and so 
+on, just like the warp,
+giving us the weft pattern
+<strong>0 1 2 3 2 1</strong>.
+It's not unusual to set things up this way,
+and use the same
+pattern in both the warp and weft.
+</p>
+<p>
+The weft colors are next.
+We read those from the bottom up.
+Here I see a kind of blue and then a 
+gray, and then pattern repeats.
+So the weft color pattern is
+<strong>blue tan</strong>.
 </p>
 <p>
 Finally, the tie-up.
+Since both the warp and weft are using
+only the first four threads,
+I've set the tie-up to also be 4 by 4.
+You don't have to make the tie-up the
+same size as the warp and weft,
+but it's common.
 Since the tie-up can have any arrangement
 of black and while cells,
 we just read them off starting at the
@@ -365,17 +404,43 @@ top left,
 then moving to the right,
 and then down a row,
 like reading a book.
-White cells are 1, and black cells are 0.
+White cells are 0,
+and black cells are 1
+(if you're a computer graphics person,
+this probably seems backwards.
+But think of it from a pencil-and-paper
+point of view, where drafts originated.
+The page was white, and you used a black pencil.
+A 0 meant "leave the cell alone,"
+which left it white.
+A 1 meant "fill it in",
+which turned it black.
+This is the convention I've found in the 
+weaving literature, and remember that weavers
+have been doing it this since way,
+<em>way</em> before computer graphics!).
 So in Figure 3a,
-the first row of the tie-up is 0 0 1 1,
-the second row is 0 1 1 0,
+the first row of the tie-up is 
+<strong>1 1 0 0</strong>,
+the second row is 
+<strong>1 1 1 0</strong>,
 and so on.
-Combining all the rows one after the other
-gives us a list of (in this case) 20 
-0's and 1's.
-TK Replace the numbers above and those in the
-list below  with actual values from the figure
+So the tie-up can be described by
+a big list of 16 1's and 0's.
 </p>
+<p>
+In this particular case, though,
+you might notice that the tie-up is
+just repeating the pattern
+<strong>1 1 0 0 1</strong>.
+This automatically creates a
+pattern than seems to shift from
+one row to the next.
+Representing the tie-up with a
+shorter repeating pattern like this
+makes it easier to edit and play with it later.
+</p>
+
 <p>
 To summarize, the following list completely
 summarizes the draft in Figure 3a,
@@ -387,24 +452,26 @@ and it's all you need to know from them to
 recreate their drafts on your own loom.
 </p>
 <ul>
-<li><strong>Warp pattern:</strong> TK 0 3 2 1 5 2 </li>
-<li><strong>Weft pattern:</strong> TK 0 3 2 1 5 2 </li>
-<li><strong>Warp colors:</strong> TK red </li>
-<li><strong>Weft colors:</strong> TK yellow blue </li>
-<li><strong>Tie-up:</strong> TK 1 1 0 0 0 0 0 1 1 0 </li>
+<li><strong>Warp pattern:</strong> 0 1 2 3 2 1 </li>
+<li><strong>Weft pattern:</strong> 0 1 2 3 2 1 </li>
+<li><strong>Warp colors:</strong> tan brown </li>
+<li><strong>Weft colors:</strong> blue gray</li>
+<li><strong>Tie-up:</strong> 1 1 0 0 1</li>
 </ul>
 <p>
 Figure 3b offers another draft.
+Here both the warp and weft are both using
+5 threads, and I've made the tie-up 5 by 5.
 Try to write down the five lists that
 describe the five sections of the draft
 before you read the list below:
 </p>
 <ul>
-<li><strong>Warp pattern:</strong> TK 0 3 2 1 5 2 </li>
-<li><strong>Weft pattern:</strong> TK 0 3 2 1 5 2 </li>
-<li><strong>Warp colors:</strong> TK red </li>
-<li><strong>Weft colors:</strong> TK yellow blue </li>
-<li><strong>Tie-up:</strong> TK 1 1 0 0 0 0 0 1 1 0 </li>
+<li><strong>Warp pattern:</strong> 3 4 3 0 1 0 1 2 </li>
+<li><strong>Weft pattern:</strong> 2 3 2 4 0 1</li>
+<li><strong>Warp colors:</strong> red </li>
+<li><strong>Weft colors:</strong> yellow </li>
+<li><strong>Tie-up:</strong> 1 0 1 0 1 1</li>
 </ul>
 <p>
 When we weave the fabric,
@@ -1605,8 +1672,6 @@ where the lists are frequently just a single color.
 
 <p><a name='interface'></a></p>
 <h2>The Rest of the Interface</h2>
-
-Here's what the rest of the controls do.
 
 <h3>Fabric and Tie-up Size</h3>
 <p>
