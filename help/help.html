@@ -20,6 +20,9 @@
 <!-- make mobile-friendly: http://www.w3schools.com/bootstrap/bootstrap_get_started.asp
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- get awesome fonts for glyphs -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 <!-- Just for grins, use Ubuntu here and there -->
 <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
@@ -40,8 +43,12 @@
 <p>
 This is a quick-start guide to my online
 <a href="http://www.TK">Digital Loom</a>.
-Here's a shortcut to the
-<a href="#commands">commands summary</a>.
+</p>
+<p>
+Here are shortcuts to the
+<a href="#commands">AWL commands summary</a>
+and the <a href="TK">AWL command descriptions</a>.
+
 </p>
 
 <p>
@@ -49,7 +56,7 @@ The Digital Loom is a simplified and abstracted version
 of a real loom used for weaving cloth.
 You can set up the loom using patterns published in weaving
 books that are over 100 years old,
-or you can cook up crazy new designs of your own.
+or you can cook up exciting new designs of your own.
 </p>
 
 <p>
@@ -209,7 +216,9 @@ though that would make a pretty boring fabric).
 To determine which thread is on top of any given
 cell in the fabric,
 we follow a simple process,
-illustrated in Figure 2:
+illustrated in Figure 2.
+We start with a cell in the fabric,
+marked with a black outine.
 </p>
 
 <figure class="figure ">
@@ -227,8 +236,9 @@ in the warp for this column.</li>
 <li>Look below the black weft cell, and to the
 right of the black warp cell, to find a cell
 in the tie-up. If that cell is black, the
-warp thread is on top. Otherwise, the weft 
-thread is on top.
+warp thread is on top, and paint the cell with
+the warp thread's color. Otherwise, the weft 
+thread is on top, and use the weft thread's color.
 </ol>
 
 <p>
@@ -284,33 +294,6 @@ In all cases,
 we start counting at 0.
 </p>
 
-<p>
-First, the weft: the checkerboard immediately
-to the right of the fabric.
-As we saw above,
-the weaving process depends on
-each row of the weft having exactly one black square.
-So we can describe the weft by simply identifying
-the location of that square in each row.
-We do this by starting at the <strong>bottom</strong>
-of the weft checkerboard,
-and working our way up.
-As we read each number from our list,
-we count starting at the <strong>left</strong>
-and going right.
-Look at the weft grid in Figure 3a.
-If the leftmost cell is black, we'd write 
-that as 0.
-If the cell to its right is black, 
-that's a 1, and so on.
-So on the bottom row, we'd write 2.
-The next row up we'd write 1,
-then 3, then 0.
-The pattern then repeats after that.
-So this weft is described by the 
-sequence 2  1 3 0.
-</p>
-
 <figure class="figure ">
   <img src="images/TwoDrafts.jpg" width="800" class="img-rounded center-block" alt="Two drafts.">
   <figcaption class="figure-caption text-center">
@@ -320,7 +303,9 @@ lists that describe them.
 </figure>
 
 <p>
-Let's now look at the warp in Figure 3a.
+Let's figure out the draft for Figure 3a.
+We'll start with the warp,
+directly under the fabric.
 Recall the each column of the warp is white
 except for one black cell,
 so again we only need to know the location
@@ -534,7 +519,7 @@ numbers (or colors) and then press the arrow.
 </p>
 <p>
 <h3>Important Note </h3> 
-If you're new to the syatem and 
+If you're new to the system and 
 you want to play around with the inputs before
 you learn the pattern language,
 that's fine;
@@ -1101,13 +1086,13 @@ The column headings can be interpreted this way:
 </li>
 <li><strong>Short:</strong> The command's shortcut, if it has one
 </li>
-<li><strong>List A:</strong>  N if <b>A</b> must be numbers, C if <b>A</b> must be colors
+<li><strong>List A:</strong>  checked if <b>A</b> must be numbers
 </li>
-<li><strong>List B:</strong>  N if <b>B</b> must be numbers, C if <b>B</b> must be colors
+<li><strong>List B:</strong>  checked if <b>B</b> must be numbers
 </li>
-<li><strong>Wrap:</strong> does this command produces numbers that might wrap around the domain
+<li><strong>Wrap:</strong> checked if this command wraps its output numbers around the domain
 </li>
-<li><strong>Resize:</strong>  does this command make both lists the same size by repeating the shorter list
+<li><strong>Resize:</strong>  checked if this command make both lists the same size by repeating the shorter list
 </li>
 <li><strong>Summary:</strong> A short description of what the command does
 </li>
@@ -1167,7 +1152,7 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> binary0</td>
 	<td>b0</td>
-	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
@@ -1176,7 +1161,7 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> binary1</td>
 	<td>b1</td>
-	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
@@ -1186,19 +1171,28 @@ yielding no new list after the split).
 	<td><b>A</b> <b>B</b> block</td>
 	<td>#</td>
 	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>Each <b>A</b>i is repeated <b>B</b>i times</td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> blockpal</td>
 	<td>#p</td>
 	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>block with internal palindrome</td>
+</tr>
+<tr>
+	<td><b>A</a> <b>B</b> cipher</td>
+	<td> </td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td> </td>
+	<td> </td>
+	<td>Replace each entry of value i in <b>A</b> with <b>B</b>(i mod (len <b>B</b>))</td>
 </tr>
 <tr>
 	<td>clear</td>
@@ -1230,37 +1224,37 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> <b>B</b> down</td>
 	<td>&gt;</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td><b>A</b>, descending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> downloop</td>
 	<td>&gt;l</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td>Like down, but includes <var>c</var> runs as well</td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> downup</td>
 	<td>&gt;u</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
-	<td>Y*</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i>*</td>
 	<td>Alternating down and up runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> downuploop</td>
 	<td>&gt;ul</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
-	<td>Y*</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i>*</td>
 	<td>Like downup but include <var>c</var> runs as well</td>
 </tr>
 <tr>
@@ -1287,25 +1281,25 @@ yielding no new list after the split).
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>Interleave <b>A</b> with growing palindromes of <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> iblock</td>
 	<td>i#</td>
 	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>Like block but the inputs are interleaved in <b>A</b></td>
 </tr>
 <tr>
 	<td><b>A</b> iblockpal</td>
 	<td>i#p</td>
 	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>iblock with internal palindrome</td>
 </tr>
 <tr>
@@ -1314,7 +1308,7 @@ yielding no new list after the split).
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
 </tr>
 <tr>
@@ -1338,8 +1332,8 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> <b>B</b> pbox</td>
 	<td> </td>
-	<td> </td>
-	<td> </td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td> </td>
 	<td>Shortcut for <b> A B A </b> veclen extend permute</td>
@@ -1347,8 +1341,8 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> <b>B</b> permute</td>
 	<td> </td>
-	<td> </td>
-	<td> </td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td> </td>
 	<td>Use elements of <b>B</b> to index <b>A</b></td>
@@ -1374,18 +1368,18 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> <b>B</b> ramp</td>
 	<td>-</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
    <td><b>A</b>, up or down as needed to stay in domain, <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> ramploop</td>
 	<td>-l</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td>Like ramp but include <var>c</var> runs as well</td>
 </tr>
@@ -1455,19 +1449,19 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> tartan</td>
 	<td> </td>
+	<td></td>
+	<td>n</td>
 	<td> </td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>Like iblock but repeats are half length</td>
 </tr>
 <tr>
 	<td><b>A</b> tartanpal</td>
 	<td> </td>
+	<td></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
 	<td>tartan with internal palindrome</td>
 </tr>
 <tr>
@@ -1500,38 +1494,38 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> <b>B</b> up</td>
 	<td>&lt;</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td><b>A</b>, ascending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
 </tr>
 <tr>
+	<td><b>A</b> <b>B</b> <var>c</var> uploop</td>
+	<td>&lt;l</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td> </td>
+	<td>Like up, but includes <var>c</var> runs as well</td>
+</tr>
+<tr>
 	<td><b>A</b> <b>B</b> updown</td>
 	<td>&lt;d</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
-	<td>Y*</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i>*</td>
 	<td>Alternating up and down runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> updownloop</td>
 	<td>&lt;dl</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
-	<td>Y*</td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i></td>
+	<td><i class="fa fa-check"></i>*</td>
 	<td>Like updown but include <var>c</var> runs as well</td>
-</tr>
-<tr>
-	<td><b>A</b> <b>B</b> <var>c</var> uploop</td>
-	<td>&lt;l</td>
-	<td> </td>
-	<td> </td>
-	<td>Y</td>
-	<td> </td>
-	<td>Like up, but includes <var>c</var> runs as well</td>
 </tr>
 <tr>
 	<td><b>A</b> veclen</td>
@@ -1540,25 +1534,25 @@ yielding no new list after the split).
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Push <b>A</b> back ont the stack, then the length of <b>A</b></td>
+	<td>Push <b>A</b> back on the stack, then the length of <b>A</b></td>
 </tr>
 <tr>
 	<td><b>A</b> vmax</td>
 	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td> </td>
-	<td>Push <b>A</b> back ont the stack, then the largest element in <b>A</b></td>
+	<td>Push <b>A</b> back on the stack, then the largest element in <b>A</b></td>
 </tr>
 <tr>
 	<td><b>A</b> vmin</td>
 	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td> </td>
-	<td>Push <b>A</b> back ont the stack, then the smallest element in <b>A</b></td>
+	<td>Push <b>A</b> back on the stack, then the smallest element in <b>A</b></td>
 </tr>
     </tbody>
   </table>
@@ -1633,8 +1627,9 @@ giving a final result of
 The domain maximum is always 1 more than the minimum.</li>
 <li>When the warp and weft patterns are copied to the draft,
 any values less than 0 are set to 0.</li>
-<li>The <code>stencil</code> command is new.</li>
+<li>The <code>cipher</code> command is new.</li>
 <li>The <code>split</code> command is new.</li>
+<li>The <code>stencil</code> command is new.</li>
 </ol>
 </li>
 </ul>
@@ -1780,21 +1775,17 @@ You can't delete the presets.
 <p><a name="faq"></a></p>
 <h1>FAQ</h1>
 
-<h3>The table is way too cryptic. What do these commands do?</h3>
+<h3>The AWL table is way too cryptic. What do these commands really do?</h3>
 <p>
 The table is just a quick reference.
-You can find a description of each 
-command in Part 2 of my 3-part column
-on Digital Weaving.
-You can find an online PDF in my big list of
-<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns</a>.
-You can also find those columns,
-collected and revised, in my book
-<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs, 
-Mallards, and Montages</a>.
-If you prefer to learn by doing,
-try experimenting.
+A more detailed description of each
+command can be found <a href="TK" target="_blank">here</a>.
+</p>
+<p>
+If you prefer to learn by experimenting,
+go for it!
 Just type in stuff and see what comes out.
+</p>
 
 <h3>How do I save my fabric and draft?</strong></h3>
 <p>
@@ -1804,24 +1795,21 @@ See the section on
 </p>
 <h3>How do I share my drafts?</strong></h3>
 <p>
-Right now, it's a hassle (other questions in this FAQ go into the reasons).
-Until browsers can all write files to your local drive,
+Given the limitations of browsers,
 you have two options:
 a screenshot or a text file.
 </p>
 <p>
 <strong>A screenshot:</strong> 
-The screenshot is the easiest way to go. When you have a
+This is the easiest way to go. When you have a
 draft that you like, 
 just take a picture of your screen
 (every operating system has a free, built-in way
 to do this;
-search online for "screen capture" and your system.
-You can buy a fancy screen grab program, 
-but the free built-in version is fine).
-This will typically give you a picture on your
-hard drive that you can treat just like any other photo,
-so you can email it or post it to social media.
+search online if you're not sure how).
+This will capture your screen's image in a picture on 
+your hard drive that you can treat just like any other photo,
+so you can email it or archive it or post it to social media.
 For you or someone else to load your draft,
 just open up the photo in its own window,
 read what's in the AWL input boxes,
@@ -1831,10 +1819,10 @@ the Digital Loom
 </p>
 <p>
 <strong>A text file:</strong> 
-To go the text file route,
-open a text editor and make a new, blank file.
-Copy the following eight lines and paste them
-into your text editor.
+Open up a blank document in your
+favorite text editor,
+copy the following eight lines,
+and paste them into your document.
 It wouldn't hurt to enter a few blank lines
 after each of these.
 </p>
@@ -1851,110 +1839,73 @@ after each of these.
 </ul>
 
 <p>
-Now click in your browser,
-click in the text field where you 
-entered your Warp Pattern AWL expression,
-copy the text,
-and paste that into the your file
-under "Warp Pattern:".
-Repeat this for the four other input areas.
-Then type into your text file the current
-values for the fabric size, tie-up width, and tie-up height.
+Now one by one,
+click in each input field in the browser,
+select all the text (that is, your AWL expression),
+copy it,
+and paste it into your text document.
+When you're done,
+type in the values for your fabric and tie-up sizes.
+The result is a text file you can save, email, copy, etc.
 </p>
 <p>
-Now you have a file with the AWL that
-completely describes your draft.
-Save the file from your text editor.
-Since that's a normal text file, you can copy it or
-back it up or email it or do whatever you like with it.
+To restore your draft from one of these files,
+reverse the process:
+copy the text out of the document and paste it into
+each input box,
+then enter the values for the fabric and tie-up sizes.
+Be sure to press the big arrow for each input
+box once you're entered your new stuff.
 </p>
 <p>
-Unfortunately, 
-the browser also can't read your local
-disk in order to load the file.
-So for you or your friends
-to get the information back into the Digital Loom
-you need to reverse the process.
-Open the file in a text editor,
-then work one field at a time,
-copying the text from the text file (just the AWL expressions,
-not your labels - those are just there so you know which is which)
-and paste that text into the text boxes
-(remember to press the corresponding arrow after each paste).
-Then set the tie-up sizes and fabric size if necessary.
-Remember you need to press the arrow button to the right
-of <em>each</em> input field to 
-tell the Digital Loom to read the new AWL you just pasted in.
-</p>
-<p>
-If you want to save the patterns produced by your AWL,
-for example to use on a real loom,
-you'd follow the same business about creating
-a new text file,
-and copying data out of the web page and pasting
-it into the text file,
-only you'd copy the <em>output</em> fields instead.
-Those hold the pattern data that you'd then use to
-set up a real, physical loom to weave your design.
-A weaver would probably prefer a file in the
-standard .WIF format; see the question on that below.
-</p>
-<h3>Why is all this file stuff so awkward?</h3>
-<p>
-Actually, it's kind of remarkable that we can manage to save and recall anything at all.
-The reasons are technical. If you're into that, read on.
-If not, just know that someday things ought to get less weird,
-but right now this is all we've got.
-</p>
-<p>
-Browsers are very deliberately designed to be unable to talk to your local computer's
-hard drive (this is to protect you, and it's one of the reasons the web has succeeded
-the way it has). But there are a few little loopholes to that policy. For example, you
-probably know about cookies: these are tiny files on your hard drive, written and read
-by the browser, that save preferences and other information for web pages. That's an
-example of the browser reading from, and writing to, your computer's hard drive,
-but cookies must be very small files and the computer can
-only read and write them from one special place.
-The Digital Loom doesn't use cookies, but it uses the other two possible exceptions
-(these are both perfectly safe: they're part of the offical, international standards 
-that all browsers follow in order to work on the web).
-</p>
-<p>
-The first one lets you save your fabric by right-clicking on it and saving it as a picture.
-We manage that by telling the browser that the drawing we made is just a normal photograph 
-that can be saved in that usual way.
-</p>
-<p>
-The second trick is called LocalStorage, and that's where we store your drafts.
-But this is a very constrained way to save things. Each URL (that is, each web page)
-can save up to 5MB total, without exception (that's not enough for pictures!).
-And each browser manages its own LocalStorage, so the drafts you save on Firefox,
-say, will not be available in Chrome, and vice-versa. This is true for each type
-of browser. The files are saved to your hard drive, so if you're using a friend's
-computer, your saved files will not be there. Finally, these aren't really files at
-all, so don't go looking for them on your disk. They're actually saved inside a
-database managed by the browser (that's why we can't use this method to save files
-you can share with other people).
-</p>
-<p>
-Someday all browsers will be able to read and write to a safe region
-of your hard drive using techniques that are now an official part of 
-the HTML5 specification. 
-When all (or even most) browsers support this feature,
-I'll happily add normal file saving and loading,
-and we'll even do it using industry-standard .WIF format files.
-Until then, we have this weird compromise.
+The text file method is slower to make
+than the screenshot,
+but it's much easier to load the AWL back in,
+and you won't risk making mistakes while
+transcribing the picture.
 </p>
 
-<h3>Can I save my draft in the WIF weaving-file format to share with other weavers, or use to set up a real loom?</h3>
+<h3>Why is all this file stuff so awkward?</h3>
+<p>
+It's because browsers are deliberately designed to
+be unable to read and write files to your computer's
+local hard drives.
+This restriction is actually a fabulously good idea,
+and it is largely responsible for allowing the web
+to become what it is today.
+But it does mean that we can't save and load
+files the way any of your installed programs can.
+</p>
+<p>
+To save and load drafts I'm using a tiny bit of
+built-in storage that the browser provides
+for each web page,
+sort of like cookies.
+But that storage isn't organized as files,
+so we can't control it with the standard load and
+save dialogs you're used to
+(for the technically minded,
+I'm using the LocalStorage API).
+But I wanted you to feel like you were saving
+and loading little files with your drafts in them.
+So I've written code to fake all of that,
+and a user interface that I hope makes it feel
+like you're reading, writing, and deleting those
+files.
+It's weird because it's all a fake
+built on a very different underlying technology.
+</p>
+
+<h3>Can I save my draft in the WIF weaving-file format?</h3>
 <p>
 Oh, how I wish the answer was "yes", but it's not. In fact, I have written all
-the code to support reading and writing WIF files.
-But that's useless now,
+the code to support reading and writing 
+<a href="http://www.mhsoft.com/wif/wif.html" target="_blank">WIF files</a>.
+But it's useless 
 because browsers are forbidden from writing files to your
 local file system. 
-When they can do that (see the previous answer),
-I'll provide .WIF reading and writing support.
+If and when that changes,
+I'll very happily provide .WIF reading and writing support.
 
 <h3>Why am I getting a really weird error when my AWL looks fine?</h3>
 <p>
@@ -2034,12 +1985,122 @@ offending AWL right into the body of the mail.
 <p><a name="furtherReading"></a></p>
 <h1>Further Reading</h1>
 <p>
-TK stuff goes here
-books and cga columns
-refs from cga
-online sites
+Wikipedia provides a very nice introductory article on
+<a href="https://en.wikipedia.org/wiki/Weaving" target="_blank">weaving</a>,
+and another on the fascinating and diverse technology behind real
+<a href="https://en.wikipedia.org/wiki/Loom" target="_blank">looms</a>.
+</p>
+<p>
+Weavers have been collecting and sharing drafts since at
+least the 1830s.
+Of course, most of those drafts are necessarily small in size,
+but there are some large ones out there.
+This is particularly surprisingly when you realize that to
+determine what a particular draft will produce,
+you usually have to weave the result!
+And once colored threads are involved,
+predicting the result just by eyeballing the draft
+seems incredibly hard.
+You can find literally thousands of drafts in your
+library, collected in old books that contain page after
+page of draft diagrams.
+Here are three books I found particularly useful:
+<ul>
+<li>B. Frey, Designing and Drafting for Handweavers, Macmillan, Basingstoke Hampshire, England, 1958.</li>
+<li>M.E. Black, The Key to Weaving, Hungry Minds, Hoboken, N.J., 1980.</li>
+<li>A Weaver's Book of 8-Shaft Patterns, Carol Strickler, ed., Interweave Press, 1991.</li>
+</ul>
+</p>
+<p>
+Some draft descriptions are available online.
+The world of online drafts seems to be in constant flux,
+with old repositories disappearing and new ones popping up,
+so I suggest the best way to get started is to do some searching.
+Most of the sites I've found over the years are gone,
+but 
+<a href="http://www.allfiberarts.com/cs/patternsdrafts.htm">Fiber Arts</a>
+still seems up and offering a nice collection of drafts.
+Ralph E. Griswold is a famous collector of weaves and author
+on the subject.
+You can find a ton of information at 
+<a href="http://www.cs.arizona.edu/patterns/weaving/front_door.html" target="_blank">his website</a>,
+including scanned-in versions of long out-of-print books on weaving and collected drafts.
+You can even find some sample code for weaving topics 
+<a href="http://www.cs.arizona.edu/patterns/weaving/FA/index.html" target="_blank">here</a>.
+A good starting point for
+tartan drafts can be found at the
+<a href="http://www.house-of-tartan.scotland.net/">House of Tartan</a>.
+</p>
+<p>
+There are a variety of commercial and public-domain programs
+available to weavers.
+Some go into much more detail than my Online Loom,
+offering far more detailed and complete simulations
+of actual looms.
+Here are some programs that I've found,
+but please note that I haven't used any of these programs myself,
+so I can't tell you which are worth your time and money.
+In alphabetical order, they are
+</p>
+<ul>
+<li><a href="http://www.fiberworks-pcw.com/" target="_blank">Fiberworks</a></li>
+<li><a href="http://www.mhsoft.com/" target="_blank">PatternLand</a></li>
+<li><a href="http://www.weaveit.com" target="_blank">WeaveIt</a></li>
+<li><a href="http://www.weavemaker.com" target="_blank">WeaveMaker</a></li>
+<li><a href="http://www.weavepoint.com" target="_blank">WeavePoint</a></li>
+</ul>
+<p>
+My weaving language AWL was strongly inspired by
+the weaving language provided in the very first release
+of the commercial artist's program 
+<a href="http://www.painterartist.com/us/product/paint-program/" target="_blank">Painter</a>,
+online and offline references on weaving,
+and monographs by Ralph Griswold, mentioned above.
+For instance,
+the <code>growblock</code> operator is based on Griswold's
+paper, "Variations On A Shadow Weave."
+</p>
+<p>
+The named colors in the Online Loom database were collected from
+a list of colors on
+<a href="https://en.wikipedia.org/wiki/List_of_colors_%28compact%29" target="_blank">Wikipedia</a>,
+a list of colors provided as part of Microsoft's
+<a href="http://www.opinionatedgeek.com/DotNet/Tools/Colors/default.aspx" target="_blank">.NET</a>
+framework,
+color measurements I made from online pictures of real tartan cloth,
+and a few other colors I've used in projects over the years.
+</p>
+<p>
+The original description of AWL and my Digital Loom
+appeared in 3 successive installments of my
+column <em>Andrew Glassner's Notebook</em>,
+which I wrote for the journal <em>IEEE Computer Graphics & Applications</em>.
+You can find those three columns in PDF form for free by going to
+<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns page</a>,
+and scrolling down to the three columns starting with 
+called <em>Digital Weaving Part 1</em>.
+I later collected many of my CG&A columns,
+expanded and revised them,
+and assembled them into the book
+<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs, 
+Mallards, and Montages</a>.
+</p>
+<p>
+For this project,
+I've re-written everything in Javascript,
+expanded the AWL language,
+fixed some bugs and added some new operators,
+signficantly improved the efficiency of interpreting
+AWL expressions and drawing the results,
+added some new user controls and other niceties,
+and greatly expanded the set of named colors.
+I used the 
+<a href="http://getbootstrap.com/" target="_blank">Bootstrap 3.3</a>
+framework to help make responsive pages.
+All the code in this project is open source.
 </p>
 
+<div style="margin-bottom:50px;"></div>
 			</div> <!-- column 10 -->
 		</div> <!-- row -->
 	</div> <!-- container -->

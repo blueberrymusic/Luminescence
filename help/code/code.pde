@@ -14,7 +14,7 @@ This will make the file HBSRGBname.txt,
 which contains the original data in that order. 
 
 3) In a shell, rRun
-  cat HBSRGBname.txt | sort > sortedHSBRGBname.txt
+  cat HBSRGBname.txt | sort -f > sortedHSBRGBname.txt
 to make the sorted version (by hue, then saturation, then brightness).
 
 4) Run this program again, using
