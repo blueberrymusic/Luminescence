@@ -197,6 +197,7 @@ var Dispatch = [
 	[ "block", DoBlock ], 
 	[ "blockpal", DoBlockPal ], 
 	[ "clear", DoClear ],
+	[ "cipher", DoCipher ],
 	[ "concat", DoConcat ], 
 	[ "domain", DoDomain ],
 	[ "down", DoDown ], 
@@ -308,6 +309,17 @@ function DoBlockPal() {
 
 function DoClear() { 
 	AATheStack = [];
+}
+
+function DoCipher() { 
+	var bList = popList();
+	var aList = popList();
+	var newList = [];
+	for (var i=0; i<aList.length; i++) {
+		var elem = aList[i] % bList.length;
+		newList.push(bList[elem]);
+	}
+	pushList(newList);
 }
 
 function DoConcat() { 
