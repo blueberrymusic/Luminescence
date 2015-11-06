@@ -1,0 +1,1229 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AWL Reference</title>
+
+<!-- jQuery must follow my style and precede Bootstrap -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Bootstrap stuff -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+<!-- make mobile-friendly: http://www.w3schools.com/bootstrap/bootstrap_get_started.asp
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- get awesome fonts for glyphs -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<!-- Just for grins, use Ubuntu here and there -->
+<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" type="text/css" href="help.css">
+<link rel="stylesheet" type="text/css" href="docsmin.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+
+				<div class="page-header">
+<h1>AWL Reference</h1>
+<p>
+This is an overview of AWL
+(Andrew's Weaving Language) for my
+<a href="http://www.TK">Digital Loom</a>.
+</p>
+
+<p><a name='toc'></a></p>
+<h2>Quick Jumps</h2>
+<div class="row">
+<div class="col-md-4">
+<ul>
+<li><a href="#binary0">binary0</a></li>
+<li><a href="#binary1">binary1</a></li>
+<li><a href="#block">block</a></li>
+<li><a href="#blockpal">blockpal</a></li>
+<li><a href="#cipher">cipher</a></li>
+<li><a href="#clear">clear</a></li>
+<li><a href="#concat">concat</a></li>
+<li><a href="#domain">domain</a></li>
+<li><a href="#down">down</a></li>
+<li><a href="#downloop">downloop</a></li>
+<li><a href="#downup">downup</a></li>
+<li><a href="#downuploop">downuploop</a></li>
+<li><a href="#dup">dup</a></li>
+<li><a href="#extend">extend</a></li>
+<li><a href="#growblock">growblock</a></li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul>
+<li><a href="#iblock">iblock</a></li>
+<li><a href="#iblockpal">iblockpal</a></li>
+<li><a href="#interleave">interleave</a></li>
+<li><a href="#nth">nth</a></li>
+<li><a href="#palindrome">palindrome</a></li>
+<li><a href="#pbox">pbox</a></li>
+<li><a href="#permute">permute</a></li>
+<li><a href="#pop">pop</a></li>
+<li><a href="#push">push</a></li>
+<li><a href="#ramp">ramp</a></li>
+<li><a href="#ramploop">ramploop</a></li>
+<li><a href="#repeat">repeat</a></li>
+<li><a href="#reverse">reverse</a></li>
+<li><a href="#rotatel">rotatel</a></li>
+<li><a href="#rotater">rotater</a></li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul>
+<li><a href="#swap">swap</a></li>
+<li><a href="#stencil">stencil</a></li>
+<li><a href="#split">split</a></li>
+<li><a href="#tartan">tartan</a></li>
+<li><a href="#tartanpal">tartanpal</a></li>
+<li><a href="#template">template</a></li>
+<li><a href="#twilll">twilll</a></li>
+<li><a href="#twillr">twillr</a></li>
+<li><a href="#up">up</a></li>
+<li><a href="#uploop">uploop</a></li>
+<li><a href="#updown">updown</a></li>
+<li><a href="#updownloop">updownloop</a></li>
+<li><a href="#veclen">veclen</a></li>
+<li><a href="#vmax">vmax</a></li>
+<li><a href="#vmin">vmin</a></li>
+</ul>
+</div>
+</div>
+
+
+<h2>binary0</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+Produce A0 0's, then A1 1's, then A2 0's, and so on.
+</p>
+
+<div class="bs-example">
+3 1 2 2 1 binary0
+</div>
+<div class="highlight">
+<pre>
+0 0 0 1 0 0 1 1 0
+</pre></div>
+
+<p><a name="binary0"></a></p>
+<h2>binary0</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="binary1"></a></p>
+<h2>binary1</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="block"></a></p>
+<h2>block</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="blockpal"></a></p>
+<h2>blockpal</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="cipher"></a></p>
+<h2>cipher</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="clear"></a></p>
+<h2>clear</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="concat"></a></p>
+<h2>concat</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="domain"></a></p>
+<h2>domain</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="down"></a></p>
+<h2>down</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="downloop"></a></p>
+<h2>downloop</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="downup"></a></p>
+<h2>downup</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="downuploop"></a></p>
+<h2>downuploop</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="dup"></a></p>
+<h2>dup</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="extend"></a></p>
+<h2>extend</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="growblock"></a></p>
+<h2>growblock</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="iblock"></a></p>
+<h2>iblock</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="iblockpal"></a></p>
+<h2>iblockpal</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="interleave"></a></p>
+<h2>interleave</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="nth"></a></p>
+<h2>nth</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="palindrome"></a></p>
+<h2>palindrome</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="pbox"></a></p>
+<h2>pbox</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="permute"></a></p>
+<h2>permute</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="pop"></a></p>
+<h2>pop</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="push"></a></p>
+<h2>push</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="ramp"></a></p>
+<h2>ramp</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="ramploop"></a></p>
+<h2>ramploop</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="repeat"></a></p>
+<h2>repeat</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="reverse"></a></p>
+<h2>reverse</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="rotatel"></a></p>
+<h2>rotatel</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="rotater"></a></p>
+<h2>rotater</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="swap"></a></p>
+<h2>swap</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="stencil"></a></p>
+<h2>stencil</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="split"></a></p>
+<h2>split</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="tartan"></a></p>
+<h2>tartan</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="tartanpal"></a></p>
+<h2>tartanpal</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="template"></a></p>
+<h2>template</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="twilll"></a></p>
+<h2>twilll</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="twillr"></a></p>
+<h2>twillr</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="up"></a></p>
+<h2>up</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="uploop"></a></p>
+<h2>uploop</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="updown"></a></p>
+<h2>updown</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="updownloop"></a></p>
+<h2>updownloop</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="veclen"></a></p>
+<h2>veclen</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="vmax"></a></p>
+<h2>vmax</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+<p><a name="vmin"></a></p>
+<h2>vmin</h2>
+<dl class="dl-horizontal">
+<dt>Shortcut:</dt><dd>b0</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes input:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+TK description
+</p>
+<div class="bs-example">
+TK input
+</div>
+<div class="highlight">
+<pre>
+TK output
+</pre></div>
+
+
+
+
+
+
+
+
+
+
+XXXXXXX
+
+Basic operators
+There are a few operators that I think of as “basic,” because they’re pretty straightforward.
+Adextend (+).If|A|>d,truncateAtodelements. If |A| < d, repeat A as needed until there are at least d ele- ments, and then truncate that result after d elements.12345push3extend =123 12push3extend =121
+Adrepeat (∗).RepeatAatotalofdtimes.
+1 2 3 push 3 repeat = 1 2 3 1 2 3 1 2 3
+Areverse (@).Reversetheorderoftheelements of A.
+1 3 5 7 reverse= 7 5 3 1
+Adrotater (>>)andAdrotatel (<<).Rotate
+the elements of A to the right (or left) by d steps.
+1 2 3 4 5 push 2 rotater = 4 5 1 2 3
+A c nth. Build the new sequence from element 0 of A, then skip c−1 elements, take the next, skip another c−1, take the next, and so on.
+1 2 3 4 5 6 7 push 2 nth = 1 4 7
+Apalindrome (|).TheoutputisAfollowedbythe reverse of A, except that the first and last elements of A aren’t included in the reversed version. We don’t repeat the first and last elements because we want to avoid flat spots both when making the new sequence, and when we repeat one after the other. For example, if we didn’t dothisthen1 2 3 palindrome 2 repeatwould be123321123321ratherthan1232 1 2 3 2, which is almost always more appropriate for creating weaving drafts.
+1 2 3 4 5 palindrome = 1 2 3 4 5 4 3 2
+Up and down
+We use these operators to create runs, or ascending and descending integers within the current domain. As we saw last month, many drafts consist of these runs, so it’s use- ful to have a bunch of convenient ways to specify them.
+ABdown (>)andABup (<).Fordown,theresult is A, followed by a run descending from the last element ofAtothefirstofB.
+1 5 3 push 6 3 down =1 5 3 2 1 0 7 6 3 The command up is the same, but the run ascends.
+A B c downloop (>l) and A B c uploop (<l). The command downloop is like down, but inserts c complete runs in addition to the single descending run.
+1 2 3 push 6 3 push 1 downloop =12321076543210763
+The command uploop is the same, but each run ascends.
+ABdownup (>u)andABupdown (<d).Reshape the inputs. For downup, take the first element of A and insert a descending run to the first element of B. Now ascend to the second element of A, descend to the sec- ond element of B, and so on.
+1 2 3 push 6 7 downup =1076701210701321076
+The command updown is the same, but the alternation begins with an ascending run.
+A B c downuploop (>ul) and A B c updownloop (<dl). The command downuploop is like downup, but inserts c complete runs in each inserted sequence.
+1 push 5 push 2 downuploop
+=1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5
+The command updownloop is the same, but the alter- nation begins with an ascending run.
+ABramp (−).ThiscreatesarunfromALtoB0,but it does so entirely within the domain. Therefore, if AL < B0, it creates an ascending run. Otherwise, it’s a descending one.
+2 push 5 ramp=2 3 4 5 7 push 5 ramp=7 6 5
+A B c ramploop (−l). This command is like ramp, but like uploop or downloop it includes c full runs.
+Advanced operations
+The previous commands were all designed to do basic operations on sequences, or create simple runs.
+This next batch of commands lets us make more com- plex patterns.
+A binary0 and A binary1. Treat A as the length of alternating sequences of 0s and 1s. The command binary0 starts with 0, while binary1 starts with 1. This is a convenience command mostly useful for spec- ifying tie-ups.
+3 1 4 2 2 binary0=0 0 0 1 0 0 0 0 1 1 0 0 ABblock (#).Reshapetheinputs.EachentryAiis
+repeated Bi times.
+3 4 5 1 2 push 2 3 block
+=334445511122
+A B blockpal (#p). The command blockpal is like a block, but it first processes its inputs by making a palindrome of them, treating the inputs as pairs. So in the following example, the pair 1 2 is considered the first element so it’s not repeated at the end, and the pair 2 2isthelastelement,soit’snotrepeatedinthemiddle.
+1 3 2 push 2 4 2 blockpal =113333223333
+name c d eis. The value of name is a string, typically a single letter followed by digits. It specifies an index number in the Encyclopedia of Integer Sequences, which is a massive reference work containing tens of thousands of interesting integer sequences (see the “Further Reading” sidebar for more information). From that named sequence, we skip the first c entries, and then extract the next d values.
+A B growblock ( = ). First, reshape the inputs. Each element Ai is followed by a ramp to B0 (recall that goes up or down, as needed, to stay within the run). At the end of the run, a palindrome of the first i elements of B is inserted, and then a run to Ai+1 is made.
+This diagram shows the result for input sequences with three elements each. The dash (—) stands for a ramp.
+A0—B0—A1—B0B1B0—A2—B0B1B2B1B0 0 1 2 push 4 5 6 growblock
+=0 1 2 3 4 3 2 1 2 3 4 5 4 3 2 3 4 5 6 5 4
+The command growblock was inspired by an analysis of shadow weaves by Ralph Griswold in one of his mono- graphs (see the “Further Reading” sidebar).
+A iblock (i#) and A iblockpal (i#p). Like block, but the values are interleaved in one operand. Thus element A0 is repeated A1 times, element A2 is repeated A3 times, and so on.
+Thecommand iblockpalislikeblockpal,build- ing palindromes from its input pairs, except that they’re taken in interleaved fashion.
+A B interleave (%). This command first
+reshapes its inputs. Then it creates a new string by tak- ing each element of A and then B in turn.
+1 2 3 4 push 9 7 5 interleave =19273549
+A B permute. First, repeat A until its length is an integer multiple of the length of B. That is, create a new vector A′ by choosing the smallest r such that r |A|/|B| is an integer.
+Now create a new vector B′ by repeating B so that it is the same length as A′, but with a twist. Add 0 to the first repeat of B, and |B| to the second, 2|B| to the third, andsoon.Forexample,ifA=1 2 3 4andB=3 1 2, then we choose r = 3 and create
+A′=1 2 3 4 1 2 3 4 1 2 3 4
+B′=3 1 2 (3+(3 1 2)) (6+(3 1 2))
+(9+(3 1 2))=3 1 2 6 4 5 9 7 6 12 10 11 The output is then found by using each element of B′
+as the index from A′. That is,
+where p is the length of either of the new vectors. The entries of B′ are taken modulo p.
+123456push10permute=214365 3 4 5 push 2 1 permute=5 4 4 3 3 5
+A B pbox. This is a convenience for the following operation, where |A| is the length of A:
+AB |A| extend permute
+A B tartan and A B tartanpal. These are a small variation on the iblock and iblockpal commands. Some tartan descriptions double the thread count for each entry, and AWL expects single counts. So after reshaping, each Ai is repeated Bi/2 times.
+A B template (:). Replace each entry in A with a little pattern based on the elements of B. Weavers call this process subarticulation.
+First, create a new vector C with the same length as B (that is, |C| = |B|) and initialize C to all 0s. Now compute Ci = Bi − B0 for all i = [1, |B|]. Thus the first element of C is 0, and all other elements are the signeddistanceofeachBi fromB0.SoifB = 6 7 5 thenC = 01−1,andifB = 34512then C = 0 1 2 − 2 − 1.
+Compute the output by replacing each element Ai with the new |C|-length vector Ai + C − 1.
+0 1 2 3 push 2 template=1 2 3 4 0 3 6 push 2 3 1 template
+1 2 3 4 push 3 push 1 twillr =123441233412
+Utilities
+This last batch of commands are for utility, stack man- agement, and bookkeeping functions.
+s clear. Erase the entire stack.
+s concat (,). Take the top two elements from the
+stack, create a new sequence by placing the second
+after the first, and push that result back on the stack. s dup. Get the top item on the stack and push a new
+copy of it onto the stack.
+s pop. Discard the top element of the stack.
+s push (/). Take everything up to now and treat it as
+a single element of the stack.
+s c d domain. Set the limits on the domain to [c,d].
+s swap. Swap the top two entries on the stack.
+s veclen. Find the length of the top element on the
+stack and push that value.
+s vmax and vmin. Push the value of the largest (or
+smallest) element in the sequence on top of the stack.
+
+
+Plus new ones - cipher, etc.
+
+
+
+
+
+<div style="margin-bottom:50px;"></div>
+			</div> <!-- column 10 -->
+		</div> <!-- row -->
+	</div> <!-- container -->
+
+</body>
+</html>
+
