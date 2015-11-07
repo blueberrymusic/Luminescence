@@ -611,21 +611,31 @@ B0 B1 B2 B3 B2 B1 B0
 <p><a name="iblock"></a></p>
 <h2>iblock</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> iblock</code></dd>
+<dt>Shortcut:</dt><dd><code>i#</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+This does the same job as <code>block</code>,
+but the values are interleaved in one just one list.
+The first element of <b>A</b>,
+<b>A</b>0,
+is repeated
+<b>A</b>1 times,
+then the next element
+<b>A</b>2
+is repeated
+<b>A</b>3 times,
+and so on.
 </p>
 <div class="bs-example">
-TK input
+4 2 5 1 3 3 i#
 </div>
 <div class="highlight">
-TK output
+4 4 5 3 3 3
 </div>
 
 
@@ -633,21 +643,22 @@ TK output
 <p><a name="iblockpal"></a></p>
 <h2>iblockpal</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> iblockpal</code></dd>
+<dt>Shortcut:</dt><dd><code>i#p</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Works like <code>blockpal</code>,
+only the entries are interleaved like <code>iblock</code>.
 </p>
 <div class="bs-example">
-TK input
+4 2 5 1 3 3 2 4 i#p
 </div>
 <div class="highlight">
-TK output
+4 4 5 3 3 3 2 2 2 2 3 3 3 5
 </div>
 
 
@@ -655,21 +666,27 @@ TK output
 <p><a name="interleave"></a></p>
 <h2>interleave</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> interleave</code></dd>
+<dt>Shortcut:</dt><dd><code>%</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
 </dl>
 <p>
-TK description
+The two input lists are turned into one by taking
+elements from each in turn.
+The new list is the first element of <b>A</b>,
+the first element of <b>B</b>,
+the second element of <b>A</b>,
+the second element of <b>B</b>,
+and so on.
 </p>
 <div class="bs-example">
-TK input
+0 2 4 6 / 1 3 5 7 %
 </div>
 <div class="highlight">
-TK output
+0 1 2 3 4 5 6 7
 </div>
 
 
@@ -677,21 +694,24 @@ TK output
 <p><a name="nth"></a></p>
 <h2>nth</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> nth</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Keep element 0 from list <b>A</b>,
+then skip over <var>c</var> elements,
+take the next element from <b>A</b>,
+skip again, and so on to the end of the list.
 </p>
 <div class="bs-example">
-TK input
+0 1 2 3 4 5 6 7 6 5 4 3 2 1 0 / 3 nth
 </div>
 <div class="highlight">
-TK output
+0 4 6 2
 </div>
 
 
@@ -699,21 +719,25 @@ TK output
 <p><a name="palindrome"></a></p>
 <h2>palindrome</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A<//b> palindrome</code></dd>
+<dt>Shortcut:</dt><dd><code>|</code> (vertical bar)</dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+The list <b>A</b> is followed by the reverse of <b>A</b>,
+except that the first and last elements of <b>A</b>
+aren't included in the reversed version.
+This makes repeated palindromes line up nicely without
+duplicated values.
 </p>
 <div class="bs-example">
-TK input
+0 1 3 4 5 |
 </div>
 <div class="highlight">
-TK output
+0 1 3 4 5 4 3 1
 </div>
 
 
@@ -721,21 +745,29 @@ TK output
 <p><a name="pbox"></a></p>
 <h2>pbox</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> pbox</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+This is a shortcut for
+<code>A B A veclen extend permute</code>
+</p>
+<p>
+In words,
+call <code>permute</code> using
+<b>A</b>,
+and a version of <b>B</b> that is either trimmed
+or repeated so that it's the same length as <b>A</b>.
 </p>
 <div class="bs-example">
-TK input
+1 2 3 4 5 6 / 1 0 pbox
 </div>
 <div class="highlight">
-TK output
+2 1 2 1 2 1
 </div>
 
 
@@ -743,21 +775,113 @@ TK output
 <p><a name="permute"></a></p>
 <h2>permute</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> permute</code></dd>
+<dt>Shortcut:</dt><dd><code>&</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
 </dl>
 <p>
-TK description
+This operation gives us a way of building a new list
+by picking out elements of list <b>A</b> using a
+version of list <b>B</b>.
+The mechanics are a little busy,
+but the results are patterns that are very nice for weaving.
+</p>
+<p>
+The first step is to resize both <b>A</b> and <b>B</b>,
+but we don't use the usual rule of just repeating the 
+shorter one and then cutting it off.
+Instead, we first make a new version of <b>A</b>,
+and then a new version of <b>B</b>,
+using different rules.
+</p>
+<p>
+To make the new <b>A</b>,
+which I'll call <b>A'</b>,
+we repeat <b>A</b> over and over until
+its length is an integer multiple of the length of <b>B</b>.
+For example,
+if <b>A</b> has length 4,
+and <b>B</b> has length 6,
+then we'll repeat <b>A</b> a total of 3 times.
+That gives us a length of 12,
+which is the length of <b>B</b> times 2.
+</p>
+<p>
+To find the length of <b>B</b> we just
+repeat it until it has the same length as <b>A</b>,
+but with a twist.
+Each time we repeat <b>B</b>,
+we'll add to its values a number equal to the
+number of repeats we've added so far.
+For example, suppose <b>B</b> has the
+value 2 0 1,
+and we need to repeat it 4 times.
+When we start building our new version of <b>B</b>,
+which I'll call <b>B'</b>,
+we've done no repeating yet,
+so we add 0 to each value of <b>B</b>.
+At this point, <b>B'</b> is just 2 0 1.
+Now we append <b>B</b> onto <b>B'</b> again,
+but since we've already repeated once,
+we add 1 to each value,
+giving us 3 1 2.
+So now <b>B'</b> is 2 0 1 3 1 2.
+The next time we add 2,
+giving us a
+<b>B'</b> of 2 0 1 3 1 2 4 2 3,
+and finally we repeat once more but add 3
+to each element of <b>B</b>,
+giving us the final version of
+<b>B'</b>, with the list 2 0 1 3 1 2 4 2 3 5 3 4.
+</p>
+<p>
+Now comes the last step,
+using list <b>B'</b> to pick out elements from
+<b>A'</b> to build up a new list.
+To do this,
+we take the first element of <b>B'</b>,
+and treat that as an index into <b>A'</b>,
+wrapping it around the length of
+<b>A'</b> if necessary.
+So if the first element of <b>B'</b>
+is, say, 3,
+then we take the element at index 3 in
+list <b>A'</b> (remember to start counting at 0),
+and that becomes the first element in our new list.
+We repeat this for every element in <b>B'</b>.
+</p>
+<p>
+For example, suppose <b>A</b> is 3 4 5,
+and <b>B</b> is 1 2.
+We'll make <b>A'</b> by repeating <b>A</b>
+twice, giving it a length of 6,
+which is 3 times the length of <b>B</b>.
+So <b>A'</b> is 3 4 5 3 4 5.
+Now we make <b>B'</b> by repeating it
+3 times, to give it a length of 6,
+adding 0 to the first repeat,
+1 to the next, and 2 to the third,
+so <b>B'</b> is then 1 2 2 3 3 4.
+Now we use the elements of <b>B'</b>
+to pull out elements of <b>A'</b>.
+The first element of <b>B'</b> is 1,
+so we take the element at index 1 from <b>A'</b>,
+which is 4.
+The next element of <b>B'</b> is 2,
+so we take the element at index 2 from <b>A'</b>,
+giving us 5.
+We continue this process to get the
+final result
+4 5 5 3 3 4.
 </p>
 <div class="bs-example">
-TK input
+3 4 5 / 2 1 &
 </div>
 <div class="highlight">
-TK output
+5 4 4 3 3 5
 </div>
 
 
