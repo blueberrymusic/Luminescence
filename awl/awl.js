@@ -210,7 +210,6 @@ var Dispatch = [
 	[ "iblock", DoIBlock ], 
 	[ "iblockpal", DoIBlockPal ], 
 	[ "interleave", DoInterleave ], 
-	[ "nth", DoNth ],
 	[ "palindrome", DoPalindrome ], 
 	[ "permute", DoPermute ],
 	[ "pbox", DoPbox ],
@@ -222,7 +221,7 @@ var Dispatch = [
 	[ "reverse", DoReverse ], 
 	[ "rotatel", DoRotateL ],
 	[ "rotater", DoRotateR ],
-	[ "stencil", DoStencil ],
+   [ "skipkeep", DoSkipKeep ],
 	[ "split", DoSplit ],
 	[ "swap", DoSwap ],
 	[ "tartan", DoTartan ],
@@ -262,6 +261,7 @@ var Dispatch = [
 	[ "@", DoReverse ],
 	[ "<<", DoRotateL ],
 	[ ">>", DoRotateR ],
+	[ "-sk", DoSkipKeep ],
 	[ ":", DoTemplate ],
 	[ "t>>", DoTwillR ],
 	[ "t<<", DoTwillL ],
@@ -433,18 +433,6 @@ function DoInterleave() {
 	pushList(newList);
 }
 
-function DoNth() { 
-	var count = 1+popInt();
-	var list = popList();
-	var newList = [];
-	var i = 0;
-	while (i < list.length) {
-		newList = newList.concat(list[i]);
-		i += count;
-	}
-	pushList(newList);
-}
-
 function DoPalindrome() {
 	var list = popList();
 	var newList = list;
@@ -532,18 +520,22 @@ function DoRotateR() {
 	handleRotation(list, -1*count);
 }
 
-function DoStencil() {
+function DoSkipKeep() {
+	var keep = popInt();
 	var skip = popInt();
-	var start = popInt();
 	var list = popList();
-	if (skip < 1) {
+	var newList = [];
+	if ((skip < 1) || (keep < 1)) {
 		pushList(list);
 		return;
 	}
-	var newList = [];
-	for (var i=0; i<list.length; i++) {
-		if ((i < start) || ((i-start) % (skip+1) != 0)) {
-			newList.push(list[i]);
+	var index = 0;
+	while (index < list.length) {
+		index += skip;
+		var k = 0;
+		while ((k < keep) && (index < list.length)) {
+			newList.push(list[index++]);
+			k++;
 		}
 	}
 	pushList(newList);

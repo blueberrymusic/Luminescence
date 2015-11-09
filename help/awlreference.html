@@ -28,7 +28,7 @@
 <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
 
 <link rel="stylesheet" type="text/css" href="help.css">
-<link rel="stylesheet" type="text/css" href="docsmin.css">
+<!-- <link rel="stylesheet" type="text/css" href="docsmin.css"> -->
 
 </head>
 
@@ -73,7 +73,6 @@ This is an overview of AWL
 <li><a href="#iblock">iblock</a></li>
 <li><a href="#iblockpal">iblockpal</a></li>
 <li><a href="#interleave">interleave</a></li>
-<li><a href="#nth">nth</a></li>
 <li><a href="#palindrome">palindrome</a></li>
 <li><a href="#pbox">pbox</a></li>
 <li><a href="#permute">permute</a></li>
@@ -85,13 +84,13 @@ This is an overview of AWL
 <li><a href="#reverse">reverse</a></li>
 <li><a href="#rotatel">rotatel</a></li>
 <li><a href="#rotater">rotater</a></li>
+<li><a href="#skipkeep">skipkeep</a></li>
 </ul>
 </div>
 <div class="col-md-4">
 <ul>
-<li><a href="#swap">swap</a></li>
-<li><a href="#stencil">stencil</a></li>
 <li><a href="#split">split</a></li>
+<li><a href="#swap">swap</a></li>
 <li><a href="#tartan">tartan</a></li>
 <li><a href="#tartanpal">tartanpal</a></li>
 <li><a href="#template">template</a></li>
@@ -229,18 +228,25 @@ Note that this result is subtly different than using
 <dl class="dl-horizontal">
 <dt>Usage:</dt><dd><code><b>A</b> <b>B</b> cipher</code></dd>
 <dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-Each element <strong>A</strong>i in <strong>A</strong> is replaced
-with element <strong>B</>i.
+Work your way through list <b>A</b>,
+taking one element at a time.
+Let's say that this element has a value of <var>a</var>.
+Replace it with the element at position <var>a</var> in 
+list <b>B</b>.
+So if <var>a</var> is 0
+we use the element of <b>B</b> at index 0 (the first element),
+if <var>a</var> is 1
+we use the element of <b>B</b> at index 1 (the second element),
+and so on.
 This is like the first "secret code" you came up with
-your friends in school to pass notes:
-A goes to F, B goes to G, C goes to H, and so on.
-In AWL, we usually use numbers for both lists.
+your friends in school to pass notes,
+where (say) A goes to F, B goes to G, C goes to H, and so on.
 </p>
 <div class="bs-example">
 3 5 2 5 0 / 7 6 5 4 3 1 cipher
@@ -677,31 +683,6 @@ and so on.
 
 
 
-<p><a name="nth"></a></p>
-<h2>nth</h2>
-<dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> nth</code></dd>
-<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
-</dl>
-<p>
-Keep element 0 from list <b>A</b>,
-then skip over <var>c</var> elements,
-take the next element from <b>A</b>,
-skip again, and so on to the end of the list.
-</p>
-<div class="bs-example">
-0 1 2 3 4 5 6 7 6 5 4 3 2 1 0 / 3 nth
-</div>
-<div class="highlight">
-0 4 6 2
-</div>
-
-
-
 <p><a name="palindrome"></a></p>
 <h2>palindrome</h2>
 <dl class="dl-horizontal">
@@ -1069,50 +1050,33 @@ with everything before it now at the end.
 
 
 
-<p><a name="swap"></a></p>
-<h2>swap</h2>
+
+<p><a name="skipkeep"></a></p>
+<h2>skipkeep</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code><b>A</b> <B></b> swap</code></dd>
-<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> <var>d</var> skipkeep</code></dd>
+<dt>Shortcut:</dt><dd><code>-sk</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-Starting with <b>B</b> on top of the stack and <b>A</b>
-beneath it,
-push <b>B</b> back on followed by <b>A</b>,
-thereby reversing their order on the stack.
+Skip the first <var>c</var> entries of <b>A</b>,
+then keep the next <var>d</var> entries.
+Repeat until the end of <b>A</b>.
+Note that if you want to start skipping somewhere
+other than the start of the list,
+you can use <code>rotater</code> or <code>rotatel</code>
+first, to get it into position.
 </p>
 <div class="bs-example">
-1 2 3 / 4 5 6 swap
+A B C D E F G H I J K L M N / 3 / 2 -sk
 </div>
 <div class="highlight">
-(list 1 2 3 will be on top of the stack, with list 4 5 6 below it)
+D E I J N
 </div>
 
-
-
-<p><a name="stencil"></a></p>
-<h2>stencil</h2>
-<dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
-</dl>
-<p>
-TK description REPLACE stencil and nth with keepskip
-</p>
-<div class="bs-example">
-TK input
-</div>
-<div class="highlight">
-TK output
-</div>
 
 
 
@@ -1137,6 +1101,32 @@ top of that as a second list.
 </div>
 <div class="highlight">
 (list 3 4 5 6 is on top of the stack, list 1 2 is below it)
+</div>
+
+
+
+
+<p><a name="swap"></a></p>
+<h2>swap</h2>
+<dl class="dl-horizontal">
+<dt>Usage:</dt><dd><code><b>A</b> <B></b> swap</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+Starting with <b>B</b> on top of the stack and <b>A</b>
+beneath it,
+push <b>B</b> back on followed by <b>A</b>,
+thereby reversing their order on the stack.
+</p>
+<div class="bs-example">
+1 2 3 / 4 5 6 swap
+</div>
+<div class="highlight">
+(list 1 2 3 will be on top of the stack, with list 4 5 6 below it)
 </div>
 
 
