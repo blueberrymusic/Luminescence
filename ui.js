@@ -27,6 +27,7 @@ $(function(){
 
 	var defaultName = Presets[0][0];
 	loadDraft(defaultName);
+	setupCanvasListener();
 });
 
 
@@ -61,6 +62,11 @@ function setupOutputRadioButtons() {
 		SelectedOutputRadioButton = thisID;
 		showChosenOutput('#'+thisID);
 	}); 
+}
+
+function setupCanvasListener() {
+   var canvas = document.getElementById("myCanvas");
+   canvas.addEventListener("mousedown", respondToMouseInCanvas, false);
 }
 
 
@@ -381,4 +387,18 @@ function DeleteModalYesFunction() {
 }
 function DeleteModalNoFunction() {
 	// nothing to do
+}
+
+///////////////////////////////////////////////////////////////////////////
+// canvas mouse callback setups
+///////////////////////////////////////////////////////////////////////////
+
+
+function respondToMouseInCanvas(event) {
+	var canvas = document.getElementById("myCanvas");
+	var rect = canvas.getBoundingClientRect();
+	var x = Math.round(event.clientX - rect.left);
+	var y = Math.round(event.clientY - rect.top);
+	
+	alert("x="+x+" y="+y);
 }
