@@ -101,7 +101,7 @@ This is an overview of AWL
 <li><a href="#uploop">uploop</a></li>
 <li><a href="#updown">updown</a></li>
 <li><a href="#updownloop">updownloop</a></li>
-<li><a href="#veclen">veclen</a></li>
+<li><a href="#vlen">vlen</a></li>
 <li><a href="#vmax">vmax</a></li>
 <li><a href="#vmin">vmin</a></li>
 </ul>
@@ -132,7 +132,6 @@ are considered to be zero.
 3 1 2 2 1 b0
 </div>
 <div class="highlight">
-
 0 0 0 1 0 0 1 1 0
 </div>
 
@@ -159,7 +158,6 @@ are considered to be zero.
 3 1 2 2 1 b1
 </div>
 <div class="highlight">
-
 1 1 1 0 1 1 0 0 1
 </div>
 
@@ -186,7 +184,6 @@ are considered to be zero.
 1 2 3 4 / 3 0 4 2 #
 </div>
 <div class="highlight">
-
 1 1 1 3 3 3 3 4 4 
 </div>
 
@@ -249,7 +246,6 @@ In AWL, we usually use numbers for both lists.
 3 5 2 5 0 / 7 6 5 4 3 1 cipher
 </div>
 <div class="highlight">
-
 4 1 5 1 7
 </div>
 <p>
@@ -278,7 +274,6 @@ This erases the entire stack, leaving nothing behind.
 clear
 </div>
 <div class="highlight">
-
 (an empty stack)
 </div>
 
@@ -301,7 +296,6 @@ This simply appends list <strong>B</a> to the end of list <strong>A</strong>.
 1 2 3 / 6 5 4 5 ,
 </div>
 <div class="highlight">
-
 1 2 3 6 5 4 5
 </div>
 
@@ -369,7 +363,6 @@ at least 1 more than the minimum.
 2 / 5 domain
 </div>
 <div class="highlight">
-
 (the domain is now set to the range [2,5])
 </div>
 
@@ -396,7 +389,6 @@ first element of <b>B</b>.
 4 5 6 / 2 3 >
 </div>
 <div class="highlight">
-
 4 5 6 5 4 3 2 3
 </div>
 
@@ -423,7 +415,6 @@ The following example assumes the default domain of [0,7].
 5 / 2 / 1 >l
 </div>
 <div class="highlight">
-
 5 4 3 2 1 0 7 6 5 4 3 2 
 </div>
 
@@ -459,7 +450,6 @@ The following example assumes the default domain of [0,7].
 1 2 3 / 6 7 >u
 </div>
 <div class="highlight">
-
 1 0 7 6 7 0 1 2 1 0 7 0 1 2 3
 </div>
 
@@ -488,7 +478,6 @@ the two lists will be resized unless
 1 7 / 5 / 1 >ul
 </div>
 <div class="highlight">
-
 1 0 7 6 5 4 3 2 1 0 7 6 5 6 7 0 1 2 3 4 5 6 7
 </div>
 
@@ -513,7 +502,6 @@ resulting in two identical copies on top of the stack.
 dup
 </div>
 <div class="highlight">
-
 (whatever was on top of the stack is duplicated)
 </div>
 
@@ -541,7 +529,6 @@ copies) is too long, we throw away the extra elements from the end.
 3 4 5 / 8 +
 </div>
 <div class="highlight">
-
 3 4 5 3 4 5 3 4 
 </div>
 
@@ -602,7 +589,6 @@ B0 B1 B2 B3 B2 B1 B0
 0 1 2 / 4 5 6 =
 </div>
 <div class="highlight">
-
 0 1 2 3 4 3 2 1 2 3 4 5 4 3 2 3 4 5 6 5 4
 </div>
 
@@ -754,7 +740,7 @@ duplicated values.
 </dl>
 <p>
 This is a shortcut for
-<code>A B A veclen extend permute</code>
+<code>A B A vlen extend permute</code>
 </p>
 <p>
 In words,
@@ -889,21 +875,21 @@ final result
 <p><a name="pop"></a></p>
 <h2>pop</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code>pop</code></dd>
+<dt>Shortcut:</dt><dd><code> </code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+The top list on the stack is popped off and thrown away.
 </p>
 <div class="bs-example">
-TK input
+pop
 </div>
 <div class="highlight">
-TK output
+(the top element on the stack is discarded)
 </div>
 
 
@@ -911,21 +897,27 @@ TK output
 <p><a name="push"></a></p>
 <h2>push</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b><A</b> push</code></dd>
+<dt>Shortcut:</dt><dd><code>/</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+The list that is current being built on top of the 
+stack is considered to be done.
+Any elements entered immediately after <code>push</code>
+are considered the start of a new list.
+If there is no growing list on top of the stack
+(that is, the most recent element pushed wasn't a
+number of a color), then <code>push</code> has no effect.
 </p>
 <div class="bs-example">
-TK input
+push
 </div>
 <div class="highlight">
-TK output
+(any accumulating list is pushed onto the stack)
 </div>
 
 
@@ -933,21 +925,27 @@ TK output
 <p><a name="ramp"></a></p>
 <h2>ramp</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> ramp</code></dd>
+<dt>Shortcut:</dt><dd><code>-</code> (minus sign)</dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+The result is list <b>A</b>,
+followed by a run from the last element of <b>A</b>
+to the first element of <b>B</b>, followed by list <b>B</b>.
+The direction of the ramp is chosen to prevent the
+need to wrap around (that is, if the first element of
+<b>B</b> is greater than the last element of <b>A</b>,
+the run goes up, otherwise it goes down).
 </p>
 <div class="bs-example">
-TK input
+5 6 7 / 2 3 -
 </div>
 <div class="highlight">
-TK output
+5 6 7 6 5 4 3 2 3
 </div>
 
 
@@ -955,43 +953,45 @@ TK output
 <p><a name="ramploop"></a></p>
 <h2>ramploop</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> ramploop</code></dd>
+<dt>Shortcut:</dt><dd><code>-l</code> (minus sign followed by lower-case L)</dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Like <code>ramp</code>,
+but after the run has been built it inserts
+<var>c</var> complete more runs through the domain,
+in the same direction as the original run.
 </p>
 <div class="bs-example">
-TK input
+5 6 7 / 1 2 / 1 -l
 </div>
 <div class="highlight">
-TK output
+5 6 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 2
 </div>
-
 
 
 <p><a name="repeat"></a></p>
 <h2>repeat</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> repeat</code></dd>
+<dt>Shortcut:</dt><dd><code>*</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+List <b>A</b> is repeated a total of <var>c</var> times.
 </p>
 <div class="bs-example">
-TK input
+3 5 6 / 3 *
 </div>
 <div class="highlight">
-TK output
+3 5 6 3 5 6 3 5 6
 </div>
 
 
@@ -999,21 +999,21 @@ TK output
 <p><a name="reverse"></a></p>
 <h2>reverse</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> reverse</code></dd>
+<dt>Shortcut:</dt><dd><code>@</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+List <b>A</b> is reversed.
 </p>
 <div class="bs-example">
-TK input
+3 5 6 1 2 reverse
 </div>
 <div class="highlight">
-TK output
+2 1 6 5 3
 </div>
 
 
@@ -1021,21 +1021,24 @@ TK output
 <p><a name="rotatel"></a></p>
 <h2>rotatel</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> rotatel</code></dd>
+<dt>Shortcut:</dt><dd><code><<</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Rotate the elements of <b>A</b> left by <var>c</var>
+steps. That is,
+element <var>c</var> now becomes the start of <b>A</b>,
+and everything before it now comes at the end of the list.
 </p>
 <div class="bs-example">
-TK input
+0 1 2 3 4 5 6 / 3 <<
 </div>
 <div class="highlight">
-TK output
+3 4 5 6 0 1 2
 </div>
 
 
@@ -1043,21 +1046,25 @@ TK output
 <p><a name="rotater"></a></p>
 <h2>rotater</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> rotater</code></dd>
+<dt>Shortcut:</dt><dd><code>>></code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Rotate the elements of <b>A</b> right by <var>c</var>
+steps. That is,
+the element <var>c</var> entries before the end now
+becomes the start of the list,
+with everything before it now at the end.
 </p>
 <div class="bs-example">
-TK input
+0 1 2 3 4 5 6 / 3 >>
 </div>
 <div class="highlight">
-TK output
+4 5 6 0 1 2 3
 </div>
 
 
@@ -1065,21 +1072,24 @@ TK output
 <p><a name="swap"></a></p>
 <h2>swap</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <B></b> swap</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Starting with <b>B</b> on top of the stack and <b>A</b>
+beneath it,
+push <b>B</b> back on followed by <b>A</b>,
+thereby reversing their order on the stack.
 </p>
 <div class="bs-example">
-TK input
+1 2 3 / 4 5 6 swap
 </div>
 <div class="highlight">
-TK output
+(list 1 2 3 will be on top of the stack, with list 4 5 6 below it)
 </div>
 
 
@@ -1095,7 +1105,7 @@ TK output
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+TK description REPLACE stencil and nth with keepskip
 </p>
 <div class="bs-example">
 TK input
@@ -1109,21 +1119,24 @@ TK output
 <p><a name="split"></a></p>
 <h2>split</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> split</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+The first <var>c</var> elements of <b>A</b> are pushed 
+onto the stack as a list,
+the the remaining elements of <b>A</b> are pushed on
+top of that as a second list.
 </p>
 <div class="bs-example">
-TK input
+1 2 3 4 5 6 / 2 split
 </div>
 <div class="highlight">
-TK output
+(list 3 4 5 6 is on top of the stack, list 1 2 is below it)
 </div>
 
 
@@ -1131,21 +1144,26 @@ TK output
 <p><a name="tartan"></a></p>
 <h2>tartan</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> tartan</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Identical to <code>iblock</code>,
+except that the counts are halved before use
+(this is a convenience for 
+entering the warp and weft colors for
+some published tartan drafts
+which use doubled thread counts).
 </p>
 <div class="bs-example">
-TK input
+Red 2 Blue 6 Yellow 4 Green 2 tartan
 </div>
 <div class="highlight">
-TK output
+Red Blue Blue Blue Yellow Yellow Green
 </div>
 
 
@@ -1153,21 +1171,25 @@ TK output
 <p><a name="tartanpal"></a></p>
 <h2>tartanpal</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> tartanpal</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Just like <code>tartan</code>,
+but concludes with a near-palindrome
+(that is, the first pair in the list
+of value-repeat pairs is not duplicated
+again at the end).
 </p>
 <div class="bs-example">
-TK input
+Red 2 Blue 6 Yellow 4 Green 2 tartan
 </div>
 <div class="highlight">
-TK output
+Red Blue Blue Blue Yellow Yellow Green Yellow Yellow Blue Blue Blue
 </div>
 
 
@@ -1175,21 +1197,36 @@ TK output
 <p><a name="template"></a></p>
 <h2>template</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> template</code></dd>
+<dt>Shortcut:</dt><dd><code>:</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Each element of <b>A</b> is replaced with the list <b>B</b>,
+except the value of that element of <b>A</b> is added to
+each value of <b>B</b>.
+Note that some weavers don't use list <b>B</b> as given,
+but subtract the first element of <b>B</b> from every
+element in the list, so that <b>B</b> begins with 0 and
+each subsequent element has the value of the original
+element minus the first.
+Thus if <b>B</b> was given as 3 5 4 6,
+it would be replaced with 0 1 -1 2 when used in the command.
+AWL does <em>not</em> adopt this convention.
+If you want your template to start with 0, 
+simply start it with 0!
+</p>
+<p>
+Weaver also call this process <em>subarticulation</em>.
 </p>
 <div class="bs-example">
-TK input
+0 1 2 3 / 0 3 1 :
 </div>
 <div class="highlight">
-TK output
+0 3 1 1 4 2 2 5 3 3 6 4
 </div>
 
 
@@ -1197,43 +1234,52 @@ TK output
 <p><a name="twilll"></a></p>
 <h2>twilll</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> <var>d</var> twilll</code></dd>
+<dt>Shortcut:</dt><dd><code>t<<</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Make <var>d</var> copies of <b>A</b>,
+each time rotating it to the left by <var>c</var> steps
+(like <code>twillr</code>, but rotating right instead of left).
+This is very useful for making tie-ups that contain a
+1-row pattern that shifts one step left on each successive row;
+such tie-ups are often used to make twill fabrics.
 </p>
 <div class="bs-example">
-TK input
+0 1 2 3 4 / 2 / 3 t>>
 </div>
 <div class="highlight">
-TK output
+0 1 2 3 4 2 3 4 0 1 4 0 1 2 3
 </div>
-
 
 
 <p><a name="twillr"></a></p>
 <h2>twillr</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <var>c</var> <var>d</var> twillr</code></dd>
+<dt>Shortcut:</dt><dd><code>t>></code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Make <var>d</var> copies of <b>A</b>,
+each time rotating it to the left by <var>c</var> steps
+(like <code>twilll</code>, but rotating left instead of right).
+This is very useful for making tie-ups that contain a
+1-row pattern that shifts one step left on each successive row;
+such tie-ups are often used to make twill fabrics.
 </p>
 <div class="bs-example">
-TK input
+0 1 2 3 4 / 2 / 3 t>>
 </div>
 <div class="highlight">
-TK output
+0 1 2 3 4 3 4 0 1 2 1 2 3 4 0
 </div>
 
 
@@ -1241,21 +1287,25 @@ TK output
 <p><a name="up"></a></p>
 <h2>up</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> up</code></dd>
+<dt>Shortcut:</dt><dd><code>&lt;</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+This produces the list <b>A</b> followed by the 
+list <b>B</b>,
+but in between there's a sequence of numbers that
+count up from the last element of <b>A</b> to the
+first element of <b>B</b>.
 </p>
 <div class="bs-example">
-TK input
+1 2 / 6 &lt;
 </div>
 <div class="highlight">
-TK output
+1 2 3 4 5 6
 </div>
 
 
@@ -1263,21 +1313,25 @@ TK output
 <p><a name="uploop"></a></p>
 <h2>uploop</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> uploop</code></dd>
+<dt>Shortcut:</dt><dd><code>&lt;l</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Like <code>up</code>,
+but after counting up to the start of <b>B</b>
+it inserts <var>c</var> complete upward runs through
+the domain.
+The following example assumes the default domain of [0,7].
 </p>
 <div class="bs-example">
-TK input
+2 3 / 6 / 2 &lt;l
 </div>
 <div class="highlight">
-TK output
+2 3 4 5 6 7 0 1 2 3 4 5 6 7 0 1 2 3 4 5 6
 </div>
 
 
@@ -1285,21 +1339,34 @@ TK output
 <p><a name="updown"></a></p>
 <h2>updown</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> updown</code></dd>
+<dt>Shortcut:</dt><dd><code>&lt;d</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
 </dl>
 <p>
-TK description
+Create an alternating series of up and down runs.
+Start with the first element of <b>A</b>,
+then count up to the first element of <b>B</b>
+(wrapping around the domain as necessary).
+Now count back down to the second element of <b>A</b>,
+then back up to the second element of <b>B</b>,
+and so on.
+Normally <code>downup</code> will resize the inputs
+to have the same length,
+but an exception to that rule is if <b>A</b> is 1
+element longer than <b>B</b>.
+That allows you to make up/down patterns that repeat
+nicely.
+The following example assumes the default domain of [0,7].
 </p>
 <div class="bs-example">
-TK input
+1 2 3 / 6 7 &lt;d
 </div>
 <div class="highlight">
-TK output
+1 2 3 4 5 6 5 4 3 2 3 4 5 6 7 6 5 4 3
 </div>
 
 
@@ -1307,43 +1374,49 @@ TK output
 <p><a name="updownloop"></a></p>
 <h2>updownloop</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> updownloop</code></dd>
+<dt>Shortcut:</dt><dd><code>&lt;dl</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
 </dl>
 <p>
-TK description
+This is just like <code>updown</code>,
+but after each generated run it inserts
+<var>c</var> full runs through the domain
+in the same direction.
+Like <code>updown</code>,
+the two lists will be resized unless
+<b>A</b> is exactly 1 element longer than <b>B</b>.
 </p>
 <div class="bs-example">
-TK input
+1 7 / 5 / 1 &lt;dl
 </div>
 <div class="highlight">
-TK output
+1 2 3 4 5 6 7 0 1 2 3 4 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7
 </div>
 
 
-
-<p><a name="veclen"></a></p>
-<h2>veclen</h2>
+<p><a name="vlen"></a></p>
+<h2>vlen</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> vlen</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Finds the length of list <b>A</b> (that is, the number
+of elements in the list).
 </p>
 <div class="bs-example">
-TK input
+3 5 3 8 1 vlen
 </div>
 <div class="highlight">
-TK output
+5
 </div>
 
 
@@ -1351,21 +1424,21 @@ TK output
 <p><a name="vmax"></a></p>
 <h2>vmax</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> vmax</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Finds the largest value in list <b>A</b>.
 </p>
 <div class="bs-example">
-TK input
+3 5 3 8 1 vmin
 </div>
 <div class="highlight">
-TK output
+1
 </div>
 
 
@@ -1373,125 +1446,22 @@ TK output
 <p><a name="vmin"></a></p>
 <h2>vmin</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code>TK</code></dd>
-<dt>Shortcut:</dt><dd><code>TK</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> vmin</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
-TK description
+Finds the largest value in list <b>A</b>.
 </p>
 <div class="bs-example">
-TK input
+3 5 3 8 1 vmax
 </div>
 <div class="highlight">
-TK output
+8
 </div>
-
-
-
-
-
-
-
-
-
-
-XXXXXXX
-
-Basic operators
-There are a few operators that I think of as “basic,” because they’re pretty straightforward.
-Adextend (+).If|A|>d,truncateAtodelements. If |A| < d, repeat A as needed until there are at least d ele- ments, and then truncate that result after d elements.12345push3extend =123 12push3extend =121
-Adrepeat (∗).RepeatAatotalofdtimes.
-1 2 3 push 3 repeat = 1 2 3 1 2 3 1 2 3
-Areverse (@).Reversetheorderoftheelements of A.
-1 3 5 7 reverse= 7 5 3 1
-Adrotater (>>)andAdrotatel (<<).Rotate
-the elements of A to the right (or left) by d steps.
-1 2 3 4 5 push 2 rotater = 4 5 1 2 3
-A c nth. Build the new sequence from element 0 of A, then skip c−1 elements, take the next, skip another c−1, take the next, and so on.
-1 2 3 4 5 6 7 push 2 nth = 1 4 7
-Apalindrome (|).TheoutputisAfollowedbythe reverse of A, except that the first and last elements of A aren’t included in the reversed version. We don’t repeat the first and last elements because we want to avoid flat spots both when making the new sequence, and when we repeat one after the other. For example, if we didn’t dothisthen1 2 3 palindrome 2 repeatwould be123321123321ratherthan1232 1 2 3 2, which is almost always more appropriate for creating weaving drafts.
-1 2 3 4 5 palindrome = 1 2 3 4 5 4 3 2
-Up and down
-We use these operators to create runs, or ascending and descending integers within the current domain. As we saw last month, many drafts consist of these runs, so it’s use- ful to have a bunch of convenient ways to specify them.
-ABdown (>)andABup (<).Fordown,theresult is A, followed by a run descending from the last element ofAtothefirstofB.
-1 5 3 push 6 3 down =1 5 3 2 1 0 7 6 3 The command up is the same, but the run ascends.
-A B c downloop (>l) and A B c uploop (<l). The command downloop is like down, but inserts c complete runs in addition to the single descending run.
-1 2 3 push 6 3 push 1 downloop =12321076543210763
-The command uploop is the same, but each run ascends.
-ABdownup (>u)andABupdown (<d).Reshape the inputs. For downup, take the first element of A and insert a descending run to the first element of B. Now ascend to the second element of A, descend to the sec- ond element of B, and so on.
-1 2 3 push 6 7 downup =1076701210701321076
-The command updown is the same, but the alternation begins with an ascending run.
-A B c downuploop (>ul) and A B c updownloop (<dl). The command downuploop is like downup, but inserts c complete runs in each inserted sequence.
-1 push 5 push 2 downuploop
-=1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5
-The command updownloop is the same, but the alter- nation begins with an ascending run.
-ABramp (−).ThiscreatesarunfromALtoB0,but it does so entirely within the domain. Therefore, if AL < B0, it creates an ascending run. Otherwise, it’s a descending one.
-2 push 5 ramp=2 3 4 5 7 push 5 ramp=7 6 5
-A B c ramploop (−l). This command is like ramp, but like uploop or downloop it includes c full runs.
-Advanced operations
-The previous commands were all designed to do basic operations on sequences, or create simple runs.
-This next batch of commands lets us make more com- plex patterns.
-A binary0 and A binary1. Treat A as the length of alternating sequences of 0s and 1s. The command binary0 starts with 0, while binary1 starts with 1. This is a convenience command mostly useful for spec- ifying tie-ups.
-3 1 4 2 2 binary0=0 0 0 1 0 0 0 0 1 1 0 0 ABblock (#).Reshapetheinputs.EachentryAiis
-repeated Bi times.
-3 4 5 1 2 push 2 3 block
-=334445511122
-A B blockpal (#p). The command blockpal is like a block, but it first processes its inputs by making a palindrome of them, treating the inputs as pairs. So in the following example, the pair 1 2 is considered the first element so it’s not repeated at the end, and the pair 2 2isthelastelement,soit’snotrepeatedinthemiddle.
-1 3 2 push 2 4 2 blockpal =113333223333
-name c d eis. The value of name is a string, typically a single letter followed by digits. It specifies an index number in the Encyclopedia of Integer Sequences, which is a massive reference work containing tens of thousands of interesting integer sequences (see the “Further Reading” sidebar for more information). From that named sequence, we skip the first c entries, and then extract the next d values.
-A B growblock ( = ). First, reshape the inputs. Each element Ai is followed by a ramp to B0 (recall that goes up or down, as needed, to stay within the run). At the end of the run, a palindrome of the first i elements of B is inserted, and then a run to Ai+1 is made.
-This diagram shows the result for input sequences with three elements each. The dash (—) stands for a ramp.
-A0—B0—A1—B0B1B0—A2—B0B1B2B1B0 0 1 2 push 4 5 6 growblock
-=0 1 2 3 4 3 2 1 2 3 4 5 4 3 2 3 4 5 6 5 4
-The command growblock was inspired by an analysis of shadow weaves by Ralph Griswold in one of his mono- graphs (see the “Further Reading” sidebar).
-A iblock (i#) and A iblockpal (i#p). Like block, but the values are interleaved in one operand. Thus element A0 is repeated A1 times, element A2 is repeated A3 times, and so on.
-Thecommand iblockpalislikeblockpal,build- ing palindromes from its input pairs, except that they’re taken in interleaved fashion.
-A B interleave (%). This command first
-reshapes its inputs. Then it creates a new string by tak- ing each element of A and then B in turn.
-1 2 3 4 push 9 7 5 interleave =19273549
-A B permute. First, repeat A until its length is an integer multiple of the length of B. That is, create a new vector A′ by choosing the smallest r such that r |A|/|B| is an integer.
-Now create a new vector B′ by repeating B so that it is the same length as A′, but with a twist. Add 0 to the first repeat of B, and |B| to the second, 2|B| to the third, andsoon.Forexample,ifA=1 2 3 4andB=3 1 2, then we choose r = 3 and create
-A′=1 2 3 4 1 2 3 4 1 2 3 4
-B′=3 1 2 (3+(3 1 2)) (6+(3 1 2))
-(9+(3 1 2))=3 1 2 6 4 5 9 7 6 12 10 11 The output is then found by using each element of B′
-as the index from A′. That is,
-where p is the length of either of the new vectors. The entries of B′ are taken modulo p.
-123456push10permute=214365 3 4 5 push 2 1 permute=5 4 4 3 3 5
-A B pbox. This is a convenience for the following operation, where |A| is the length of A:
-AB |A| extend permute
-A B tartan and A B tartanpal. These are a small variation on the iblock and iblockpal commands. Some tartan descriptions double the thread count for each entry, and AWL expects single counts. So after reshaping, each Ai is repeated Bi/2 times.
-A B template (:). Replace each entry in A with a little pattern based on the elements of B. Weavers call this process subarticulation.
-First, create a new vector C with the same length as B (that is, |C| = |B|) and initialize C to all 0s. Now compute Ci = Bi − B0 for all i = [1, |B|]. Thus the first element of C is 0, and all other elements are the signeddistanceofeachBi fromB0.SoifB = 6 7 5 thenC = 01−1,andifB = 34512then C = 0 1 2 − 2 − 1.
-Compute the output by replacing each element Ai with the new |C|-length vector Ai + C − 1.
-0 1 2 3 push 2 template=1 2 3 4 0 3 6 push 2 3 1 template
-1 2 3 4 push 3 push 1 twillr =123441233412
-Utilities
-This last batch of commands are for utility, stack man- agement, and bookkeeping functions.
-s clear. Erase the entire stack.
-s concat (,). Take the top two elements from the
-stack, create a new sequence by placing the second
-after the first, and push that result back on the stack. s dup. Get the top item on the stack and push a new
-copy of it onto the stack.
-s pop. Discard the top element of the stack.
-s push (/). Take everything up to now and treat it as
-a single element of the stack.
-s c d domain. Set the limits on the domain to [c,d].
-s swap. Swap the top two entries on the stack.
-s veclen. Find the length of the top element on the
-stack and push that value.
-s vmax and vmin. Push the value of the largest (or
-smallest) element in the sequence on top of the stack.
-
-
-Plus new ones - cipher, etc.
-
-
-
-
 
 <div style="margin-bottom:50px;"></div>
 			</div> <!-- column 10 -->

@@ -234,7 +234,7 @@ var Dispatch = [
 	[ "uploop", DoUpLoop ], 
 	[ "updown", DoUpDown ], 
 	[ "updownloop", DoUpDownLoop ], 
-	[ "veclen", DoVecLen ],
+	[ "vlen", DoVlen ],
 	[ "vmax", DoVmax ],
 	[ "vmin", DoVmin ],
 
@@ -257,7 +257,7 @@ var Dispatch = [
 	[ "&", DoPermute ],
 	[ "/", DoPush ],
 	[ "-", DoRamp ],
-	[ "rl", DoRampLoop ],
+	[ "-l", DoRampLoop ],
 	[ "*", DoRepeat ],
 	[ "@", DoReverse ],
 	[ "<<", DoRotateL ],
@@ -646,7 +646,7 @@ function DoUpDownLoop() {
 	handleDownUp(aList, bList, numLoops, false);
 }
 
-function DoVecLen() {
+function DoVlen() {
 	var list = popList();
 	var v = list.length;
 	pushList([v.toString()]);
