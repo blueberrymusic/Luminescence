@@ -9,6 +9,7 @@ var TieUpWidth = 8;    // width of tie-up
 var TieUpHeight = 8;   // height of tie-up
 var FabricRight;       // right side of fabric grid
 var FabricBottom;      // bottom of fabric grid
+var TieUpL, TieUpR, TieUpT, TieUpB; // tie-up sides for use by ui.js
 
 /* 
 We use the matrix form of the weaving equation on page 113 of
@@ -198,6 +199,11 @@ function drawTieUp() {
 	var top = FabricBottom + SqSize;
 	var right = left + (TieUpWidth * SqSize);
 	var bottom = top + (TieUpHeight * SqSize);
+	// save these so that ui.js can use them for clicks in the tie-up
+	TieUpL = left;
+	TieUpR = right;
+	TieUpT = top;
+	TieUpB = bottom;
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box

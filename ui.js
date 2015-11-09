@@ -177,15 +177,24 @@ function tieUpButtonFunction() {
 ///////////////////////////////////////////////////////////////////////////
 
 
+// if SqSize is too small for a reliable indication, then blink a
+// reddish box to alert the user.
 function respondToMouseInCanvas(event) {
 	var canvas = document.getElementById("myCanvas");
 	var rect = canvas.getBoundingClientRect();
 	var x = Math.round(event.clientX - rect.left);
 	var y = Math.round(event.clientY - rect.top);
+	x += 15;  // compensate for gutter between columns in Bootstrap
 
-	if (SqSize < 5) {
-		alert("Processing x="+x+" y="+y+" SqSize="+SqSize);
+	if (SqSize < 4) {  
+		var boxULx = x - 25;
+		var boxULy = y - 25;
+		$('#canvasSignalBoxDiv').css('left', boxULx);
+		$('#canvasSignalBoxDiv').css('top', boxULy);
+		$('#canvasSignalBoxDiv').animate({display: 'show'});
 	} else {
+		// from drawing.js, use TieUpL, TieUpR, TieUpT, TieUpB for sides of tie-up
+		alert("Processing x="+x+" y="+y+" SqSize="+SqSize);
 	}
 	
 }
