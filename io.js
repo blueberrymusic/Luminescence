@@ -118,10 +118,15 @@ function loadDraft(draftName) {
 }
 
 function saveButtonFunction() {
-    $('#modalOK').modal('show'); 
-    $('#modalOK').modal('show'); 
-    $('#modalOKBoxTitle').html("There was a Dropbox problem")
-    $('#modalOKBoxText').html("I'm sorry, but there was an error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
+	getDropboxDirectory(continueWithSave);
+}
+
+function continueWithSave(entries) {
+	alert("from save, Your Dropbox contains " + entries.join(", "));
+    //$('#modalOK').modal('show'); 
+    //$('#modalOK').modal('show'); 
+    //$('#modalOKBoxTitle').html("There was a Dropbox problem")
+    //$('#modalOKBoxText').html("I'm sorry, but there was an error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
 /*
 	if (DraftName === "") {
 		alert("Please provide a name for the draft, then try saving again");
@@ -228,6 +233,8 @@ function DeleteModalNoFunction() {
 ///////////////////////////////////////////////////////////////////////////
 
 var DropboxClient = null;
+var DropboxDirectoryListing = null;         // The directory list
+var DropboxDirectoryListingReady = false;   // The flag for syncing the reader
 
 // Don't do anything but create and authorize the client. This is called
 // when the user wants to save, or asks to load from Dropbox.
@@ -303,11 +310,26 @@ var showDropboxError = function(error) {
 	}
 };
 
+function getDropboxDirectory(callback) {
+	if (DropboxClient === null) authorizeDropBox();
+	DropboxClient.readdir("/", function(error, entries) {
+		if (error) {
+			alert("something went wrong");
+			return showDropboxError(error);  // Something went wrong.
+		}
+		alert("got listing "+entries.join(", "));
+		callback(entries);
+		//DropboxDirectoryListing = entries;
+		//DropboxDirectoryListingReady = true;
+	});
+}
+
+
 function doSomethingCool(DropboxClient) {
 	alert("doing something cool for the DropboxClient");
 }
 
-// these are examples from the docuemtnation
+// these are examples from the docs
 function listDirectory() {
 if (DropboxClient === null) authorizeDropBox();
 	DropboxClient.readdir("/", function(error, entries) {
