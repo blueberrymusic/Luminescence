@@ -173,9 +173,22 @@ function tieUpButtonFunction() {
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// canvas mouse callback setups
+// i/o pnael responders
 ///////////////////////////////////////////////////////////////////////////
 
+function draftNameInputFunction() {
+	var target = $("input[name='draftNameInput']");
+	var name = target.val();
+	name = name.trim();
+	name = name.replace(/\s\s+/g, ' '); // all whitespace becomes one space
+	//name = name.replace(/\s/g, '-'); // all spaces become one dash
+	DraftName = name;
+	target.val(DraftName);
+}
+
+///////////////////////////////////////////////////////////////////////////
+// canvas mouse callback setups
+///////////////////////////////////////////////////////////////////////////
 
 // if SqSize is too small for a reliable indication, then blink a
 // reddish box to alert the user.

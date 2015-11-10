@@ -13,6 +13,10 @@
 <!-- jQuery must follow my style and precede Bootstrap -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+<!-- Dropbox integration -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js">
+</script>
+
 <script src="ui.js"> </script>
 <script src="io.js"> </script>
 <script src="awl/awl.js"> </script>
@@ -293,6 +297,26 @@ http://www.codeproject.com/Tips/891309/Custom-Confirmation-Box-using-Bootstrap-M
     </div>
 </div>
 
+<!-- OK-only modal from http://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
+<div id="modalOK" class="modal fade" show="false" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 id="modalOKBoxTitle" class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <p id="modalOKBoxText"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="modalOKBoxButton" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 
