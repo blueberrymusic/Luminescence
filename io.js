@@ -2,141 +2,10 @@
 // Draft saving and loading 
 ///////////////////////////////////////////////////////////////////////////
 
-// we use the dropbox.js API from https://github.com/dropbox/dropbox-js
 
-var DropboxClient = null;
-
-// Don't do anything but create and authorize the client. This is called
-// when the user wants to save, or asks to load from Dropbox.
-function authorizeDropBox() {
-	// Browser-side applications do not use the API secret.
-	DropboxClient = new Dropbox.Client({ key: "0aa5l83w7a4bcb9" });
-	DropboxClient.authenticate(function(error, DropboxClient) {
-		if (error) {
-			// Replace with a call to your own error-handling code.
-			//
-			// Don't forget to return from the callback, so you don't execute the code
-			// that assumes everything went well.
-			return showDropboxError(error);
-		}
-
-		// Replace with a call to your own application code.
-		//
-		// The user authorized your app, and everything went well.
-		// DropboxClient is a Dropbox.Client instance that you can use to make API calls.
-		// doSomethingCool(DropboxClient);
-	});
-	DropboxClient.onError.addListener(function(error) {
-		if (window.console) {  
-				console.error(error);
-				alert("see console for an error!");
-		}
-	});
-};
-
-var showDropboxError = function(error) {
-  switch (error.status) {
-  case Dropbox.ApiError.INVALID_TOKEN:
-    // If you're using dropbox.js, the only cause behind this error is that
-    // the user token expired.
-    // Get the user through the authentication flow again.
-    $('#modalOK').modal('show'); 
-    $('#modalOKBoxTitle').html("There was a Dropbox problem")
-    $('#modalOKBoxText').html("I'm sorry, but you're not currently logged into Dropbox. Please choose this list again and log in again.");
-    break;
-
-  case Dropbox.ApiError.NOT_FOUND:
-    // The file or folder you tried to access is not in the user's Dropbox.
-    // Handling this error is specific to your application.
-    $('#modalOK').modal('show'); 
-    $('#modalOKBoxTitle').html("There was a Dropbox problem")
-    $('#modalOKBoxText').html("I'm sorry, but I couldn't find your file on your Dropbox. Please check that it's really there, or pick a different file.")
-    break;
-
-  case Dropbox.ApiError.OVER_QUOTA:
-    // The user is over their Dropbox quota.
-    // Tell them their Dropbox is full. Refreshing the page won't help.
-    $('#modalOK').modal('show'); 
-    $('#modalOKBoxTitle').html("There was a Dropbox problem")
-    $('#modalOKBoxText').html("I'm sorry, but you're out of space on your Dropbox. You can either buy more, or free up some space by deleting files you no longer need.");
-    break;
-
-  case Dropbox.ApiError.RATE_LIMITED:
-    // Too many API requests. Tell the user to try again later.
-    // Long-term, optimize your code to use fewer API calls.
-    $('#modalOK').modal('show'); 
-    $('#modalOKBoxTitle').html("There was a Dropbox problem")
-    $('#modalOKBoxText').html("I'm sorry, but Dropbox is busy. Please wait a moment and try again.");
-    break;
-
-  case Dropbox.ApiError.NETWORK_ERROR:
-    // An error occurred at the XMLHttpRequest layer.
-    // Most likely, the user's network connection is down.
-    // API calls will not succeed until the user gets back online.
-    $('#modalOK').modal('show'); 
-    $('#modalOKBoxTitle').html("There was a Dropbox problem")
-    $('#modalOKBoxText').html("I'm sorry, but I can't reach Dropbox. Either Dropbox or the network is down.");
-    break;
-
-  case Dropbox.ApiError.INVALID_PARAM:
-  case Dropbox.ApiError.OAUTH_ERROR:
-  case Dropbox.ApiError.INVALID_METHOD:
-  default:
-    // Caused by a bug in dropbox.js, in your application, or in Dropbox.
-    // Tell the user an error occurred, ask them to refresh the page.
-    $('#modalOK').modal('show'); 
-    $('#modalOKBoxTitle').html("There was a Dropbox problem")
-    $('#modalOKBoxText').html("I'm sorry, but there was a Dropbox-related error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
-  }
-};
-
-function doSomethingCool(DropboxClient) {
-	alert("doing something cool for the DropboxClient");
-}
-
-function listDirectory() {
-	if (DropboxClient === null) authorizeDropBox();
-DropboxClient.readdir("/", function(error, entries) {
-  if (error) {
-    return showDropboxError(error);  // Something went wrong.
-  }
-
-  alert("Your Dropbox contains " + entries.join(", "));
-});
-}
-
-function userInfo() {
-	if (DropboxClient === null) authorizeDropBox();
-	DropboxClient.getAccountInfo(function(error, accountInfo) {
-  	if (error) {
-    	return showDropboxError(error);  // Something went wrong.
-  	}
-	
-  	alert("Hello, " + accountInfo.name + "!");
-	});
-}
-
-function readDBfile(filename) {
-	if (DropboxClient === null) authorizeDropBox();
-DropboxClient.readFile(filename, function(error, data) {
-  if (error) {
-    return showDropboxError(error);  // Something went wrong.
-  }
-
-  alert(data);  // data has the file's contents
-});
-}
-
-function saveDBfile(filename, filetext) {
-	if (DropboxClient === null) authorizeDropBox();
-DropboxClient.writeFile(filename, filetext, function(error, stat) {
-  if (error) {
-    return showDropboxError(error);  // Something went wrong.
-  }
-
-  alert("File saved as revision " + stat.versionTag);
-});
-}
+///////////////////////////////////////////////////////////////////////////
+// Repsonders
+///////////////////////////////////////////////////////////////////////////
 
 function buildLoadDraftDropdown() {
 /*
@@ -353,3 +222,128 @@ function DeleteModalNoFunction() {
 }
 
 
+///////////////////////////////////////////////////////////////////////////
+// Dropbox integration
+// I use the dropbox.js API from https://github.com/dropbox/dropbox-js
+///////////////////////////////////////////////////////////////////////////
+
+var DropboxClient = null;
+
+// Don't do anything but create and authorize the client. This is called
+// when the user wants to save, or asks to load from Dropbox.
+function authorizeDropBox() {
+	// Browser-side applications do not use the API secret.
+	DropboxClient = new Dropbox.Client({ key: "0aa5l83w7a4bcb9" });
+	DropboxClient.authenticate(function(error, DropboxClient) {
+		if (error) {
+			// Replace with a call to your own error-handling code.
+			//
+			// Don't forget to return from the callback, so you don't execute the code
+			// that assumes everything went well.
+			return showDropboxError(error);
+		}
+
+		// Replace with a call to your own application code.
+		//
+		// The user authorized your app, and everything went well.
+		// DropboxClient is a Dropbox.Client instance that you can use to make API calls.
+		// doSomethingCool(DropboxClient);
+	});
+	DropboxClient.onError.addListener(function(error) {
+		if (window.console) {  
+				console.error(error);
+				showDropboxError(error);
+		}
+	});
+}
+
+var showDropboxError = function(error) {
+	$('#modalOK').modal('show'); 
+	$('#modalOKBoxTitle').html("There was a Dropbox problem")
+	switch (error.status) {
+		case Dropbox.ApiError.INVALID_TOKEN:
+		// If you're using dropbox.js, the only cause behind this error is that
+		// the user token expired.
+		// Get the user through the authentication flow again.
+		$('#modalOKBoxText').html("I'm sorry, but you're not currently logged into Dropbox. Please choose this list again and log in again.");
+		break;
+		
+		case Dropbox.ApiError.NOT_FOUND:
+		// The file or folder you tried to access is not in the user's Dropbox.
+		// Handling this error is specific to your application.
+		$('#modalOKBoxText').html("I'm sorry, but I couldn't find your file on your Dropbox. Please check that it's really there, or pick a different file.")
+		break;
+		
+		case Dropbox.ApiError.OVER_QUOTA:
+		// The user is over their Dropbox quota.
+		// Tell them their Dropbox is full. Refreshing the page won't help.
+		$('#modalOKBoxText').html("I'm sorry, but you're out of space on your Dropbox. You can either buy more, or free up some space by deleting files you no longer need.");
+		break;
+		
+		case Dropbox.ApiError.RATE_LIMITED:
+		// Too many API requests. Tell the user to try again later.
+		// Long-term, optimize your code to use fewer API calls.
+		$('#modalOKBoxText').html("I'm sorry, but Dropbox is busy. Please wait a moment and try again.");
+		break;
+		
+		case Dropbox.ApiError.NETWORK_ERROR:
+		// An error occurred at the XMLHttpRequest layer.
+		// Most likely, the user's network connection is down.
+		// API calls will not succeed until the user gets back online.
+		$('#modalOKBoxText').html("I'm sorry, but I can't reach Dropbox. Either Dropbox or the network is down.");
+		break;
+		
+		case Dropbox.ApiError.INVALID_PARAM:
+		case Dropbox.ApiError.OAUTH_ERROR:
+		case Dropbox.ApiError.INVALID_METHOD:
+		default:
+		// Caused by a bug in dropbox.js, in your application, or in Dropbox.
+		// Tell the user an error occurred, ask them to refresh the page.
+		$('#modalOKBoxText').html("I'm sorry, but there was a Dropbox-related error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
+	}
+};
+
+function doSomethingCool(DropboxClient) {
+	alert("doing something cool for the DropboxClient");
+}
+
+// these are examples from the docuemtnation
+function listDirectory() {
+if (DropboxClient === null) authorizeDropBox();
+	DropboxClient.readdir("/", function(error, entries) {
+		if (error) {
+			return showDropboxError(error);  // Something went wrong.
+		}
+		alert("Your Dropbox contains " + entries.join(", "));
+	});
+}
+
+function userInfo() {
+	if (DropboxClient === null) authorizeDropBox();
+	DropboxClient.getAccountInfo(function(error, accountInfo) {
+		if (error) {
+			return showDropboxError(error);  // Something went wrong.
+		}
+		alert("Hello, " + accountInfo.name + "!");
+	});
+}
+
+function readDBfile(filename) {
+	if (DropboxClient === null) authorizeDropBox();
+	DropboxClient.readFile(filename, function(error, data) {
+		if (error) {
+			return showDropboxError(error);  // Something went wrong.
+		}
+		alert(data);  // data has the file's contents
+	});
+}
+
+function saveDBfile(filename, filetext) {
+	if (DropboxClient === null) authorizeDropBox();
+	DropboxClient.writeFile(filename, filetext, function(error, stat) {
+		if (error) {
+			return showDropboxError(error);  // Something went wrong.
+		}
+		alert("File saved as revision " + stat.versionTag);
+	});
+}
