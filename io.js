@@ -4,11 +4,20 @@
 
 
 ///////////////////////////////////////////////////////////////////////////
-// Repsonders
+// Responders
 ///////////////////////////////////////////////////////////////////////////
 
+var LogIntoDropboxText = "Log into Dropbox";
+
 function buildLoadDraftDropdown() {
-/*
+	if (DropboxClient === null) {
+		buildLoadDraftDropdownWithDropboxFiles(null);
+	} else {
+		getDropboxDirectory(buildLoadDraftDropdownWithDropboxFiles);
+	}
+}
+
+function buildLoadDraftDropdownWithDropboxFiles(fileList) {
 	var loadMenu = $('#loadDraftMenuItems');
 	// clear the menu
 	loadMenu.find('li').remove().end();
@@ -16,14 +25,13 @@ function buildLoadDraftDropdown() {
 	//loadMenu.append("<li><a href='#'>"+"item 1"+"</a></li>");
 	//loadMenu.append("<li class='divider'></li>");
 
-	if (LocalStorageAvailable) {
-		loadMenu.append("<li class='dropdown-header'>Local Saves</li>");
- 		for (var i = 0; i < localStorage.length; i++){
-			var key = localStorage.key(i);
-			var value = localStorage.getItem(key); // or localStorage[key];
-			loadMenu.append("<li><a href='#'>"+key+"</a></li>");
+	loadMenu.append("<li class='dropdown-header'>Dropbox Files</li>");
+	if (fileList === null) {
+		loadMenu.append("<li><a href='#'>"+LogIntoDropboxText+"</a></li>");
+	} else {
+		for (var i=0; i<fileList.length; i++) {
+			loadMenu.append("<li><a href='#'>"+fileList[i]+"</a></li>");
 		}
-		loadMenu.append("<li class='divider'></li>");
 	}
 	loadMenu.append("<li class='dropdown-header'>Presets</li>");
 	for (var i=0; i<Presets.length; i++) {
@@ -42,36 +50,32 @@ function buildLoadDraftDropdown() {
 		var selText = $(this).text();
 		loadDraft(selText);
 	});
-*/
 }
 
 function loadDraft(draftName) {
-/*
-	var jsonData = "";
-	var foundIt = false;
-	if (LocalStorageAvailable) {
- 		for (var i = 0; (i < localStorage.length) && (!foundIt); i++){
-			var key = localStorage.key(i);
-			if (key === draftName) {
-				jsonData = localStorage.getItem(key); // or localStorage[key];
-				foundIt = true;
-			}
-		}
-	}
-	if (!foundIt) {
-		for (var i=0; (i<Presets.length) && (!foundIt); i++) {
-			var psi = Presets[i];
-			var name = psi[0];
-			if (name === draftName) {
-				jsonData = psi[1];
-				foundIt = true;
-			}
-		}
-	}
-	if (!foundIt) {
-		alert("I couldn't find draft "+draftName+" to load either in local storage or as a built-in preset. Sorry!");
+	if (draftName === LogIntoDropboxText) {
+		authorizeDropBox();
+		buildLoadDraftDropdown();
 		return;
 	}
+	// search for preset names first, then try to go to dropbox
+	var foundIt = false;
+	for (var i=0; (i<Presets.length) && (!foundIt); i++) {
+		var psi = Presets[i];
+		var name = psi[0];
+		if (name === draftName) {
+			jsonData = psi[1]; 
+			foundIt = true;
+			alert("found "+draftName+" in the presets");
+			loadDraftFromJSON(draftName, jsonData);
+		}
+	}
+	if (!foundIt) {
+		getDropboxFileContents(draftName, loadDraftFromWIF);
+	}
+}
+
+function loadDraftFromJSON(draftName, jsonData) {
 	var weaveData = JSON.parse(jsonData);
 	for (var i=0; i<weaveData.length; i++) {
 		var datum = weaveData[i];
@@ -114,7 +118,10 @@ function loadDraft(draftName) {
 	$("input[name='draftNameInput']").val(DraftName);
 
 	drawCanvas();
-*/
+}
+
+function loadDraftFromWIF(draftName, wifData) {
+	alert("loading from wif contents "+wifData);
 }
 
 function saveButtonFunction() {
@@ -233,8 +240,6 @@ function DeleteModalNoFunction() {
 ///////////////////////////////////////////////////////////////////////////
 
 var DropboxClient = null;
-var DropboxDirectoryListing = null;         // The directory list
-var DropboxDirectoryListingReady = false;   // The flag for syncing the reader
 
 // Don't do anything but create and authorize the client. This is called
 // when the user wants to save, or asks to load from Dropbox.
@@ -272,6 +277,7 @@ var showDropboxError = function(error) {
 		// If you're using dropbox.js, the only cause behind this error is that
 		// the user token expired.
 		// Get the user through the authentication flow again.
+		DropboxClient = null;
 		$('#modalOKBoxText').html("I'm sorry, but you're not currently logged into Dropbox. Please choose this list again and log in again.");
 		break;
 		
@@ -306,24 +312,48 @@ var showDropboxError = function(error) {
 		default:
 		// Caused by a bug in dropbox.js, in your application, or in Dropbox.
 		// Tell the user an error occurred, ask them to refresh the page.
+		DropboxClient = null;
 		$('#modalOKBoxText').html("I'm sorry, but there was a Dropbox-related error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
 	}
 };
 
+// Use a callback here because readdir() is asynchronous. So we wait until the listing
+// is ready, then hand it to the callback.
 function getDropboxDirectory(callback) {
 	if (DropboxClient === null) authorizeDropBox();
 	DropboxClient.readdir("/", function(error, entries) {
 		if (error) {
-			alert("something went wrong");
+			//alert("something went wrong");
 			return showDropboxError(error);  // Something went wrong.
 		}
-		alert("got listing "+entries.join(", "));
+		//alert("got listing "+entries.join(", "));
 		callback(entries);
-		//DropboxDirectoryListing = entries;
-		//DropboxDirectoryListingReady = true;
 	});
 }
 
+function getDropboxFileContents(filename, callback) {
+	if (DropboxClient === null) authorizeDropBox();
+	DropboxClient.readFile(filename, function(error, data) {
+		if (error) {
+			return showDropboxError(error);  // Something went wrong.
+		}
+		//alert(data);  // data has the file's contents
+		callback(filename, data);
+	});
+}
+
+function saveDropboxFile(filename, filetext, callback) {
+	if (DropboxClient === null) authorizeDropBox();
+	DropboxClient.writeFile(filename, filetext, function(error, stat) {
+		if (error) {
+			return showDropboxError(error);  // Something went wrong.
+		}
+		//alert("File saved as revision " + stat.versionTag);
+		callback();
+	});
+}
+
+///////// originals from the dropbox doc
 
 function doSomethingCool(DropboxClient) {
 	alert("doing something cool for the DropboxClient");
