@@ -1,0 +1,40 @@
+
+function currentDraftAsWIF() {
+	var wifString = "WIF string";
+
+	// get the draft as it is now
+	var warpPatternString = $('#warpPatternAWL').val();
+	var weftPatternString = $('#weftPatternAWL').val();
+	var warpColorString = $('#warpColorAWL').val();
+	var weftColorString = $('#weftColorAWL').val();
+	var tieUpString = $('#tieUpAWL').val();
+	var fabricSizeString = $('#fabricSizeInput').val();
+	var tieUpWidthString = $('#tieUpWidthInput').val();
+	var tieUpHeightString = $('#tieUpHeightInput').val();
+
+	return wifString;
+}
+
+function convertWIFtoJSON(draftName, wifData) {
+	var warpPatternString = "0 1 2";
+	var weftPatternString = "3 4 5";
+	var warpColorString = "red yellow";
+	var weftColorString = "rgb(100,150,200) green";
+	var tieUpString = "1 1 1 0 0 0";
+	var fabricSizeString = "120";
+	var tieUpWidthString = "8";
+	var tieUpHeightString = "8";
+warpPatternString += " "+Date();
+	
+	var draft = [];
+	draft.push({ "field": "WarpAWL",      "value": warpPatternString });
+	draft.push({ "field": "WeftAWL",      "value": weftPatternString });
+	draft.push({ "field": "WarpColorAWL", "value": warpColorString });
+	draft.push({ "field": "WeftColorAWL", "value": weftColorString });
+	draft.push({ "field": "TieUpAWL",     "value": tieUpString });
+	draft.push({ "field": "FabricSize",   "value": fabricSizeString });
+	draft.push({ "field": "TieUpWidth",   "value": tieUpWidthString });
+	draft.push({ "field": "TieUpHeight",  "value": tieUpHeightString });
+	var JSONdraft = JSON.stringify(draft);
+	return JSONdraft;
+}

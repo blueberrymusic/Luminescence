@@ -4,7 +4,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////
-// Responders
+// Dropdown Responders
 ///////////////////////////////////////////////////////////////////////////
 
 var LogIntoDropboxText = "Log into Dropbox";
@@ -30,7 +30,11 @@ function buildLoadDraftDropdownWithDropboxFiles(fileList) {
 		loadMenu.append("<li><a href='#'>"+LogIntoDropboxText+"</a></li>");
 	} else {
 		for (var i=0; i<fileList.length; i++) {
-			loadMenu.append("<li><a href='#'>"+fileList[i]+"</a></li>");
+			// we only want to offer files that end with .txt or .wif
+			var suffixes = /\.txt$|\.wif$/;
+			if (suffixes.test(fileList[i])) {
+				loadMenu.append("<li><a href='#'>"+fileList[i]+"</a></li>");
+			}
 		}
 	}
 	loadMenu.append("<li class='dropdown-header'>Presets</li>");
@@ -52,6 +56,10 @@ function buildLoadDraftDropdownWithDropboxFiles(fileList) {
 	});
 }
 
+///////////////////////////////////////////////////////////////////////////
+// Load draft
+///////////////////////////////////////////////////////////////////////////
+
 function loadDraft(draftName) {
 	if (draftName === LogIntoDropboxText) {
 		authorizeDropBox();
@@ -66,13 +74,18 @@ function loadDraft(draftName) {
 		if (name === draftName) {
 			jsonData = psi[1]; 
 			foundIt = true;
-			alert("found "+draftName+" in the presets");
+			//alert("found "+draftName+" in the presets");
 			loadDraftFromJSON(draftName, jsonData);
 		}
 	}
 	if (!foundIt) {
 		getDropboxFileContents(draftName, loadDraftFromWIF);
 	}
+}
+
+function loadDraftFromWIF(draftName, wifData) {
+	var jsonData = convertWIFtoJSON(draftName, wifData);
+	loadDraftFromJSON(draftName, jsonData);
 }
 
 function loadDraftFromJSON(draftName, jsonData) {
@@ -120,57 +133,35 @@ function loadDraftFromJSON(draftName, jsonData) {
 	drawCanvas();
 }
 
-function loadDraftFromWIF(draftName, wifData) {
-	alert("loading from wif contents "+wifData);
-}
-
+///////////////////////////////////////////////////////////////////////////
+// Save draft
+///////////////////////////////////////////////////////////////////////////
+	
 function saveButtonFunction() {
-	getDropboxDirectory(continueWithSave);
-}
 
-function continueWithSave(entries) {
-	alert("from save, Your Dropbox contains " + entries.join(", "));
-    //$('#modalOK').modal('show'); 
-    //$('#modalOK').modal('show'); 
-    //$('#modalOKBoxTitle').html("There was a Dropbox problem")
-    //$('#modalOKBoxText').html("I'm sorry, but there was an error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
-/*
 	if (DraftName === "") {
 		alert("Please provide a name for the draft, then try saving again");
 		return;
 	}
-
-	var warpPatternString = $('#warpPatternAWL').val();
-	var weftPatternString = $('#weftPatternAWL').val();
-	var warpColorString = $('#warpColorAWL').val();
-	var weftColorString = $('#weftColorAWL').val();
-	var tieUpString = $('#tieUpAWL').val();
-	var fabricSizeString = $('#fabricSizeInput').val();
-	var tieUpWidthString = $('#tieUpWidthInput').val();
-	var tieUpHeightString = $('#tieUpHeightInput').val();
-
-	var draft = [];
-	draft.push({ "field": "WarpAWL",      "value": warpPatternString });
-	draft.push({ "field": "WeftAWL",      "value": weftPatternString });
-	draft.push({ "field": "WarpColorAWL", "value": warpColorString });
-	draft.push({ "field": "WeftColorAWL", "value": weftColorString });
-	draft.push({ "field": "TieUpAWL",     "value": tieUpString });
-	draft.push({ "field": "FabricSize",   "value": fabricSizeString });
-	draft.push({ "field": "TieUpWidth",   "value": tieUpWidthString });
-	draft.push({ "field": "TieUpHeight",  "value": tieUpHeightString });
-	var JSONDraft = JSON.stringify(draft);
-
-	try {
-		localStorage.setItem(DraftName, JSONDraft);
-	}
-	catch (e) {
-		alert("Sorry! You're out of local storage space. Try deleting some drafts to make room for new ones.");
+	var suffixes = /.wif$/;
+	if (!suffixes.test(DraftName)) {
+		DraftName = DraftName+".wif";
+		$("input[name='draftNameInput']").val(DraftName);
 	}
 
-	buildLoadDraftDropdown(); // rebuild the drop-down to include this new entry
-*/
+	var wifFileContents = currentDraftAsWIF();
+	saveDropboxFile(DraftName, wifFileContents, wroteDropboxFile);
+
 }
 
+function wroteDropboxFile(fileName) {
+	alert("wrote "+fileName+" to dropbox");
+	buildLoadDraftDropdown(); // rebuild the drop-down to include this new entry
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Delete draft (delete this? TK if so, delete the YesNo model below AND from html
+///////////////////////////////////////////////////////////////////////////
 function deleteButtonFunction() {
 /*
 	if (DraftName === "") {
@@ -232,7 +223,6 @@ function DeleteModalYesFunction() {
 function DeleteModalNoFunction() {
 	// nothing to do
 }
-
 
 ///////////////////////////////////////////////////////////////////////////
 // Dropbox integration
@@ -317,8 +307,11 @@ var showDropboxError = function(error) {
 	}
 };
 
-// Use a callback here because readdir() is asynchronous. So we wait until the listing
-// is ready, then hand it to the callback.
+// These are modified from the example code. First, we check for authorization,
+// and log in if necessary. Second, we use a callback to the main client so that
+// the asynchrononous directory and file reads (and maybe write?) don't return
+// before the job's done.
+
 function getDropboxDirectory(callback) {
 	if (DropboxClient === null) authorizeDropBox();
 	DropboxClient.readdir("/", function(error, entries) {
@@ -349,7 +342,7 @@ function saveDropboxFile(filename, filetext, callback) {
 			return showDropboxError(error);  // Something went wrong.
 		}
 		//alert("File saved as revision " + stat.versionTag);
-		callback();
+		callback(filename);
 	});
 }
 
