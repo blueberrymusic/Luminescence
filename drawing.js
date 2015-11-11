@@ -202,6 +202,7 @@ function drawTieUp() {
 	var index = 0;
 	for (var row=0; row<TieUpHeight; row++) { 
 		for (var col=0; col<TieUpWidth; col++) {
+			index = (col*TieUpHeight)+row;  // new
 			if (T[index % T.length] !== 0) {
 				Ctx.fillRect(left+(col*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
 				Ctx.strokeRect(left+(col*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
@@ -231,7 +232,8 @@ function drawFabric() {
 			} else if (tieUpRow < 0) {
 				rgb = WeftColors[row % WeftColors.length];
 			} else {
-				var tieUpVal = T[(tieUpRow * TieUpWidth) + tieUpCol];
+				//var tieUpVal = T[(tieUpRow * TieUpWidth) + tieUpCol];
+				var tieUpVal = T[(tieUpCol * TieUpHeight) + tieUpRow];
 				if (tieUpVal === 1) {  // use warp color
 					rgb = WarpColors[col % WarpColors.length];
 				} else { // use weft color

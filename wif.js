@@ -111,6 +111,8 @@ function convertWIFtoJSON(draftName, wifData) {
 	var rgbMax = 255;
 	var numColors = 10;
 	var colorList = [];  // we'll use this to make the color strings
+	var warpDefaultColorIndex = 0;
+	var weftDefaultColorIndex = 0;
 	var warpColorIndices = []; // we don't know in advance how long this will be
 	var weftColorIndices = []; // we don't know in advance how long this will be
 	var lines, thisSection;
@@ -139,7 +141,7 @@ function convertWIFtoJSON(draftName, wifData) {
 	lines = thisSection.split(/[\n\r]/);
 	warpPatternLen = getValueInLines(lines, /Threads/i);
 	var cindex = getValueInLines(lines, /color/i);
-	if (cindex != null) warpColorIndices[0] = parseInt(cindex[0]);
+	if (cindex != null) warpDefaultColorIndex= parseInt(cindex[0])-1;
 	
 
 	// From WEFT, get the Weft pattern length and default color index
@@ -147,8 +149,7 @@ function convertWIFtoJSON(draftName, wifData) {
 	lines = thisSection.split(/[\n\r]/);
 	weftPatternLen = getValueInLines(lines, /Threads/i);
 	var cindex = getValueInLines(lines, /color/i);
-	if (cindex != null) weftColorIndices[0] = parseInt(cindex[0]);
-
+	if (cindex != null) weftDefaultColorIndex= parseInt(cindex[0])-1;
  	
 	// From THREADING, get the WarpPattern string
 	thisSection  = getSection(sections, /THREADING\]/i);
@@ -158,7 +159,12 @@ function convertWIFtoJSON(draftName, wifData) {
 	for (var i=0; i<lines.length; i++) {
 		if (lines[i].match(/=/) != null) {
 			var w = lines[i].split('=');
-			warpPattern[parseInt(w[0])-1] = parseInt(w[1])-1; // we count starting at 0
+			var val = w[1];
+			if (w[1].match(/,/) != null) {
+				var splitw1 = w[1].split(',');
+				val = splitw1[0];
+			}
+			warpPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
 		}
 	}
 	for (var i=0; i<warpPatternLen; i++) {
@@ -173,7 +179,12 @@ function convertWIFtoJSON(draftName, wifData) {
 	for (var i=0; i<lines.length; i++) {
 		if (lines[i].match(/=/) != null) {
 			var w = lines[i].split('=');
-			weftPattern[parseInt(w[0])-1] = parseInt(w[1])-1; // we count starting at 0
+			var val = w[1];
+			if (w[1].match(/,/) != null) {
+				var splitw1 = w[1].split(',');
+				val = splitw1[0];
+			}
+			weftPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
 		}
 	}
 	for (var i=0; i<weftPatternLen; i++) {
@@ -210,42 +221,100 @@ function convertWIFtoJSON(draftName, wifData) {
 	// From WARP COLORS get WarpColors String
 	thisSection  = getSection(sections, /WARP COLORS\]/i);
 	lines = thisSection.split(/[\n\r]/);
+	var maxIndex = 0;
 	for (var i=0; i<lines.length; i++) {
 		if (lines[i].match(/=/) != null) {
 			var w = lines[i].split('=');
-			warpColorIndices[parseInt(w[0])-1] = parseInt(w[1])-1;
+			var index = parseInt(w[0])-1;
+			if (index > maxIndex) maxIndex = index;
+			warpColorIndices[index] = parseInt(w[1])-1;
 		}
 	}
-	// copy the indexed colors into the string
-	for (var i=0; i<warpColorIndices.length; i++) {
-		var index = warpColorIndices[i];
-		var clr = colorList[index-1];	
-		warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") ";
+	// fill in what's missing
+	for (var i=0; i<maxIndex; i++) {
+		if (!(i in warpColorIndices)) {
+			warpColorIndices[i] = warpDefaultColorIndex;
+		}
 	}
+	// now make value/run pairs
+	var clrs = [];
+	var lens = [];
+	var lastColorIndex = warpColorIndices[0];
+	var thisLen = 1;
+	var index = 0;
+	while (index++ < maxIndex) {
+		var thisColorIndex = warpColorIndices[index];
+		if (thisColorIndex != lastColorIndex) {
+			clrs.push(lastColorIndex);
+			lens.push(thisLen);
+			thisLen = 1;
+			lastColorIndex = thisColorIndex;
+		} else {
+			thisLen++;
+		}
+	}
+ 	clrs.push(lastColorIndex);
+	lens.push(thisLen);
+	// make the string
+	for (var i=0; i<clrs.length; i++) {
+		var clrIndex = clrs[i];
+		var clr = colorList[clrIndex];	
+		warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+	}
+	warpColorsString += "iblock";
 	
 	// From WEFT COLORS get WeftColors String
 	thisSection  = getSection(sections, /WEFT COLORS\]/i);
 	lines = thisSection.split(/[\n\r]/);
+	var maxIndex = 0;
 	for (var i=0; i<lines.length; i++) {
 		if (lines[i].match(/=/) != null) {
 			var w = lines[i].split('=');
-			weftColorIndices[parseInt(w[0])-1] = parseInt(w[1])-1;
+			var index = parseInt(w[0])-1;
+			if (index > maxIndex) maxIndex = index;
+			weftColorIndices[index] = parseInt(w[1])-1;
 		}
 	}
-	// copy the indexed colors into the string
-	for (var i=0; i<weftColorIndices.length; i++) {
-		var index = weftColorIndices[i];
-		var clr = colorList[index-1];	
-		weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") ";
+	// fill in what's missing
+	for (var i=0; i<maxIndex; i++) {
+		if (!(i in weftColorIndices)) {
+			weftColorIndices[i] = weftDefaultColorIndex;
+		}
 	}
+	// now make value/run pairs
+	var clrs = [];
+	var lens = [];
+	var lastColorIndex = weftColorIndices[0];
+	var thisLen = 1;
+	var index = 0;
+	while (index++ < maxIndex) {
+		var thisColorIndex = weftColorIndices[index];
+		if (thisColorIndex != lastColorIndex) {
+			clrs.push(lastColorIndex);
+			lens.push(thisLen);
+			thisLen = 1;
+			lastColorIndex = thisColorIndex;
+		} else {
+			thisLen++;
+		}
+	}
+ 	clrs.push(lastColorIndex);
+	lens.push(thisLen);
+	// make the string
+	for (var i=0; i<clrs.length; i++) {
+		var clrIndex = clrs[i];
+		var clr = colorList[clrIndex];	
+		weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+	}
+	weftColorsString += "iblock";
 	
 	// From TIEUP, get TieUpString
 	var tu = [];
 	var tuWid = parseInt(tieUpWidthString);
 	var tuHgt = parseInt(tieUpHeightString);
-	for (var y=0; y<tuWid; y++) {
-		for (var x=0; x<tuHgt; x++) {
-			tu[(y*thWid)+x] = 0;
+	for (var col=0; col<tuWid; col++) {
+		for (var row=0; row<tuHgt; row++) {
+			tu[(col*tuHgt)+row] = 0;
 		}
 	}
 	thisSection  = getSection(sections, /TIEUP\]/i);
@@ -253,17 +322,18 @@ function convertWIFtoJSON(draftName, wifData) {
 	for (var i=0; i<lines.length; i++) {
 		if (lines[i].match(/=/) != null) {
 			var w = lines[i].split('=');
-			var row = parseInt(w[0])-1;
+			var col = parseInt(w[0])-1;
 			var indices = w[1].split(',');
 			for (var j=0; j<indices.length; j++) {
-				var column = parseInt(indices[j])-1;
-				tu[(row*tuWid)+col] = 1;
+				var row = parseInt(indices[j])-1;
+				var tuindex = (col*tuHgt)+row;
+				tu[tuindex] = 1;
 			}
 		}
 	}
 	tieUpString = "";
 	for (var i=0; i<tu.length; i++) {
-		tieUpString += Math.Floor(tu[i]).toString() + " ";
+		tieUpString += Math.floor(tu[i]).toString() + " ";
 	}
 
 	var draft = [];
