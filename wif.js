@@ -29,36 +29,6 @@ function currentDraftAsWIF() {
 	wifString += "Title="+DraftName+"\n";
 	wifString += "; Creation "+Date()+"\n";
 
-
-COLOR PALETTE=true
-WEAVING=true
-WARP=true
-WEFT=true
-COLOR TABLE=true
-THREADING=true
-TIEUP=true
-TREADLING=true
-WARP COLORS=true
-WEFT COLORS=true
-
-[THREADING]
-1=1
-2=2
-
-[TIEUP]
-1=1
-2=2
-3=1,3
-
-[TREADLING]
-1=1
-2=2
-3=3
-4=1
-5=2
-
-	// save the AWL for reloading
-	wifString += "PRIVATE 
 	// get the draft as it is now
 	var warpPatternString = $('#warpPatternAWL').val();
 	var weftPatternString = $('#weftPatternAWL').val();
@@ -81,7 +51,6 @@ function convertWIFtoJSON(draftName, wifData) {
 	var fabricSizeString = "120";
 	var tieUpWidthString = "8";
 	var tieUpHeightString = "8";
-warpPatternString += " "+Date();
 	
 	var draft = [];
 	draft.push({ "field": "WarpAWL",      "value": warpPatternString });
