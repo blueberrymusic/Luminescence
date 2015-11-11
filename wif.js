@@ -93,14 +93,13 @@ function convertWIFtoJSON(draftName, wifData) {
 		}
 	}
 
-	var warpPatternString = "";   // this comes from the THREADING section
-	var weftPatternString = "";   // this comes from the TREADLING section
-	var warpColorsString = "";
-	var weftColorsString = "";
-	var tieUpString = "";
+	var warpPatternString = "0 1 / 7 <d";   // this comes from the THREADING section
+	var weftPatternString = "0 1 / 7 <d";   // this comes from the TREADLING section
+	var warpColorsString = "red";
+	var weftColorsString = "yellow";
+	var tieUpString = "1 0 0 0";
 	var tieUpWidthString = "8";    // this comes from the WEAVING section
 	var tieUpHeightString = "8";   // this comes from the WEAVING section
-	var RGBList = [];              // this comes from the COLOR TABLE and COLOR PALETTE sections
 	var fabricSizeString = "100";  // default - nothing in WIF overrides this
 
 	var treadles = 8;
@@ -128,212 +127,231 @@ function convertWIFtoJSON(draftName, wifData) {
 	// From WEFT COLORS get WeftColors String
 	// From TIEUP, get TieUpString
 
+	if (gotWeaving) {
 	// From WEAVING, get the TieUp width and height
-	thisSection  = getSection(sections, /WEAVING\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	treadles =  getValueInLines(lines, /Treadles/i);
-	shafts =  getValueInLines(lines, /Shafts/i);
-	tieUpWidthString = treadles;
-	tieUpHeightString = shafts;
+			  thisSection  = getSection(sections, /WEAVING\]/i);
+			  lines = thisSection.split(/[\n\r]/);
+			  treadles =  getValueInLines(lines, /Treadles/i);
+			  shafts =  getValueInLines(lines, /Shafts/i);
+			  tieUpWidthString = treadles;
+			  tieUpHeightString = shafts;
+	}	
 
-	// From WARP, get the Warp pattern length and default color index
-	thisSection  = getSection(sections, /WARP\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	warpPatternLen = getValueInLines(lines, /Threads/i);
-	var cindex = getValueInLines(lines, /color/i);
-	if (cindex != null) warpDefaultColorIndex= parseInt(cindex[0])-1;
-	
+	if (gotWarp) {
+		// From WARP, get the Warp pattern length and default color index
+		thisSection  = getSection(sections, /WARP\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		warpPatternLen = getValueInLines(lines, /Threads/i);
+		var cindex = getValueInLines(lines, /color/i);
+		if (cindex != null) warpDefaultColorIndex= parseInt(cindex[0])-1;
+	}
 
-	// From WEFT, get the Weft pattern length and default color index
-	thisSection  = getSection(sections, /WEFT\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	weftPatternLen = getValueInLines(lines, /Threads/i);
-	var cindex = getValueInLines(lines, /color/i);
-	if (cindex != null) weftDefaultColorIndex= parseInt(cindex[0])-1;
+	if (gotWeft) {
+		// From WEFT, get the Weft pattern length and default color index
+		thisSection  = getSection(sections, /WEFT\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		weftPatternLen = getValueInLines(lines, /Threads/i);
+		var cindex = getValueInLines(lines, /color/i);
+		if (cindex != null) weftDefaultColorIndex= parseInt(cindex[0])-1;
+	}
  	
-	// From THREADING, get the WarpPattern string
-	thisSection  = getSection(sections, /THREADING\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	var warpPattern = [];
-	for (var i=0; i<warpPatternLen; i++) warpPattern[i] = -1;
-	for (var i=0; i<lines.length; i++) {
-		if (lines[i].match(/=/) != null) {
-			var w = lines[i].split('=');
-			var val = w[1];
-			if (w[1].match(/,/) != null) {
-				var splitw1 = w[1].split(',');
-				val = splitw1[0];
+	if (gotThreading) {
+		// From THREADING, get the WarpPattern string
+		thisSection  = getSection(sections, /THREADING\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		var warpPattern = [];
+		for (var i=0; i<warpPatternLen; i++) warpPattern[i] = -1;
+		for (var i=0; i<lines.length; i++) {
+			if (lines[i].match(/=/) != null) {
+				var w = lines[i].split('=');
+				var val = w[1];
+				if (w[1].match(/,/) != null) {
+					var splitw1 = w[1].split(',');
+					val = splitw1[0];
+				}
+				warpPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
 			}
-			warpPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
+		}
+		for (var i=0; i<warpPatternLen; i++) {
+			warpPatternString += warpPattern[i].toString()+" ";
 		}
 	}
-	for (var i=0; i<warpPatternLen; i++) {
-		warpPatternString += warpPattern[i].toString()+" ";
-	}
 
-	// From TREADLING, get the WefPattern string
-	thisSection  = getSection(sections, /TREADLING\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	var weftPattern = [];
-	for (var i=0; i<weftPatternLen; i++) weftPattern[i] = -1;
-	for (var i=0; i<lines.length; i++) {
-		if (lines[i].match(/=/) != null) {
-			var w = lines[i].split('=');
-			var val = w[1];
-			if (w[1].match(/,/) != null) {
-				var splitw1 = w[1].split(',');
-				val = splitw1[0];
+	if (gotTreadling) {
+		// From TREADLING, get the WefPattern string
+		thisSection  = getSection(sections, /TREADLING\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		var weftPattern = [];
+		for (var i=0; i<weftPatternLen; i++) weftPattern[i] = -1;
+		for (var i=0; i<lines.length; i++) {
+			if (lines[i].match(/=/) != null) {
+				var w = lines[i].split('=');
+				var val = w[1];
+				if (w[1].match(/,/) != null) {
+					var splitw1 = w[1].split(',');
+					val = splitw1[0];
+				}
+				weftPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
 			}
-			weftPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
 		}
-	}
-	for (var i=0; i<weftPatternLen; i++) {
-		weftPatternString += weftPattern[i].toString()+" ";
-	}
-
-	// From COLOR PALETTE get rgb min and max
-	thisSection  = getSection(sections, /COLOR PALETTE\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	var rangeLine = getValueInLines(lines, /range/i);
-	var ranges = rangeLine.split(',');
-	rgbMin = parseInt(ranges[0]);
-	rgbMax = parseInt(ranges[1]);
-	if (rgbMax === 0) rgbMax = 1;
-	var entriesLine = getValueInLines(lines, /entries/i);
-	numColors = parseInt(entriesLine);
-
-	// From COLOR TABLE get the list of RGB values scaled [0,255]
-	thisSection  = getSection(sections, /COLOR TABLE\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	for (var i=0; i<numColors; i++) colorList[i] = [0, 0, 0];
-	for (var i=0; i<lines.length; i++) {
-		if (lines[i].match(/=/) != null) {
-			var w = lines[i].split('=');
-			var cindex = parseInt(w[0]);
-			var rgbArray = w[1].split(',');
-			var rval = Math.floor(255 * (parseInt(rgbArray[0])-rgbMin)/rgbMax);
-			var gval = Math.floor(255 * (parseInt(rgbArray[1])-rgbMin)/rgbMax);
-			var bval = Math.floor(255 * (parseInt(rgbArray[2])-rgbMin)/rgbMax);
-			colorList[cindex-1] = [rval, gval, bval];
+		for (var i=0; i<weftPatternLen; i++) {
+			weftPatternString += weftPattern[i].toString()+" ";
 		}
 	}
 
-	// From WARP COLORS get WarpColors String
-	thisSection  = getSection(sections, /WARP COLORS\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	var maxIndex = 0;
-	for (var i=0; i<lines.length; i++) {
-		if (lines[i].match(/=/) != null) {
-			var w = lines[i].split('=');
-			var index = parseInt(w[0])-1;
-			if (index > maxIndex) maxIndex = index;
-			warpColorIndices[index] = parseInt(w[1])-1;
+	if (gotColorPalette) {
+		// From COLOR PALETTE get rgb min and max
+		thisSection  = getSection(sections, /COLOR PALETTE\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		var rangeLine = getValueInLines(lines, /range/i);
+		var ranges = rangeLine.split(',');
+		rgbMin = parseInt(ranges[0]);
+		rgbMax = parseInt(ranges[1]);
+		if (rgbMax === 0) rgbMax = 1;
+		var entriesLine = getValueInLines(lines, /entries/i);
+		numColors = parseInt(entriesLine);
+	}
+
+	if (gotColorTable) {
+		// From COLOR TABLE get the list of RGB values scaled [0,255]
+		thisSection  = getSection(sections, /COLOR TABLE\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		for (var i=0; i<numColors; i++) colorList[i] = [0, 0, 0];
+		for (var i=0; i<lines.length; i++) {
+			if (lines[i].match(/=/) != null) {
+				var w = lines[i].split('=');
+				var cindex = parseInt(w[0]);
+				var rgbArray = w[1].split(',');
+				var rval = Math.floor(255 * (parseInt(rgbArray[0])-rgbMin)/rgbMax);
+				var gval = Math.floor(255 * (parseInt(rgbArray[1])-rgbMin)/rgbMax);
+				var bval = Math.floor(255 * (parseInt(rgbArray[2])-rgbMin)/rgbMax);
+				colorList[cindex-1] = [rval, gval, bval];
+			}
 		}
 	}
-	// fill in what's missing
-	for (var i=0; i<maxIndex; i++) {
-		if (!(i in warpColorIndices)) {
-			warpColorIndices[i] = warpDefaultColorIndex;
+
+	if (gotWarpColors && gotColorTable) {
+		// From WARP COLORS get WarpColors String
+		thisSection  = getSection(sections, /WARP COLORS\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		var maxIndex = 0;
+		for (var i=0; i<lines.length; i++) {
+			if (lines[i].match(/=/) != null) {
+				var w = lines[i].split('=');
+				var index = parseInt(w[0])-1;
+				if (index > maxIndex) maxIndex = index;
+				warpColorIndices[index] = parseInt(w[1])-1;
+			}
 		}
-	}
-	// now make value/run pairs
-	var clrs = [];
-	var lens = [];
-	var lastColorIndex = warpColorIndices[0];
-	var thisLen = 1;
-	var index = 0;
-	while (index++ < maxIndex) {
-		var thisColorIndex = warpColorIndices[index];
-		if (thisColorIndex != lastColorIndex) {
-			clrs.push(lastColorIndex);
-			lens.push(thisLen);
-			thisLen = 1;
-			lastColorIndex = thisColorIndex;
-		} else {
-			thisLen++;
+		// fill in what's missing
+		for (var i=0; i<maxIndex; i++) {
+			if (!(i in warpColorIndices)) {
+				warpColorIndices[i] = warpDefaultColorIndex;
+			}
 		}
+		// now make value/run pairs
+		var clrs = [];
+		var lens = [];
+		var lastColorIndex = warpColorIndices[0];
+		var thisLen = 1;
+		var index = 0;
+		while (index++ < maxIndex) {
+			var thisColorIndex = warpColorIndices[index];
+			if (thisColorIndex != lastColorIndex) {
+				clrs.push(lastColorIndex);
+				lens.push(thisLen);
+				thisLen = 1;
+				lastColorIndex = thisColorIndex;
+			} else {
+				thisLen++;
+			}
+		}
+	 	clrs.push(lastColorIndex);
+		lens.push(thisLen);
+		// make the string
+		for (var i=0; i<clrs.length; i++) {
+			var clrIndex = clrs[i];
+			var clr = colorList[clrIndex];	
+			warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+		}
+		warpColorsString += "iblock";
 	}
- 	clrs.push(lastColorIndex);
-	lens.push(thisLen);
-	// make the string
-	for (var i=0; i<clrs.length; i++) {
-		var clrIndex = clrs[i];
-		var clr = colorList[clrIndex];	
-		warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
-	}
-	warpColorsString += "iblock";
 	
-	// From WEFT COLORS get WeftColors String
-	thisSection  = getSection(sections, /WEFT COLORS\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	var maxIndex = 0;
-	for (var i=0; i<lines.length; i++) {
-		if (lines[i].match(/=/) != null) {
-			var w = lines[i].split('=');
-			var index = parseInt(w[0])-1;
-			if (index > maxIndex) maxIndex = index;
-			weftColorIndices[index] = parseInt(w[1])-1;
-		}
-	}
-	// fill in what's missing
-	for (var i=0; i<maxIndex; i++) {
-		if (!(i in weftColorIndices)) {
-			weftColorIndices[i] = weftDefaultColorIndex;
-		}
-	}
-	// now make value/run pairs
-	var clrs = [];
-	var lens = [];
-	var lastColorIndex = weftColorIndices[0];
-	var thisLen = 1;
-	var index = 0;
-	while (index++ < maxIndex) {
-		var thisColorIndex = weftColorIndices[index];
-		if (thisColorIndex != lastColorIndex) {
-			clrs.push(lastColorIndex);
-			lens.push(thisLen);
-			thisLen = 1;
-			lastColorIndex = thisColorIndex;
-		} else {
-			thisLen++;
-		}
-	}
- 	clrs.push(lastColorIndex);
-	lens.push(thisLen);
-	// make the string
-	for (var i=0; i<clrs.length; i++) {
-		var clrIndex = clrs[i];
-		var clr = colorList[clrIndex];	
-		weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
-	}
-	weftColorsString += "iblock";
-	
-	// From TIEUP, get TieUpString
-	var tu = [];
-	var tuWid = parseInt(tieUpWidthString);
-	var tuHgt = parseInt(tieUpHeightString);
-	for (var col=0; col<tuWid; col++) {
-		for (var row=0; row<tuHgt; row++) {
-			tu[(col*tuHgt)+row] = 0;
-		}
-	}
-	thisSection  = getSection(sections, /TIEUP\]/i);
-	lines = thisSection.split(/[\n\r]/);
-	for (var i=0; i<lines.length; i++) {
-		if (lines[i].match(/=/) != null) {
-			var w = lines[i].split('=');
-			var col = parseInt(w[0])-1;
-			var indices = w[1].split(',');
-			for (var j=0; j<indices.length; j++) {
-				var row = parseInt(indices[j])-1;
-				var tuindex = (col*tuHgt)+row;
-				tu[tuindex] = 1;
+	if (gotWeftColors && gotColorTable) {
+		// From WEFT COLORS get WeftColors String
+		thisSection  = getSection(sections, /WEFT COLORS\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		var maxIndex = 0;
+		for (var i=0; i<lines.length; i++) {
+			if (lines[i].match(/=/) != null) {
+				var w = lines[i].split('=');
+				var index = parseInt(w[0])-1;
+				if (index > maxIndex) maxIndex = index;
+				weftColorIndices[index] = parseInt(w[1])-1;
 			}
 		}
+		// fill in what's missing
+		for (var i=0; i<maxIndex; i++) {
+			if (!(i in weftColorIndices)) {
+				weftColorIndices[i] = weftDefaultColorIndex;
+			}
+		}
+		// now make value/run pairs
+		var clrs = [];
+		var lens = [];
+		var lastColorIndex = weftColorIndices[0];
+		var thisLen = 1;
+		var index = 0;
+		while (index++ < maxIndex) {
+			var thisColorIndex = weftColorIndices[index];
+			if (thisColorIndex != lastColorIndex) {
+				clrs.push(lastColorIndex);
+				lens.push(thisLen);
+				thisLen = 1;
+				lastColorIndex = thisColorIndex;
+			} else {
+				thisLen++;
+			}
+		}
+	 	clrs.push(lastColorIndex);
+		lens.push(thisLen);
+		// make the string
+		for (var i=0; i<clrs.length; i++) {
+			var clrIndex = clrs[i];
+			var clr = colorList[clrIndex];	
+			weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+		}
+		weftColorsString += "iblock";
 	}
-	tieUpString = "";
-	for (var i=0; i<tu.length; i++) {
-		tieUpString += Math.floor(tu[i]).toString() + " ";
+	
+	if (gotTieup) {
+		// From TIEUP, get TieUpString
+		var tu = [];
+		var tuWid = parseInt(tieUpWidthString);
+		var tuHgt = parseInt(tieUpHeightString);
+		for (var col=0; col<tuWid; col++) {
+			for (var row=0; row<tuHgt; row++) {
+				tu[(col*tuHgt)+row] = 0;
+			}
+		}
+		thisSection  = getSection(sections, /TIEUP\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		for (var i=0; i<lines.length; i++) {
+			if (lines[i].match(/=/) != null) {
+				var w = lines[i].split('=');
+				var col = parseInt(w[0])-1;
+				var indices = w[1].split(',');
+				for (var j=0; j<indices.length; j++) {
+					var row = parseInt(indices[j])-1;
+					var tuindex = (col*tuHgt)+row;
+					tu[tuindex] = 1;
+				}
+			}
+		}
+		tieUpString = "";
+		for (var i=0; i<tu.length; i++) {
+			tieUpString += Math.floor(tu[i]).toString() + " ";
+		}
 	}
 
 	var draft = [];
