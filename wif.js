@@ -1,7 +1,64 @@
+/*
+// lots of great examples at http://www.weavezine.com/content/flowing-curves-network-drafted-twill.html
+*/
 
 function currentDraftAsWIF() {
-	var wifString = "WIF string";
+	var wifString = "";	
+	wifString += "[WIF]\n";
+	wifString += "Version=1.1\n";
+	wifString += "Date=April 20, 1997\n";
+	wifString += "Developers=aquamusic@gmail.com\n";
+	wifString += "Source Program=AndrewsOnlineLoom\n";
+	wifString += "Source Version=1\n";
+	wifString += "\n";
+	wifString += "[CONTENTS]\n";
 
+	// edit this to include only what's really in here
+	wifString += "COLOR PALETTE=true\n";
+	wifString += "TEXT=true\n";
+	wifString += "WEAVING=true\n";
+	wifString += "WARP=true\n";
+	wifString += "WEFT=true\n";
+	wifString += "COLOR TABLE=true\n";
+	wifString += "THREADING=true\n";
+	wifString += "TIEUP=true\n";
+	wifString += "TREADLING=true\n";
+	wifString += "\n";
+
+	wifString += "[TEXT]\n";
+	wifString += "Title="+DraftName+"\n";
+	wifString += "; Creation "+Date()+"\n";
+
+
+COLOR PALETTE=true
+WEAVING=true
+WARP=true
+WEFT=true
+COLOR TABLE=true
+THREADING=true
+TIEUP=true
+TREADLING=true
+WARP COLORS=true
+WEFT COLORS=true
+
+[THREADING]
+1=1
+2=2
+
+[TIEUP]
+1=1
+2=2
+3=1,3
+
+[TREADLING]
+1=1
+2=2
+3=3
+4=1
+5=2
+
+	// save the AWL for reloading
+	wifString += "PRIVATE 
 	// get the draft as it is now
 	var warpPatternString = $('#warpPatternAWL').val();
 	var weftPatternString = $('#weftPatternAWL').val();
