@@ -219,7 +219,7 @@ function convertWIFtoJSON(draftName, wifData) {
 	// copy the indexed colors into the string
 	for (var i=0; i<warpColorIndices.length; i++) {
 		var index = warpColorIndices[i];
-		var clr = colorList[parseInt(index)-1];	
+		var clr = colorList[index-1];	
 		warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") ";
 	}
 	
@@ -235,7 +235,7 @@ function convertWIFtoJSON(draftName, wifData) {
 	// copy the indexed colors into the string
 	for (var i=0; i<weftColorIndices.length; i++) {
 		var index = weftColorIndices[i];
-		var clr = colorList[parseInt(index)-1];	
+		var clr = colorList[index-1];	
 		weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") ";
 	}
 	
