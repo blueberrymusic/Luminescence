@@ -8,7 +8,7 @@ var DrawGrid = false;  // see the underlying grid, for debuggin
 var TieUpWidth = 8;    // width of tie-up
 var TieUpHeight = 8;   // height of tie-up
 var FabricRight;       // right side of fabric grid
-var FabricBottom;      // bottom of fabric grid
+var FabricTop;         // bottom of fabric grid
 var TieUpL, TieUpR, TieUpT, TieUpB; // tie-up sides for use by ui.js
 
 /* 
@@ -32,14 +32,14 @@ function drawCanvas() {
 	CanvasSize  = Math.min(c.width, c.height);
 	getDomainSizes();
 	var rightSquares = Math.max(TieUpWidth+2, WeftDMax+1+4);
-	var bottomSquares = Math.max(TieUpHeight+2, WarpDMax+1+4);
-	var maxGap = Math.max(rightSquares, bottomSquares);
+	var topSquares = Math.max(TieUpHeight+2, WarpDMax+1+4);
+	var maxGap = Math.max(rightSquares, topSquares);
 	var numSquares = FabricSize + maxGap + 1;
 
 	SqSize = CanvasSize / numSquares;
 
 	FabricRight = CanvasSize - (rightSquares* SqSize);
-	FabricBottom = CanvasSize - (bottomSquares * SqSize);
+	FabricTop = CanvasSize - ((FabricSize+1)* SqSize);
 
 	makeMatrices();
 	drawWarp();
@@ -124,6 +124,129 @@ function getOutputAsList(input, numbers, defaultReturn) {
 	return result;
 }
 
+function drawWarp() {
+	var right = FabricRight;
+	var bottom = FabricTop - SqSize;
+	var left = right - (FabricSize * SqSize);
+	var top = bottom - ((WarpDMax+1) * SqSize);
+	var colorTop = top - (2 * SqSize);
+	Ctx.strokeStyle = "#000000";
+	Ctx.lineWidth = 1;
+	// draw the box
+	Ctx.strokeRect(left, top, right-left, bottom-top);
+	// draw the filled-in boxes in the grid
+	Ctx.fillStyle = "rgb(0, 0, 0)";
+	for (var col=0; col<FabricSize; col++) {  
+		var cellNum = S[col % S.length];
+		cellNum = toWarpDomain(cellNum);
+		if (cellNum >= 0) {
+			Ctx.fillRect(right-((col+1)*SqSize), bottom-((cellNum+1)*SqSize), SqSize, SqSize);
+		}
+	}
+	// draw the colors
+	for (var col=0; col<FabricSize; col++) {  
+		var rgb = WarpColors[col % WarpColors.length];
+		Ctx.fillStyle = rgb;
+		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
+		Ctx.strokeStyle = rgb;
+		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
+	}
+}
+
+function drawWeft() {
+	var left = FabricRight + SqSize;
+	var top = FabricTop;
+	var right = left + ((WeftDMax+1) * SqSize);
+	var bottom = top + (FabricSize * SqSize);
+
+	var colorLeft = right + SqSize;
+	Ctx.strokeStyle = "#000000";
+	Ctx.lineWidth = 1;
+	// draw the box
+	Ctx.strokeRect(left, top, right-left, bottom-top);
+	// draw the filled-in boxes in the grid
+	Ctx.fillStyle = "rgb(0, 0, 0)";
+	for (var row=0; row<FabricSize; row++) {  
+		var cellNum = R[row % R.length];
+		cellNum = toWeftDomain(cellNum);
+		if (cellNum >= 0) {
+			Ctx.fillRect(left+(cellNum*SqSize), top+(row*SqSize), SqSize, SqSize);
+		}
+	}
+	// draw the colors
+	for (var row=0; row<FabricSize; row++) {  
+		var rgb = WeftColors[row % WeftColors.length];
+		Ctx.fillStyle = rgb;
+		Ctx.fillRect(colorLeft, top+(row*SqSize), SqSize, SqSize);
+		Ctx.strokeStyle = rgb;
+		Ctx.strokeRect(colorLeft, top+(row*SqSize), SqSize, SqSize);
+	}
+}
+
+function drawTieUp() {
+	var left = FabricRight + SqSize;
+	var bottom = FabricTop - SqSize;
+	var right = left + (TieUpWidth * SqSize);
+	var top = bottom - (TieUpHeight * SqSize);
+	// save these so that ui.js can use them for clicks in the tie-up
+	TieUpL = left;
+	TieUpR = right;
+	TieUpT = top;
+	TieUpB = bottom;
+	Ctx.strokeStyle = "#000000";
+	Ctx.lineWidth = 1;
+	// draw the box
+	Ctx.strokeRect(left, top, right-left, bottom-top);
+	// draw the filled-in boxes in the grid
+	Ctx.fillStyle = "rgb(0, 0, 0)";
+	var index = 0;
+	for (var row=0; row<TieUpHeight; row++) { 
+		for (var col=0; col<TieUpWidth; col++) {
+			if (T[index % T.length] !== 0) {
+				Ctx.fillRect(left+(col*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
+				Ctx.strokeRect(left+(col*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
+			}
+			index++;
+		}
+	}
+}
+
+function drawFabric() {
+	var right = FabricRight;
+	var top = FabricTop;
+	var left = right - (FabricSize * SqSize);
+	var bottom = top + (FabricSize * SqSize);
+	Ctx.strokeStyle = "#000000";
+	Ctx.lineWidth = 1;
+	// draw the box
+	Ctx.strokeRect(left, top, right-left, bottom-top);
+	// use the weaving equation to fill in the fabric
+	for (var row=0; row<FabricSize; row++) { 
+		for (var col=0; col<FabricSize; col++) {
+			var tieUpCol = R[row % R.length];
+			var tieUpRow = S[col % S.length];
+			var rgb = "rgb(0, 0, 0)";
+			if (tieUpCol < 0) {
+				rgb = WarpColors[col % WarpColors.length];
+			} else if (tieUpRow < 0) {
+				rgb = WeftColors[row % WeftColors.length];
+			} else {
+				var tieUpVal = T[(tieUpRow * TieUpWidth) + tieUpCol];
+				if (tieUpVal === 1) {  // use warp color
+					rgb = WarpColors[col % WarpColors.length];
+				} else { // use weft color
+					rgb = WeftColors[row % WeftColors.length];
+				}
+			}
+			Ctx.fillStyle = rgb;
+			Ctx.fillRect(right-((col+1)*SqSize), top+(row*SqSize), SqSize, SqSize);
+			Ctx.strokeStyle = rgb;
+			Ctx.strokeRect(right-((col+1)*SqSize), top+(row*SqSize), SqSize, SqSize);
+		}
+	}
+}
+
+/* These are the originals, warp on bottom, weft on right
 function drawWarp() { 
 	var right = FabricRight;
 	var top = FabricBottom + SqSize;
@@ -284,3 +407,4 @@ function drawFabric() {
 		}
 	}
 }
+*/
