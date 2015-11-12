@@ -3,45 +3,9 @@
 // lots of great examples at http://www.weavezine.com/content/flowing-curves-network-drafted-twill.html
 */
 
-function currentDraftAsWIF() {
-	var wifString = "";	
-	wifString += "[WIF]\n";
-	wifString += "Version=1.1\n";
-	wifString += "Date=April 20, 1997\n";
-	wifString += "Developers=aquamusic@gmail.com\n";
-	wifString += "Source Program=AndrewsOnlineLoom\n";
-	wifString += "Source Version=1\n";
-	wifString += "\n";
-	wifString += "[CONTENTS]\n";
-
-	// edit this to include only what's really in here
-	wifString += "COLOR PALETTE=true\n";
-	wifString += "TEXT=true\n";
-	wifString += "WEAVING=true\n";
-	wifString += "WARP=true\n";
-	wifString += "WEFT=true\n";
-	wifString += "COLOR TABLE=true\n";
-	wifString += "THREADING=true\n";
-	wifString += "TIEUP=true\n";
-	wifString += "TREADLING=true\n";
-	wifString += "\n";
-
-	wifString += "[TEXT]\n";
-	wifString += "Title="+DraftName+"\n";
-	wifString += "; Creation "+Date()+"\n";
-
-	// get the draft as it is now
-	var warpPatternString = $('#warpPatternAWL').val();
-	var weftPatternString = $('#weftPatternAWL').val();
-	var warpColorString = $('#warpColorAWL').val();
-	var weftColorString = $('#weftColorAWL').val();
-	var tieUpString = $('#tieUpAWL').val();
-	var fabricSizeString = $('#fabricSizeInput').val();
-	var tieUpWidthString = $('#tieUpWidthInput').val();
-	var tieUpHeightString = $('#tieUpHeightInput').val();
-
-	return wifString;
-}
+///////////////////////////////////////////////////
+// Reading WIF 
+///////////////////////////////////////////////////
 
 // wifData is a giant string with the WIF file contents
 function convertWIFtoJSON(draftName, wifData) {
@@ -59,6 +23,14 @@ function convertWIFtoJSON(draftName, wifData) {
 		var jsonData = getJSONfromWIFwithAWL(wifData);
 		return jsonData;
 	}
+	return convertGeneralWIFtoJSON(draftName, wifData);
+}
+
+///////////////////////////////////////////////////
+// Reading WIF (general, without AWL information)
+///////////////////////////////////////////////////
+
+function convertGeneralWIFtoJSON(draftName, wifData) {
 	var sections = wifData.split('[');
 
 	// Scan the CONTENTS and find which sections are present. They need to be
@@ -115,8 +87,8 @@ function convertWIFtoJSON(draftName, wifData) {
 	// assign defaults for missing sections
 	if (!gotWarp) warpPatternString = "0 1 / 7 <d";
 	if (!gotWeft) weftPatternString = "0 1 / 7 <d";
-	if (!gotWarpColors) warpColorsString = "red";
-	if (!gotWeftColors) weftColorsString = "yellow";
+	if (!gotWarpColors) warpColorsString = "black white";
+	if (!gotWeftColors) weftColorsString = "white black";
 	if (!gotTieup) tieUpString = "1 0 0 0";
 	if (!gotWeaving) tieUpWidthString = "8";
 	if (!gotWeaving) tieUpHeightString = "8";
@@ -252,107 +224,13 @@ function convertWIFtoJSON(draftName, wifData) {
 	if (gotWarpColors && gotColorTable) {
 		// From WARP COLORS get WarpColors String
 		thisSection  = getSection(sections, /WARP COLORS\]/i);
-		lines = thisSection.split(/[\n\r]/);
-		var maxIndex = 0;
-		for (var i=0; i<lines.length; i++) {
-			if (lines[i].match(/=/) != null) {
-				var w = lines[i].split('=');
-				var index = parseInt(w[0])-1;
-				if (index > maxIndex) maxIndex = index;
-				warpColorIndices[index] = parseInt(w[1])-1;
-			}
-		}
-		// fill in what's missing
-		for (var i=0; i<maxIndex; i++) {
-			if (!(i in warpColorIndices)) {
-				warpColorIndices[i] = warpDefaultColorIndex;
-			}
-		}
-		// now make value/run pairs
-		var clrs = [];
-		var lens = [];
-		var lastColorIndex = warpColorIndices[0];
-		var thisLen = 1;
-		var index = 0;
-		while (index++ < maxIndex) {
-			var thisColorIndex = warpColorIndices[index];
-			if (thisColorIndex != lastColorIndex) {
-				clrs.push(lastColorIndex);
-				lens.push(thisLen);
-				thisLen = 1;
-				lastColorIndex = thisColorIndex;
-			} else {
-				thisLen++;
-			}
-		}
-	 	clrs.push(lastColorIndex);
-		lens.push(thisLen);
-		// make the string
-		for (var i=0; i<clrs.length; i++) {
-			var clrIndex = clrs[i];
-			var clr = colorList[clrIndex];	
-			var rgbString = clr[0]+","+clr[1]+","+clr[2];
-			if (rgbString in KeyRGBValueName) {
-				var name = KeyRGBValueName[rgbString];
-				warpColorsString += name+" "+lens[i]+" ";
-			} else {
-				warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
-			}
-		}
-		warpColorsString += "iblock";
+		warpColorsString = getColorString(thisSection, warpColorIndices, warpDefaultColorIndex, colorList);
 	}
 	
 	if (gotWeftColors && gotColorTable) {
 		// From WEFT COLORS get WeftColors String
 		thisSection  = getSection(sections, /WEFT COLORS\]/i);
-		lines = thisSection.split(/[\n\r]/);
-		var maxIndex = 0;
-		for (var i=0; i<lines.length; i++) {
-			if (lines[i].match(/=/) != null) {
-				var w = lines[i].split('=');
-				var index = parseInt(w[0])-1;
-				if (index > maxIndex) maxIndex = index;
-				weftColorIndices[index] = parseInt(w[1])-1;
-			}
-		}
-		// fill in what's missing
-		for (var i=0; i<maxIndex; i++) {
-			if (!(i in weftColorIndices)) {
-				weftColorIndices[i] = weftDefaultColorIndex;
-			}
-		}
-		// now make value/run pairs
-		var clrs = [];
-		var lens = [];
-		var lastColorIndex = weftColorIndices[0];
-		var thisLen = 1;
-		var index = 0;
-		while (index++ < maxIndex) {
-			var thisColorIndex = weftColorIndices[index];
-			if (thisColorIndex != lastColorIndex) {
-				clrs.push(lastColorIndex);
-				lens.push(thisLen);
-				thisLen = 1;
-				lastColorIndex = thisColorIndex;
-			} else {
-				thisLen++;
-			}
-		}
-	 	clrs.push(lastColorIndex);
-		lens.push(thisLen);
-		// make the string
-		for (var i=0; i<clrs.length; i++) {
-			var clrIndex = clrs[i];
-			var clr = colorList[clrIndex];	
-			var rgbString = clr[0]+","+clr[1]+","+clr[2];
-			if (rgbString in KeyRGBValueName) {
-				var name = KeyRGBValueName[rgbString];
-				weftColorsString += name+" "+lens[i]+" ";
-			} else {
-				weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
-			}
-		}
-		weftColorsString += "iblock";
+		weftColorsString = getColorString(thisSection, weftColorIndices, weftDefaultColorIndex, colorList);
 	}
 	
 	if (gotTieup) {
@@ -424,6 +302,108 @@ function getValueInLines(lines, re) {
 	return null;
 }
 
+function getColorString(thisSection, indices, defaultColorIndex, colorList) {
+	lines = thisSection.split(/[\n\r]/);
+	var maxIndex = 0;
+	for (var i=0; i<lines.length; i++) {
+		if (lines[i].match(/=/) != null) {
+			var w = lines[i].split('=');
+			var index = parseInt(w[0])-1;
+			if (index > maxIndex) maxIndex = index;
+			indices[index] = parseInt(w[1])-1;
+		}
+	}
+	// fill in what's missing
+	for (var i=0; i<maxIndex; i++) {
+		if (!(i in indices)) {
+			indices[i] = defaultColorIndex;
+		}
+	}
+	// now make value/run pairs
+	var clrs = [];
+	var lens = [];
+	var lastColorIndex = indices[0];
+	var thisLen = 1;
+	var index = 0;
+	while (index++ < maxIndex) {
+		var thisColorIndex = indices[index];
+		if (thisColorIndex != lastColorIndex) {
+			clrs.push(lastColorIndex);
+			lens.push(thisLen);
+			thisLen = 1;
+			lastColorIndex = thisColorIndex;
+		} else {
+			thisLen++;
+		}
+	}
+ 	clrs.push(lastColorIndex);
+	lens.push(thisLen);
+	// make the string
+	var colorString = "";
+	for (var i=0; i<clrs.length; i++) {
+		var clrIndex = clrs[i];
+		var clr = colorList[clrIndex];	
+		var rgbString = clr[0]+","+clr[1]+","+clr[2];
+		if (rgbString in KeyRGBValueName) {
+			var name = KeyRGBValueName[rgbString];
+			colorString += name+" "+lens[i]+" ";
+		} else {
+			colorString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+		}
+	}
+	colorString += "iblock";
+	return colorString;
+}
+
+
+///////////////////////////////////////////////////
+// Reading WIF (from stored AWL data)
+///////////////////////////////////////////////////
+
 function getJSONfromWIFwithAWL(wifData) {
 	return null;
+}
+
+///////////////////////////////////////////////////
+// Write WIF
+///////////////////////////////////////////////////
+
+function currentDraftAsWIF() {
+	var wifString = "";	
+	wifString += "[WIF]\n";
+	wifString += "Version=1.1\n";
+	wifString += "Date=April 20, 1997\n";
+	wifString += "Developers=aquamusic@gmail.com\n";
+	wifString += "Source Program=AndrewsOnlineLoom\n";
+	wifString += "Source Version=1\n";
+	wifString += "\n";
+	wifString += "[CONTENTS]\n";
+
+	// edit this to include only what's really in here
+	wifString += "COLOR PALETTE=true\n";
+	wifString += "TEXT=true\n";
+	wifString += "WEAVING=true\n";
+	wifString += "WARP=true\n";
+	wifString += "WEFT=true\n";
+	wifString += "COLOR TABLE=true\n";
+	wifString += "THREADING=true\n";
+	wifString += "TIEUP=true\n";
+	wifString += "TREADLING=true\n";
+	wifString += "\n";
+
+	wifString += "[TEXT]\n";
+	wifString += "Title="+DraftName+"\n";
+	wifString += "; Creation "+Date()+"\n";
+
+	// get the draft as it is now
+	var warpPatternString = $('#warpPatternAWL').val();
+	var weftPatternString = $('#weftPatternAWL').val();
+	var warpColorString = $('#warpColorAWL').val();
+	var weftColorString = $('#weftColorAWL').val();
+	var tieUpString = $('#tieUpAWL').val();
+	var fabricSizeString = $('#fabricSizeInput').val();
+	var tieUpWidthString = $('#tieUpWidthInput').val();
+	var tieUpHeightString = $('#tieUpHeightInput').val();
+
+	return wifString;
 }
