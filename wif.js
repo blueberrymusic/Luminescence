@@ -48,6 +48,11 @@ function convertWIFtoJSON(draftName, wifData) {
 	// For a non-AWL file, we only care about the sections 
 	//   WEFT/WARP COLORS, WEFT/WARP, TREADLING, THREADING, TIEUP, COLOR TABLE, WEAVING 
 	// But we search first for AWL entries in a private field
+	if (null != wifData.match(/^\[WIF\]$/i)) {
+		alert("This doesn't appear to be a WIF file. It's missing the [WIF] header.");
+		return null;
+	}
+
 	awlField = /\[PRIVATE AWLOnline Input\]/i;
 	var awlFound = wifData.match(awlField);
 	if (null != awlFound) {
@@ -72,10 +77,12 @@ function convertWIFtoJSON(draftName, wifData) {
 	var gotColorTable = false;
 	var gotColorPalette = false;
 	var gotWeaving = false;
-	var gotFlork = false;
+	
+	var gotContents = false;
 	for (var i=0; i<sections.length; i++) {
 		var thisSection = sections[i];
 		if (null != thisSection.match(/CONTENTS/i)) {
+			gotContents = true;
 			var lines = thisSection.split(/[\n\r]/);
 			for (var k=0; k<lines.length; k++) {
 				if (lineHastrueRE(lines[k], /WARP/i)) gotWarp = true;
@@ -88,9 +95,12 @@ function convertWIFtoJSON(draftName, wifData) {
 				if (lineHastrueRE(lines[k], /COLOR TABLE/i)) gotColorTable = true;
 				if (lineHastrueRE(lines[k], /COLOR PALETTE/i)) gotColorPalette = true;
 				if (lineHastrueRE(lines[k], /WEAVING/i)) gotWeaving = true;
-				if (lineHastrueRE(lines[k], /FLORK/i)) gotFlork = true;
 			}
 		}
+	}
+	if (!gotContents) {
+		alert("This WIF file is missing the mandatory CONTENTS section, so I can't read it.");
+		return null;
 	}
 
 	var warpPatternString = "";    // from the THREADING section

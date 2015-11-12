@@ -202,7 +202,7 @@ function drawTieUp() {
 	var index = 0;
 	for (var row=0; row<TieUpHeight; row++) { 
 		for (var col=0; col<TieUpWidth; col++) {
-			index = (col*TieUpHeight)+row;  // new
+			index = (col*TieUpHeight)+row;  // new way
 			if (T[index % T.length] !== 0) {
 				Ctx.fillRect(left+(col*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
 				Ctx.strokeRect(left+(col*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
