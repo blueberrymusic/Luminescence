@@ -449,6 +449,8 @@ function currentDraftAsWIF() {
 	wifString += "THREADING=true\n";
 	wifString += "TIEUP=true\n";
 	wifString += "TREADLING=true\n";
+	wifString += "WARP COLORS=true\n";
+	wifString += "WEFT COLORS=true\n";
 	wifString += "\n";
 
 	// get the draft inputs
@@ -542,9 +544,27 @@ function currentDraftAsWIF() {
 	}
 	wifString += "\n";
 
+	//
+	// First we'll build up the color palette. Run through the
+	// two color outputs and make a key/value list from all the
+	// rgb values that are used. Then use that list to write
+	// out the color palette, then the table, then the colors
+	var keyRGBvalueIndex = {};
+	var pairLength = 0;
+	var allColors = WarpColorOutput+" "+WeftColorOutput;
+	var allColorsWords = allColors.split(' ');
+	for (var i=0; i<allColorsWords.length; i++) {
+		var rgbString = getColorAsRGBString(allColorsWords[i]); // comes back rgb(r,g,b)
+		if (!(rgbString in keyRGBvalueIndex)) {
+			keyRGBvalueIndex[rgbString] = pairLength++;
+		}
+	}
+	var f = 5;
 /*
 	wifString += "[COLOR TABLE]\n";
 	wifString += "[COLOR PALETTE]\n";
+	wifString += "[WARP COLORS]\n";
+	wifString += "[WEFT COLORS]\n";
 */
 
 	return wifString;
