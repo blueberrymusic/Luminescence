@@ -291,7 +291,13 @@ function convertWIFtoJSON(draftName, wifData) {
 		for (var i=0; i<clrs.length; i++) {
 			var clrIndex = clrs[i];
 			var clr = colorList[clrIndex];	
-			warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+			var rgbString = clr[0]+","+clr[1]+","+clr[2];
+			if (rgbString in KeyRGBValueName) {
+				var name = KeyRGBValueName[rgbString];
+				warpColorsString += name+" "+lens[i]+" ";
+			} else {
+				warpColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+			}
 		}
 		warpColorsString += "iblock";
 	}
@@ -338,7 +344,13 @@ function convertWIFtoJSON(draftName, wifData) {
 		for (var i=0; i<clrs.length; i++) {
 			var clrIndex = clrs[i];
 			var clr = colorList[clrIndex];	
-			weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+			var rgbString = clr[0]+","+clr[1]+","+clr[2];
+			if (rgbString in KeyRGBValueName) {
+				var name = KeyRGBValueName[rgbString];
+				weftColorsString += name+" "+lens[i]+" ";
+			} else {
+				weftColorsString += "rgb("+clr[0]+","+clr[1]+","+clr[2]+") "+lens[i]+" ";
+			}
 		}
 		weftColorsString += "iblock";
 	}

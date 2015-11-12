@@ -72,8 +72,14 @@ function getColorRGBSub(nameLC, leftIndex, rightIndex) {
 }
 
 function buildColorKeyValueLists() {
-	alert("build lists TK");
-	//var KeyNameValueRGB, KeyRGBValueName;
+	KeyNameValueRGB = {};
+	KeyRGBValueName = {};
+	for (var i=0; i<AllColorsRGB.length; i++) {
+		var c = AllColorsRGB[i];
+		var rgbString = c[1]+","+c[2]+","+c[3];
+		KeyNameValueRGB[c[0]] = rgbString;
+		KeyRGBValueName[rgbString] = c[0];
+	}
 }
 
 // old utilities
