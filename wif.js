@@ -528,11 +528,22 @@ function currentDraftAsWIF() {
 	}
 	wifString += "\n";
 
+	wifString += "[THREADING]\n";
+	var warpWords = WarpPatternOutput.split(' ');
+	for (var i=0; i<warpWords.length; i++) {
+		wifString += i+"="+(parseInt(warpWords[i])+1)+"\n";
+	}
+	wifString += "\n";
+
+	wifString += "[TREADLING]\n";
+	var weftWords = WeftPatternOutput.split(' ');
+	for (var i=0; i<weftWords.length; i++) {
+		wifString += i+"="+(parseInt(weftWords[i])+1)+"\n";
+	}
+	wifString += "\n";
 
 /*
-	wifString += "[THREADING]\n";
 	wifString += "[COLOR TABLE]\n";
-	wifString += "[TREADLING]\n";
 	wifString += "[COLOR PALETTE]\n";
 */
 
