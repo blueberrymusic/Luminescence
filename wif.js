@@ -93,14 +93,23 @@ function convertWIFtoJSON(draftName, wifData) {
 		}
 	}
 
-	var warpPatternString = "0 1 / 7 <d";   // this comes from the THREADING section
-	var weftPatternString = "0 1 / 7 <d";   // this comes from the TREADLING section
-	var warpColorsString = "red";
-	var weftColorsString = "yellow";
-	var tieUpString = "1 0 0 0";
-	var tieUpWidthString = "8";    // this comes from the WEAVING section
-	var tieUpHeightString = "8";   // this comes from the WEAVING section
+	var warpPatternString = "";    // from the THREADING section
+	var weftPatternString = "";    // from the TREADLING section
+	var warpColorsString = "";     // from WARP COLORS
+	var weftColorsString = "";     // from WEFT COLORS
+	var tieUpString = "";          // from TIEUP
+	var tieUpWidthString = "";     // from the WEAVING section
+	var tieUpHeightString = "";    // from the WEAVING section
 	var fabricSizeString = "100";  // default - nothing in WIF overrides this
+
+	// assign defaults for missing sections
+	if (!gotWarp) warpPatternString = "0 1 / 7 <d";
+	if (!gotWeft) weftPatternString = "0 1 / 7 <d";
+	if (!gotWarpColors) warpColorsString = "red";
+	if (!gotWeftColors) weftColorsString = "yellow";
+	if (!gotTieup) tieUpString = "1 0 0 0";
+	if (!gotWeaving) tieUpWidthString = "8";
+	if (!gotWeaving) tieUpHeightString = "8";
 
 	var treadles = 8;
 	var shafts = 8;
