@@ -2,6 +2,19 @@
 
 // lots of great examples at http://www.weavezine.com/content/flowing-curves-network-drafted-twill.html
 */
+AWLPrivateFieldString =  "[PRIVATE AWLOnline InputFields]";
+
+var WIF_ID_WarpPatternAWL = "WarpPatternAWL";
+var WIF_ID_WeftPatternAWL = "WeftPatternAWL";
+var WIF_ID_WarpColorsAWL =  "WarpColorsAWL";
+var WIF_ID_WeftColorsAWL =  "WeftColorsAWL";
+var WIF_ID_TieUpAWL =       "TieUpAWL";
+var WIF_ID_FabricSizeAWL =  "FabricSizeAWL";
+var WIF_ID_TieUpWidthAWL =  "TieUpWidthAWL";
+var WIF_ID_TieUpHeightAWL =  "TieUpHeightAWL";
+
+var WIF_ID_Delimiter = " ==== ";
+
 
 ///////////////////////////////////////////////////
 // Reading WIF 
@@ -17,11 +30,11 @@ function convertWIFtoJSON(draftName, wifData) {
 		return null;
 	}
 
-	awlField = /\[PRIVATE AWLOnline Input\]/i;
-	var awlFound = wifData.match(awlField);
+	var pvre = new RegExp(AWLPrivateFieldString);
+	var awlFound = wifData.match(pvre);
 	if (null != awlFound) {
 		var jsonData = getJSONfromWIFwithAWL(wifData);
-		return jsonData;
+		if (jsonData != null) return jsonData;
 	}
 	return convertGeneralWIFtoJSON(draftName, wifData);
 }
@@ -119,13 +132,13 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 	// From TIEUP, get TieUpString
 
 	if (gotWeaving) {
-	// From WEAVING, get the TieUp width and height
-			  thisSection  = getSection(sections, /WEAVING\]/i);
-			  lines = thisSection.split(/[\n\r]/);
-			  treadles =  getValueInLines(lines, /Treadles/i);
-			  shafts =  getValueInLines(lines, /Shafts/i);
-			  tieUpWidthString = treadles;
-			  tieUpHeightString = shafts;
+		// From WEAVING, get the TieUp width and height
+		thisSection  = getSection(sections, /WEAVING\]/i);
+		lines = thisSection.split(/[\n\r]/);
+		treadles =  getValueInLines(lines, /Treadles/i);
+		shafts =  getValueInLines(lines, /Shafts/i);
+		tieUpWidthString = treadles;
+		tieUpHeightString = shafts;
 	}	
 
 	if (gotWarp) {
@@ -274,8 +287,6 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 	draft.push({ "field": "TieUpHeight",  "value": tieUpHeightString });
 	var JSONdraft = JSON.stringify(draft);
 
-	var jj = JSONdraft;
-
 	return JSONdraft;
 }
 
@@ -361,9 +372,58 @@ function getColorString(thisSection, indices, defaultColorIndex, colorList) {
 ///////////////////////////////////////////////////
 
 function getJSONfromWIFwithAWL(wifData) {
+	var pvre = new RegExp(AWLPrivateFieldString.substr(1)); // remove opening [ since we split on that
+	var sections = wifData.split('[');
+	for (var i=0; i<sections.length; i++) {
+		var thisSection = sections[i];
+		if (null != thisSection.match(pvre)) {
+			gotContents = true;
+			var lines = thisSection.split(/[\n\r]/);
+			var warpPatternString = getPrivateFieldFromWIF(WIF_ID_WarpPatternAWL, lines);
+			var weftPatternString = getPrivateFieldFromWIF(WIF_ID_WeftPatternAWL, lines);
+			var warpColorsString = getPrivateFieldFromWIF(WIF_ID_WarpColorsAWL, lines);
+			var weftColorsString = getPrivateFieldFromWIF(WIF_ID_WeftColorsAWL, lines);
+			var tieUpString = getPrivateFieldFromWIF(WIF_ID_TieUpAWL, lines);
+			var fabricSizeString = getPrivateFieldFromWIF(WIF_ID_FabricSizeAWL, lines);
+			var tieUpWidthString = getPrivateFieldFromWIF(WIF_ID_TieUpWidthAWL, lines);
+			var tieUpHeightString = getPrivateFieldFromWIF(WIF_ID_TieUpHeightAWL, lines);
+
+			if ((warpPatternString == null) || (weftPatternString == null) ||
+			    (warpColorsString == null) || (weftColorsString == null) ||
+             (tieUpString == null) || (fabricSizeString == null) ||
+             (tieUpWidthString == null) || (tieUpHeightString == null)) {
+				return null;
+			}
+
+			var draft = [];
+			draft.push({ "field": "WarpAWL",      "value": warpPatternString });
+			draft.push({ "field": "WeftAWL",      "value": weftPatternString });
+			draft.push({ "field": "WarpColorAWL", "value": warpColorsString });
+			draft.push({ "field": "WeftColorAWL", "value": weftColorsString });
+			draft.push({ "field": "TieUpAWL",     "value": tieUpString });
+			draft.push({ "field": "FabricSize",   "value": fabricSizeString });
+			draft.push({ "field": "TieUpWidth",   "value": tieUpWidthString });
+			draft.push({ "field": "TieUpHeight",  "value": tieUpHeightString });
+			var JSONdraft = JSON.stringify(draft);
+			return JSONdraft;
+		}
+	}
 	return null;
 }
 
+function getPrivateFieldFromWIF(awlString, lines) {
+	var pvre = new RegExp(awlString);
+	for (var k=0; k<lines.length; k++) {
+		var line = lines[k];
+	 	if (line.match(pvre)) {
+			var words = line.split(WIF_ID_Delimiter);
+			var kk = 5;
+			return words[1];
+		}
+	}
+	return null;
+}
+			
 ///////////////////////////////////////////////////
 // Write WIF
 ///////////////////////////////////////////////////
@@ -398,12 +458,24 @@ function currentDraftAsWIF() {
 	// get the draft as it is now
 	var warpPatternString = $('#warpPatternAWL').val();
 	var weftPatternString = $('#weftPatternAWL').val();
-	var warpColorString = $('#warpColorAWL').val();
-	var weftColorString = $('#weftColorAWL').val();
+	var warpColorsString = $('#warpColorAWL').val();
+	var weftColorsString = $('#weftColorAWL').val();
 	var tieUpString = $('#tieUpAWL').val();
 	var fabricSizeString = $('#fabricSizeInput').val();
 	var tieUpWidthString = $('#tieUpWidthInput').val();
 	var tieUpHeightString = $('#tieUpHeightInput').val();
+
+	// First, write the private AWL section
+	wifString += "\n" + AWLPrivateFieldString +"\n";
+	wifString += WIF_ID_WarpPatternAWL   + WIF_ID_Delimiter + warpPatternString + "\n";
+	wifString += WIF_ID_WeftPatternAWL   + WIF_ID_Delimiter + weftPatternString + "\n";
+	wifString += WIF_ID_WarpColorsAWL    + WIF_ID_Delimiter + warpColorsString + "\n";
+	wifString += WIF_ID_WeftColorsAWL    + WIF_ID_Delimiter + weftColorsString + "\n";
+	wifString += WIF_ID_TieUpAWL         + WIF_ID_Delimiter + tieUpString + "\n";
+	wifString += WIF_ID_FabricSizeAWL    + WIF_ID_Delimiter + fabricSizeString + "\n";
+	wifString += WIF_ID_TieUpWidthAWL    + WIF_ID_Delimiter + tieUpWidthString + "\n";
+	wifString += WIF_ID_TieUpHeightAWL    + WIF_ID_Delimiter + tieUpHeightString + "\n";
+	wifString += "\n";
 
 	return wifString;
 }
