@@ -155,7 +155,7 @@ function saveButtonFunction() {
 }
 
 function wroteDropboxFile(fileName) {
-	alert("wrote "+fileName+" to dropbox");
+	//alert("wrote "+fileName+" to dropbox");
 	buildLoadDraftDropdown(); // rebuild the drop-down to include this new entry
 }
 

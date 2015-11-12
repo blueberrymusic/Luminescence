@@ -90,8 +90,8 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 
 	var warpPatternString = "";    // from the THREADING section
 	var weftPatternString = "";    // from the TREADLING section
-	var warpColorsString = "";     // from WARP COLORS
-	var weftColorsString = "";     // from WEFT COLORS
+	var warpColorString = "";     // from WARP COLORS
+	var weftColorString = "";     // from WEFT COLORS
 	var tieUpString = "";          // from TIEUP
 	var tieUpWidthString = "";     // from the WEAVING section
 	var tieUpHeightString = "";    // from the WEAVING section
@@ -100,8 +100,8 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 	// assign defaults for missing sections
 	if (!gotWarp) warpPatternString = "0 1 / 7 <d";
 	if (!gotWeft) weftPatternString = "0 1 / 7 <d";
-	if (!gotWarpColors) warpColorsString = "black white";
-	if (!gotWeftColors) weftColorsString = "white black";
+	if (!gotWarpColors) warpColorString = "black white";
+	if (!gotWeftColors) weftColorString = "white black";
 	if (!gotTieup) tieUpString = "1 0 0 0";
 	if (!gotWeaving) tieUpWidthString = "8";
 	if (!gotWeaving) tieUpHeightString = "8";
@@ -237,13 +237,13 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 	if (gotWarpColors && gotColorTable) {
 		// From WARP COLORS get WarpColors String
 		thisSection  = getSection(sections, /WARP COLORS\]/i);
-		warpColorsString = getColorString(thisSection, warpColorIndices, warpDefaultColorIndex, colorList);
+		warpColorString = getColorString(thisSection, warpColorIndices, warpDefaultColorIndex, colorList);
 	}
 	
 	if (gotWeftColors && gotColorTable) {
 		// From WEFT COLORS get WeftColors String
 		thisSection  = getSection(sections, /WEFT COLORS\]/i);
-		weftColorsString = getColorString(thisSection, weftColorIndices, weftDefaultColorIndex, colorList);
+		weftColorString = getColorString(thisSection, weftColorIndices, weftDefaultColorIndex, colorList);
 	}
 	
 	if (gotTieup) {
@@ -279,8 +279,8 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 	var draft = [];
 	draft.push({ "field": "WarpAWL",      "value": warpPatternString });
 	draft.push({ "field": "WeftAWL",      "value": weftPatternString });
-	draft.push({ "field": "WarpColorAWL", "value": warpColorsString });
-	draft.push({ "field": "WeftColorAWL", "value": weftColorsString });
+	draft.push({ "field": "WarpColorAWL", "value": warpColorString });
+	draft.push({ "field": "WeftColorAWL", "value": weftColorString });
 	draft.push({ "field": "TieUpAWL",     "value": tieUpString });
 	draft.push({ "field": "FabricSize",   "value": fabricSizeString });
 	draft.push({ "field": "TieUpWidth",   "value": tieUpWidthString });
@@ -381,15 +381,15 @@ function getJSONfromWIFwithAWL(wifData) {
 			var lines = thisSection.split(/[\n\r]/);
 			var warpPatternString = getPrivateFieldFromWIF(WIF_ID_WarpPatternAWL, lines);
 			var weftPatternString = getPrivateFieldFromWIF(WIF_ID_WeftPatternAWL, lines);
-			var warpColorsString = getPrivateFieldFromWIF(WIF_ID_WarpColorsAWL, lines);
-			var weftColorsString = getPrivateFieldFromWIF(WIF_ID_WeftColorsAWL, lines);
+			var warpColorString = getPrivateFieldFromWIF(WIF_ID_WarpColorsAWL, lines);
+			var weftColorString = getPrivateFieldFromWIF(WIF_ID_WeftColorsAWL, lines);
 			var tieUpString = getPrivateFieldFromWIF(WIF_ID_TieUpAWL, lines);
 			var fabricSizeString = getPrivateFieldFromWIF(WIF_ID_FabricSizeAWL, lines);
 			var tieUpWidthString = getPrivateFieldFromWIF(WIF_ID_TieUpWidthAWL, lines);
 			var tieUpHeightString = getPrivateFieldFromWIF(WIF_ID_TieUpHeightAWL, lines);
 
 			if ((warpPatternString == null) || (weftPatternString == null) ||
-			    (warpColorsString == null) || (weftColorsString == null) ||
+			    (warpColorString == null) || (weftColorString == null) ||
              (tieUpString == null) || (fabricSizeString == null) ||
              (tieUpWidthString == null) || (tieUpHeightString == null)) {
 				return null;
@@ -398,8 +398,8 @@ function getJSONfromWIFwithAWL(wifData) {
 			var draft = [];
 			draft.push({ "field": "WarpAWL",      "value": warpPatternString });
 			draft.push({ "field": "WeftAWL",      "value": weftPatternString });
-			draft.push({ "field": "WarpColorAWL", "value": warpColorsString });
-			draft.push({ "field": "WeftColorAWL", "value": weftColorsString });
+			draft.push({ "field": "WarpColorAWL", "value": warpColorString });
+			draft.push({ "field": "WeftColorAWL", "value": weftColorString });
 			draft.push({ "field": "TieUpAWL",     "value": tieUpString });
 			draft.push({ "field": "FabricSize",   "value": fabricSizeString });
 			draft.push({ "field": "TieUpWidth",   "value": tieUpWidthString });
@@ -451,15 +451,11 @@ function currentDraftAsWIF() {
 	wifString += "TREADLING=true\n";
 	wifString += "\n";
 
-	wifString += "[TEXT]\n";
-	wifString += "Title="+DraftName+"\n";
-	wifString += "; Creation "+Date()+"\n";
-
-	// get the draft as it is now
+	// get the draft inputs
 	var warpPatternString = $('#warpPatternAWL').val();
 	var weftPatternString = $('#weftPatternAWL').val();
-	var warpColorsString = $('#warpColorAWL').val();
-	var weftColorsString = $('#weftColorAWL').val();
+	var warpColorString = $('#warpColorAWL').val();
+	var weftColorString = $('#weftColorAWL').val();
 	var tieUpString = $('#tieUpAWL').val();
 	var fabricSizeString = $('#fabricSizeInput').val();
 	var tieUpWidthString = $('#tieUpWidthInput').val();
@@ -469,13 +465,76 @@ function currentDraftAsWIF() {
 	wifString += "\n" + AWLPrivateFieldString +"\n";
 	wifString += WIF_ID_WarpPatternAWL   + WIF_ID_Delimiter + warpPatternString + "\n";
 	wifString += WIF_ID_WeftPatternAWL   + WIF_ID_Delimiter + weftPatternString + "\n";
-	wifString += WIF_ID_WarpColorsAWL    + WIF_ID_Delimiter + warpColorsString + "\n";
-	wifString += WIF_ID_WeftColorsAWL    + WIF_ID_Delimiter + weftColorsString + "\n";
+	wifString += WIF_ID_WarpColorsAWL    + WIF_ID_Delimiter + warpColorString + "\n";
+	wifString += WIF_ID_WeftColorsAWL    + WIF_ID_Delimiter + weftColorString + "\n";
 	wifString += WIF_ID_TieUpAWL         + WIF_ID_Delimiter + tieUpString + "\n";
 	wifString += WIF_ID_FabricSizeAWL    + WIF_ID_Delimiter + fabricSizeString + "\n";
 	wifString += WIF_ID_TieUpWidthAWL    + WIF_ID_Delimiter + tieUpWidthString + "\n";
 	wifString += WIF_ID_TieUpHeightAWL    + WIF_ID_Delimiter + tieUpHeightString + "\n";
 	wifString += "\n";
+
+	// now write the more generic version
+	// start with the draft values from the output sections
+
+			var warpPatternOutputString = WarpPatternOutput;
+			var weftPatternOutputString = WeftPatternOutput;
+			var warpColorOutputString = WarpColorOutput;
+			var weftColorOutputString = WeftColorOutput;
+			var tieUpOutputString = TieUpOutput;
+			var fabricSizeOutputString = $('#fabricSizeInput').val();
+			var tieUpWidthOutputString = $('#tieUpWidthInput').val();
+			var tieUpHeightOutputString = $('#tieUpHeightInput').val();
+
+	var warpPatternLength = (WarpPatternOutput.split(' ')).length;
+	var weftPatternLength = (WeftPatternOutput.split(' ')).length;
+
+	wifString += "[TEXT]\n";
+	wifString += "Title="+DraftName+"\n";
+	wifString += "Written by Andrew's Online Loom at http://xxx\n";
+	wifString += "; Creation "+Date()+"\n";
+	wifString += "\n";
+
+	wifString += "[WEAVING]\n";
+	wifString += "Rising Shed=true\n";  // I'm not sure what this is for
+	wifString += "Treadles="+TieUpWidth.toString()+"\n";
+	wifString += "Shafts="+TieUpHeight.toString()+"\n";
+	wifString += "\n";
+
+	wifString += "[WARP]\n";
+	wifString += "Color=0\n";  // why not, give this default color 0
+	wifString += "Threads="+warpPatternLength+"\n";
+	wifString += "\n";
+
+	wifString += "[WEFT]\n";
+	wifString += "Color=1\n";  // why not, give this default color 1
+	wifString += "Threads="+weftPatternLength+"\n";
+	wifString += "\n";
+
+	wifString += "[TIEUP]\n";
+	var tieString = TieUpOutput.split(' ');
+	for (var col=0; col<TieUpWidth; col++) {
+		var firstInRow = true;
+		rowString = "";
+		for (var row=0; row<TieUpHeight; row++) {
+			if (tieString[(col*TieUpHeight)+row] !== '0') {
+				if (!firstInRow) rowString += ",";
+				firstInRow = false;
+				rowString += (row+1);
+			}
+		}
+		if (rowString !== "") {
+			wifString += (col+1)+"="+rowString+"\n";
+		}
+	}
+	wifString += "\n";
+
+
+/*
+	wifString += "[THREADING]\n";
+	wifString += "[COLOR TABLE]\n";
+	wifString += "[TREADLING]\n";
+	wifString += "[COLOR PALETTE]\n";
+*/
 
 	return wifString;
 }
