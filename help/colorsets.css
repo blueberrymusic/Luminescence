@@ -1,5 +1,6 @@
 
 .colorCell { 
+	margin-top: 10px;
 	padding-top: 40px; 
 }
 
@@ -8,3 +9,12 @@
 	font-size: 90%;
 }
 
+.colorRGB {
+	font-size:85%; 
+	float:left;
+}
+
+.colorHex {
+	font-size:85%; 
+	float:right;
+}

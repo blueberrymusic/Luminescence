@@ -1,5 +1,7 @@
 "use strict";
 
+var KeyNameValueRGB, KeyRGBValueName;
+
 function getColorAsRGBString(name) {
 	var nameLC = name.toLowerCase();
 	// is it hex6?
@@ -33,15 +35,6 @@ function getColorAsRGBString(name) {
 	return "rgb("+entry[1]+", "+entry[2]+", "+entry[3]+")";
 }
 
-function getColorEntry(name) {
-		for (var i=0; i<AllColorsRGB.length; i++) {
-			var entry = AllColorsRGB[i];
-			var procLC = entry[0].toLowerCase();
-			if (nameLC === procLC) {
-				return "rgb("+entry[1]+", "+entry[2]+", "+entry[3]+")";
-			}
-		}
-}
 
 // subdivision search 
 // The master list AllColorsRGB must be alphabetically sorted
@@ -76,6 +69,22 @@ function getColorRGBSub(nameLC, leftIndex, rightIndex) {
 		return getColorRGBSub(nameLC, leftIndex, midIndex);
 	} 
 	return getColorRGBSub(nameLC, midIndex, rightIndex);
+}
+
+function buildColorKeyValueLists() {
+	alert("build lists TK");
+	//var KeyNameValueRGB, KeyRGBValueName;
+}
+
+// old utilities
+function getColorEntry(name) {
+		for (var i=0; i<AllColorsRGB.length; i++) {
+			var entry = AllColorsRGB[i];
+			var procLC = entry[0].toLowerCase();
+			if (nameLC === procLC) {
+				return "rgb("+entry[1]+", "+entry[2]+", "+entry[3]+")";
+			}
+		}
 }
 	
 function getColorIndex(name) {

@@ -24,6 +24,7 @@ $(function(){
 	setupRemoveBGPrompts();
 	setupOutputRadioButtons();
 	buildLoadDraftDropdown();
+	buildColorKeyValueLists();
 
 	var defaultName = Presets[0][0];
 	loadDraft(defaultName);

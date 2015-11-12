@@ -117,6 +117,8 @@ void makeBrowseByColor() {
         }
       }
     } while (reachedAhead && (targetIndex < allColors.length));
+    PW.println("<br/><span class=\"colorRGB\">"+thisColor.redval+","+thisColor.grnval+","+thisColor.bluval+"</span>");
+    PW.println("<span class=\"colorHex\">#"+thisColor.hexColor+"</span>");
     PW.println("</p></div>");
     
     targetIndex++;
@@ -150,7 +152,10 @@ void makeBrowseByName() {
      color clr = color(redval, grnval, bluval);
      String hexColor = hex(clr, 6);  // Prints "FFCC00"
     PW.println("<div class=\"col-md-2\"><p class=\"colorCell\" style=\"background-color:#"+hexColor+";\"></p>");
-    PW.print("<p class=\"colorName\" >"+name+"</p></div>");
+    PW.print("<p class=\"colorName\" >"+name);
+    PW.println("<br/><span class=\"colorRGB\">"+redval+","+grnval+","+bluval+"</span>");
+    PW.println("<span class=\"colorHex\">#"+hex(clr, 6)+"</span>");
+    PW.println("</p></div>");
     if (++rowLengthSoFar == 6) {
       rowLengthSoFar = 0;
       PW.println("</div>");
