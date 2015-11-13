@@ -171,7 +171,7 @@ function draftNameInputFunction() {
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// canvas mouse callback setups
+// mouse in Canvas callback for tieup editor
 ///////////////////////////////////////////////////////////////////////////
 
 // if SqSize is too small for a reliable indication, then blink a
@@ -208,10 +208,39 @@ function respondToMouseInCanvas(event) {
 		} else {
 			tieUpWords[entry] = '0';
 		}
-		var newTieUp = tieUpWords.join(' ');	
+		var newTieUp = tieUpStringToBinaryAWL(tieUpWords);
  		$('#tieUpAWL').val(newTieUp);
 		TieUpOutput = AWLtoString('#tieUpAWL');
 		drawCanvas();
 	}
-	
 }
+
+function tieUpStringToBinaryAWL(words) {
+	var lens = [];
+	var lastEntry = words[0];
+	var thisLen = 1;
+	var index = 0;
+	while (index++ < words.length) {
+		if ((words[index] !== '0') && (words[index] !== '1')) continue;
+		if (words[index] !== lastEntry) {
+			lens.push(thisLen);
+			thisLen = 1;
+			lastEntry = words[index];	
+		} else {
+			thisLen++;
+		}
+	}
+	lens.push(thisLen);
+	var newString = "";
+	for (var i=0; i<lens.length; i++) {
+		if (i > 0) newString += ' ';
+		newString += (lens[i].toString());
+	}
+	if (words[0] === '0') {
+		newString += ' b0';
+	} else {
+		newString += ' b1';
+	}
+	return newString;
+}
+

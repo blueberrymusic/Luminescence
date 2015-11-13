@@ -24,16 +24,16 @@ function convertWIFtoJSON(draftName, wifData) {
 	// For a non-AWL file, we only care about the sections 
 	//   WEFT/WARP COLORS, WEFT/WARP, TREADLING, THREADING, TIEUP, COLOR TABLE, WEAVING 
 	// But we search first for AWL entries in a private field
-	if (null != wifData.match(/^\[WIF\]$/i)) {
+	if (null !== wifData.match(/^\[WIF\]$/i)) {
 		showModalAlert("There was a file problem", "This doesn't appear to be a WIF file. It's missing the [WIF] header.");
 		return null;
 	}
 
 	var pvre = new RegExp(AWLPrivateFieldString);
 	var awlFound = wifData.match(pvre);
-	if (null != awlFound) {
+	if (null !== awlFound) {
 		var jsonData = getJSONfromWIFwithAWL(wifData);
-		if (jsonData != null) return jsonData;
+		if (jsonData !== null) return jsonData;
 	}
 	return convertGeneralWIFtoJSON(draftName, wifData);
 }
@@ -65,7 +65,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 	var gotContents = false;
 	for (var i=0; i<sections.length; i++) {
 		var thisSection = sections[i];
-		if (null != thisSection.match(/CONTENTS/i)) {
+		if (null !== thisSection.match(/CONTENTS/i)) {
 			gotContents = true;
 			var lines = thisSection.split(/[\n\r]/);
 			for (var k=0; k<lines.length; k++) {
@@ -146,7 +146,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 		lines = thisSection.split(/[\n\r]/);
 		warpPatternLen = getValueInLines(lines, /Threads/i);
 		var cindex = getValueInLines(lines, /color/i);
-		if (cindex != null) warpDefaultColorIndex= parseInt(cindex[0])-1;
+		if (cindex !== null) warpDefaultColorIndex= parseInt(cindex[0])-1;
 	}
 
 	if (gotWeft) {
@@ -155,7 +155,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 		lines = thisSection.split(/[\n\r]/);
 		weftPatternLen = getValueInLines(lines, /Threads/i);
 		var cindex = getValueInLines(lines, /color/i);
-		if (cindex != null) weftDefaultColorIndex= parseInt(cindex[0])-1;
+		if (cindex !== null) weftDefaultColorIndex= parseInt(cindex[0])-1;
 	}
  	
 	if (gotThreading) {
@@ -165,10 +165,10 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 		var warpPattern = [];
 		for (var i=0; i<warpPatternLen; i++) warpPattern[i] = -1;
 		for (var i=0; i<lines.length; i++) {
-			if (lines[i].match(/=/) != null) {
+			if (lines[i].match(/=/) !== null) {
 				var w = lines[i].split('=');
 				var val = w[1];
-				if (w[1].match(/,/) != null) {
+				if (w[1].match(/,/) !== null) {
 					var splitw1 = w[1].split(',');
 					val = splitw1[0];
 				}
@@ -187,10 +187,10 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 		var weftPattern = [];
 		for (var i=0; i<weftPatternLen; i++) weftPattern[i] = -1;
 		for (var i=0; i<lines.length; i++) {
-			if (lines[i].match(/=/) != null) {
+			if (lines[i].match(/=/) !== null) {
 				var w = lines[i].split('=');
 				var val = w[1];
-				if (w[1].match(/,/) != null) {
+				if (w[1].match(/,/) !== null) {
 					var splitw1 = w[1].split(',');
 					val = splitw1[0];
 				}
@@ -221,7 +221,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 		lines = thisSection.split(/[\n\r]/);
 		for (var i=0; i<numColors; i++) colorList[i] = [0, 0, 0];
 		for (var i=0; i<lines.length; i++) {
-			if (lines[i].match(/=/) != null) {
+			if (lines[i].match(/=/) !== null) {
 				var w = lines[i].split('=');
 				var cindex = parseInt(w[0]);
 				var rgbArray = w[1].split(',');
@@ -258,7 +258,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 		thisSection  = getSection(sections, /TIEUP\]/i);
 		lines = thisSection.split(/[\n\r]/);
 		for (var i=0; i<lines.length; i++) {
-			if (lines[i].match(/=/) != null) {
+			if (lines[i].match(/=/) !== null) {
 				var w = lines[i].split('=');
 				var col = parseInt(w[0])-1;
 				var indices = w[1].split(',');
@@ -290,21 +290,21 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 }
 
 function lineHastrueRE(line, re) {
-	return ((null != line.match(re)) && (null != line.match(/true/i)));
+	return ((null !== line.match(re)) && (null !== line.match(/true/i)));
 }
 
 function getSection(sections, re) {
 	for (var i=0; i<sections.length; i++) {
 		var thisSection = sections[i];
-		if (null != thisSection.match(/CONTENTS/i)) continue;
-		if (null != thisSection.match(re)) return thisSection;
+		if (null !== thisSection.match(/CONTENTS/i)) continue;
+		if (null !== thisSection.match(re)) return thisSection;
 	}
 	return null;
 }
 
 function getValueInLines(lines, re) {
 	for (var i=0; i<lines.length; i++) {
-		if (null != lines[i].match(re)) {
+		if (null !== lines[i].match(re)) {
 			var sp = lines[i].split('=');
 			return sp[1];
 		}
@@ -316,7 +316,7 @@ function getColorString(thisSection, indices, defaultColorIndex, colorList) {
 	lines = thisSection.split(/[\n\r]/);
 	var maxIndex = 0;
 	for (var i=0; i<lines.length; i++) {
-		if (lines[i].match(/=/) != null) {
+		if (lines[i].match(/=/) !== null) {
 			var w = lines[i].split('=');
 			var index = parseInt(w[0])-1;
 			if (index > maxIndex) maxIndex = index;
@@ -337,7 +337,8 @@ function getColorString(thisSection, indices, defaultColorIndex, colorList) {
 	var index = 0;
 	while (index++ < maxIndex) {
 		var thisColorIndex = indices[index];
-		if (thisColorIndex != lastColorIndex) {
+		if (thisColorIndex === ' ') continue;
+		if (thisColorIndex !== lastColorIndex) {
 			clrs.push(lastColorIndex);
 			lens.push(thisLen);
 			thisLen = 1;
@@ -375,7 +376,7 @@ function getJSONfromWIFwithAWL(wifData) {
 	var sections = wifData.split('[');
 	for (var i=0; i<sections.length; i++) {
 		var thisSection = sections[i];
-		if (null != thisSection.match(pvre)) {
+		if (null !== thisSection.match(pvre)) {
 			gotContents = true;
 			var lines = thisSection.split(/[\n\r]/);
 			var warpPatternString = getPrivateFieldFromWIF(WIF_ID_WarpPatternAWL, lines);
@@ -387,10 +388,10 @@ function getJSONfromWIFwithAWL(wifData) {
 			var tieUpWidthString = getPrivateFieldFromWIF(WIF_ID_TieUpWidthAWL, lines);
 			var tieUpHeightString = getPrivateFieldFromWIF(WIF_ID_TieUpHeightAWL, lines);
 
-			if ((warpPatternString == null) || (weftPatternString == null) ||
-			    (warpColorString == null) || (weftColorString == null) ||
-             (tieUpString == null) || (fabricSizeString == null) ||
-             (tieUpWidthString == null) || (tieUpHeightString == null)) {
+			if ((warpPatternString === null) || (weftPatternString === null) ||
+			    (warpColorString === null) || (weftColorString === null) ||
+             (tieUpString === null) || (fabricSizeString === null) ||
+             (tieUpWidthString === null) || (tieUpHeightString === null)) {
 				return null;
 			}
 
@@ -416,7 +417,6 @@ function getPrivateFieldFromWIF(awlString, lines) {
 		var line = lines[k];
 	 	if (line.match(pvre)) {
 			var words = line.split(WIF_ID_Delimiter);
-			var kk = 5;
 			return words[1];
 		}
 	}
