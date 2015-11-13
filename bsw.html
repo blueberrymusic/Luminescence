@@ -70,7 +70,7 @@
 				</div> <!-- row -->
 
 				<div class="row">
-					<div class="col-sm-9">
+					<div class="col-sm-12">
 
 
 <div class="btn-group" id="loadDraftButtonGroup">
@@ -93,11 +93,7 @@
 
 
 
-					</div> <!-- column 9 -->
-					<div class="col-sm-3">
-						<!-- <button type="button" class="btn btn-block btn-default" id="deleteButton" onclick="deleteButtonFunction()">Delete</button> -->
-						<button type="button" class="btn btn-block btn-default" id="deleteButton" onclick="showDeleteConfirmationModal()">Delete</button> 
-					</div> <!-- column 3 -->
+					</div> <!-- column 12 -->
 				</div> <!-- row -->
 			</div> <!-- column 6 -->
 
@@ -268,35 +264,9 @@
 		</div> <!-- row -->
 	</div> <!-- container -->
 
-<!-- modal popup to confirm delete
-I'd sure like to use one of the dialog libraries which make this much
-easier (like Bootbox.js) but I don't like adding dependencies that might
-later break... and then I have to figure out what to do. So, stick with
-core Bootstrap and include all the junk.
+<-- I had a modal yes-no confirmation box here for the delete button. Example code at
 http://www.codeproject.com/Tips/891309/Custom-Confirmation-Box-using-Bootstrap-Modal-Dial
 -->
-<div id="modalConfirmYesNo" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" 
-                class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 id="lblTitleConfirmYesNo" class="modal-title">Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                <p id="lblMsgConfirmYesNo"></p>
-            </div>
-            <div class="modal-footer">
-                <button id="btnYesConfirmYesNo" 
-                type="button" class="btn btn-primary">Yes</button>
-                <button id="btnNoConfirmYesNo" 
-                type="button" class="btn btn-default">No</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- OK-only modal from http://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
 <div id="modalOK" class="modal fade" show="false" role="dialog">

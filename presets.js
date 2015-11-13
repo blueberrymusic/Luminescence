@@ -102,7 +102,7 @@ var RawPresets = [
 [ "Nude Descending A Fabric",
 "0 / 7 - 1 1 2 3 6 5 3 2 # 0 4 :",
 "0 / 7 - 1 1 1 1 2 3 4 3 # 0 4 :",
-"black white", "white black",
+"white black", "black white", 
 "0 0 0 1 1 1 1 0 / 1 / 8 t<<",
 220, 8, 8],
 
