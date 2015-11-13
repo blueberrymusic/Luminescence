@@ -1,7 +1,7 @@
 /*
-
-// lots of great examples at http://www.weavezine.com/content/flowing-curves-network-drafted-twill.html
+// lots of great drafts at http://www.weavezine.com/content/flowing-curves-network-drafted-twill.html
 */
+
 AWLPrivateFieldString =  "[PRIVATE AWLOnline InputFields]";
 
 var WIF_ID_WarpPatternAWL = "WarpPatternAWL";
@@ -14,7 +14,6 @@ var WIF_ID_TieUpWidthAWL =  "TieUpWidthAWL";
 var WIF_ID_TieUpHeightAWL =  "TieUpHeightAWL";
 
 var WIF_ID_Delimiter = " ==== ";
-
 
 ///////////////////////////////////////////////////
 // Reading WIF 
@@ -478,15 +477,6 @@ function currentDraftAsWIF() {
 	// now write the more generic version
 	// start with the draft values from the output sections
 
-			var warpPatternOutputString = WarpPatternOutput;
-			var weftPatternOutputString = WeftPatternOutput;
-			var warpColorOutputString = WarpColorOutput;
-			var weftColorOutputString = WeftColorOutput;
-			var tieUpOutputString = TieUpOutput;
-			var fabricSizeOutputString = $('#fabricSizeInput').val();
-			var tieUpWidthOutputString = $('#tieUpWidthInput').val();
-			var tieUpHeightOutputString = $('#tieUpHeightInput').val();
-
 	var warpPatternLength = (WarpPatternOutput.split(' ')).length;
 	var weftPatternLength = (WeftPatternOutput.split(' ')).length;
 
@@ -545,27 +535,71 @@ function currentDraftAsWIF() {
 	wifString += "\n";
 
 	//
+	// The colors take some work, because we have to identify 
+	// all the unique colors in such a way that we can match
+	// them up to numbers starting at 0. So I use an associative
+	// array with the color name as the key, and the number
+	// for the value.
+	//
 	// First we'll build up the color palette. Run through the
 	// two color outputs and make a key/value list from all the
 	// rgb values that are used. Then use that list to write
 	// out the color palette, then the table, then the colors
-	var keyRGBvalueIndex = {};
+	//
+	var keyRGBValueIndex = {};
 	var pairLength = 0;
 	var allColors = WarpColorOutput+" "+WeftColorOutput;
 	var allColorsWords = allColors.split(' ');
 	for (var i=0; i<allColorsWords.length; i++) {
 		var rgbString = getColorAsRGBString(allColorsWords[i]); // comes back rgb(r,g,b)
-		if (!(rgbString in keyRGBvalueIndex)) {
-			keyRGBvalueIndex[rgbString] = pairLength++;
+		if (!(rgbString in keyRGBValueIndex)) {
+			keyRGBValueIndex[rgbString] = pairLength++;
 		}
 	}
-	var f = 5;
-/*
-	wifString += "[COLOR TABLE]\n";
+
 	wifString += "[COLOR PALETTE]\n";
+	wifString += "Range=0,255\n";
+	wifString += "Entries="+(pairLength.toString())+"\n";
+	wifString += "\n";
+
+	wifString += "[COLOR TABLE]\n";
+	for (var i=0; i<pairLength; i++) {
+		for (var k in keyRGBValueIndex) {
+			if (keyRGBValueIndex[k] === i) {
+				var thisKey = k;
+				var rgbRE = /rgb.(\d+), *(\d+), *(\d+).*/
+				var match = rgbRE.exec(thisKey);
+				var rval = match[1];
+				var gval = match[2];
+				var bval = match[3];
+				wifString += ((i+1).toString())+"="+rval+","+gval+","+bval+"\n";
+			}
+		}
+	}
+	wifString += "\n";
+
 	wifString += "[WARP COLORS]\n";
-	wifString += "[WEFT COLORS]\n";
-*/
+	var warpWords = WarpColorOutput.split(' ');
+	for (var i=0; i<warpWords.length; i++) {
+		var rgbString = getColorAsRGBString(warpWords[i]); // comes back rgb(r,g,b)
+		var rgbVal = keyRGBValueIndex[rgbString];
+	 	wifString += ((i+1).toString())+"="+((parseInt(rgbVal)+1).toString())+"\n";
+	 	var aaa =  ((i+1).toString())+"="+((parseInt(rgbVal)+1).toString())+"\n";
+		var b = 3;
+	}
+	wifString += "\n";
+
+	wifString += "[WARP COLORS]\n";
+	var weftWords = WeftColorOutput.split(' ');
+	for (var i=0; i<weftWords.length; i++) {
+		var rgbString = getColorAsRGBString(weftWords[i]); // comes back rgb(r,g,b)
+		var rgbVal = keyRGBValueIndex[rgbString];
+	 	wifString += ((i+1).toString())+"="+((parseInt(rgbVal)+1).toString())+"\n";
+	 	var aaa =  ((i+1).toString())+"="+((parseInt(rgbVal)+1).toString())+"\n";
+		var b = 3;
+	}
+	wifString += "\n";
 
 	return wifString;
 }
+
