@@ -67,21 +67,12 @@
 	background-color: #cccccc;
 }
 
-#deleteButton {
-	margin: 10px 30px 0px 0px;  // TRBL
-	width: 100px;
-	height: 40px;
-	font-size: 130%;
-	//border: 1px;
-	//border-style: solid;
-	//border-color: #999999;
-	//background-image:none; 
-	//background-color: #dddddd;
-}
-
-#deleteButton:hover  { 
-	//background-image:none; 
-	background-color: #cccccc;
+// thanks Stack overflow question 19227496
+// demo in http://www.bootply.com/86116
+.scrollable-menu {
+	height: auto;
+	max-height: 700px;
+	overflow-x: hidden;
 }
 
 #saveAsSpan {
