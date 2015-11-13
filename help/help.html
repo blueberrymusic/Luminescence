@@ -47,7 +47,7 @@ This is a quick-start guide to my online
 <p>
 Here are shortcuts to the
 <a href="#commands">AWL commands summary</a>
-and the <a href="TK">AWL command descriptions</a>.
+and the extensive <a href="AWLReference" target="_blank">AWL Reference</a>.
 
 </p>
 
@@ -1714,61 +1714,93 @@ using almost any image editing program.
 <h4>Saving and Loading The Draft</h4>
 
 <p>
+Because of how browsers are written,
+you cannot save and load your drafts to your
+local hard drive
+(saving the image of your fabric uses a
+special exemption for images).
+So you need to use some kind of remote
+file system, usually called <em>the cloud</em>.
+Since all cloud services are different,
+I can't support them all.
+I chose to support a popular cloud service
+called <a href="https://db.tt/TeyvYvem" target="_blank">Dropbox</a>.
+They have a great reputation for privacy and reliability,
+and they offer you 3GB of storage for free.
+They stay in business by selling you more space than
+that if you need it.
+If you don't have Dropbox yet, 
+click on
+<a href="https://db.tt/TeyvYvem" target="_blank">this link</a>
+to sign up for a free account
+(disclaimer: by using the link, rather than going to
+Dropbox directly, they give me some more storage.
+I use that space to develop apps like this.
+But you can go straight to 
+<a href="https://www.dropbox.com" target="blank">Dropbox</a> 
+if you prefer to bypass my link).
+</p>
+<p>
+If you're not logged into Dropbox,
+you'll be prompted to sign in
+when you try to load or save a file.
+The first time you use the program,
+it will ask for permission to read and write
+files to a special folder in your Dropbox
+set aside for this app.
+This is perfectly safe. 
+Your password and all of your files are yours
+and yours alone, and I never see any of it.
+I don't even have a way of knowing if you've
+done this! It's just so Dropbox knows that
+this is something you've meant to do.
+When you approve this,
+Dropbox will create a folder for you in
+your Dropbox account called 
+<code>Apps/AndrewsOnlineLoom</code>,
+and all of your files will be placed there.
+Note that if you want to share one of those
+files, you'll want to copy it into the
+<code>Public</code> part of your Dropbox,
+as usual.
+</p>
+<p>
 To save your draft,
 give it a name by typing
 in the text box at the very 
 top of the window,
 and then press the <strong>Save</strong> button.
+You don't have to give it an extension;
+the program will automatically add <code>.wif</code>
+for you if it's not there.
+WIF is the standard format that weaving
+programs use to describe a draft
+(you can find out more in the FAQ below).
 </p>
 <p>
-Note that you will <em>not</em> get a file
-dialog box!
-So where does your draft go?
-It goes into some private storage that's controlled
-by the browser.
-The downsides of this technique are that this storage
-is per-browser,
-so for exmaple if you use the program in Firefox and 
-save a bunch of drafts,
-they'll be visible to Firefox,
-but not to Chrome or Safari.
-Each of these browsers will have its own private
-collection of drafts, and you can't share them
-between browsers or even with other people.
-I know this is pretty lousy,
-but all browsers are
-<em>deliberately</em> prevented from talking to
-your computer's local disk.
-So this is the best solution I could come up with.
-See the FAQ for more technical details.
-<p>
-
-
-<p>
-To load a draft, click on the <strong>Load Draft:</strong>
-button.
-You'll see a list with two parts.
-The top part lists all of the drafts you've saved using
-this browser (the list will vary for each browser,
-as discussed above).
-Under that, you'll see a list about 25 presets,
-or demos.
+To load a draft, just choose
+<strong>Load Draft</strong>.
+You'll get a drop-down list with two parts.
+At the top are all the .wif files in your
+Dropbox (or an invitation to log in if you
+haven't done so already).
+Below that is a list of <em>presets</em>,
+or drafts that I've made for you as
+examples.
+You can't modify or save the presets,
+but you can change them and save your own
+copies in your Dropbox.
 </p>
-
 <p>
-Finally, you can delete a draft from your local
-storage by choosing it with the <strong>Load Draft:</strong>
-button (or just typing its name into the draft name box)
-and then pressing the <strong>Delete</strong> button.
-</p>
-
-<p>
-Note that you can save new copies of the built-in presets,
-using even the very same names.
-The system always looks for your personal drafts before
-it looks at the presets, so if you use the same name as a
-preset you'll always get your version.
-You can't delete the presets.
+If you want to change the names of
+your .wif files, copy or delete them,
+or do anything else with them,
+just use your normal file-system
+browser to view the contents of
+<code>Dropbox/Apps/AndrewsOnlineLoom</code>,
+probably located in your home directory.
+You can even read the .wif files if you
+like; they're just plain text.
 </p>
 
 
@@ -1779,7 +1811,7 @@ You can't delete the presets.
 <p>
 The table is just a quick reference.
 A more detailed description of each
-command can be found <a href="TK" target="_blank">here</a>.
+command can be found <a href="AWLReference.html" target="_blank">here</a>.
 </p>
 <p>
 If you prefer to learn by experimenting,
@@ -1787,125 +1819,78 @@ go for it!
 Just type in stuff and see what comes out.
 </p>
 
-<h3>How do I save my fabric and draft?</strong></h3>
+<h3>What if I don't want to use Dropbox?</h3>
 <p>
-See the section on
-<a href='#savingAndLoading'>Saving and Loading</a> above.
-
+No problem. The online loom will still run fine.
+You can even load the presets,
+and you can save your fabric images.
+But you won't be able to load and save
+your drafts, nor import the drafts from
+other people or those published in books
+or available online.
+</p>
+<p>
+I wish I could support all cloud services,
+but each one requires me to write special 
+programming to talk to it, and for some 
+services that can get very complicated.
+I picked Dropbox because they're reliable
+and take privacy seriously, and they offer
+a lot of free storage (3GB is <em>huge</em>;
+you can store over a half-million typical
+.wif files in that much space!).
+</p>
+<p>
+If you really love another service, 
+you can use that for your everyday work,
+and just drag your .wif files into and out
+of your Dropbox and into your other service
+when you want them there.
+</p>
+<p>
+If you want to save your drafts but you
+really don't want to go anywhere near Dropbox,
+you can always take a screenshot of the 
+program, and then type everything back in
+from there to re-load the draft.
 </p>
 <h3>How do I share my drafts?</strong></h3>
 <p>
-Given the limitations of browsers,
-you have two options:
-a screenshot or a text file.
-</p>
-<p>
-<strong>A screenshot:</strong> 
-This is the easiest way to go. When you have a
-draft that you like, 
-just take a picture of your screen
-(every operating system has a free, built-in way
-to do this;
-search online if you're not sure how).
-This will capture your screen's image in a picture on 
-your hard drive that you can treat just like any other photo,
-so you can email it or archive it or post it to social media.
-For you or someone else to load your draft,
-just open up the photo in its own window,
-read what's in the AWL input boxes,
-and type that into the AWL input boxes in 
-the Digital Loom
-(because it's a photo, you can't copy and paste the text).
-</p>
-<p>
-<strong>A text file:</strong> 
-Open up a blank document in your
-favorite text editor,
-copy the following eight lines,
-and paste them into your document.
-It wouldn't hurt to enter a few blank lines
-after each of these.
+The .wif files are just plain text files.
+Just share them as you'd share any text file!
 </p>
 
-<ul>
-<li>Warp Pattern:</li>
-<li>Weft Pattern:</li>
-<li>Warp Colors:</li>
-<li>Weft Colors:</li>
-<li>Tie-Up:</li>
-<li>Fabric Size:</li>
-<li>Tie-up Width:</li>
-<li>Tie-up Height:</li>
-</ul>
-
+<h3>What's this WIF format all about?</h3>
 <p>
-Now one by one,
-click in each input field in the browser,
-select all the text (that is, your AWL expression),
-copy it,
-and paste it into your text document.
-When you're done,
-type in the values for your fabric and tie-up sizes.
-The result is a text file you can save, email, copy, etc.
+It's a format designed in 1997 by a group of
+authors of weaving software so that their
+users could share their drafts.
+It's simply a set of rules for how to 
+write your draft into a plain-text file.
+You can find the specification
+<a href="http://www.mhsoft.com/wif/wif1-1.txt" target="_blank">here</a>.
 </p>
 <p>
-To restore your draft from one of these files,
-reverse the process:
-copy the text out of the document and paste it into
-each input box,
-then enter the values for the fabric and tie-up sizes.
-Be sure to press the big arrow for each input
-box once you're entered your new stuff.
-</p>
-<p>
-The text file method is slower to make
-than the screenshot,
-but it's much easier to load the AWL back in,
-and you won't risk making mistakes while
-transcribing the picture.
+My loom writes simple WIF files that omit
+a lot of optional stuff,
+like thread spacing and thread thickness.
+If you're reading a WIF file with that
+information in it, my program just ignores that stuff
+(which means it isn't included if you later
+save the file to the same or a different name).
 </p>
 
-<h3>Why is all this file stuff so awkward?</h3>
+<h3>I found a draft where there are lots of black squares
+in the warp columns and weft rows. What gives?</h3>
 <p>
-It's because browsers are deliberately designed to
-be unable to read and write files to your computer's
-local hard drives.
-This restriction is actually a fabulously good idea,
-and it is largely responsible for allowing the web
-to become what it is today.
-But it does mean that we can't save and load
-files the way any of your installed programs can.
+I am not a weaving expert,
+but my understanding is that those drafts are
+for varieties of looms that don't have tie-ups.
+I don't support those kinds of drafts;
+if you try to read them in you'll find that I
+ignore all but the first marked column or
+row in the warp and weft.
 </p>
-<p>
-To save and load drafts I'm using a tiny bit of
-built-in storage that the browser provides
-for each web page,
-sort of like cookies.
-But that storage isn't organized as files,
-so we can't control it with the standard load and
-save dialogs you're used to
-(for the technically minded,
-I'm using the LocalStorage API).
-But I wanted you to feel like you were saving
-and loading little files with your drafts in them.
-So I've written code to fake all of that,
-and a user interface that I hope makes it feel
-like you're reading, writing, and deleting those
-files.
-It's weird because it's all a fake
-built on a very different underlying technology.
-</p>
-
-<h3>Can I save my draft in the WIF weaving-file format?</h3>
-<p>
-Oh, how I wish the answer was "yes", but it's not. In fact, I have written all
-the code to support reading and writing 
-<a href="http://www.mhsoft.com/wif/wif.html" target="_blank">WIF files</a>.
-But it's useless 
-because browsers are forbidden from writing files to your
-local file system. 
-If and when that changes,
-I'll very happily provide .WIF reading and writing support.
 
 <h3>Why am I getting a really weird error when my AWL looks fine?</h3>
 <p>
@@ -1942,24 +1927,19 @@ It's been designed for one thing only: to help you make cool patterns of numbers
 and colors that are useful in weaving. You don't need variables, loops, and all that
 stuff to do that.
 If you find yourself wanting to use all of those tools to make your expressions,
+or you want to use arithmetic or even math operators,
 your best bet is to fire up your favorite language and write programs in it.
-The output should be either a big list of numbers or colors,
-which you can just copy and paste into the appropriate input box.
-Hit the arrow and it will simply copy over into the output box.
-Or, if you're feeling fancy, you can use your program to write AWL expressions
-that you copy and paste the same way.
-</p>
-
-<h3>AWL still seems pretty weak. You don't even have addition or subtraction!</h3>
-<p>
-AWL was designed to make patterns,
-not to calculate with numbers.
-If you find yourself really needing addition and subtraction,
-you can fake them with the <code>template</code> command.
+The easiest output would be a big list of numbers or colors,
+which you can just copy and paste into the appropriate input boxes.
+If you're feeling fancy, you can use your program to write AWL expressions.
+If you're really ambitious, you can write .wif files directly;
+see the question above for a link to the format specification.
 </p>
 
 <h3>Hey! You crashed my browser!</h3>
 <p>Sorry! 
+This probably happened after you pressed one of the arrows
+to turn your AWL into a pattern for the loom.
 The truth is that there are a lot of ways that things can go
 wrong when we turn your AWL into a pattern.
 I've tried to catch all of them,
@@ -2034,12 +2014,16 @@ tartan drafts can be found at the
 <p>
 There are a variety of commercial and public-domain programs
 available to weavers.
-My Online Loom was designed to complement,
+My Online Loom is mainly intended to help you create
+cool patterns with AWL.
+It wasn't meant to model the rich diversity and complexity
+of real looms.
+In other words, the Online Loom was designed to complement,
 not replace,
-these feature-rich, dedicated programs
+these feature-rich, dedicated programs,
 written by and for serious weavers.
 If you find that you're enjoying working with the Online Loom,
-you might want to consider graduating to a commercial product.
+you might want to consider trying a commercial product.
 Here are the weaving systems that I know of now.
 If I'm missing your favorite, let me know!
 I'm sorry that I can't offer any buying advice;
@@ -2055,12 +2039,13 @@ In alphabetical order, they are
 <li><a href="http://www.weavepoint.com" target="_blank">WeavePoint</a></li>
 </ul>
 <p>
-My weaving language AWL was strongly inspired by
+My weaving language AWL was inspired by
 the weaving language provided in the very first release
 of the commercial artist's program 
-<a href="http://www.painterartist.com/us/product/paint-program/" target="_blank">Painter</a>,
-online and offline references on weaving,
-and monographs by Ralph Griswold, mentioned above.
+<a href="http://www.painterartist.com/us/product/paint-program/" target="_blank">Painter</a>.
+I've extended that language significantly,
+inspired by online and offline references on weaving.
+Of particular value were monographs by Ralph Griswold, mentioned above.
 For instance,
 the <code>growblock</code> operator is based on Griswold's
 paper, "Variations On A Shadow Weave."
@@ -2089,20 +2074,21 @@ expanded and revised them,
 and assembled them into the book
 <a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs, 
 Mallards, and Montages</a>.
+Please note that several of the AWL operators in the Online Loom 
+are a bit changed from the descriptions in those references,
+and several new ones have been added.
+Full details are availabe
+in the <a href="AWLReference" target="_blank">AWL Reference</a>.
 </p>
 <p>
-For this project,
-I've re-written everything in Javascript,
-expanded the AWL language,
-fixed some bugs and added some new operators,
-signficantly improved the efficiency of interpreting
-AWL expressions and drawing the results,
-added some new user controls and other niceties,
-and greatly expanded the set of named colors.
+The Online Loom was written from scratch in standard Javascript,
+with just a bit of jQuery.
 I used the 
 <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3.3</a>
-framework to help make responsive pages.
-All the code in this project is open source.
+framework to help make responsive pages,
+and the 
+<a href="https://github.com/dropbox/dropbox-js" target="_blank">dropbox.js</a>
+API for reading and writing to Dropbox.
 </p>
 
 <div style="margin-bottom:50px;"></div>
