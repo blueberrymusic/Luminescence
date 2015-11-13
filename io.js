@@ -74,7 +74,6 @@ function loadDraft(draftName) {
 		if (name === draftName) {
 			jsonData = psi[1]; 
 			foundIt = true;
-			//alert("found "+draftName+" in the presets");
 			loadDraftFromJSON(draftName, jsonData);
 		}
 	}
@@ -119,7 +118,7 @@ function loadDraftFromJSON(draftName, jsonData) {
 			TieUpHeight = Number(value);
 			$('#tieUpHeightInput').val(TieUpHeight);
 		} else {
-			alert("Reading draft "+draftName+" I found an unknown field named ["+fieldName+"]");
+			showModalAlert("There was a problem loading your draft", "Reading draft "+draftName+" I found an unknown field named ["+fieldName+"]");
 			return;
 		}
 	}
@@ -140,7 +139,7 @@ function loadDraftFromJSON(draftName, jsonData) {
 function saveButtonFunction() {
 
 	if (DraftName === "") {
-		alert("Please provide a name for the draft, then try saving again");
+		showModalAlert("I need a name for the file", "Please provide a name for the draft, then try saving again");
 		return;
 	}
 	var suffixes = /.wif$/;
@@ -157,6 +156,16 @@ function saveButtonFunction() {
 function wroteDropboxFile(fileName) {
 	//alert("wrote "+fileName+" to dropbox");
 	buildLoadDraftDropdown(); // rebuild the drop-down to include this new entry
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Display the modal alert with just the OK button
+///////////////////////////////////////////////////////////////////////////
+
+function showModalAlert(title, contents) {
+	$('#modalOK').modal('show'); 
+	$('#modalOKBoxTitle').html(title);
+	$('#modalOKBoxText').html(contents);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -195,40 +204,38 @@ function authorizeDropBox() {
 }
 
 var showDropboxError = function(error) {
-	$('#modalOK').modal('show'); 
-	$('#modalOKBoxTitle').html("There was a Dropbox problem")
 	switch (error.status) {
 		case Dropbox.ApiError.INVALID_TOKEN:
 		// If you're using dropbox.js, the only cause behind this error is that
 		// the user token expired.
 		// Get the user through the authentication flow again.
 		DropboxClient = null;
-		$('#modalOKBoxText').html("I'm sorry, but you're not currently logged into Dropbox. Please choose this list again and log in again.");
+		showModalAlert("There was a Dropbox problem", "I'm sorry, but you're not currently logged into Dropbox. Please choose this list again and log in again.");
 		break;
 		
 		case Dropbox.ApiError.NOT_FOUND:
 		// The file or folder you tried to access is not in the user's Dropbox.
 		// Handling this error is specific to your application.
-		$('#modalOKBoxText').html("I'm sorry, but I couldn't find your file on your Dropbox. Please check that it's really there, or pick a different file.")
+		showModalAlert("There was a Dropbox problem", "I'm sorry, but I couldn't find your file on your Dropbox. Please check that it's really there, or pick a different file.")
 		break;
 		
 		case Dropbox.ApiError.OVER_QUOTA:
 		// The user is over their Dropbox quota.
 		// Tell them their Dropbox is full. Refreshing the page won't help.
-		$('#modalOKBoxText').html("I'm sorry, but you're out of space on your Dropbox. You can either buy more, or free up some space by deleting files you no longer need.");
+		showModalAlert("There was a Dropbox problem", "I'm sorry, but you're out of space on your Dropbox. You can either buy more, or free up some space by deleting files you no longer need.");
 		break;
 		
 		case Dropbox.ApiError.RATE_LIMITED:
 		// Too many API requests. Tell the user to try again later.
 		// Long-term, optimize your code to use fewer API calls.
-		$('#modalOKBoxText').html("I'm sorry, but Dropbox is busy. Please wait a moment and try again.");
+		showModalAlert("There was a Dropbox problem", "I'm sorry, but Dropbox is busy. Please wait a moment and try again.");
 		break;
 		
 		case Dropbox.ApiError.NETWORK_ERROR:
 		// An error occurred at the XMLHttpRequest layer.
 		// Most likely, the user's network connection is down.
 		// API calls will not succeed until the user gets back online.
-		$('#modalOKBoxText').html("I'm sorry, but I can't reach Dropbox. Either Dropbox or the network is down.");
+		showModalAlert("There was a Dropbox problem", "I'm sorry, but I can't reach Dropbox. Either Dropbox or the network is down.");
 		break;
 		
 		case Dropbox.ApiError.INVALID_PARAM:
@@ -238,7 +245,7 @@ var showDropboxError = function(error) {
 		// Caused by a bug in dropbox.js, in your application, or in Dropbox.
 		// Tell the user an error occurred, ask them to refresh the page.
 		DropboxClient = null;
-		$('#modalOKBoxText').html("I'm sorry, but there was a Dropbox-related error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
+		showModalAlert("There was a Dropbox problem", "I'm sorry, but there was a Dropbox-related error I can't handle. Please refresh the page and try again. If you're saving a draft, you might want to take a screenshot before you refresh, so you can type your draft back in again after refreshing.");
 	}
 };
 

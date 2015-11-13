@@ -25,7 +25,7 @@ function convertWIFtoJSON(draftName, wifData) {
 	//   WEFT/WARP COLORS, WEFT/WARP, TREADLING, THREADING, TIEUP, COLOR TABLE, WEAVING 
 	// But we search first for AWL entries in a private field
 	if (null != wifData.match(/^\[WIF\]$/i)) {
-		alert("This doesn't appear to be a WIF file. It's missing the [WIF] header.");
+		showModalAlert("There was a file problem", "This doesn't appear to be a WIF file. It's missing the [WIF] header.");
 		return null;
 	}
 
@@ -83,7 +83,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 		}
 	}
 	if (!gotContents) {
-		alert("This WIF file is missing the mandatory CONTENTS section, so I can't read it.");
+		showModalAlert("There was a file problem", "This file seems to be in WIF format, but it's missing the mandatory [CONTENTS] section, so I can't read it.");
 		return null;
 	}
 
