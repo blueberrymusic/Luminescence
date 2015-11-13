@@ -37,18 +37,12 @@
 			<div class="col-md-10 col-md-offset-1">
 
 				<div class="page-header">
-<h1>Andrew's Digital Loom Help <small>Improved and Online!</small> </h1>
+<h1>Andrew's Digital Loom Help </h1>
 
 
 <p>
 This is a quick-start guide to my online
 <a href="http://www.TK">Digital Loom</a>.
-</p>
-<p>
-Here are shortcuts to the
-<a href="#commands">AWL commands summary</a>
-and the extensive <a href="AWLReference" target="_blank">AWL Reference</a>.
-
 </p>
 
 <p>
@@ -67,18 +61,33 @@ take a look at the
 section.
 </p>
 
+<h2>Quick Shortcuts</h2>
+
+<ul>
+<li><a href="#commands">AWL commands summary</a></li>
+<li><a href="AWLReference.html" target="_blank">Full AWL Reference</a></li>
+<li><a href="BrowseColorsByName.html" target="_blank">Colors by Name</a></li>
+<li><a href="BrowseColorsByHue.html" target="_blank">Colors by Color</a></li>
+</ul>
+
+
+
 <p><a name='quickStart'></a></p>
 <h2>Super-Quick Start</h2>
 <p>
 Click on the <em>Load Draft</em> button
 near the top-middle of the screen and 
 take a look at the built-in presets.
-Don't bother clicking on the grids or
-the fabric on the right,
-because they're not interactive.
-Instead, you can change the fabric size
-using the text box above the fabric,
-or change the pattern of the fabric
+You can click in the little checkerboard
+to the upper-right of the woven fabric,
+but no other graphics on the right side will
+respond to clicks
+(if you get a red square when you try to
+click in the checkerboard, then it's too
+small for interaction - choose a smaller
+number for <em>Fabric size</em> in the box
+just above the fabric itself).
+You can also change the design of the fabric
 by altering what's in any of the five text boxes
 on the left (and then pressing the arrow
 to that box's right).
@@ -87,8 +96,9 @@ guess at some reasonable color names for now),
 and try fiddling with some of the numbers.
 For now, keep all of your numbers in the range 0 to 7,
 but you'll probably still get crazy results!
-In the sections below you'll come to know
-everything that's going on here.
+The text in those boxes uses a custom
+pattern-making language that probably looks
+cryptic to you now, but will soon become second nature.
 </p>
 
 
@@ -99,7 +109,7 @@ everything that's going on here.
 <li><a href="#toc">Table of Contents</a></li>
 <li><a href="#overview">Overview of The Digital Loom</a></li>
 <li><a href="#rightSide">The Right Side: The Draft</a></li>
-<li><a href="#bridge">The Bridge: Patterns</a></li>
+<li><a href="#patterns">From Input to Loom: Patterns</a></li>
 <li><a href="#leftSide">The Left Side: AWL Input (and Output)</a></li>
 <li><a href="#colors">Colors</a></li>
 <li><a href="#makingPatterns">Making Patterns: The AWL Language</a></li>
@@ -136,12 +146,15 @@ results onto the right side of the window.
 </p>
 
 <p>
-In this document I'll use very casual language
-for the loom and its components;
-see the references in the
+Looms are sophisticated machines,
+and weavers have their own terminology
+for their art and their tools.
+In this document I'll discuss our simple
+loom and the process of using it to
+weave fabric using very casual language.
+See the references in the
 <a href="#furtherReading">Further Reading</a>
-section for more careful descriptions of the 
-loom's elements and their names.
+section for more information on weaving and looms.
 </p>
 
 <p><a name='rightSide'></a></p>
@@ -150,72 +163,96 @@ loom's elements and their names.
 <p>
 The right side of the window is 
 collectively called the <strong>draft</strong>.
-This shows you the results of your AWL
-expressions,
+These checkerboards show you how your
+loom is set up,
 and the final fabric that results.
+The checkerboards (and the two strips of colors)
+are created in response to the strings you
+type into the input boxes on the left hand side
+of the window.
 The fabric is automatically re-woven each
 time you change one of the input expressions.
-The draft is not interactive:
-clicking on the draft and fabric has no effect.
+You can click in the tie-up in the upper right
+to turn cells on and off;
+no other elements of the draft are interactive.
+If you try to click on the tie-up and you get
+a red box,
+that means the tie-up is too small for you to
+edit.
+You can make it larger on the screen by reducing
+the size of the fabric,
+by typing a smaller number into the <em>Fabric Size</em>
+control just above the left side of the fabric.
+</p>
+<p>
+Your job is to write expressions that create
+drafts that produce fabrics you like.
+So it's important to know how the draft
+turns into the fabric.
+Here's a crash course.
 </p>
 <p>
 Think of the fabric as a grid.
 We want to know the color of each cell
 in that grid.
-To find it,
-we look at the three checkerboards
-below and to the right of the grid,
-and the row and column of colors 
-just outside them.
+We use the three grids around the fabric,
+and the single row or column of colors
+on the outside of the two larger ones.
 </p>
 <p>
-The checkerboard on the right is
-called the <strong>weft</strong>.
+First up is the grid on the right.
+We call that
+the <strong>weft</strong>.
 Each row of the weft is white except for
 exactly one black square.
 To the right of the weft is a column
 of colors,
 collectively called the <strong>weft colors</strong>.
 Imagine that each cell in the weft colors
-array is the source of a thread of colored
-yarn that runs to the left pefectly horizontally,
+is a spool of a thread of colored
+yarn whose thread runs perfectly horizontally to the left,
 passing through each cell of the fabric to its left.
 </p>
 <p>
-The checkerboard below the fabric
+Next is the grid above the fabric.
+This is
 called the <strong>warp</strong>.
 Each column of the warp is white except for
 exactly one black square.
-Below the warp is a row
-of colors,
+Above the warp is a row of colors,
 collectively called the <strong>warp colors</strong>.
 Imagine that each cell in the warp colors
-array is the source of a thread of colored
-yarn that runs vertically upwards,
-passing through each cell of the fabric above it.
+is a spool of colored
+yarn whose thread runs vertically downwards,
+passing through each cell of the fabric beneath it.
 </p>
 <p>
 Thus each cell in the fabric has two threads
 passing through it.
-One of these threads will be on top, while
-the other passes under it.
-The cell will have the color of the thread on top.
+We imagine that each thread is as wide as the cell,
+so one of them will have to be on top while the
+other is below it.
+The cell will take the color of the thread on top.
 To determine which thread is on top,
-we use one more checkerboard.
+we use the third grid.
 </p>
 <p>
-The checkerboard below and to the right of
+The grid above and to the right of
 the fabric is called the <strong>tie-up</strong>.
 Unlike the warp and weft,
 the tie-up can have any arrangement of white
 and black cells
 (it can even be all white or all black,
 though that would make a pretty boring fabric).
+Unlike the warp and weft,
+you can click in the tie-up to change its pattern
+(as long as the cells are big enough on the screen).
 </p>
 <p>
-To determine which thread is on top of any given
-cell in the fabric,
-we follow a simple process,
+So to color in the fabric,
+we only need to know which thread is on top
+in each cell.
+This process is
 illustrated in Figure 2.
 We start with a cell in the fabric,
 marked with a black outine.
@@ -231,16 +268,27 @@ Figure 2: Finding the color of a cell in the fabric.
 <ol>
 <li>Look directly to the right, and find the black
 cell in the weft for this row.</li>
-<li>Look directly below, and find the black cell
+<li>Look directly above, and find the black cell
 in the warp for this column.</li>
-<li>Look below the black weft cell, and to the
+<li>Look above the black weft cell, and to the
 right of the black warp cell, to find a cell
 in the tie-up. If that cell is black, the
-warp thread is on top, and paint the cell with
+warp thread is on top, so paint the cell with
 the warp thread's color. Otherwise, the weft 
-thread is on top, and use the weft thread's color.
+thread is on top, so use the weft thread's color.
 </ol>
 
+<p>
+In the figure, we find that the cell marked in black
+ends up at a black cell in the tie-up,
+so we color this cell with the warp color
+that is directly above it.
+If the tie-up cell had been white,
+we'd instead use the weft color directly
+to the right of this cell.
+In this draft, all the warp threads are the same
+dark-blue color, so that's the color of this cell.
+</p>
 <p>
 Although it's easy to state,
 understanding how the warp, weft, and tie-up interact
@@ -256,179 +304,197 @@ Just play and have fun,
 and see what you can discover.
 </p>
 <p>
-But if you can't click on the draft,
-how do you set it up?
+But if you can't click on the warp and weft
+and their colors,
+how do you set them up?
 The answer is that the draft is created as a result
 of the expressions you type into the input boxes
 on the left hand side;
 we'll turn to those now.
 </p>
 
-<p><a name='bridge'></a></p>
-<h2>The Bridge: Patterns</h2>
+<p><a name='patterns'></a></p>
+<h2>From Input to Loom: Patterns</h2>
 
 <p>
 The trick to describing a draft is to 
-fill in the black and white squares the
-way you want.
-The historical way to to do this is to
-use patterns of numbers.
-We use this tradition here, 
-as it allows you to immediately use any
-of the countless drafts that have been
-collected and published,
-and it lets you communicate with other weavers.
+create a pattern of numbers that identify
+which cells are to filled in with black.
+You can then publish these numbers,
+along with or instead of a picture of the draft,
+and other weavers can then duplicate your design.
+Many weaving programs let you enter your
+warp and weft patterns by clicking on the
+cells of their grids
+(and we also allow that for the tie-up).
+But when your drafts get really big,
+that becomes a tedious and error-prone process.
+And if you want to tweak your design by,
+say, repeating one section somewhere in the middle,
+you'd have a ton of clicking to do.
 </p>
-
 <p>
-Each of the five elements of the draft
-gets filled in with its own pattern.
-The three checkerboards use lists of numbers,
-while the two colors sources use lists
-of colors.
-Each of these five grids has a slightly
-different rule for how you convert its list
-to grid contents,
-so we'll cover each one.
-In all cases,
-we start counting at 0.
+So instead, we create these number
+patterns with a little language designed explicitly
+for that.
+We'll get into the language in the next section.
+Here, we'll look at how to take each list of numbers
+and apply it to the draft.
+</p>
+<p>
+The key thing to this process is how we
+name the cells of each grid.
+And each grid is different!
+That might seem crazy when you first encounter it, 
+but it's a good scheme that
+has been used for over a century.
+Once you get used to it, you'll probably like it.
+</p>
+<p>
+So let's dig in.
+Figure 3 shows how each grid is counted.
+Let's start with the warp,
+located above the fabric.
+Our rule is that each column in the warp has exactly
+one black cell.
+So we only need one number,
+telling us where in the column the cell is located.
+As the draing on the right shows,
+we start counting the warp by going up
+along the rightmost column,
+then we move one step left and go up again,
+then one step left and go up again,
+and so on.
+We number the rows in the warp
+and the columns in the weft
+<strong>starting with 0</strong>
+(it was easier for me to write the
+program this way,
+and it would take a day of work to change.
+if this is a problem for anyone,
+let me know,
+and I'll look into changing it.
+This has no effect on the WIF files
+that are read and written;
+they are fully compatible with other 
+weaving programs).
+</p>
+<p>
+So starting at 0,
+the bottom-most row in the weft is row 0,
+then row 1 is above it,
+then row 2,
+and so on.
+In this example, 
+there are 4 rows,
+so they're numbered 0 to 3.
+Looking at the pattern in the warp,
+we can see the rightmost column has
+its black cell in row 0,
+then moving left it's in row 1,
+then row 2, then 3, then we're back
+to 2, and we're back to 1.
+I want this little section to repeat,
+so I'll stop there.
+The pattern for the warp in this
+figure is <code>0 1 2 3 2 1</code>.
+Note that I left the 0 off the end,
+so that I can just repeat the pattern
+over and over and the 0 doesn't get
+duplicated.
 </p>
 
 <figure class="figure ">
-  <img src="images/TwoDrafts.jpg" width="800" class="img-rounded center-block" alt="Two drafts.">
+  <img src="images/CountingOrder.jpg" width="800" class="img-rounded center-block" alt="Two drafts.">
   <figcaption class="figure-caption text-center">
-Figure 3: Two drafts. See the text for the
-lists that describe them.
+Figure 3: 
+We locate black cells in the warp (red) by going upwards, starting at the right and moving left.
+We locate black cells in the weft (green) by going to the right, starting at the top and moving down.
+The warp colors are filled in from right to left,
+the weft colors from top down.
+We fill in the tie-up (black) by going upwards,
+moving from the left to the right.
 </figcaption>
 </figure>
 
 <p>
-Let's figure out the draft for Figure 3a.
-We'll start with the warp,
-directly under the fabric.
-Recall the each column of the warp is white
-except for one black cell,
-so again we only need to know the location
-of that cell.
-For the warp, we start at the
-<strong>right</strong> and work our way
-to the left,
-and we count from the <strong>top</strong>
-and go down.
-So if the black cell is in the topmost row,
-we'd call it 0.
-If it's one down from that,
-we'd call it a 1, 
-and so on.
-In the warp of Figure 3a,
-the cell in the rightmost column indeed
-is at the top,
-so the pattern starts out as <strong>0</strong>
-Moving left, the next black cell is one
-step down, so we append a <strong>1</strong>
-and our pattern becomes 
-<strong>0 1</strong>.
-Moving left, we find black dots at locations
-2, 3, then 2, and 1 again.
-Using these six colums, we've got
-the pattern <strong>0 1 2 3 2 1</strong>.
+The weft appears to the right of the fabric.
+We follow a similar scheme,
+only here the rule is that each row has a single
+black cell.
+So we start at the top row,
+and count from the left to the right.
+The pattern in this example is the same
+as in the warp,
+giving us the same pattern <code>0 1 2 3 2 1</code>,
+which again is just repeated over and over 
+as needed to make the fabric.
 </p>
+
 <p>
-You can see that this pattern repeats,
-so this first section is all we need.
-Notice that we don't repeat the starting
-0 at the end, or we'd get two 0's in a row
-when we repeated the pattern.
+The warp colors are filled in from right to left,
+like the columns of the warp.
+In this example, our pattern is the colors
+<em>Topaz</em> (beige) and <em>Grizzly</em> (dark brown).
+So those two colors are placed,
+in order,
+from the right moving to the left,
+and then repeated as needed.
+The weft colors work the same way,
+only from top down. Here we're using
+<em>BlueJeans</em> followed by <em>Gray18</em>.
 </p>
+
 <p>
-Let's now look at the warp colors,
-directly under the warp.
-Again, we start at the far right
-and work our way left.
-Here I see a kind of tan color,
-then brown,
-and then the pattern repeats.
-So our warp color pattern is
-<strong>tan brown</strong>.
+Finally, we have the tie-up.
+Because each cell in the tie-up can be either
+white or black,
+we need to somehow list every cell our pattern.
+So we just make a big list of 0's and 1's,
+one entry for each cell in the tie-up grid.
+In our system, <strong>1 is black</strong>
+and <strong>0 is white</strong>.
+If you use computer-based colors a lot this
+may feel backwards.
+It will make more sense if you think of someone
+in a pre-computer age,
+filling in a draft with a black ink on a
+white sheet of paper.
+If the draft says 0, the suggests doing nothing,
+leaving the cell white.
+If it says 1, then you fill in that square with
+your pen, turning it black.
+We count the tie-up starting in the bottom-left
+corner and going upwards.
+When we reach the top,
+we move one column to the right, 
+jump down to the bottom, and start going up again.
+In this example,
+the tie-up pattern is
+<code>1 1 0 0 1 1 1 0 0 1 1 1 0 0 1 1</code>.
+If you look at this closely,
+you'll see it's just the pattern
+<code>1 1 0 0 1</code> repeating over and over.
 </p>
+
 <p>
-Now we'll look at the weft.
-We start at the bottom and work our
-way up,
-counting cells from the left.
-This is another up-down triangle
-wave just lie the warp.
-The first cell is 0, then 1, and so 
-on, just like the warp,
-giving us the weft pattern
-<strong>0 1 2 3 2 1</strong>.
-It's not unusual to set things up this way,
-and use the same
-pattern in both the warp and weft.
-</p>
-<p>
-The weft colors are next.
-We read those from the bottom up.
-Here I see a kind of blue and then a 
-gray, and then pattern repeats.
-So the weft color pattern is
-<strong>blue tan</strong>.
-</p>
-<p>
-Finally, the tie-up.
-Since both the warp and weft are using
-only the first four threads,
-I've set the tie-up to also be 4 by 4.
-You don't have to make the tie-up the
-same size as the warp and weft,
-but it's common.
-Since the tie-up can have any arrangement
-of black and while cells,
-we just read them off starting at the
-top left,
-then moving to the right,
-and then down a row,
-like reading a book.
-White cells are 0,
-and black cells are 1
-(if you're a computer graphics person,
-this probably seems backwards.
-But think of it from a pencil-and-paper
-point of view, where drafts originated.
-The page was white, and you used a black pencil.
-A 0 meant "leave the cell alone,"
-which left it white.
-A 1 meant "fill it in",
-which turned it black.
-This is the convention I've found in the 
-weaving literature, and remember that weavers
-have been doing it this since way,
-<em>way</em> before computer graphics!).
-So in Figure 3a,
-the first row of the tie-up is 
-<strong>1 1 0 0</strong>,
-the second row is 
-<strong>1 1 1 0</strong>,
-and so on.
-So the tie-up can be described by
-a big list of 16 1's and 0's.
-</p>
-<p>
-In this particular case, though,
-you might notice that the tie-up is
-just repeating the pattern
-<strong>1 1 0 0 1</strong>.
-This automatically creates a
-pattern than seems to shift from
-one row to the next.
-Representing the tie-up with a
-shorter repeating pattern like this
-makes it easier to edit and play with it later.
+You'll be relieved to know that you'll only
+need to count things out like this when you're
+entering someone else's draft from a book or
+website,
+or when your pattern is not at all what you
+expected and you need to check what numbers
+you're making.
+Most of the time you'll be creating your
+patterns using the cool techniques in the
+pattern-making language,
+and leaving all of this counting stuff up to
+the computer.
 </p>
 
 <p>
 To summarize, the following list completely
-summarizes the draft in Figure 3a,
+summarizes the draft in Figure 3,
 and thus also completely specifies the pattern
 of the fabric it leads to.
 If you want to share your draft with other weavers,
@@ -439,35 +505,22 @@ recreate their drafts on your own loom.
 <ul>
 <li><strong>Warp pattern:</strong> 0 1 2 3 2 1 </li>
 <li><strong>Weft pattern:</strong> 0 1 2 3 2 1 </li>
-<li><strong>Warp colors:</strong> tan brown </li>
-<li><strong>Weft colors:</strong> blue gray</li>
+<li><strong>Warp colors:</strong> Topaz Grizzly </li>
+<li><strong>Weft colors:</strong> BlueJeans Gray18 </li>
 <li><strong>Tie-up:</strong> 1 1 0 0 1</li>
 </ul>
 <p>
-Figure 3b offers another draft.
-Here both the warp and weft are both using
-5 threads, and I've made the tie-up 5 by 5.
-Try to write down the five lists that
-describe the five sections of the draft
-before you read the list below:
-</p>
-<ul>
-<li><strong>Warp pattern:</strong> 3 4 3 0 1 0 1 2 </li>
-<li><strong>Weft pattern:</strong> 2 3 2 4 0 1</li>
-<li><strong>Warp colors:</strong> red </li>
-<li><strong>Weft colors:</strong> yellow </li>
-<li><strong>Tie-up:</strong> 1 0 1 0 1 1</li>
-</ul>
-<p>
-When we weave the fabric,
-we just repeat the warp and weft
-patterns and colors as needed.
-The tie-up we only have to make once,
-but if the input pattern is shorter than
-the size of the tie-up grid,
-we just use the input pattern over and over until
-the grid is filled up,
-as in the last example.
+All of these patterns are repeated as
+needed.
+The tie-up pattern, for instance, is repeated
+until the entire tie-up grid is filled in
+(if the pattern is bigger than the grid,
+the excess is just ignored).
+The warp and weft patterns,
+and their colors,
+are repeated until they're providing
+a value to every cell in the fabric at
+whatever size we want to make it.
 </p>
 <p>
 Now that we know how lists of numbers
@@ -481,67 +534,65 @@ lead to beautiful fabrics.
 <h2>The Left Side: AWL Input (and Output)</h2>
 
 <p>
-The job of the left side of the window
-is to make patterns of numbers and colors.
-The problem will use these
-to fill in the draft.
+To fill in the grids of the loom,
+we enter text expressions into the 
+boxes on the left side of the window.
+When you've typed something into one
+of these boxes,
+press the big arrow button to the right
+of the box to update the loom.
+The fabric will be automatically updated
+using the new draft.
 </p>
 <p>
-There are five text input boxes,
-one for each of the five sections of the draft.
-You can type an expression in a special pattern-making
-language into each box,
-and then press the arrow to the right of the box
-to translate your expression into a list.
-The list is immediately copied into the draft
-(that is, the grids are updated)
-and the fabric is immediately re-woven.
+You can see the result of your expressions
+in the black and white cells of the draft,
+but sometimes it's more useful to see them 
+in numerical form.
+At the bottom of the left column there's a 
+text box with a multi-part button above it.
+Press the button to see the output from the
+input box you're interested in
+(when you press an arrow button,
+the output automatically displays the 
+output of the expression you just entered).
+Note that this is strictly an output
+area; you can't type into this box.
 </p>
 <p>
-It's often useful to see the output of your expressions
-so you can make sure you're creating the pattern you want.
-At the bottom of the left side there's a region that
-holds the output of any one of the five input areas.
-Click one of the buttons above to choose which output
-you want to see.
-When you press one of the arrows,
-the output region automatically switches to the 
-draft element you just entered.
-Note that you can't type into the output area.
-</p>
-<p>
-So what goes into the boxes on the left?
-You write little expressions in a custom language
-designed for making cool number patterns.
-We'll see that language in the next section.
-For now, you can just type in a sequence of
-numbers (or colors) and then press the arrow.
-</p>
-<p>
-<h3>Important Note </h3> 
+<h3>Weaving Quick Start</h3>
 If you're new to the system and 
 you want to play around with the inputs before
 you learn the pattern language,
 that's fine;
 messing around is a big part of the fun.
-You'll find that things will go best if
-you stick to the following rules for now
-(later, when you learn the language,
-of course you can do whatever you like!).
-Your sequences 
-for the warp and weft patterns must
-be made up only of numbers from 0 to 7, and they must
-be separated by spaces (don't use commas
-or periods or anything else).
-In the warp and weft color fields
-just type in a list of color names,
-separated by spaces 
-(for a list of all available color names, see the section on
-<a href="#colors">Colors</a>).
-Finally,
-the tie-up input should contain just the
-two numbers 0 and 1 in whatever sequence you like,
-again separated only by spaces.
+Just type the patterns you want in your
+loom right into each text box,
+and press the arrow to its right to
+copy that into the loom.
+The <strong>most important thing</strong> to
+remember is this: <strong>put spaces around
+each number or color name</strong>.
+For example,
+to recreate Figure 3,
+you'd type <code>0 1 2 3 2 1</code>
+into the <em>Warp Pattern</em> box.
+Note that each number is followed by a space,
+and there are no commas, periods, or
+other characters. Just numbers and spaces.
+You'd type the same thing into the
+<em>Weft Pattern</em> box.
+You can even type <strong>Topaz Grizzly</strong>
+into the <em>Warp Colors</em> box because
+the Online Loom knows those colors by name.
+Enter the weft colors and the tie-up,
+and you should get back Figure 3!
+If necessary, use the fields above the
+fabric to set
+<em>FabricSize</em> to 10, 
+and <em>Tie-Up Width</em> and <em>Tie-up Height</em> to 4.
+To make more fabric, just crank up the fabric size
+to something like 100 or 200.
 </p>
 
 <p><a name="colors"></a></p>
@@ -551,12 +602,13 @@ again separated only by spaces.
 Colors are a vital part of weaving,
 and two of the AWL input areas on the left
 are devoted to creating patterns of colors.
-You create these patterns by creating
-AWL expressions that combine commands,
-numbers, and colors.
-You can name your colors in three ways,
-and you can even mix and match these in a
-single expression.
+You can create big, complicated patterns
+of colors using the AWL commands,
+or you can just enter one or a few colors
+by hand.
+There are three ways to identify each color;
+you can mix and match these as you like
+even in a single expression.
 </p>
 
 <h4>By Name</h4>
@@ -566,17 +618,17 @@ knows 1303 different color names,
 gathered from a wide variety of sources.
 Probably any color name you know is in the list.
 You can browse the colors 
-<a href="browseColorsByName.html" target="_blank">sorted by name</a>
+<a href="BrowseColorsByName.html" target="_blank">sorted by name</a>
 or
-<a href="browseColorsByColor.html" target="_blank">sorted by hue</a>
+<a href="BrowseColorsByHue.html" target="_blank">sorted by hue</a>
 using the links below.
 Note that if a given color has multiple names,
 I've retained all of them because some names might
 be more familiar to you than others.
 </p>
 <ul>
-<li><a href="browseColorsByName.html" target="_blank">Page of colors sorted by name</a></li>
-<li><a href="browseColorsByColor.html" target="_blank">Page of colors sorted by hue</a></li>
+<li><a href="BrowseColorsByName.html" target="_blank">Page of colors sorted by name</a></li>
+<li><a href="BrowseColorsByhue.html" target="_blank">Page of colors sorted by hue</a></li>
 </ul>
 <p>
 For example, a nice middle brown is

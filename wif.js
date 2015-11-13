@@ -6,12 +6,13 @@ AWLPrivateFieldString =  "[PRIVATE AWLOnline InputFields]";
 
 var WIF_ID_WarpPatternAWL = "WarpPatternAWL";
 var WIF_ID_WeftPatternAWL = "WeftPatternAWL";
-var WIF_ID_WarpColorsAWL =  "WarpColorsAWL";
-var WIF_ID_WeftColorsAWL =  "WeftColorsAWL";
-var WIF_ID_TieUpAWL =       "TieUpAWL";
-var WIF_ID_FabricSizeAWL =  "FabricSizeAWL";
-var WIF_ID_TieUpWidthAWL =  "TieUpWidthAWL";
-var WIF_ID_TieUpHeightAWL =  "TieUpHeightAWL";
+var WIF_ID_WarpColorsAWL  = "WarpColorsAWL";
+var WIF_ID_WeftColorsAWL  = "WeftColorsAWL";
+var WIF_ID_TieUpAWL       = "TieUpAWL";
+var WIF_ID_FabricSizeAWL  = "FabricSizeAWL";
+var WIF_ID_TieUpWidthAWL  = "TieUpWidthAWL";
+var WIF_ID_TieUpHeightAWL = "TieUpHeightAWL";
+var WIF_ID_OriginAWL      =  "OriginAWL";
 
 var WIF_ID_Delimiter = " ==== ";
 
@@ -471,7 +472,8 @@ function currentDraftAsWIF() {
 	wifString += WIF_ID_TieUpAWL         + WIF_ID_Delimiter + tieUpString + "\n";
 	wifString += WIF_ID_FabricSizeAWL    + WIF_ID_Delimiter + fabricSizeString + "\n";
 	wifString += WIF_ID_TieUpWidthAWL    + WIF_ID_Delimiter + tieUpWidthString + "\n";
-	wifString += WIF_ID_TieUpHeightAWL    + WIF_ID_Delimiter + tieUpHeightString + "\n";
+	wifString += WIF_ID_TieUpHeightAWL   + WIF_ID_Delimiter + tieUpHeightString + "\n";
+	wifString += WIF_ID_OriginAWL        + WIF_ID_Delimiter + "0" + "\n";
 	wifString += "\n";
 
 	// now write the more generic version
