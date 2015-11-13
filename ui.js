@@ -119,8 +119,7 @@ function showChosenOutput(choice) {
 ///////////////////////////////////////////////////////////////////////////
 	
 function helpButtonFunction() {
-	alert("help button");
-	//window.open("http://www.glassner.com");
+	window.open("help/help.html", "_blank");
 }
 
 function fabricSizeInputFunction() {
