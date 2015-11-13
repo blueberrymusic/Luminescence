@@ -6,7 +6,6 @@ var WarpColorOutput = "";
 var WeftColorOutput = "";
 var TieUpOutput = "";
 
-var LocalStorageAvailable = false;
 var DraftName = "";
 
 var SelectedOutputRadioButton = "WarpPatternRadio";
@@ -17,8 +16,6 @@ var SelectedOutputRadioButton = "WarpPatternRadio";
 
 // on page load
 $(function(){
-
-	LocalStorageAvailable = localStorageTest();
 
 	makePresets();
 	setupRemoveBGPrompts();
@@ -68,19 +65,6 @@ function setupOutputRadioButtons() {
 function setupCanvasListener() {
    var canvas = document.getElementById("myCanvas");
    canvas.addEventListener("mousedown", respondToMouseInCanvas, false);
-}
-
-
-///////////////////////////////////////////////////////////////////////////
-// localStorage Utilities
-///////////////////////////////////////////////////////////////////////////
-
-function localStorageTest() {
-  try {
-    return 'localStorage' in window && window['localStorage'] !== null;
-  } catch(e){
-    return false;
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////
