@@ -197,17 +197,37 @@ function respondToMouseInCanvas(event) {
 	var rect = canvas.getBoundingClientRect();
 	var x = Math.round(event.clientX - rect.left);
 	var y = Math.round(event.clientY - rect.top);
-	x += 15;  // compensate for gutter between columns in Bootstrap
 
-	if (SqSize < 4) {  
-		var boxULx = x - 25;
-		var boxULy = y - 25;
+	if ((x < TieUpL) || (x > TieUpR) || (y < TieUpT) || (y > TieUpB)) return;
+	var minSqSize = 4;
+
+	if (SqSize < minSqSize) {  
+		var redBoxSize = 25;
+		var boxULx = (x+15) - (redBoxSize/2); // compensate for 15px gutter between columns in Bootstrap
+		var boxULy = y - (redBoxSize/2);
+		$('#canvasSignalBoxDiv').css('width', redBoxSize);
+		$('#canvasSignalBoxDiv').css('height', redBoxSize);
 		$('#canvasSignalBoxDiv').css('left', boxULx);
 		$('#canvasSignalBoxDiv').css('top', boxULy);
+		$('#canvasSignalBoxDiv').css('border-width', (redBoxSize/6).toString()+"px");
+		$('#canvasSignalBoxDiv').css('border-color', "white");
+		$('#canvasSignalBoxDiv').css('border-style', "solid");
 		$('#canvasSignalBoxDiv').animate({display: 'show'});
 	} else {
 		// from drawing.js, use TieUpL, TieUpR, TieUpT, TieUpB for sides of tie-up
-		alert("Processing x="+x+" y="+y+" SqSize="+SqSize);
+		var col = Math.floor((x-TieUpL)/SqSize);
+		var row = Math.floor((TieUpB-y)/SqSize);
+		var tieUpWords = TieUpOutput.split(' ');
+		var entry = (col * TieUpHeight) + row;
+		if (tieUpWords[entry] === '0') {
+			tieUpWords[entry] = '1';
+		} else {
+			tieUpWords[entry] = '0';
+		}
+		var newTieUp = tieUpWords.join(' ');	
+ 		$('#tieUpAWL').val(newTieUp);
+		TieUpOutput = AWLtoString('#tieUpAWL');
+		drawCanvas();
 	}
 	
 }
