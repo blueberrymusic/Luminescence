@@ -199,8 +199,8 @@ function respondToMouseInCanvas(event) {
 		$('#canvasSignalBoxDiv').animate({display: 'show'});
 	} else {
 		// from drawing.js, use TieUpL, TieUpR, TieUpT, TieUpB for sides of tie-up
-		var col = Math.floor((x-TieUpL)/SqSize);
-		var row = Math.floor((TieUpB-y)/SqSize);
+		var col = Math.floor((x-TieUpL)/(1.0*SqSize));
+		var row = Math.floor((TieUpB-y)/(1.0*SqSize));
 		var tieUpWords = TieUpOutput.split(' ');
 		var entry = (col * TieUpHeight) + row;
 		if (tieUpWords[entry] === '0') {
