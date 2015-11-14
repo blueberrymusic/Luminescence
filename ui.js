@@ -75,6 +75,7 @@ function AWLtoString(inputID) {
 	var input = $(inputID).val()
 	var result = ProcessString(input);
 	var output = "";
+	if (result === "") return "";
 	for (var i=0; i<result.length; i++) {
 		if (i > 0) output = output.concat(" ");
 		output = output.concat(result[i]);

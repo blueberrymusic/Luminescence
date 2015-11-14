@@ -21,7 +21,12 @@ var OListType= "olist";  // open list: new elements get appended
 ////////////////////////////////
 
 function ProcessString(input) {
+	if (input === null) return "";
 	initStack();
+	var allWhiteRE = /^\s*$/;
+	if (allWhiteRE.test(input)) { // it's all white space
+		return "";
+	}
 	input = cleanInputString(input);
 	var words = input.split(" ");
 	for (var i=0; i<words.length; i++) {

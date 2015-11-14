@@ -39,10 +39,10 @@
 		<div class="row"> <!-- row with header, IO, help -->
 			<!-- HEADER -->
 			<div class="col-sm-6">
-				<h1>Andrew's Online Loom</h1>
+				<h1 class="digitalLoomLabel">Andrew's Online Loom</h1>
 			</div> <!-- column -->
 			<div class="col-sm-6">
-				<h1 style="background-color: #eeeeee; color: #888888;">AWL Reference</h1>
+				<h1 class="digitalLoomLabel" style="background-color: #eeeeee; color: #888888;">AWL Reference</h1>
 			</div> <!-- column -->
 		</div> <!-- row -->
 
@@ -54,10 +54,37 @@
 <p>
 This is an overview of AWL
 (Andrew's Weaving Language) for my
-<a href="http://www.TK">Digital Loom</a>.
+<a href="../OnlineLoom.html" target="_blank">Online Loom</a>.
+You can learn more about the ideas behind AWL and
+how it's used in the Online Loom in
+the general <a href="help.html#concepts" target="_blank"">Help File</a>.
 </p>
-
-<h1>REPLACE ALL LOOP WITH RUN</h1>
+<p>
+The commands are all case insensitive,
+so you can use any mix of upper and lower case that you like.
+In the usage summaries,
+<b>A</b> and <b>B</b> refer to lists of one or more elements,
+<var>c</var> and <var>d</var> refer to single numbers.
+If a command is marked with <em>Wraps output</em> it means
+that the values it produces depend on, and will be strictly
+within, the current domain.
+If a command is marked <em>Resizes inputs</em>,
+it means the shorter list is repeated until it is at least
+as long as the longer list, then excess elements
+are removed.
+If this entry is marked with a solid star,
+it means that the command resizes the lists
+in a special way that is described in its notes.
+</p>
+<p>
+<b>Note for programmers:</b> Following the convention
+of weaving drafts,
+we use 1-origin indexing into arrays,
+not 0 as is more common when programming.
+For example, if we have the list <code>5 6 4</code>,
+then element 1 is 5, elmeent 2 is 6, and elemetn 3 is 4.
+There is no element 0.
+</p>
 
 <p><a name='toc'></a></p>
 <h2>Quick Jumps</h2>
@@ -73,9 +100,9 @@ This is an overview of AWL
 <li><a href="#concat">concat</a></li>
 <li><a href="#domain">domain</a></li>
 <li><a href="#down">down</a></li>
-<li><a href="#downloop">downloop</a></li>
+<li><a href="#downrun">downrun</a></li>
 <li><a href="#downup">downup</a></li>
-<li><a href="#downuploop">downuploop</a></li>
+<li><a href="#downuprun">downuprun</a></li>
 <li><a href="#dup">dup</a></li>
 <li><a href="#extend">extend</a></li>
 <li><a href="#growblock">growblock</a></li>
@@ -86,22 +113,24 @@ This is an overview of AWL
 <li><a href="#iblock">iblock</a></li>
 <li><a href="#iblockpal">iblockpal</a></li>
 <li><a href="#interleave">interleave</a></li>
+<li><a href="#interleaveSteps">interleaveSteps</a></li>
 <li><a href="#palindrome">palindrome</a></li>
 <li><a href="#pbox">pbox</a></li>
 <li><a href="#permute">permute</a></li>
 <li><a href="#pop">pop</a></li>
 <li><a href="#push">push</a></li>
 <li><a href="#ramp">ramp</a></li>
-<li><a href="#ramploop">ramploop</a></li>
+<li><a href="#ramprun">ramprun</a></li>
 <li><a href="#repeat">repeat</a></li>
 <li><a href="#reverse">reverse</a></li>
 <li><a href="#rotatel">rotatel</a></li>
 <li><a href="#rotater">rotater</a></li>
-<li><a href="#skipkeep">skipkeep</a></li>
 </ul>
 </div>
 <div class="col-md-4">
 <ul>
+<li><a href="#showstack">showstack</a></li>
+<li><a href="#skipkeep">skipkeep</a></li>
 <li><a href="#split">split</a></li>
 <li><a href="#swap">swap</a></li>
 <li><a href="#tartan">tartan</a></li>
@@ -110,9 +139,9 @@ This is an overview of AWL
 <li><a href="#twilll">twilll</a></li>
 <li><a href="#twillr">twillr</a></li>
 <li><a href="#up">up</a></li>
-<li><a href="#uploop">uploop</a></li>
+<li><a href="#uprun">uprun</a></li>
 <li><a href="#updown">updown</a></li>
-<li><a href="#updownloop">updownloop</a></li>
+<li><a href="#updownrun">updownrun</a></li>
 <li><a href="#vlen">vlen</a></li>
 <li><a href="#vmax">vmax</a></li>
 <li><a href="#vmin">vmin</a></li>
@@ -135,9 +164,10 @@ Produce a list of 0's and 1's, usually for the tie-up.
 The elements of <strong>A</strong> tell how many times each digit
 should be repated.
 The list starts with 0's
-(compare to <code>binary1</code> which starts with 0's).
+(compare to <code>binary1</code> which starts with 1's).
 Entries in <strong>A</strong> that are less than zero
 are considered to be zero.
+This command is primarily used to create patterns for the tie-up.
 </p>
 
 <div class="bs-example">
@@ -161,10 +191,11 @@ are considered to be zero.
 Produce a list of 0's and 1's, usually for the tie-up.
 The elements of <strong>A</strong> tell how many times each digit
 should be repated.
-The list starts with 0's
+The list starts with 1's
 (compare to <code>binary0</code> which starts with 0's).
 Entries in <strong>A</strong> that are less than zero
 are considered to be zero.
+This command is primarily used to create patterns for the tie-up.
 </p>
 <div class="bs-example">
 3 1 2 2 1 b1
@@ -252,10 +283,10 @@ taking one element at a time.
 Let's say that this element has a value of <var>a</var>.
 Replace it with the element at position <var>a</var> in 
 list <b>B</b>.
-So if <var>a</var> is 0
-we use the element of <b>B</b> at index 0 (the first element),
-if <var>a</var> is 1
-we use the element of <b>B</b> at index 1 (the second element),
+So if <var>a</var> is 1
+we use the first element of <b>B</b>,
+if <var>a</var> is 3
+we use the third element of <b>B</b>,
 and so on.
 This is like the first "secret code" you came up with
 your friends in school to pass notes,
@@ -265,14 +296,8 @@ where (say) A goes to F, B goes to G, C goes to H, and so on.
 3 5 2 5 0 / 7 6 5 4 3 1 cipher
 </div>
 <div class="highlight">
-4 1 5 1 7
+red 3 orange 3 7
 </div>
-<p>
-Here the 3 in <strong>A</strong> was mapped to element 3 of <strong>B</strong>,
-producing 4 (remember we start counting with 0).
-Then we appended the 5th element of <strong>B</strong>, or 1,
-and so on.
-</p>
 
 
 
@@ -332,8 +357,18 @@ This simply appends list <strong>B</a> to the end of list <strong>A</strong>.
 </dl>
 <p>
 The <em>domain</em> is the range of numbers
-that are used by the commands that use arithmetic
-to produce results.
+that are used by the commands that produce 
+ascending or descending lists of numbers,
+typically joining two given numbers at the ends.
+A special type of such list is a <em>run</em>,
+which starts at some value and either ascends,
+wrapping around the top of the domain, to
+a value one less than the start,
+or descends,
+wrapping around the bottom of the domain,
+to a value one greater than the start.
+</p>
+</p>
 For example, <code>ramp</code> produces a new
 list by counting upwards from one number to another.
 When any of the counting programs produce a number
@@ -343,26 +378,27 @@ The command summary lets you which commands do this
 with a solid dot after <strong>Wraps output:</strong> in their summary.
 </p>
 <p>
-The domain starts with a minimum value of 0
-and a maximum of 7.
+The domain starts with a minimum value of 1
+and a maximum of 8.
 So if you ask <code>ramp</code> to count
 upwards from 5 to 3, it would produce the numbers
-6 and 7, and then 8.
-But 8 is outside the domain [0,7], 
-so it wraps around to 0.
+6, 7, 8, and then 9.
+But 9 is outside the domain [1,8], 
+so it wraps around to 1.
 The counting continues from there,
-so the whole list would be
-<code>5 6 7 0 1 2 3</code>.
+so the whole list (including the 5
+at the start and the 3 at the end) would be
+<code>5 6 7 8 9 1 2 3</code>.
 The same thing happens when you're counting
 down: if a value goes below the minimum,
 it wraps around to the maximum.
-Again, using the default values of 0 and 7,
+Again, using the default values of 1 and 8,
 if you counted down from 2 to 6 you'd get
-the list <code>2 1 0 7 6</code>.
+the list <code>2 1 8 7 6</code>.
 </p>
 <p>
 Each AWL input box always starts with the
-domain set to [0,7]. If you change it,
+domain set to [1,8]. If you change it,
 that change stays in effect for the rest of
 that expression.
 Changing the domain is useful when you want
@@ -371,8 +407,8 @@ the values from 2 to 5) within a larger pattern
 that uses a larger domain.
 </p>
 <p>
-The <code>domain</code> command will clamp
-any minimum value less than 0 to 0,
+The <code>domain</code> command enforces
+the domain minimum to be at least 1,
 and the maximum value will always be
 at least 1 more than the minimum.
 </p>
@@ -405,19 +441,19 @@ count down from the last element of <b>A</b> to the
 first element of <b>B</b>.
 </p>
 <div class="bs-example">
-4 5 6 / 2 3 >
+5 4 / 6 7 >
 </div>
 <div class="highlight">
-4 5 6 5 4 3 2 3
+5 4 3 2 1 8 7 6 7
 </div>
 
 
 
-<p><a name="downloop"></a></p>
-<h2>downloop</h2>
+<p><a name="downrun"></a></p>
+<h2>downrun</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> downloop</code></dd>
-<dt>Shortcut:</dt><dd><code>>l</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> downrun</code></dd>
+<dt>Shortcut:</dt><dd><code>>r</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
@@ -431,10 +467,10 @@ the domain.
 The following example assumes the default domain of [0,7].
 </p>
 <div class="bs-example">
-5 / 2 / 1 >l
+5 4 / 6 7 / 1 >r
 </div>
 <div class="highlight">
-5 4 3 2 1 0 7 6 5 4 3 2 
+5 4 3 2 1 8 7 6 5 4 3 2 1 8 7 6 7
 </div>
 
 
@@ -447,7 +483,7 @@ The following example assumes the default domain of [0,7].
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-star"></i></dd>
 </dl>
 <p>
 Create an alternating series of up and down runs.
@@ -469,20 +505,20 @@ The following example assumes the default domain of [0,7].
 1 2 3 / 6 7 >u
 </div>
 <div class="highlight">
-1 0 7 6 7 0 1 2 1 0 7 0 1 2 3
+1 8 7 6 7 8 1 2 1 8 7 8 1 2 3
 </div>
 
 
 
-<p><a name="downuploop"></a></p>
-<h2>downuploop</h2>
+<p><a name="downuprun"></a></p>
+<h2>downuprun</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> downuploop</code></dd>
-<dt>Shortcut:</dt><dd><code>>ul</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> downuprun</code></dd>
+<dt>Shortcut:</dt><dd><code>>ur</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-star"></i></dd>
 </dl>
 <p>
 This is just like <code>downup</code>,
@@ -494,10 +530,10 @@ the two lists will be resized unless
 <b>A</b> is exactly 1 element longer than <b>B</b>.
 </p>
 <div class="bs-example">
-1 7 / 5 / 1 >ul
+1 7 / 5 / 1 >ur
 </div>
 <div class="highlight">
-1 0 7 6 5 4 3 2 1 0 7 6 5 6 7 0 1 2 3 4 5 6 7
+1 8 7 6 5 4 3 2 1 8 7 6 5 6 7 8 1 2 3 4 5 6 7
 </div>
 
 
@@ -506,7 +542,7 @@ the two lists will be resized unless
 <h2>dup</h2>
 <dl class="dl-horizontal">
 <dt>Usage:</dt><dd><code>dup</code></dd>
-<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd:
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
@@ -541,8 +577,8 @@ We force list <b>A</b> to have exacty <var>c</var>
 elements.
 If it's too short, we append copies of <b>A</b> to itself
 over and over until it has a length of <var>c</var> or more.
-If the original list (or the one we just made by appending
-copies) is too long, we throw away the extra elements from the end.
+If the original list, or the result of repeating it, is too long,
+we throw away the extra elements at the end.
 </p>
 <div class="bs-example">
 3 4 5 / 8 +
@@ -605,10 +641,10 @@ B0 B1 B2 B3 B2 B1 B0
 </p>
 
 <div class="bs-example">
-0 1 2 / 4 5 6 =
+1 2 3 / 5 6 7 =
 </div>
 <div class="highlight">
-0 1 2 3 4 3 2 1 2 3 4 5 4 3 2 3 4 5 6 5 4
+1 2 3 4 5 4 3 2 3 4 5 6 5 4 3 4 5 6 7 6 5
 </div>
 
 
@@ -650,7 +686,7 @@ and so on.
 <dl class="dl-horizontal">
 <dt>Usage:</dt><dd><code><b>A</b> iblockpal</code></dd>
 <dt>Shortcut:</dt><dd><code>i#p</code></dd>
-<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
@@ -676,7 +712,7 @@ only the entries are interleaved like <code>iblock</code>.
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 The two input lists are turned into one by taking
@@ -686,12 +722,46 @@ the first element of <b>B</b>,
 the second element of <b>A</b>,
 the second element of <b>B</b>,
 and so on.
+Thiis is useful for producing lists that can
+be used with commands like <code>iblock</code> or <code>tartan</code>.
 </p>
 <div class="bs-example">
-0 2 4 6 / 1 3 5 7 %
+red yellow green blue / 1 3 5 7 %
 </div>
 <div class="highlight">
-0 1 2 3 4 5 6 7
+red 1 yellow 3 green 5 blue 7
+</div>
+
+
+
+<p><a name="interleaveSteps"></a></p>
+<h2>interleaveSteps</h2>
+<dl class="dl-horizontal">
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> <var>d</var> interleaveSteps</code></dd>
+<dt>Shortcut:</dt><dd><code>%s</code></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+The two input lists are turned into one by taking
+the first <var>c</var> elements from <b>A</b>,
+followed by 
+the first <var>d</var> elements from <b>B</b>,
+then the next <var>c</var> elements from <b>A</b>,
+followed by 
+the next <var>d</var> elements from <b>B</b>,
+and so on.
+If one list runs out before the other,
+the remaining elements from the longer list
+are placed at the end of the result.
+</p>
+<div class="bs-example">
+A B C D E F G H I J / 1 2 3 4 5 6 7 8 9 / 2 / 3 %s
+</div>
+<div class="highlight">
+A B 1 2 3 C D 4 5 6 E F 7 8 9 G H I J
 </div>
 
 
@@ -714,10 +784,10 @@ This makes repeated palindromes line up nicely without
 duplicated values.
 </p>
 <div class="bs-example">
-0 1 3 4 5 |
+1 2 4 5 7 |
 </div>
 <div class="highlight">
-0 1 3 4 5 4 3 1
+1 2 4 5 7 5 4 2
 </div>
 
 
@@ -744,10 +814,10 @@ and a version of <b>B</b> that is either trimmed
 or repeated so that it's the same length as <b>A</b>.
 </p>
 <div class="bs-example">
-1 2 3 4 5 6 / 1 0 pbox
+7 5 3 1 6 4 2  / 2 1 pbox
 </div>
 <div class="highlight">
-2 1 2 1 2 1
+5 7 5 7 5 7 5
 </div>
 
 
@@ -760,7 +830,7 @@ or repeated so that it's the same length as <b>A</b>.
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-star"></i></dd>
 </dl>
 <p>
 This operation gives us a way of building a new list
@@ -828,8 +898,8 @@ wrapping it around the length of
 <b>A'</b> if necessary.
 So if the first element of <b>B'</b>
 is, say, 3,
-then we take the element at index 3 in
-list <b>A'</b> (remember to start counting at 0),
+then we take the third element from
+list <b>A'</b>,
 and that becomes the first element in our new list.
 We repeat this for every element in <b>B'</b>.
 </p>
@@ -848,20 +918,20 @@ so <b>B'</b> is then 1 2 2 3 3 4.
 Now we use the elements of <b>B'</b>
 to pull out elements of <b>A'</b>.
 The first element of <b>B'</b> is 1,
-so we take the element at index 1 from <b>A'</b>,
-which is 4.
+so we take first element from <b>A'</b>,
+which is 3.
 The next element of <b>B'</b> is 2,
-so we take the element at index 2 from <b>A'</b>,
-giving us 5.
+so we take the second element from <b>A'</b>,
+giving us 4.
 We continue this process to get the
 final result
-4 5 5 3 3 4.
+3 4 4 5 5 4.
 </p>
 <div class="bs-example">
 3 4 5 / 2 1 &
 </div>
 <div class="highlight">
-5 4 4 3 3 5
+4 3 3 5 5 4
 </div>
 
 
@@ -870,7 +940,7 @@ final result
 <h2>pop</h2>
 <dl class="dl-horizontal">
 <dt>Usage:</dt><dd><code>pop</code></dd>
-<dt>Shortcut:</dt><dd><code> </code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
@@ -878,6 +948,7 @@ final result
 </dl>
 <p>
 The top list on the stack is popped off and thrown away.
+Do not call this on an empty list.
 </p>
 <div class="bs-example">
 pop
@@ -944,11 +1015,11 @@ the run goes up, otherwise it goes down).
 
 
 
-<p><a name="ramploop"></a></p>
-<h2>ramploop</h2>
+<p><a name="ramprun"></a></p>
+<h2>ramprun</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> ramploop</code></dd>
-<dt>Shortcut:</dt><dd><code>-l</code> (minus sign followed by lower-case L)</dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> ramprun</code></dd>
+<dt>Shortcut:</dt><dd><code>-r</code> (minus sign followed by lower-case L)</dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
@@ -1064,11 +1135,44 @@ with everything before it now at the end.
 
 
 
+<p><a name="showstack"></a></p>
+<h2>showstack</h2>
+<dl class="dl-horizontal">
+<dt>Usage:</dt><dd><code>showStack</code></dd>
+<dt>Shortcut:</dt><dd><i class="fa fa-ban"></i></dd>
+<dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
+</dl>
+<p>
+The complete stack is displayed in a popup window.
+This is very useful for debugging AWL expressions.
+Each element on the stack is numbered.
+The <em>type</em> of each element is also displayed;
+this is typically either 
+<code>clist</code>
+or
+<code>olist</code>.
+You can ignore this information,
+but it's useful to me in debugging 
+if there's a crash.
+</p>
+<div class="bs-example">
+showstack
+</div>
+<div class="highlight">
+(A pop-up window is displayed)
+</div>
+
+
+
+
 <p><a name="skipkeep"></a></p>
 <h2>skipkeep</h2>
 <dl class="dl-horizontal">
 <dt>Usage:</dt><dd><code><b>A</b> <var>c</var> <var>d</var> skipkeep</code></dd>
-<dt>Shortcut:</dt><dd><code>-sk</code></dd>
+<dt>Shortcut:</dt><dd><code>][</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
@@ -1089,9 +1193,6 @@ A B C D E F G H I J K L M N / 3 / 2 -sk
 <div class="highlight">
 D E I J N
 </div>
-
-<h1>showStack</h1>
-<h1>intereaveSteps %s</h1>
 
 
 
@@ -1316,11 +1417,11 @@ first element of <b>B</b>.
 
 
 
-<p><a name="uploop"></a></p>
-<h2>uploop</h2>
+<p><a name="uprun"></a></p>
+<h2>uprun</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> uploop</code></dd>
-<dt>Shortcut:</dt><dd><code>&lt;l</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> uprun</code></dd>
+<dt>Shortcut:</dt><dd><code>&lt;r</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
@@ -1377,11 +1478,11 @@ The following example assumes the default domain of [0,7].
 
 
 
-<p><a name="updownloop"></a></p>
-<h2>updownloop</h2>
+<p><a name="updownrun"></a></p>
+<h2>updownrun</h2>
 <dl class="dl-horizontal">
-<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> updownloop</code></dd>
-<dt>Shortcut:</dt><dd><code>&lt;dl</code></dd>
+<dt>Usage:</dt><dd><code><b>A</b> <b>B</b> <var>c</var> updownrun</code></dd>
+<dt>Shortcut:</dt><dd><code>&lt;dr</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
