@@ -31,8 +31,8 @@ function drawCanvas() {
 
 	CanvasSize  = Math.min(c.width, c.height);
 	getDomainSizes();
-	var rightSquares = Math.max(TieUpWidth+2, WeftDMax+1+4);
-	var topSquares = Math.max(TieUpHeight+2, WarpDMax+1+4);
+	var rightSquares = Math.max(TieUpWidth+2, WeftDMax+1+3);
+	var topSquares = Math.max(TieUpHeight+2, WarpDMax+1+3);
 	var maxGap = Math.max(rightSquares, topSquares);
 	var numSquares = FabricSize + maxGap + 1;
 
@@ -128,7 +128,7 @@ function drawWarp() {
 	var right = FabricRight;
 	var bottom = FabricTop - SqSize;
 	var left = right - (FabricSize * SqSize);
-	var top = bottom - ((WarpDMax+1) * SqSize);
+	var top = bottom - (WarpDMax * SqSize);
 	var colorTop = top - (2 * SqSize);
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
@@ -140,7 +140,7 @@ function drawWarp() {
 		var cellNum = S[col % S.length];
 		cellNum = toWarpDomain(cellNum);
 		if (cellNum >= 0) {
-			Ctx.fillRect(right-((col+1)*SqSize), bottom-((cellNum+1)*SqSize), SqSize, SqSize);
+			Ctx.fillRect(right-((col+1)*SqSize), bottom-(cellNum*SqSize), SqSize, SqSize);
 		}
 	}
 	// draw the colors
@@ -156,7 +156,7 @@ function drawWarp() {
 function drawWeft() {
 	var left = FabricRight + SqSize;
 	var top = FabricTop;
-	var right = left + ((WeftDMax+1) * SqSize);
+	var right = left + (WeftDMax * SqSize);
 	var bottom = top + (FabricSize * SqSize);
 
 	var colorLeft = right + SqSize;
@@ -170,7 +170,7 @@ function drawWeft() {
 		var cellNum = R[row % R.length];
 		cellNum = toWeftDomain(cellNum);
 		if (cellNum >= 0) {
-			Ctx.fillRect(left+(cellNum*SqSize), top+(row*SqSize), SqSize, SqSize);
+			Ctx.fillRect(left+((cellNum-1)*SqSize), top+(row*SqSize), SqSize, SqSize);
 		}
 	}
 	// draw the colors
@@ -226,14 +226,18 @@ function drawFabric() {
 		for (var col=0; col<FabricSize; col++) {
 			var tieUpCol = R[row % R.length];
 			var tieUpRow = S[col % S.length];
+			tieUpCol--;   // fix for user's 1-based indexing
+			tieUpRow--;
+			tieUpCol = tieUpCol % TieUpWidth;
+			tieUpRow = tieUpRow % TieUpHeight;
 			var rgb = "rgb(0, 0, 0)";
 			if (tieUpCol < 0) {
 				rgb = WarpColors[col % WarpColors.length];
 			} else if (tieUpRow < 0) {
 				rgb = WeftColors[row % WeftColors.length];
 			} else {
-				//var tieUpVal = T[(tieUpRow * TieUpWidth) + tieUpCol];
-				var tieUpVal = T[(tieUpCol * TieUpHeight) + tieUpRow];
+				var tieUpIndex = (tieUpCol * TieUpHeight) + tieUpRow;
+				var tieUpVal = T[tieUpIndex % T.length];
 				if (tieUpVal === 1) {  // use warp color
 					rgb = WarpColors[col % WarpColors.length];
 				} else { // use weft color
