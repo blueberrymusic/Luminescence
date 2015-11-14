@@ -212,9 +212,9 @@ var Dispatch = [
 	[ "concat", DoConcat ], 
 	[ "domain", DoDomain ],
 	[ "down", DoDown ], 
-	[ "downloop", DoDownLoop ], 
+	[ "downrun", DoDownRun ], 
 	[ "downup", DoDownUp ], 
-	[ "downuploop", DoDownUpLoop ], 
+	[ "downuprun", DoDownUpRun ], 
 	[ "dup", DoDup ],
 	[ "extend", DoExtend ], 
 	[ "growblock", DoGrowBlock ], 
@@ -228,7 +228,7 @@ var Dispatch = [
 	[ "pop", DoPopOp ],
 	[ "push", DoPush ], 
 	[ "ramp", DoRamp ], 
-	[ "ramploop", DoRampLoop ], 
+	[ "ramprun", DoRampRun ], 
 	[ "repeat", DoRepeat ], 
 	[ "reverse", DoReverse ], 
 	[ "rotatel", DoRotateL ],
@@ -243,9 +243,9 @@ var Dispatch = [
 	[ "twillr", DoTwillR ], 
 	[ "twilll", DoTwillL ], 
 	[ "up", DoUp ], 
-	[ "uploop", DoUpLoop ], 
+	[ "uprun", DoUpRun ], 
 	[ "updown", DoUpDown ], 
-	[ "updownloop", DoUpDownLoop ], 
+	[ "updownrun", DoUpDownRun ], 
 	[ "vlen", DoVlen ],
 	[ "vmax", DoVmax ],
 	[ "vmin", DoVmin ],
@@ -257,9 +257,9 @@ var Dispatch = [
 	[ "#p", DoBlockPal ],
 	[ ",", DoConcat ],
 	[ ">", DoDown ],
-	[ ">l", DoDownLoop ],
+	[ ">r", DoDownRun ],
 	[ ">u", DoDownUp ],
-	[ ">ul", DoDownUpLoop ],
+	[ ">ur", DoDownUpRun ],
 	[ "+", DoExtend ],
 	[ "=", DoGrowBlock ],
 	[ "i#", DoIBlock ],
@@ -270,7 +270,7 @@ var Dispatch = [
 	[ "&", DoPermute ],
 	[ "/", DoPush ],
 	[ "-", DoRamp ],
-	[ "-l", DoRampLoop ],
+	[ "-r", DoRampRun ],
 	[ "*", DoRepeat ],
 	[ "@", DoReverse ],
 	[ "<<", DoRotateL ],
@@ -280,9 +280,9 @@ var Dispatch = [
 	[ "t>>", DoTwillR ],
 	[ "t<<", DoTwillL ],
 	[ "<", DoUp ],
-	[ "<l", DoUpLoop ],
+	[ "<r", DoUpRun ],
 	[ "<d", DoUpDown ],
-	[ "<dl", DoUpDownLoop ]
+	[ "<dr", DoUpDownRun ]
 ];
 	
 // If it's an operator, call its function. Otherwise it should be an int. Check 
@@ -359,11 +359,11 @@ function DoDown() {
 	handleUpOrDown(aList, bList, 0, true);
 }
 
-function DoDownLoop() { 
-	var numLoops = popInt();
+function DoDownRun() { 
+	var numRuns = popInt();
 	var bList = popList();
 	var aList = popList();
-	handleUpOrDown(aList, bList, numLoops, true);
+	handleUpOrDown(aList, bList, numRuns, true);
 }
 
 function DoDownUp() { 
@@ -372,11 +372,11 @@ function DoDownUp() {
 	handleDownUp(aList, bList, 0, true);
 }
 	
-function DoDownUpLoop() { 
-	var numLoops = popInt();
+function DoDownUpRun() { 
+	var numRuns = popInt();
 	var bList = popList();
 	var aList = popList();
-	handleDownUp(aList, bList, numLoops, true);
+	handleDownUp(aList, bList, numRuns, true);
 }
 
 function DoDup() {
@@ -525,11 +525,11 @@ function DoRamp() {
 	handleRamp(aList, bList, 0);
 }
 
-function DoRampLoop() { 
-	var numLoops = popInt();
+function DoRampRun() { 
+	var numRuns = popInt();
 	var bList = popList();
 	var aList = popList();
-	handleRamp(aList, bList, numLoops);
+	handleRamp(aList, bList, numRuns);
 } 
 
 function DoRepeat() {
@@ -663,11 +663,11 @@ function DoUp() {
 	handleUpOrDown(aList, bList, 0, false);
 }
 
-function DoUpLoop() { 
-	var numLoops = popInt();
+function DoUpRun() { 
+	var numRuns = popInt();
 	var bList = popList();
 	var aList = popList();
-	handleUpOrDown(aList, bList, numLoops, false);
+	handleUpOrDown(aList, bList, numRuns, false);
 }
 
 function DoUpDown() { 
@@ -676,11 +676,11 @@ function DoUpDown() {
 	handleDownUp(aList, bList, 0, false);
 }
 
-function DoUpDownLoop() {
-	var numLoops = popInt();
+function DoUpDownRun() {
+	var numRuns = popInt();
 	var bList = popList();
 	var aList = popList();
-	handleDownUp(aList, bList, numLoops, false);
+	handleDownUp(aList, bList, numRuns, false);
 }
 
 function DoVlen() {
@@ -771,16 +771,16 @@ function handleBinary(list, chars01) {
 // start and end are strings, so turn them into numbers first, but as usual
 // save the resulting list elements as strings.
 // This helper function simplifies the various versions of up, down, updown,
-// etc. with and without loops. It makes things much easier than the C# code!
+// etc. with and without runs. It makes things much easier than the C# code!
 //
-function buildBridge(start, end, numLoops, goDown) {
+function buildBridge(start, end, numRuns, goDown) {
 	start = toDomain(Number(start));
 	end = toDomain(Number(end));
 	var newList = [];
 	var delta = 1;
 	if (goDown) delta = -1;
-	// build the loops
-	for (var loop=0; loop<numLoops; loop++) {
+	// build the runs
+	for (var run=0; run<numRuns; run++) {
 		for (var j=0; j<1+DomainMax-DomainMin; j++) {
 			var v = start + ((j+1) * delta);
 			v = toDomain(v);
@@ -805,10 +805,10 @@ function buildBridge(start, end, numLoops, goDown) {
 // ramp to join the last element of the left with the first element of the right. Optionally
 // also include several complete ascending or descending ramps between them as well.
 //
-function handleUpOrDown(leftList, rightList, numLoops, goDown) {
+function handleUpOrDown(leftList, rightList, numRuns, goDown) {
 	var leftEnd = Number(leftList[leftList.length-1]);
 	var rightStart = Number(rightList[0]);
-	var bridge = buildBridge(leftEnd, rightStart, numLoops, goDown);
+	var bridge = buildBridge(leftEnd, rightStart, numRuns, goDown);
 	var newList = leftList;
 	newList = newList.concat(bridge);
 	newList = newList.concat(rightList);
@@ -822,7 +822,7 @@ function handleUpOrDown(leftList, rightList, numLoops, goDown) {
 // Tweaking what's in CG&A, the A list can have 1 more entry than B, so we can
 // make repeating triangular structures.
 //
-function handleDownUp(leftList, rightList, numLoops, downFirstThenUp) {
+function handleDownUp(leftList, rightList, numRuns, downFirstThenUp) {
 	if (leftList.length !== rightList.length+1) {
 		var norms = normalizeLists(leftList, rightList);
 		leftList = norms[0];
@@ -831,11 +831,11 @@ function handleDownUp(leftList, rightList, numLoops, downFirstThenUp) {
 	var goDown = downFirstThenUp;
 	var newList = [leftList[0]];
 	for (var i=0; i<rightList.length; i++) {
-		var bridge = buildBridge(leftList[i], rightList[i], numLoops, goDown);
+		var bridge = buildBridge(leftList[i], rightList[i], numRuns, goDown);
 		newList = newList.concat(bridge);
 		newList.push(rightList[i]);
 		if (i < leftList.length-1) {
-			bridge = buildBridge(rightList[i], leftList[i+1], numLoops, !goDown);
+			bridge = buildBridge(rightList[i], leftList[i+1], numRuns, !goDown);
 			newList = newList.concat(bridge);
 			newList.push(leftList[i+1]);
 		}
@@ -909,13 +909,13 @@ function handlePermute(aList, bList) {
 	pushList(newList);
 }
 
-function handleRamp(leftList, rightList, numLoops) {
+function handleRamp(leftList, rightList, numRns) {
 	var leftEnd = toDomain(Number(leftList[leftList.length-1]));
 	var rightStart = toDomain(Number(rightList[0]));
 	var newList = leftList;
 	var goDown = true;
 	if (leftEnd < rightStart) goDown = false;
-	var bridge = buildBridge(leftEnd, rightStart, numLoops, goDown);
+	var bridge = buildBridge(leftEnd, rightStart, numRuns, goDown);
 	newList = newList.concat(bridge);
 	newList = newList.concat(rightList);
 	pushList(newList);

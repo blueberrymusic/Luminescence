@@ -358,21 +358,14 @@ Our rule is that each column in the warp has exactly
 one black cell.
 So we only need one number,
 telling us where in the column the cell is located.
-As the draing on the right shows,
+As the image on the right shows,
 we start counting the warp by going up
 along the rightmost column,
 then we move one step left and go up again,
 then one step left and go up again,
 and so on.
-We number the rows in the warp
-and the columns in the weft
-starting with 1.
 </p>
 <p>
-So the bottom-most row in the weft is row 1,
-then row 2 is above it,
-then row 3,
-and so on.
 Looking at the pattern in the warp,
 we can see the rightmost column has
 its black cell in row 1,
@@ -463,16 +456,10 @@ you'll see it's just the pattern
 </p>
 
 <p>
-You'll be relieved to know that you'll only
-need to count things out like this when you're
-entering someone else's draft from a book or
-website,
-or when your pattern is not at all what you
-expected and you need to check what numbers
-you're making.
+You'll be relieved to know that you'll very
+rarely need to count things out like this.
 Most of the time you'll be creating your
-patterns using the cool techniques in the
-pattern-making language,
+patterns using the pattern-making language,
 and leaving all of this counting stuff up to
 the computer.
 </p>
@@ -715,8 +702,30 @@ press the arrow button to the right of
 the box you're in.
 But the real power of AWL comes from 
 using its built-in commands to make
-something interesting.
+big, interesting patterns.
+For example, look at the preset named
+<em>Long Green</em>.
+You can see the AWL expressions for the
+warp and left in the boxes on the left
+(don't worry about what how to read them
+right now, just notice how short they are).
+The warp expression makes a pattern
+a bit over 800 numbers long,
+and the warp is just over 600.
+This means those two short expressions
+specify a piece of fabric a little larger
+than 800 wide and 600 tall
+(looms, both real and digital, just repeat
+this basic block over and over to make
+as large a fabric as you like).
+Imagine designing and then typing in
+(or clicking!) 800 cells,
+and then debugging the inevitable mistakes.
+For something this size
+(and also for many smaller drafts),
+AWL is a much nicer way to go.
 </p>
+<h2>About Stack Based Languages</h2>
 <p>
 AWL is a <em>stack-based</em> language.
 The traditional way to think about this
@@ -740,13 +749,21 @@ And if we pop a tray it's no longer
 on the stack,
 but it's on our hands where we can
 read its value and do something with it.
-We'll say that if there are no trays,
+Those two things are all we can do:
+there's no peeking into the stack,
+re-ordering the trays,
+or anything like that.
+Just push a new tray on top,
+or pop the top one off.
+</p>
+<p>
+We say that if there are no trays,
 we have an <strong>empty stack</strong>
 (the thinking is that the stack is still
 there in an abstract way,
-there's just nothing in it).
+but there's just nothing in it).
 We'll make the rule that it's illegal
-to try to pop the top tray off an empty
+to try to try to pop the top tray off an empty
 stack (since there are no trays to pop).
 </p>
 <p>
@@ -817,7 +834,7 @@ And it's almost right for AWL,
 but with a twist.
 Our pieces of data are not number,
 but <strong>lists</strong>.
-They can be lists of number or lists of
+They can be lists of numbers or lists of
 colors, but either way they're always lists.
 In AWL, 
 a list has to have at least one element
@@ -827,7 +844,7 @@ In fact, much of the power of AWL is that
 you can create very big lists with just a
 few commands.
 Since our lists get turned into the 
-checkerboards of the warp, weft, and tie-up
+grids of the warp, weft, and tie-up
 (and the colors for the warp and weft),
 having really long lists with lots of
 interesting internal patterns can produce
@@ -841,8 +858,8 @@ structure and detail.
 <p>
 AWL commands are also called <strong>operators</strong>,
 and the data they use are also called <strong>arguments</strong>.
-We call any item on a list an <strong>element</strong>,
-so in AWL any element is either a number or a color.
+We call any item on a list an <strong>element</strong>.
+In AWL, an element is either a number or a color.
 Any command that produces a result automatically
 pushes that result onto the stack when it's done.
 </p>
@@ -857,8 +874,8 @@ simply pops a list off the stack,
 reverses the order of its elements,
 and pushes the result back on.
 You can give <code>reverse</code> a list
-of numbers or colors, and it will happilyd
-do its job.
+of numbers or colors, and it will happily
+do the same job.
 </p>
 <p>
 On the other hand, some commands require
@@ -869,10 +886,11 @@ For example,
 It makes a new list by repeating each
 element of <b>B</b> the number of times
 given by the corresponding element of <b>A</b>.
+If
 <code><b>A</b>=2 3 4</code>
 and
 <code><b>B</b>=1 5 8</code>,
-the result of block would be
+the result of <code><b>A</b> <b>B</b> block</b></code>  would be
 <code>1 1 5 5 5 8 8 8 8</code>.
 If <code><b>B</b>=yellow blue red</code>,
 the result of block would be
@@ -882,7 +900,7 @@ list <b>A</b> has to contain numbers,
 while list <b>B</b> can hold either numbers or colors.
 </p>
 <p>
-The table identifies whether each 
+The table below identifies whether each 
 list must be made up of all numbers,
 or all colors,
 or either.
@@ -921,13 +939,16 @@ one entry with the list <code>1 2 3</code>,
 and on top of that (and on top of the stack)
 is the list <code>9 8 7 6</code>.
 Forgetting to push between two lists is a common
-mistake.
-You'll often see this kind of thing written
-<code>1 2 3 / 9 8 7 6</code> because
-<code>/</code> is a shortcut for <code>push</code>.
+mistake, so if things go wrong for you,
+this is a good first thing to check for.
+Because you'll use <block>push</block> so much,
+there's a shortcut for it:
+the forward slash (technically called a <em>virgule</em>): <code>/</code>.
+So you'll often see the above example written simply
+<code>1 2 3 / 9 8 7 6</code>.
 </p>
 <p>
-This situation is the pretty much the only 
+This situation is pretty much the only 
 time you'll ever need to explicitly push something
 onto the stack,
 because
@@ -951,97 +972,112 @@ commands (in my expressions, I always leave them out).
 <h3>Results Get Pushed Automatically</h3>
 <p>
 Any command that produces a result will push
-that result back onto the stack automatically.
-If you start providing numbers or colors,
-they are presumed to be part of a new list,
-and are not tacked on to the end of the
-list that was just pushed as the result
-of the command.
+that result back onto the stack automatically
+as a new list.
 </p>
 <p>
-For exmaple, the expression
-<code>1 2 3 reverse 4 5</code>
-will produce a stack with two elements.
-On the bottom is the list <code>3 2 1</code>,
-and above it, 
-on the top of the stack,
-is the list <code>4 5</code>.
+For example, the expression
+<code>1 2 3 reverse</code>
+will cause <code>1 2 3</code> to be
+popped off by <code>reverse</code>,
+and when that command is done,
+it will push its result <code>3 2 1</code>
+onto the top of the stack.
+</p>
+
+<h3>Draft Sizes</h3>
+<p>
+When your AWL is copied to the warp,
+it will draw a grid that starts at 1,
+but extends upwards as high as necessary
+to include your expression.
+So if your expression has the values 3 through 13,
+you'll get a warp that's 15 units high
+(because we always start at 1).
+Note that if this is bigger than the tie-up,
+the tie-up will get automatically repeated
+internally to match your huge warp;
+this will usually give you surprising results.
+All of the above also holds for the weft.
+</p>
+<p>
+You can control the size of the fabric by
+using the <em>Fabric Size</em> control located
+just above the fabric.
+As you make the fabric larger,
+the individual cells in the draft necessarily
+get smaller.
+If you want to edit the tie-up interactively
+with mouse clicks,
+the cells have to be big enough for you to
+be able to point to them accurately.
+If they're too small, you'll see a red box
+when you click. 
+That's your signal to make the loom cells
+bigger by choosing a smaller fabric size.
 </p>
 
 <h3>The Domain</h3>
 <p>
 When you have 8 threads in your warp
 and weft (the starting default),
-then your pattern can only contain the
-numbers 0 through 7.
-This range [0,7] is called the <strong>domain</strong>.
+then your pattern can only refer to threads
+numbers 1 through 8.
+This range [1,8] is called the <strong>domain</strong>.
 </p>
 <p>
-The domain is most important when you're using
-counting commands.
-For example, <code>up</code>
-takes two lists as input 
-(as usual, we'll call them <b>A</b> and <b>B</b>).
-The result of <code>up</code> is the list <b>A</b>,
-followed by an ascending list of numbers that starts
-with the last value of <b>A</b> and ends at the
-first value of <b>B</b>, then the list <b>B</b>.
-For example, 
-<code>1 2 3 / 6 7 up</code>
-will produce
-<code>1 2 3 4 5 6 7</code>.
-In this example, <code>up</code> is counting
-upwards from 3 to 6,
-and including all the values in between 
-(4 and 5) in the output.
-But what should be in response to
-<code>3 5 6 / 2 2 up</code>?
-The answer is that the program still counts
-upward,
-but it respects the domain.
-When it gets to 8,
-which is outside the domain,
-that <em>wraps around</em> to the
-start of the domain, which is 0,
-and the counting continues.
-So the result of that expression is
-<code>3 5 6 7 0 1 2 2</code>.
+When you're entering AWL, most of the time
+you don't need to think about the domain.
+The exception is when you use AWL commands
+that create <b>runs</b>.
+A run is a pass through the whole domain,
+going either up or down.
+For example,
+a run starting at 3 
+using the default domain
+is <code>3 4 5 6 7 8 1 2</code>.
+If the domain was instead [2, 6],
+then a run starting at 3 would be
+<code>3 4 5 6 2</code>.
+Most of these commands have the 
+word <code>run</code> in them.
+</p>
 </p>
 <p>
 The same principle applies to counting down.
 For example,
-<code>3 5 6 / 2 2 down</code>
-produces
-<code>3 5 6 5 4 3 2 2</code>,
-while
-<code>2 3 / 6 5 down</code>
-produces
-<code>2 3 2 1 0 7 6 5</code>,
-where <code>down</code> inserted
-the short run <code> 2 1 0 7</code>
-as it tried to count dowwards from 3 to 6.
+counting down from 3 in our default
+domain would produce the run <code>3 2 1 8 7 6 5 4</code>.
 </p>
 <p>
-You can set the two ends of the domain
-with the <code>domain</code> command,
-allowing you to change it mid-expression.
+You set the two ends of the domain
+with the <code>domain</code> command.
+You can use this command to
+change the domain in the middle of an AWL expression.
 For example, if your warp has only 4 threads,
 you probably want to wrap around your up counts
 after 3. 
-Consider this expression:
+Many commands let you specify the start
+and end values for a run.
+For example, <code>up</code>
+takes two lists,
+and inserts an upward ramp from the
+last element of the first list to
+the first element of the second list.
+So in our standard domain, 
 <code>1 2 / 1 2 up</code>.
-Using the default domain, 
-you'd get back
-<code>1 2 3 4 5 6 7 0 1 2</code>.
-But if you want to use a domain from 0 to 3,
+would give us
+<code>1 2 3 4 5 6 7 8 1 2</code>
+(the middle part, <code>3 4 5 6 7 8</code>, is the run).
+But if you want to use a domain from 1 to 4,
 you'd write
-<code>0 / 3 domain 1 2 / 1 2 up</code>,
+<code>1 / 4 domain 1 2 / 1 2 up</code>,
 which would produce
-<code>1 2 3 0 1 2</code>.
+<code>1 2 3 4 1 2</code>.
 Keep in mind that your new domain will remain
 in effect until you change it again.
 Each input box maintains its own domain,
-and it always starts out with the range [0,7].
+and it always starts out with the range [1,8].
 </p>
 
 <h3>Automatic Resizing</h3>
@@ -1049,7 +1085,7 @@ and it always starts out with the range [0,7].
 <p>
 Some commands require both lists to have
 the same length.
-For exmaple, we saw above that <code>block</code>
+For example, we saw above that <code>block</code>
 takes two lists, <b>A</b> and <b>B</b>.
 It takes the first number in <b>A</b>,
 and repeats the first element of <b>B</b> that
@@ -1137,7 +1173,7 @@ After the table is a summary of the differences.
 Remember that the first thing popped off the stack is the
 most recent thing pushed.
 So for example, the commmand summarized
-<code><b>A</b> <b>B</b> <var>c</va> ramploop</code>
+<code><b>A</b> <b>B</b> <var>c</va> ramprun</code>
 expects three elements on the stack:
 on top (and most recently pushed) is the number <var>c</var>,
 under it (and pushed just before <var>c</var>) is the list <b>B</b>,
@@ -1251,8 +1287,8 @@ yielding no new list after the split).
 	<td><b>A</b>, descending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <var>c</var> downloop</td>
-	<td>&gt;l</td>
+	<td><b>A</b> <b>B</b> <var>c</var> downrun</td>
+	<td>&gt;r</td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
@@ -1269,8 +1305,8 @@ yielding no new list after the split).
 	<td>Alternating down and up runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <var>c</var> downuploop</td>
-	<td>&gt;ul</td>
+	<td><b>A</b> <b>B</b> <var>c</var> downuprun</td>
+	<td>&gt;ur</td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
@@ -1322,7 +1358,7 @@ yielding no new list after the split).
 	<td><i class="fa fa-check"></i></td>
 	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
 </tr>
-<tr>InterleaveSteps %s<td>TK</td></tr>
+<tr><td>InterleaveSteps %s TK</td></tr>
 <tr>
 	<td><b>A</b> iblockpal</td>
 	<td>i#p</td>
@@ -1396,8 +1432,8 @@ yielding no new list after the split).
    <td><b>A</b>, up or down as needed to stay in domain, <b>B</b></td>
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <var>c</var> ramploop</td>
-	<td>-l</td>
+	<td><b>A</b> <b>B</b> <var>c</var> ramprun</td>
+	<td>-r</td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
@@ -1440,8 +1476,8 @@ yielding no new list after the split).
 	<td> </td>
 	<td>rotate <b>A</b> right by <var>d</var> steps</td>
 </tr>
-<tr>ShowStack showstack<td>TK</td></tr>
-<tr>Skipkeep skipkeep<td>TK</td></tr>
+<tr><td>ShowStack showstack TK</td></tr>
+<tr><td>Skipkeep skipkeep TK</td></tr>
 <tr>
 	<td><b>A</b> <var>c</var> split</td>
 	<td> </td>
@@ -1524,8 +1560,8 @@ yielding no new list after the split).
 	<td><b>A</b>, ascending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <var>c</var> uploop</td>
-	<td>&lt;l</td>
+	<td><b>A</b> <b>B</b> <var>c</var> uprun</td>
+	<td>&lt;r</td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
@@ -1542,8 +1578,8 @@ yielding no new list after the split).
 	<td>Alternating up and down runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> <var>c</var> updownloop</td>
-	<td>&lt;dl</td>
+	<td><b>A</b> <b>B</b> <var>c</var> updownrun</td>
+	<td>&lt;dr</td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
@@ -1599,7 +1635,7 @@ first number in the second list. So the values you add to each
 number in your starting list are simply the numbers you provide.
 For example, <code>3 4 : 1 2 3</code> will add the values <code>1 2 3</code>
 to <code>3</code> and then to <code>4</code>, producing <code>4 5 6 5 6 7</code>.</li>
-<li><strong>updown, updownloop, downup, downuploop:</strong> These four
+<li><strong>updown, updownrun, downup, downuprun:</strong> These four
 commands normally reshape the two input lists so they have the same size.
 Introduced to the online version, this resizing won't happen if
 the first list can have 1 more element than the second one. This way
