@@ -1,10 +1,13 @@
 // AWL Parser
-// Version 0.1, 18 Oct 2015, AG  (adapted from my C# version from 2003!)
+// Version 1.1, 18 Oct 2015, AG 
+//    adapted from my C# version from 2003!
+// Version 1.2, 13 Nov 2015, AG 
+//    changing all counting to 1-based, to match convention
 
 "use strict";
 var AATheStack = [];  // entries [element, type]
-var DomainMin = 0;
-var DomainMax = 7;
+var DomainMin = 1;
+var DomainMax = 8;
 var DebugString = "";
 var ParsedSoFar = "";
 var Alerted = false;
@@ -26,7 +29,7 @@ function ProcessString(input) {
 		word = word.trim();
 		processToken(word);
 		ParsedSoFar += " " + word;
-		if (Alerted) return [ "0" ];
+		if (Alerted) return [ "1" ];
 	}
 	DebugString += stackToHTML();
 	var top = popList();
@@ -39,8 +42,8 @@ function ProcessString(input) {
 
 function initStack() {
 	AATheStack = [];
-	DomainMin = 0;
-	DomainMax = 7;
+	DomainMin = 1;
+	DomainMax = 8;
 	DebugString = "";
 	ParsedSoFar = "";
 	Alerted = false;
@@ -108,7 +111,8 @@ function stackIsEmpty() {
 ////////////////////////////////
 
 function showAlert(msg) {
-	alert("ERROR: "+msg+" Read so far: "+ParsedSoFar);
+	//alert("ERROR: "+msg+" Read so far: "+ParsedSoFar);
+	showModalAlert("AWL parsing problem", "I ran into a problem translating your AWL. Here's what I've managed so far: "+ParsedSoFar);
 	Alerted = true;
 	//throw new Error(); // stop processing, let user try again
 }
@@ -181,9 +185,16 @@ function normalizeLists(a, b) {
 }
 
 function toDomain(v) {
-	var dr = 1+DomainMax - DomainMin;
+	var dr = 1+DomainMax-DomainMin;
 	while (v < DomainMin) v += dr;
 	while (v > DomainMax) v -= dr;
+	return v;
+}
+
+function toRange(v, min, max) {
+	var dr = 1+max-min;
+	while (v < min) v += dr;
+	while (v > max) v -= dr;
 	return v;
 }
 
@@ -221,6 +232,7 @@ var Dispatch = [
 	[ "reverse", DoReverse ], 
 	[ "rotatel", DoRotateL ],
 	[ "rotater", DoRotateR ],
+	[ "showstack", DoShowStack ],
    [ "skipkeep", DoSkipKeep ],
 	[ "split", DoSplit ],
 	[ "swap", DoSwap ],
@@ -317,8 +329,9 @@ function DoCipher() {
 	var aList = popList();
 	var newList = [];
 	for (var i=0; i<aList.length; i++) {
-		var elem = aList[i] % bList.length;
-		newList.push(bList[elem]);
+		var index = parseInt(aList[i]);  // 1 indexing, so 1 means first element
+		index = toRange(index, 1, bList.length);
+		newList.push(bList[index-1]);
 	}
 	pushList(newList);
 }
@@ -334,7 +347,7 @@ function DoConcat() {
 function DoDomain() { 
 	DomainMax = popInt();
 	DomainMin = popInt();
-	if (DomainMin < 0) DomainMin = 0;
+	if (DomainMin < 1) DomainMin = 1;
 	if (DomainMax <= DomainMin) DomainMax = DomainMin+1;
 }
 
@@ -518,6 +531,11 @@ function DoRotateR() {
 	var count = popInt();
 	var list = popList();
 	handleRotation(list, -1*count);
+}
+
+function DoShowStack() {
+	var s = stackToHTML();
+	showModalAlert("Requested AWL stack", s);
 }
 
 function DoSkipKeep() {
@@ -856,7 +874,8 @@ function handlePermute(aList, bList) {
 	}
 	var newList = [];
 	for (var i=0; i<newa.length; i++) {
-		var index = Number(newb[i]) % newb.length;
+		var index = Number(newb[i])-1; // user uses 1-origin indexing
+		index = toRange(index, 0, newb.length-1);
 		var v = newa[index];
 		newList.push(v.toString());
 	}

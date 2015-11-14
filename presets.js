@@ -23,8 +23,8 @@ function makePresets() {
 // name, warp-pattern, weft-pattern, warp-colors, weft-colors, tie-up
 var RawPresets = [
 [ "Simple Twill",
-"0 1 / 7 updown",
-"0 1 / 7 updown",
+"1 2 / 8 updown",
+"1 2 / 8 updown",
 "DeepSkyBlue", "PowderBlue", 
 "1 1 1 1 0 0 0 0 / 1 / 8 t<<",
 120, 8, 8],
