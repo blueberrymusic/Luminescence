@@ -221,6 +221,7 @@ var Dispatch = [
 	[ "iblock", DoIBlock ], 
 	[ "iblockpal", DoIBlockPal ], 
 	[ "interleave", DoInterleave ], 
+	[ "interleaveSteps", DoInterleaveSteps ], 
 	[ "palindrome", DoPalindrome ], 
 	[ "permute", DoPermute ],
 	[ "pbox", DoPbox ],
@@ -264,6 +265,7 @@ var Dispatch = [
 	[ "i#", DoIBlock ],
 	[ "i#p", DoIBlockPal ],
 	[ "%", DoInterleave ],
+	[ "%s", DoInterleaveSteps ],
 	[ "|", DoPalindrome ],
 	[ "&", DoPermute ],
 	[ "/", DoPush ],
@@ -435,13 +437,38 @@ function DoIBlockPal() {
 }
 
 function DoInterleave() {   
-	normalizeStackTopLists();
 	var bList = popList();
 	var aList = popList();
 	var newList = [];
-	for (var i=0; i<aList.length; i++) {
-		newList.push(aList[i]);
-		newList.push(bList[i]);
+	var maxLen = Math.max(aList.length, bList.length);
+	for (var i=0; i<maxLen; i++) {
+		if (i < aList.length) newList.push(aList[i]);
+		if (i < bList.length) newList.push(bList[i]);
+	}
+	pushList(newList);
+}
+
+function DoInterleaveSteps() {   
+	var bSteps = popInt();
+	var aSteps = popInt();
+	if (aSteps < 1) aSteps = 1;
+	if (bSteps < 1) bSteps = 1;
+	var bList = popList();
+	var aList = popList();
+	var newList = [];
+	var aIndex = 0;
+	var bIndex = 0;
+	while ((aIndex < aList.length) || (bIndex < bList.length)) {
+		for (var j=0; j<aSteps; j++) {
+			if (aIndex < aList.length) {
+				newList.push(aList[aIndex++]);
+			}
+		}
+		for (var j=0; j<bSteps; j++) {
+			if (bIndex < bList.length) {
+				newList.push(bList[bIndex++]);
+			}
+		}
 	}
 	pushList(newList);
 }

@@ -1314,15 +1314,6 @@ yielding no new list after the split).
 	<td>Like block but the inputs are interleaved in <b>A</b></td>
 </tr>
 <tr>
-	<td><b>A</b> iblockpal</td>
-	<td>i#p</td>
-	<td> </td>
-	<td><i class="fa fa-check"></i></td>
-	<td> </td>
-	<td><i class="fa fa-check"></i></td>
-	<td>iblock with internal palindrome</td>
-</tr>
-<tr>
 	<td><b>A</b> <b>B</b> interleave</td>
 	<td>%</td>
 	<td> </td>
@@ -1330,6 +1321,16 @@ yielding no new list after the split).
 	<td> </td>
 	<td><i class="fa fa-check"></i></td>
 	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
+</tr>
+<tr>InterleaveSteps %s<td>TK</td></tr>
+<tr>
+	<td><b>A</b> iblockpal</td>
+	<td>i#p</td>
+	<td> </td>
+	<td><i class="fa fa-check"></i></td>
+	<td> </td>
+	<td><i class="fa fa-check"></i></td>
+	<td>iblock with internal palindrome</td>
 </tr>
 <tr>
 	<td><b>A</b> <var>d</var> nth</td>
@@ -1439,15 +1440,16 @@ yielding no new list after the split).
 	<td> </td>
 	<td>rotate <b>A</b> right by <var>d</var> steps</td>
 </tr>
-<tr>ShowStack,Skipkeep<td>...</td></tr>
+<tr>ShowStack showstack<td>TK</td></tr>
+<tr>Skipkeep skipkeep<td>TK</td></tr>
 <tr>
-	<td><b>A</b> <b>B</b> swap</td>
+	<td><b>A</b> <var>c</var> split</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Exchange the top two stack elements</td>
+	<td>Cut <b>A</b> after element <var>c</var>, then push the left then right lists</td>
 </tr>
 <tr>
 	<td><b>A</b> <var>c</var> <var>d</var> stencil</td>
@@ -1459,13 +1461,13 @@ yielding no new list after the split).
 	<td>Remove entry <var>c</var>, include the next <var>d</var> entries, repeat</td>
 </tr>
 <tr>
-	<td><b>A</b> <var>c</var> split</td>
+	<td><b>A</b> <b>B</b> swap</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
-	<td>Cut <b>A</b> after element <var>c</var>, then push the left then right lists</td>
+	<td>Exchange the top two stack elements</td>
 </tr>
 <tr>
 	<td><b>A</b> tartan</td>
