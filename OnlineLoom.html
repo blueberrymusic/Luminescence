@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Andrew's Online Loom</title>
+
+<!-- The order matters! My stuff, then jQuery, the Bootstrap -->
+
+<!-- My local css comes first -->
+<link rel="stylesheet" type="text/css" href="OnlineLoom.css">
+
+<!-- jQuery must follow my style and precede Bootstrap -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Dropbox integration -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js">
+</script>
+
+<script src="ui.js"> </script>
+<script src="io.js"> </script>
+<script src="wif.js"> </script>
+<script src="awl/awl.js"> </script>
+<script src="awl/colors.js"> </script>
+<script src="presets.js"> </script>
+<script src="drawing.js"> </script>
+
+<!-- Bootstrap stuff -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+<!-- make mobile-friendly: http://www.w3schools.com/bootstrap/bootstrap_get_started.asp
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Just for grins, use Ubuntu here and there -->
+<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+	<!-- top row -->
+	<div class="container">
+		<div class="row"> <!-- row with header, IO, help -->
+			<!-- HEADER -->
+			<div class="col-sm-6">
+				<h1 class="digitalLoomLabel">Andrew's Online Loom</h1>
+			</div> <!-- column -->
+
+			<!-- I/O -->
+			<div id="loadSavePanel" class="col-sm-5">
+				<div class="row">
+					<div class="col-sm-3">
+						<button type="button" class="btn btn-block btn-default" id="saveButton" onclick="saveButtonFunction()">Save</button>
+					</div>  <!-- column 3 -->
+					<!--<span class="col-sm-2" id="saveAsSpan">Name:</span>
+					<input type="text" class="col-sm-6 input-group" name="draftNameInput" id="draftNameInput" onchange="draftNameInputFunction()" ></input>-->
+
+<div class="input-group" style="margin-top:10px;">
+<span class="input-group-addon" id="draftNameAddOn">Draft Name:</span>
+<input type="text" class="col-sm-6 input-group" name="draftNameInput" id="draftNameInput" onchange="draftNameInputFunction()" ></input>
+</div>
+
+
+				</div> <!-- row -->
+
+				<div class="row">
+					<div class="col-sm-12">
+
+
+<div class="btn-group" id="loadDraftButtonGroup">
+   
+   <button type="button" class="btn btn-default dropdown-toggle" id="loadDraftDropdownButton" data-toggle="dropdown">
+      Load Draft  
+      <span class = "caret"></span>
+   </button>
+   
+   <ul class = "dropdown-menu scrollable-menu" id="loadDraftMenuItems" role = "menu">
+      <li><a href = "#">Action</a></li>
+      <li><a href = "#">Another action</a></li>
+      <li><a href = "#">Something else here</a></li>
+      
+      <li class = "divider"></li>
+      <li><a href = "#">Separated link</a></li>
+   </ul>
+</div>
+
+
+
+
+					</div> <!-- column 12 -->
+				</div> <!-- row -->
+			</div> <!-- column 5 -->
+
+			<!-- HELP BUTTON -->
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-info" id="helpButton" onclick="helpButtonFunction()">Help!</button>
+			</div> <!-- column -->
+			
+		</div> <!-- top row with header, IO, help-->
+
+		<!-- vertical spacer -->
+		<div class="row">
+			<div class="col-sm-12"><p style="margin-top:20px;"> </p></div>
+		</div>
+
+		<div class="row"> <!-- second row. input boxes on left, canvas on right -->
+			<!-- start of input section -->
+
+<div class="col-sm-6">
+
+	<div class="row"><div class="col-sm-10">
+	<span id="patternSpan">Patterns:</span>
+	</div></div>
+
+	<!-- WARP PATTERN INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="warpPatternAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:15px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="warpPatternButton" onclick="warpPatternButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<!-- WEFT PATTERN INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:5px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="weftPatternAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:10px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="weftPatternButton" onclick="weftPatternButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<!-- spacer -->
+	<div class="row"><div class="col-sm-10"><p> </p></div></div>
+
+	<div class="row"><div class="col-sm-10">
+	<span id="colorSpan">Colors:</span>
+	</div></div>
+
+	<!-- WARP COLOR INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="warpColorAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:15px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="warpColorButton" onclick="warpColorButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<!-- WEFT COLOR INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:5px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="weftColorAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:10px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="weftColorButton" onclick="weftColorButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<!-- spacer -->
+	<div class="row"><div class="col-sm-10"><p> </p></div></div>
+
+	<div class="row"><div class="col-sm-10">
+	<span id="tieUpSpan">Tie-Up:</span>
+	</div></div>
+
+	<!-- TIE-UP INPUT -->
+	<div class="row">
+		<div class="col-sm-10" style="margin:10px 0px 0px 15px; padding:0px;">
+			<textarea class="form-control" id="tieUpAWL"></textarea>
+		</div>
+		<div class="col-sm-1" style="margin:15px 0px 0px 0px; padding: 0px 0px 0px 0px;">
+			<button class="btn btn-info" id="tieUpButton" onclick="tieUpButtonFunction()" name="" value="">
+		</div>
+	</div>
+
+	<!-- spacer -->
+	<div class="row"><div class="col-sm-10"><p> </p></div></div>
+
+	<div class="row"><div class="col-sm-10" style="height:33px;">
+	<span id="outputSpan">Output:</span>
+	</div></div>
+
+	<div class="row"><div class="col-sm-12">
+
+	<div id="outputChoiceButtons" class="btn-group" data-toggle="buttons">
+  	<label class="btn btn-default outputRadioButton active">
+    	<input type="radio" name="options" id="WarpPatternRadio" autocomplete="off" checked> Warp Pattern
+  	</label>
+  	<label class="btn btn-default outputRadioButton">
+    	<input type="radio" name="options" id="WeftPatternRadio" autocomplete="off"> Weft Pattern
+  	</label>
+  	<label class="btn btn-default outputRadioButton">
+    	<input type="radio" name="options" id="WarpColorRadio" autocomplete="off"> Warp Color
+  	</label>
+  	<label class="btn btn-default outputRadioButton">
+    	<input type="radio" name="options" id="WeftColorRadio" autocomplete="off"> Weft Color
+  	</label>
+  	<label class="btn btn-default outputRadioButton">
+    	<input type="radio" name="options" id="TieUpRadio" autocomplete="off"> Tie-up
+  	</label>
+	</div>
+
+	</div></div>
+
+
+	<!-- OUTPUT -->
+	<div class="row">
+		<div class="col-sm-12" style="margin:10px 0px 0px 15px; padding:0px;">
+			<textarea readonly class="form-control" id="AWLOutput"></textarea>
+		</div>
+	</div>
+
+			</div> <!-- end of column with text areas -->
+
+			<!-- start of canvas section-->
+			<div class="col-sm-6">
+
+				<!-- push the canvas stuff down a bit so it's centered wrt left colum -->
+				<div class="row"><div class="col-sm-12"><p style="margin-top:0px; padding:0px;">&nbsp; </p></div></div>
+
+				<div class="row">
+
+					<div class="form-inline">
+						<div class="form-group">
+    						<label >Fabric size:</label>
+							<input type="number" id="fabricSizeInput" min="2" max="600" onchange="fabricSizeInputFunction()">
+  						</div>
+  						<div class="form-group">
+    						<label style="margin-left:30px;">Tie-up Width:</label>
+							<input type="number" id="tieUpWidthInput" min="2" max="50" onchange="tieUpWidthInputFunction()">
+  						</div>
+  						<div class="form-group">
+    						<label style="margin-left:20px;">Tie-up Height:</label>
+							<input type="number" id="tieUpHeightInput" min="2" max="50" onchange="tieUpHeightInputFunction()">
+  						</div>
+					</div>
+
+				</div> <!-- row -->
+				<div class="row">
+					<div class="row"><div class="col-sm-12"><p style="margin-top:10px;">&nbsp; </p></div></div>
+				</row> <!-- row -->
+				<div class="row">
+					<div class="col-sm-12">
+					<canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;">
+					</canvas> 
+    				<div id="canvasSignalBoxDiv" style="display:none; position: absolute; z-index: 1; left: 50px; top: 20px; width:50px; height: 50px; background-color:#FF5E67;">
+				   </div>
+            </div>
+				<div class="row">
+					<div class="col-sm-6"></div>
+					<div class="col-sm-6">
+					<span id="rightClickSpan" style="text-align:right;">Right-click the draft to save it as an image.</span>
+				</div></div>
+			</div>
+		</div> <!-- row -->
+	</div> <!-- container -->
+
+<!-- I had a modal yes-no confirmation box here for the delete button. Example code at
+http://www.codeproject.com/Tips/891309/Custom-Confirmation-Box-using-Bootstrap-Modal-Dial
+-->
+
+<!-- OK-only modal from http://www.w3schools.com/bootstrap/bootstrap_modal.asp -->
+<div id="modalOK" class="modal fade" show="false" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 id="modalOKBoxTitle" class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <p id="modalOKBoxText"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="modalOKBoxButton" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+</body> 
+</html> 

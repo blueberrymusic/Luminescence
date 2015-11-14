@@ -1,0 +1,296 @@
+
+
+.digitalLoomLabel {
+	//background-color: #9933cc;
+	font-family: Ubuntu;
+	font-size: 37px;
+	//font-weight: bold;
+	background-color: #cccccc;
+	color: #ffffff;
+	margin-top: 15px;
+	padding: 35px;  // this aligns the text vertically
+	height: 110px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#helpButton {
+	margin-top: 15px;
+	font-size: 200%;
+	font-family: Ubuntu;
+	//font-weight: bold;
+	width: 100px;
+	height: 110px;
+	border: 2px solid #bbbbbb;
+	background-image:none; 
+	background-color: #cccccc;
+}
+
+#helpButton:hover  { 
+	background-image:none; 
+	background-color: #aaaaaa;
+}
+
+#loadSavePanel {
+	//background-color: #eeeeee;
+	background-color: #eeeeee;
+	margin-top: 15px;
+	height: 110px;
+}
+
+#saveButton {
+	margin: 10px 30px 0px 0px;  // TRBL
+	width: 100px;
+	height: 40px;
+	font-size: 130%;
+	//border: 1px;
+	//border-style: solid;
+	//border-color: #999999;
+	//background-image:none; 
+	//background-color: #dddddd;
+}
+
+#saveButton:hover  { 
+	//background-image:none; 
+	background-color: #cccccc;
+}
+
+#loadDraftDropdownButton {
+	margin: 10px 30px 0px 0px;  // TRBL
+	width: 180px;
+	height: 40px;
+	font-size: 130%;
+}
+
+#loadDraftDropdownButton:hover {
+	//background-image:none; 
+	background-color: #cccccc;
+}
+
+// thanks Stack overflow question 19227496
+// demo in http://www.bootply.com/86116
+.scrollable-menu {
+	height: auto;
+	max-height: 700px;
+	overflow-x: hidden;
+}
+
+#saveAsSpan {
+	font-size: 130%;
+	padding: 0px 10px 0px 0px;
+	margin: 15px 0px 0px 0px;
+	text-align: right;
+}
+
+#draftNameAddOn {
+	font-size: 130%;
+	padding: 0px 5px 0px 5px;
+}
+
+#draftNameInput {
+	font-size: 110%;
+	padding: 0px 5px 0px 5px;
+	width: 240px;
+	height:40px;
+}
+
+#loadDraftButton {
+	margin: 10px 30px 0px 0px;  // TRBL
+	width: 100px;
+	height: 40px;
+	font-size: 130%;
+}
+
+.h4textspan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 0px;
+}
+
+#patternSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 40px 40px 40px 400px;
+}
+
+#colorSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 40px 40px 40px 400px;
+}
+
+#tieUpSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 0px;
+}
+
+#outputSpan {
+	font-size: 16px;
+	font-weight: bold; 
+	text-align: right;
+	padding: 0px;
+	border: 0px;
+}
+
+#warpPatternAWL {
+	width: 460px;
+	height: 80px;
+	padding: 5px;
+	border: 3px solid #cccccc;
+	font-size: 12pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Warp-Pattern-Input.gif); 
+}
+
+#warpPatternButton {
+	border: none;
+	outline: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/WarpButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#warpPatternButton:hover  { background-position: 0px -80px; }
+
+#weftPatternAWL {
+	width: 460px;
+	height: 80px;
+	padding: 4px;
+	border: 3px solid #cccccc;
+	font-size: 12pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Weft-Pattern-Input.gif); 
+}
+
+#weftPatternButton  {
+	border: none;
+	outline: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/WeftButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#weftPatternButton:hover  { background-position: 0px -80px; }
+
+#warpColorAWL {
+	width: 460px;
+	height: 80px;
+	padding: 5px;
+	border: 3px solid #cccccc;
+	font-size: 12pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Warp-Color-Input.gif); 
+}
+
+#warpColorButton  {
+	border: none;
+	outline: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/WarpButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#warpColorButton:hover  { background-position: 0px -80px; }
+
+#weftColorAWL {
+	width: 460px;
+	height: 80px;
+	padding: 4px;
+	border: 3px solid #cccccc;
+	font-size: 12pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Weft-Color-Input.gif); 
+}
+
+#weftColorButton  {
+	border: none;
+	outline: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/WeftButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#weftColorButton:hover  { background-position: 0px -80px; }
+
+#tieUpAWL {
+	width: 460px;
+	height: 80px;
+	padding: 5px;
+	border: 3px solid #cccccc;
+	font-size: 12pt;
+	resize: none;
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url(images/BG-Tieup-Input.gif); 
+}
+
+#tieUpButton  {
+	border: none;
+	outline: none;
+	width: 55px;
+	height: 80px;
+	margin: 0px 0px 0px -8px;
+	background: url(images/TieUpButtonPair.gif) 0px 0px no-repeat; 
+}
+
+#tieUpButton:hover  { background-position: 0px -80px; }
+
+#AWLOutput {
+	width: 530px;
+	height: 80px;
+	padding: 5px;
+	border: 2px solid #cccccc;
+	background-color: #eeeeee;
+	font-size: 12pt;
+	resize: none;
+	//background-position: bottom right;
+	//background-repeat: no-repeat;
+	//background-image: url(images/BG-AWL-Output.gif); 
+}
+
+#fabricSizeInput {
+	font-size:16px; 
+	width: 80px; 
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
+#tieUpWidthInput {
+	font-size:16px; 
+	width: 80px; 
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
+}
+
+#tieUpHeightInput {
+	font-size:16px; 
+	width: 80px; 
+	-webkit-appearance:none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: 0;
