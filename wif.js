@@ -173,7 +173,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 					var splitw1 = w[1].split(',');
 					val = splitw1[0];
 				}
-				warpPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
+				warpPattern[parseInt(w[0])-1] = parseInt(val); 
 			}
 		}
 		for (var i=0; i<warpPatternLen; i++) {
@@ -195,7 +195,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 					var splitw1 = w[1].split(',');
 					val = splitw1[0];
 				}
-				weftPattern[parseInt(w[0])-1] = parseInt(val)-1; // we count starting at 0
+				weftPattern[parseInt(w[0])-1] = parseInt(val);
 			}
 		}
 		for (var i=0; i<weftPatternLen; i++) {
@@ -525,14 +525,14 @@ function currentDraftAsWIF() {
 	wifString += "[THREADING]\n";
 	var warpWords = WarpPatternOutput.split(' ');
 	for (var i=0; i<warpWords.length; i++) {
-		wifString += i+"="+(parseInt(warpWords[i])+1)+"\n";
+		wifString += i+"="+(parseInt(warpWords[i]))+"\n";
 	}
 	wifString += "\n";
 
 	wifString += "[TREADLING]\n";
 	var weftWords = WeftPatternOutput.split(' ');
 	for (var i=0; i<weftWords.length; i++) {
-		wifString += i+"="+(parseInt(weftWords[i])+1)+"\n";
+		wifString += i+"="+(parseInt(weftWords[i]))+"\n";
 	}
 	wifString += "\n";
 
