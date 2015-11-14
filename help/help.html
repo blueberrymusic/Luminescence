@@ -653,10 +653,10 @@ If you accidentally type a space,
 AWL will read it as two separate
 colors in a row to build a pattern
 For example, if you put a space in 
-<em>HarvestGold</em>, the system would look for a
-color named <em>Harvest</em> and it wouldn't find
+<code>HarvestGold</code>, the system would look for a
+color named <code>Harvest</code> and it wouldn't find
 it, giving you black as a default.
-Then it would search for <em>Gold</em>
+Then it would search for <code>Gold</code>
 and find it, since that's
 an existing color.
 So instead of a single brownish color,
@@ -676,7 +676,7 @@ and follow it with six hex digits
 (the numbers 0 to 9, and the letters a to f or A to F).
 Remember there cannot be a space between the
 hash mark and the hex digits.
-The color <em>HarvestGold</em> can be named
+The color <code>HarvestGold</code> can be named
 in hex as <code>#DA9100</code>
 (case doesn't matter, so <code>#da9100</code>
 works just as well).
@@ -693,8 +693,8 @@ Start with the string <code>rgb(</code>
 and then list your values in the order
 red, green, blue, separated by commas (<code>,</code>),
 ending with a closing parentheses (<code>)</code>).
-In this form, Harvest Gold would be
-written <code>rgb(217,145,0)</code>.
+In this form, <code>HarvestGold</code> would be
+written <code>rgb(218,145,0)</code>.
 Remember, as always, there can be 
 <em>no spaces</em> anywhere in this 
 string (not even after the commas).
@@ -1869,6 +1869,33 @@ command can be found <a href="AWLReference.html" target="_blank">here</a>.
 If you prefer to learn by experimenting,
 go for it!
 Just type in stuff and see what comes out.
+</p>
+
+<h3>Why can't I click in the warp or weft patterns, like I can in the tie-up?</h3>
+<p>
+The tie-up is essentially a random bunch of 0's and 1's,
+so it makes sense to let you change them interactively.
+I can automatically compute a reasonable AWL from any tie-up,
+so I do that and  paste it into the Tie-up input box for you
+each time you click a tie-up cell.
+</p>
+<p>
+But if you were to click in the warp or weft and change
+even one entry,
+it wouldn't be feasible
+for me to figure out a new set of AWL
+commands that describe that new pattern.
+So your best bet is to modify your AWL input
+to create the pattern you want.
+If you want to individually tweak lots of individual entries in, say, 
+the warp pattern,
+the easiest way would probably be to copy the big
+list of numbers from the output box
+(set to show you the warp pattern, of course),
+and paste that list into the warp pattern input box.
+Then you can edit that list as you like,
+and each time you press the arrow the loom and fabric
+will be updated.
 </p>
 
 <h3>What if I don't want to use Dropbox?</h3>
