@@ -366,40 +366,26 @@ then one step left and go up again,
 and so on.
 We number the rows in the warp
 and the columns in the weft
-<strong>starting with 0</strong>
-(it was easier for me to write the
-program this way,
-and it would take a day of work to change.
-if this is a problem for anyone,
-let me know,
-and I'll look into changing it.
-This has no effect on the WIF files
-that are read and written;
-they are fully compatible with other 
-weaving programs).
+starting with 1.
 </p>
 <p>
-So starting at 0,
-the bottom-most row in the weft is row 0,
-then row 1 is above it,
-then row 2,
+So the bottom-most row in the weft is row 1,
+then row 2 is above it,
+then row 3,
 and so on.
-In this example, 
-there are 4 rows,
-so they're numbered 0 to 3.
 Looking at the pattern in the warp,
 we can see the rightmost column has
-its black cell in row 0,
-then moving left it's in row 1,
-then row 2, then 3, then we're back
-to 2, and we're back to 1.
+its black cell in row 1,
+then moving left it's in row 2,
+then row 3, then 4, then we're back
+to 3, and we're back to 2.
 I want this little section to repeat,
 so I'll stop there.
 The pattern for the warp in this
-figure is <code>0 1 2 3 2 1</code>.
-Note that I left the 0 off the end,
+figure is <code>1 2 3 4 3 2</code>.
+Note that I left the 1 off the end,
 so that I can just repeat the pattern
-over and over and the 0 doesn't get
+over and over and the 1 doesn't get
 duplicated.
 </p>
 
@@ -425,7 +411,7 @@ So we start at the top row,
 and count from the left to the right.
 The pattern in this example is the same
 as in the warp,
-giving us the same pattern <code>0 1 2 3 2 1</code>,
+giving us the same pattern <code>1 2 3 4 3 2</code>,
 which again is just repeated over and over 
 as needed to make the fabric.
 </p>
@@ -502,8 +488,8 @@ and it's all you need to know from them to
 recreate their drafts on your own loom.
 </p>
 <ul>
-<li><strong>Warp pattern:</strong> 0 1 2 3 2 1 </li>
-<li><strong>Weft pattern:</strong> 0 1 2 3 2 1 </li>
+<li><strong>Warp pattern:</strong> 1 2 3 4 3 2</li>
+<li><strong>Weft pattern:</strong> 1 2 3 4 3 2</li>
 <li><strong>Warp colors:</strong> Topaz Grizzly </li>
 <li><strong>Weft colors:</strong> BlueJeans Gray18 </li>
 <li><strong>Tie-up:</strong> 1 1 0 0 1</li>
