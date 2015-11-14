@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Help for Andrew's Digital Loom</title>
+	<title>Help for Andrew's Online Loom</title>
 
 <!-- jQuery must follow my style and precede Bootstrap -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -32,20 +32,30 @@
 
 <body>
 
+	<!-- top row -->
 	<div class="container">
+		<div class="row"> <!-- row with header, IO, help -->
+			<!-- HEADER -->
+			<div class="col-sm-6">
+				<h1>Andrew's Online Loom</h1>
+			</div> <!-- column -->
+			<div class="col-sm-6">
+				<h1 style="background-color: #eeeeee; color: #888888;">Main Help</h1>
+			</div> <!-- column -->
+		</div> <!-- row -->
+
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 
 				<div class="page-header">
-<h1>Andrew's Digital Loom Help </h1>
 
 <p>
 This is a quick-start guide to my online
-<a href="http://www.TK">Digital Loom</a>.
+<a href="http:../OnlineLoom.html">Online Loom</a>.
 </p>
 
 <p>
-The Digital Loom is a simplified and abstracted version
+The Online Loom is a simplified and abstracted version
 of a real loom used for weaving cloth.
 You can set up the loom using patterns published in weaving
 books that are over 100 years old,
@@ -106,7 +116,7 @@ cryptic to you now, but will soon become second nature.
 <ul>
 <li><a href="#quickStart">Quick Start</a></li>
 <li><a href="#toc">Table of Contents</a></li>
-<li><a href="#overview">Overview of The Digital Loom</a></li>
+<li><a href="#overview">Overview of The Online Loom</a></li>
 <li><a href="#rightSide">The Right Side: The Draft</a></li>
 <li><a href="#patterns">From Input to Loom: Patterns</a></li>
 <li><a href="#leftSide">The Left Side: AWL Input (and Output)</a></li>
@@ -114,25 +124,26 @@ cryptic to you now, but will soon become second nature.
 <li><a href="#makingPatterns">Making Patterns: The AWL Language</a></li>
 <li><a href="#concepts">AWL Concepts</a></li>
 <li><a href="#commands">The AWL Commands</a></li>
-<li><a href="#notes">Notes on This Version of AWL</a></li>
+<li><a href="#notes">Notes On Using AWL</a></li>
 <li><a href="#interface">The Rest of the Interface</a></li>
+<li><a href="#editingTheTieUp">Editing the Tie-Up</a></li>
 <li><a href="#savingAndLoading">Saving and Loading</a></li>
 <li><a href="#faq">FAQ</a></li>
 <li><a href="#furtherReading">Further Reading</a></li>
 </ul>
 
 <p><a name='overview'></a></p>
-<h1>Overview of The Digital Loom</h1>
+<h1>Overview of The Online Loom</h1>
 
 <figure class="figure ">
-  <img src="images/OverviewOfDigitalLoom.jpg" width="800" class="img-rounded center-block" alt="Overview of the digital loom.">
+  <img src="images/OverviewOfDigitalLoom.jpg" width="800" class="img-rounded center-block" alt="Overview of the online loom.">
   <figcaption class="figure-caption text-center">
-Figure 1: The Digital Loom with major sections labeled.
+Figure 1: The Online Loom with major sections labeled.
 </figcaption>
 </figure>
 
 <p>
-Figure 1 shows the Digital Loom,
+Figure 1 shows the Online Loom,
 with the major components labeled.
 To create a piece of woven fabric,
 you type expressions in the AWL language
@@ -585,7 +596,7 @@ even in a single expression.
 
 <h4>By Name</h4>
 <p>
-This is probably the easiest option. The Digital Loom
+This is probably the easiest option. The Online Loom
 knows 1303 different color names,
 gathered from a wide variety of sources.
 Probably any color name you know is in the list.
@@ -984,6 +995,25 @@ and when that command is done,
 it will push its result <code>3 2 1</code>
 onto the top of the stack.
 </p>
+<p>
+If a command produces two more lists,
+they get pushed back in the order given
+in the
+<a href="AWLReference.html" target="_blank">Full AWL Reference</a>.
+</p>
+<p>
+Some commands will push back either 1 or 2 lists,
+depending on their inputs.
+For example, the <code>split</code> command
+splits the topmost list on the stack at the
+location you specify,
+and then pushes the first half of your input list,
+and then the second half.
+But if your split location is before the beginning
+or after the end,
+then your input list doesn't get affected,
+and it simply goes back on the stack unchanged.
+</p>
 
 <h3>Draft Sizes</h3>
 <p>
@@ -1079,13 +1109,19 @@ in effect until you change it again.
 Each input box maintains its own domain,
 and it always starts out with the range [1,8].
 </p>
+<p>
+The domain is only used by the run-making
+commands to control the values they produce. 
+Everywhere else, you're free to use whatever
+values you like.
+</p>
 
 <h3>Automatic Resizing</h3>
 
 <p>
 Some commands require both lists to have
 the same length.
-For example, we saw above that <code>block</code>
+For example, <code>block</code>
 takes two lists, <b>A</b> and <b>B</b>.
 It takes the first number in <b>A</b>,
 and repeats the first element of <b>B</b> that
@@ -1116,7 +1152,7 @@ so you won't have to spend effort doing it yourself.
 <h2>The AWL Commands</h2>
 
 <p>
-Here we'll collect all the AWL commands 
+Here are all the AWL commands 
 together in a big table.
 In this table,
 the
@@ -1125,7 +1161,7 @@ stand for lists,
 and lower-case letters
 <var>c</var> and <var>d</var>
 stand for single numbers
-(technically, a single number is a list,
+(technically, a single number is also a list,
 but here we mean to indicate that this
 list must have only one element).
 A0 and AL refer to the first
@@ -1135,7 +1171,7 @@ Ai refers to the i'th element of A,
 and Bi is the same for B.
 </p>
 <p>
-The column headings can be interpreted this way:
+The column headings have these meanings:
 </p>
 <ul>
 <li><strong>Command:</strong>  The command name
@@ -1155,39 +1191,10 @@ The column headings can be interpreted this way:
 </ul>
 
 <p>
-AWL has a bit more than 40 commands. I won't run through
-them all here.
-You can find a discussion of each one in Part 2 of my CG&A
-Digital Weaving series,
-which again you can read for free by going to my
-list of
-<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns</a>,
-or read in 
-<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">my book</a>
-that collects those columns.
-Note that this version of AWL is a bit different than
-what's described in those references.
-After the table is a summary of the differences.
+This table is just a summary.
+For a full description of each command,
+see the <a href="AWLReference.html" target="_blank">Full AWL Reference</a>.
 </p>
-<p>
-Remember that the first thing popped off the stack is the
-most recent thing pushed.
-So for example, the commmand summarized
-<code><b>A</b> <b>B</b> <var>c</va> ramprun</code>
-expects three elements on the stack:
-on top (and most recently pushed) is the number <var>c</var>,
-under it (and pushed just before <var>c</var>) is the list <b>B</b>,
-and on the bottom (and first thing pushed in this group) is the list <b>A</b>.
-</p>
-<p>
-Also remember that each command will push its result back on the stack
-when it's done.
-If the command makes one or more lists,
-it will not push any lists that are empty
-(for example, calling <code>0 1 2 / 5 split</code> will push only
-the "left side" of the split, or the list <code>0 1 2</code>,
-because this split point is past the end if the input list,
-yielding no new list after the split).
 
 <div style="margin-top:50px;"></div>
 
@@ -1302,7 +1309,7 @@ yielding no new list after the split).
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i>*</td>
-	<td>Alternating down and up runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
+	<td>Alternating down and up runs (<strong>A</strong> may be 1 longer than <strong>B</strong>)
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> downuprun</td>
@@ -1350,16 +1357,6 @@ yielding no new list after the split).
 	<td>Like block but the inputs are interleaved in <b>A</b></td>
 </tr>
 <tr>
-	<td><b>A</b> <b>B</b> interleave</td>
-	<td>%</td>
-	<td> </td>
-	<td> </td>
-	<td> </td>
-	<td><i class="fa fa-check"></i></td>
-	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
-</tr>
-<tr><td>InterleaveSteps %s TK</td></tr>
-<tr>
 	<td><b>A</b> iblockpal</td>
 	<td>i#p</td>
 	<td> </td>
@@ -1369,13 +1366,22 @@ yielding no new list after the split).
 	<td>iblock with internal palindrome</td>
 </tr>
 <tr>
-	<td><b>A</b> <var>d</var> nth</td>
+	<td><b>A</b> <b>B</b> interleave</td>
+	<td>%</td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
 	<td> </td>
+	<td>Take alternating elements of <b>A</b> and <b>B</b></td>
+</tr>
+<tr>
+	<td><b>A</b> <b>B</b> <var>c</var> <var>d</var> interleaveSteps</td>
+	<td>%s</td>
 	<td> </td>
-	<td>Take every <var>d</var>'th element of <b>A</b></td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td>Take <var>c</var> elements from <b>A</b>, then <var>d</var> elements from <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> palindrome</td>
@@ -1476,8 +1482,24 @@ yielding no new list after the split).
 	<td> </td>
 	<td>rotate <b>A</b> right by <var>d</var> steps</td>
 </tr>
-<tr><td>ShowStack showstack TK</td></tr>
-<tr><td>Skipkeep skipkeep TK</td></tr>
+<tr>
+	<td>showStack</td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td>Display an alert box with the current stack</td>
+</tr>
+<tr>
+	<td><b>A</b> <var>c</var> <var>d</var> skipkeep</td>
+	<td>][</td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td> </td>
+	<td>Skip <var>c</var> elements of <b>A</b>, keep next <var>d</var> elements, repeat</td>
+</tr>
 <tr>
 	<td><b>A</b> <var>c</var> split</td>
 	<td> </td>
@@ -1486,15 +1508,6 @@ yielding no new list after the split).
 	<td> </td>
 	<td> </td>
 	<td>Cut <b>A</b> after element <var>c</var>, then push the left then right lists</td>
-</tr>
-<tr>
-	<td><b>A</b> <var>c</var> <var>d</var> stencil</td>
-	<td> </td>
-	<td> </td>
-	<td> </td>
-	<td> </td>
-	<td> </td>
-	<td>Remove entry <var>c</var>, include the next <var>d</var> entries, repeat</td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> swap</td>
@@ -1508,8 +1521,8 @@ yielding no new list after the split).
 <tr>
 	<td><b>A</b> tartan</td>
 	<td> </td>
+	<td><i class="fa fa-check"></i></td>
 	<td></td>
-	<td>n</td>
 	<td> </td>
 	<td><i class="fa fa-check"></i></td>
 	<td>Like iblock but repeats are half length</td>
@@ -1575,7 +1588,7 @@ yielding no new list after the split).
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i>*</td>
-	<td>Alternating up and down runs (<strong>A</strong> may be 1 longer than <strong>B</strong)
+	<td>Alternating up and down runs (<strong>A</strong> may be 1 longer than <strong>B</strong>)
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> updownrun</td>
@@ -1619,79 +1632,7 @@ yielding no new list after the split).
 
 
 <p><a name='notes'></a></p>
-<h2>Notes on This Version of AWL</h2>
-
-<p>
-Here are the key differences between what's in 
-<a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns</a>
-and
-<a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">my book</a>,
-and what's implemented here.
-</p>
-
-<ul>
-<li><strong>template:</strong> Templates are no longer automatically made relative to the
-first number in the second list. So the values you add to each
-number in your starting list are simply the numbers you provide.
-For example, <code>3 4 : 1 2 3</code> will add the values <code>1 2 3</code>
-to <code>3</code> and then to <code>4</code>, producing <code>4 5 6 5 6 7</code>.</li>
-<li><strong>updown, updownrun, downup, downuprun:</strong> These four
-commands normally reshape the two input lists so they have the same size.
-Introduced to the online version, this resizing won't happen if
-the first list can have 1 more element than the second one. This way
-you can make nice repeating patterns of up and down ramps.
-For example, <code>0 1 / 4 updown</code> has two elements in the first
-list (<code>0 1</code>)and only one in the second (<code>7</code>).
-These lists won't be resized, so the result goes up from <code>0</code>
-to <code>4</code>, then back down to <code>1</code>,
-giving you the nice up-down sequence <code>0 1 2 3 4 3 2 1</code>.
-When this automatically repeats you'll get a nice triangle wave 
-repeating forever (a perfect starting point for twills).</li>
-<li><strong>twillr, twilll:</strong> These commands got a little 
-confused. Here's how they work now.
-<ol>
-<li>
-I implemented them backwards in the original code,
-so they rotated in the directions opposite to their names.
-That's fixed now (and the examples have been updated
-to reflect that).</li>
-<li>
-Both commands take as input a list <code>A</code>
-and two numbers
-<code>c</code>
-and 
-<code>d</code>,
-in that order.
-The list gets repeated <code>d</code> times.
-The first time it appears just as given.
-The second time it's rotated right (or left) by <code>c</code>
-steps.
-The next time that most recent version gets rotated right
-(or left) by another <code>c</code> steps, and so on.
-So for example,
-<code>0 1 2 3 / 1 / 4 twillr</code>
-will produce the list
-<code>0 1 2 3</code>,
-then it gets rotated right once to produce
-<code>3 0 1 2</code>,
-then rotated again to make
-<code>2 3 0 1</code>,
-and then a fourth time to produce
-<code>1 2 3 0</code>,
-giving a final result of
-<code>0 1 2 3 3 0 1 2 2 3 0 1 1 2 3 0</code>.
-</li>
-</ol>
-<li>The domain minimum is set to 0 if you try to make it negative.
-The domain maximum is always 1 more than the minimum.</li>
-<li>When the warp and weft patterns are copied to the draft,
-any values less than 0 are set to 0.</li>
-<li>The <code>cipher</code> command is new.</li>
-<li>The <code>split</code> command is new.</li>
-<li>The <code>stencil</code> command is new.</li>
-</ol>
-</li>
-</ul>
+<h2>Notes On Using AWL</h2>
 
 <p>
 Here are some helpful hints to keep in mind.
@@ -1707,13 +1648,22 @@ is to ignore the loom and the fabric. Just write little expressions in one
 of the input windows and press the arrow,
 and see what it generates by looking at the output window below.
 </li>
-<li>Remember to push between lists! This is an easy thing to forget.</li>
-<li>Make sure to keep track of your domain. It starts at [0,7] for both warp and
+<li>The <code>showStack</code> command is your friend. It will always
+show you the full stack as of the moment it's encountered. It's great
+at the end of long expressions where you make lots of little sublists
+that get concatenated together, so you can make sure you haven't missed any.</li>
+<li>The stack always starts out empty at the start of evalating
+each input box's expression.</li>
+<li>Remember to push between lists when
+you're making them! This is an easy thing to forget.</li>
+<li>Make sure to keep track of your domain. It starts at [1,8] for both warp and
 weft. If you change it, that change stays in effect for the rest of that
-expression. You can always set it back to [0,7] if you want.
+expression. You can always set it back to [1,8] if you want.
 <li>Make sure you have the tie-up sizes set the way you like. The tie-up doesn't
 automatically re-size to fit your warp or weft (that would make it much harder
-to experiment with your drafts).</li>
+to experiment with your drafts), but it will repeat as needed when the 
+fabric is created. This can get confusing if the tie-up height is smaller
+than the size of the warp, or the width is less than the size of the weft.</li>
 <li>When in doubt, just type in your pattern explicitly;
 not everything has to be a clever AWL construction.
 For example, if you want the pattern <code>0 1 3 5 2</code>,
@@ -1747,15 +1697,65 @@ If there's more data in the tie-up pattern than is needed,
 the extra is just ignored.
 If the tie-up pattern isn't long enough to fill up the grid,
 it's repeated as needed.
+If the tie-up height is less than the size of the warp,
+or its width is less than the size of the weft,
+it will be internally repeated as needed to match.
 </ul>
+
+<p><a name='editingTheTieUp'></a></p>
+<h3>Editing the Tie-Up</h3>
+<p>
+The tie-up is fun to edit interactively.
+Try starting with a simple triangle wave in
+both the warp and weft,
+as in the <em>Simple Twill</em> preset.
+If you want a larger canvas,
+make the tie-up bigger,
+as in the <em>Tabletop Variation</em> presets
+(remember to make make your domain size
+and warp and weft patterns larger also).
+To flip a tie-up cell from black to white,
+or vice-versa, just click on it.
+</p>
+<p>
+If you see a red box, it means that your
+tie-up cells are too small to be edited 
+with any accuracy.
+To make all the cells in the draft bigger,
+including the tie-up,
+reduce the size of the fabric.
+Using an 8-by-8 tie-up, I find a fabric
+size of 50 gives me plenty of accuracy
+for editing, and shows me about 
+3 and a half repeats of the fabric's pattern in 
+each direction.
+</p>
 
 <p><a name='savingAndLoading'></a></p>
 <h3>Saving and Loading</h3>
 
-<h4>Saving The Fabric</h4>
 
 <p>
-To save the image of the fabric,
+You can save your fabric directly to your hard
+drive using the instructions below.
+But because of how browsers are written,
+you cannot save and load your drafts to your
+local hard drive.
+So you need to use some kind of remote
+file system, usually called <em>the cloud</em>.
+Since all cloud services are different,
+I can't support them all.
+I chose to support a popular cloud service
+called <a href="https://db.tt/TeyvYvem" target="_blank">Dropbox</a>.
+They have a great reputation for privacy and reliability,
+and they offer you 3GB of storage off the bat for free.
+They stay in business by selling you more space than
+that if you need it.
+</p>
+
+<h4>Saving The Fabric</h4>
+<p>
+To save an image of the fabric,
 just right-click on it.
 You should get a pop-up menu that
 offers you a few options.
@@ -1771,70 +1771,31 @@ using almost any image editing program.
 </p>
 
 <h4>Saving and Loading The Draft</h4>
-
 <p>
-Because of how browsers are written,
-you cannot save and load your drafts to your
-local hard drive
-(saving the image of your fabric uses a
-special exemption for images).
-So you need to use some kind of remote
-file system, usually called <em>the cloud</em>.
-Since all cloud services are different,
-I can't support them all.
-I chose to support a popular cloud service
-called <a href="https://db.tt/TeyvYvem" target="_blank">Dropbox</a>.
-They have a great reputation for privacy and reliability,
-and they offer you 3GB of storage for free.
-They stay in business by selling you more space than
-that if you need it.
-If you don't have Dropbox yet, 
-click on
-<a href="https://db.tt/TeyvYvem" target="_blank">this link</a>
-to sign up for a free account
-(disclaimer: by using the link, rather than going to
-Dropbox directly, they give me some more storage.
-I use that space to develop apps like this.
-But you can go straight to 
-<a href="https://www.dropbox.com" target="blank">Dropbox</a> 
-if you prefer to bypass my link).
+As mentioned above, saving and loading
+your draft requires Dropbox.
+See the next section for getting that
+set up.
 </p>
 <p>
-If you're not logged into Dropbox,
-you'll be prompted to sign in
-when you try to load or save a file.
-The first time you use the program,
-it will ask for permission to read and write
-files to a special folder in your Dropbox
-set aside for this app.
-This is perfectly safe. 
-Your password and all of your files are yours
-and yours alone, and I never see any of it.
-I don't even have a way of knowing if you've
-done this! It's just so Dropbox knows that
-this is something you've meant to do.
-When you approve this,
-Dropbox will create a folder for you in
-your Dropbox account called 
-<code>Apps/AndrewsOnlineLoom</code>,
-and all of your files will be placed there.
-Note that if you want to share one of those
-files, you'll want to copy it into the
-<code>Public</code> part of your Dropbox,
-as usual.
-</p>
-<p>
-To save your draft,
-give it a name by typing
+Once you're set up with Dropbox,
+you save your draft
+but first giving it a name.
+Type the name you like
 in the text box at the very 
 top of the window,
 and then press the <strong>Save</strong> button.
-You don't have to give it an extension;
+You don't have to give the name an extension;
 the program will automatically add <code>.wif</code>
 for you if it's not there.
 WIF is the standard format that weaving
 programs use to describe a draft
 (you can find out more in the FAQ below).
+By saving your drafts in WIF,
+you can share them with other people,
+read them into other weaving programs,
+and even give them to a weaver to produce
+real fabric for you!
 </p>
 <p>
 To load a draft, just choose
@@ -1855,12 +1816,81 @@ If you want to change the names of
 your .wif files, copy or delete them,
 or do anything else with them,
 just use your normal file-system
-browser to view the contents of
-<code>Dropbox/Apps/AndrewsOnlineLoom</code>,
+browser to view the contents of the folder
+<code>Apps/AndrewsOnlineLoom</code>,
+located inside your <code>Dropbox</code>
+folder, which is
 probably located in your home directory.
-You can even read the .wif files if you
-like; they're just plain text.
+You can even read the .wif files with
+any text editor that you like,
+since they're just plain text.
 </p>
+
+<h4>Using Dropbox</h4>
+<p>
+If you don't have Dropbox yet, 
+click on
+<a href="https://db.tt/TeyvYvem" target="_blank">this link</a>
+to sign up for a free account
+(disclaimer: by using the link, rather than going to
+Dropbox directly, they give me some more storage.
+I use that space to develop apps like this.
+But you can go straight to 
+<a href="https://www.dropbox.com" target="blank">Dropbox</a> 
+if you prefer to bypass my link).
+</p>
+<p>
+If you care about privacy (I sure do),
+be assured that your transactions with Dropbox
+are completely independent of me and my code.
+Your password and all of your files are yours
+and yours alone, and I never see any of it.
+I can't even find out if you ever use Dropbox
+or not, much less find out what you're doing or
+looking at your files.
+Frankly, I like it this way;
+what you do with your computer is your business.
+</p>
+<p>
+The first time you try to save or load a file
+from a fresh web page,
+Dropbox will ask you to log in,
+as shown on the left of Figure 4.
+Just enter your normal Dropbox account
+credentials.
+The very first time you do this,
+Dropbox will create a special folder for
+the Online Loom in your Dropbox folder.
+To protect you,
+my site will only be allowed to read and
+write files in this folder.
+This authorization is shown on the right
+of Figure 4;
+you should only have to do this once.
+</p>
+
+<figure class="figure ">
+  <img src="images/DropboxPair.jpg" width="800" class="img-rounded center-block" alt="Two drafts.">
+  <figcaption class="figure-caption text-center">
+Figure 4: 
+Left: Signing into Dropbox. Right: Authorizing the program to use your Dropbox.
+</figcaption>
+</figure>
+
+<p>
+When you've approved access,
+Dropbox will create a folder for you in
+your Dropbox account.
+This new folder is called
+<code>Apps/AndrewsOnlineLoom</code>,
+and all of your files will be placed there.
+Note that if you want to share any of those
+files with someone else, 
+you'll want to copy them into the
+<code>Public</code> part of your Dropbox,
+as usual.
+</p>
+
 
 
 <p><a name="faq"></a></p>
@@ -1887,22 +1917,30 @@ so I do that and  paste it into the Tie-up input box for you
 each time you click a tie-up cell.
 </p>
 <p>
-But if you were to click in the warp or weft and change
-even one entry,
-it wouldn't be feasible
-for me to figure out a new set of AWL
-commands that describe that new pattern.
-So your best bet is to modify your AWL input
-to create the pattern you want.
-If you want to individually tweak lots of individual entries in, say, 
+Clicking on the tie-up often makes a lot of
+intuitive sense,
+particularly when the warp and weft are simple,
+like repeating trianglular waves.
+Clicking in the warp or weft is usually lot
+more unpredictable and harder to anticipate,
+so I find it much less useful.
+</p>
+<p>
+If you really want to twiddle individual
+entries in the warp or weft,
+your best best is to replace your AWL
+patterns with the big list of numbers
+that they generate,
+and then edit that list.
+For example,
+if you want to individually tweak 
 the warp pattern,
-the easiest way would probably be to copy the big
-list of numbers from the output box
-(set to show you the warp pattern, of course),
-and paste that list into the warp pattern input box.
-Then you can edit that list as you like,
-and each time you press the arrow the loom and fabric
-will be updated.
+set the output box to show you the warp pattern,
+and copy its contents.
+Paste that list back into the warp input box.
+Now you can edit that list as you like.
+Remember to press the arrow after each change
+to copy your new pattern to the loom.
 </p>
 
 <h3>What if I don't want to use Dropbox?</h3>
@@ -1911,9 +1949,8 @@ No problem. The online loom will still run fine.
 You can even load the presets,
 and you can save your fabric images.
 But you won't be able to load and save
-your drafts, nor import the drafts from
-other people or those published in books
-or available online.
+your drafts, nor import drafts shared
+or published by other people.
 </p>
 <p>
 I wish I could support all cloud services,
@@ -1921,28 +1958,39 @@ but each one requires me to write special
 programming to talk to it, and for some 
 services that can get very complicated.
 I picked Dropbox because they're reliable
-and take privacy seriously, and they offer
+and take privacy seriously, 
+they made it easy for me to integrate my
+code with them,
+and they offer
 a lot of free storage (3GB is <em>huge</em>;
 you can store over a half-million typical
 .wif files in that much space!).
+As I mentioned above,
+you can click on 
+<a href="https://db.tt/TeyvYvem" target="_blank">this link</a>
+to sign up (and give me a bit more space
+to develop more programs).
 </p>
 <p>
-If you really love another service, 
-you can use that for your everyday work,
-and just drag your .wif files into and out
-of your Dropbox and into your other service
-when you want them there.
+If you prefer to use another cloud provider
+for your everyday work,
+you can certainly use both that one and Dropbox 
+at the same time.
+Just drag the files back and forth as needed.
 </p>
 <p>
 If you want to save your drafts but you
-really don't want to go anywhere near Dropbox,
-you can always take a screenshot of the 
-program, and then type everything back in
+really don't want to use Dropbox,
+you can take a screenshot of your
+window, and then type everything back in
 from there to re-load the draft.
 </p>
 <h3>How do I share my drafts?</strong></h3>
 <p>
-The .wif files are just plain text files.
+The .wif files are just plain text files,
+sitting in the directoy
+<code>Apps/AndrewsOnlineLoom</code>
+in your Dropbox.
 Just share them as you'd share any text file!
 </p>
 
@@ -1967,7 +2015,8 @@ save the file to the same or a different name).
 </p>
 
 <h3>I found a draft where there are lots of black squares
-in the warp columns and weft rows. What gives?</h3>
+in the warp columns and weft rows, but you said there
+should be only one in each column and row. What gives?</h3>
 <p>
 I am not a weaving expert,
 but my understanding is that those drafts are
@@ -1976,6 +2025,12 @@ I don't support those kinds of drafts;
 if you try to read them in you'll find that I
 ignore all but the first marked column or
 row in the warp and weft.
+</p>
+<p>
+In my experience, I've always been able convert one
+of those drafts into one that follows the
+format we use here, but I can't guarantee that's
+always possible.
 </p>
 
 <h3>Why am I getting a really weird error when my AWL looks fine?</h3>
@@ -1996,9 +2051,12 @@ is an easy mistake to make.
 <p>
 If things are going wrong, I find it easiest to write down the whole
 expression I'm working on, and then build it up again one step at a time.
-Type in one new piece of stuff to build the pattern, hit the button,
-and see what's on top of the stack. If that looks right, continue.
-If it doesn't, tune up what you have there until it does.
+Type in one new piece of stuff to build the pattern, 
+and put a <code>showStack</code> command at the end.
+Between the stack and the output window,
+you should be able to see what you're making,
+and tune it up until it's right.
+When it's okay, move on and build the next chunk.
 </p>
 
 <h3>You said there should be just one thing left on the stack at the end, but I have more. Is that a problem?</h3>
@@ -2017,7 +2075,7 @@ or you want to use arithmetic or even math operators,
 your best bet is to fire up your favorite language and write programs in it.
 The easiest output would be a big list of numbers or colors,
 which you can just copy and paste into the appropriate input boxes.
-If you're feeling fancy, you can use your program to write AWL expressions.
+If you're feeling fancy, you can write AWL expressions.
 If you're really ambitious, you can write .wif files directly;
 see the question above for a link to the format specification.
 </p>
@@ -2060,23 +2118,17 @@ and another on the fascinating and diverse technology behind real
 Weavers have been collecting and sharing drafts since at
 least the 1830s.
 Of course, most of those drafts are necessarily small in size,
-but there are some large ones out there.
-This is particularly surprisingly when you realize that to
-determine what a particular draft will produce,
-you usually have to weave the result!
-And once colored threads are involved,
-predicting the result just by eyeballing the draft
-seems incredibly hard.
+though there are also some large ones.
 You can find literally thousands of drafts in your
 library, collected in old books that contain page after
 page of draft diagrams.
 Here are three books I found particularly useful:
+</p>
 <ul>
 <li>B. Frey, Designing and Drafting for Handweavers, Macmillan, Basingstoke Hampshire, England, 1958.</li>
 <li>M.E. Black, The Key to Weaving, Hungry Minds, Hoboken, N.J., 1980.</li>
-<li>A Weaver's Book of 8-Shaft Patterns, Carol Strickler, ed., Interweave Press, 1991.</li>
+<li>Carol Strickler, ed., A Weaver's Book of 8-Shaft Patterns, Interweave Press, 1991.</li>
 </ul>
-</p>
 <p>
 Some draft descriptions are available online.
 The world of online drafts seems to be in constant flux,
@@ -2085,7 +2137,10 @@ so I suggest the best way to get started is to do some searching.
 Most of the sites I've found over the years are gone,
 but 
 <a href="http://www.allfiberarts.com/cs/patternsdrafts.htm">Fiber Arts</a>
-still seems up and offering a nice collection of drafts.
+still seems up and offering a nice collection of drafts,
+and some (but not all) of the articles in the
+<a href="http://www.weavezine.com/" target="_blank">WeaveZine</a>
+archives have WIF files available.
 Ralph E. Griswold is a famous collector of weaves and author
 on the subject.
 You can find a ton of information at 
@@ -2096,6 +2151,19 @@ You can even find some sample code for weaving topics
 A good starting point for
 tartan drafts can be found at the
 <a href="http://www.house-of-tartan.scotland.net/">House of Tartan</a>.
+</p>
+<p>
+My initial version of AWL was inspired by
+the weaving language included in the very first release
+of the commercial artist's program 
+<a href="http://www.painterartist.com/us/product/paint-program/" target="_blank">Painter</a>.
+I've extended that language significantly,
+inspired by online and offline references on weaving.
+Ralph Griswold's monographs
+were particularly valuable.
+For instance,
+the <code>growblock</code> operator is based on Griswold's
+paper, "Variations On A Shadow Weave."
 </p>
 <p>
 There are a variety of commercial and public-domain programs
@@ -2110,7 +2178,7 @@ these feature-rich, dedicated programs,
 written by and for serious weavers.
 If you find that you're enjoying working with the Online Loom,
 you might want to consider trying a commercial product.
-Here are the weaving systems that I know of now.
+Here are the actively supported weaving programs that I know of.
 If I'm missing your favorite, let me know!
 I'm sorry that I can't offer any buying advice;
 each of these programs offers lots of online information
@@ -2125,18 +2193,6 @@ In alphabetical order, they are
 <li><a href="http://www.weavepoint.com" target="_blank">WeavePoint</a></li>
 </ul>
 <p>
-My weaving language AWL was inspired by
-the weaving language provided in the very first release
-of the commercial artist's program 
-<a href="http://www.painterartist.com/us/product/paint-program/" target="_blank">Painter</a>.
-I've extended that language significantly,
-inspired by online and offline references on weaving.
-Of particular value were monographs by Ralph Griswold, mentioned above.
-For instance,
-the <code>growblock</code> operator is based on Griswold's
-paper, "Variations On A Shadow Weave."
-</p>
-<p>
 The named colors in the Online Loom database were collected from
 a list of colors on
 <a href="https://en.wikipedia.org/wiki/List_of_colors_%28compact%29" target="_blank">Wikipedia</a>,
@@ -2147,7 +2203,7 @@ color measurements I made from online pictures of real tartan cloth,
 and a few other colors I've used in projects over the years.
 </p>
 <p>
-The original description of AWL and my Digital Loom
+The original description of AWL and my Online Loom
 appeared in 3 successive installments of my
 column <em>Andrew Glassner's Notebook</em>,
 which I wrote for the journal <em>IEEE Computer Graphics & Applications</em>.
@@ -2160,10 +2216,9 @@ expanded and revised them,
 and assembled them into the book
 <a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs, 
 Mallards, and Montages</a>.
-Please note that several of the AWL operators in the Online Loom 
-are a bit changed from the descriptions in those references,
-and several new ones have been added.
-Full details are availabe
+Please note that that I've significantly
+extended and improved AWL for this website.
+Full details of the current version are availabe
 in the <a href="AWLReference" target="_blank">AWL Reference</a>.
 </p>
 <p>

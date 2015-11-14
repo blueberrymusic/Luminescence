@@ -275,7 +275,7 @@ var Dispatch = [
 	[ "@", DoReverse ],
 	[ "<<", DoRotateL ],
 	[ ">>", DoRotateR ],
-	[ "-sk", DoSkipKeep ],
+	[ "][", DoSkipKeep ],
 	[ ":", DoTemplate ],
 	[ "t>>", DoTwillR ],
 	[ "t<<", DoTwillL ],
@@ -909,7 +909,7 @@ function handlePermute(aList, bList) {
 	pushList(newList);
 }
 
-function handleRamp(leftList, rightList, numRns) {
+function handleRamp(leftList, rightList, numRuns) {
 	var leftEnd = toDomain(Number(leftList[leftList.length-1]));
 	var rightStart = toDomain(Number(rightList[0]));
 	var newList = leftList;
