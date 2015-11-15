@@ -82,7 +82,7 @@ of weaving drafts,
 we use 1-origin indexing into arrays,
 not 0 as is more common when programming.
 For example, if we have the list <code>5 6 4</code>,
-then element 1 is 5, elmeent 2 is 6, and elemetn 3 is 4.
+then element 1 is 5, elmeent 2 is 6, and element 3 is 4.
 There is no element 0.
 </p>
 
@@ -948,7 +948,7 @@ final result
 </dl>
 <p>
 The top list on the stack is popped off and thrown away.
-Do not call this on an empty list.
+Do not call this on an empty stack.
 </p>
 <div class="bs-example">
 pop
@@ -1032,10 +1032,10 @@ but after the run has been built it inserts
 in the same direction as the original run.
 </p>
 <div class="bs-example">
-5 6 7 / 1 2 / 1 -l
+5 6 7 / 1 2 / 1 -r
 </div>
 <div class="highlight">
-5 6 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 2
+5 6 7 6 5 4 3 2 1 8 7 6 5 4 3 2 1 2
 </div>
 
 
@@ -1075,10 +1075,10 @@ List <b>A</b> is repeated a total of <var>c</var> times.
 List <b>A</b> is reversed.
 </p>
 <div class="bs-example">
-3 5 6 1 2 reverse
+red green blue 2 reverse
 </div>
 <div class="highlight">
-2 1 6 5 3
+2 blue green red
 </div>
 
 
@@ -1096,14 +1096,14 @@ List <b>A</b> is reversed.
 <p>
 Rotate the elements of <b>A</b> left by <var>c</var>
 steps. That is,
-element <var>c</var> now becomes the start of <b>A</b>,
+element <var>c</var>+1 now becomes the start of <b>A</b>,
 and everything before it now comes at the end of the list.
 </p>
 <div class="bs-example">
-0 1 2 3 4 5 6 / 3 <<
+1 2 3 4 5 6 7 / 3 <<
 </div>
 <div class="highlight">
-3 4 5 6 0 1 2
+4 5 6 7 1 2 3
 </div>
 
 
@@ -1126,10 +1126,10 @@ becomes the start of the list,
 with everything before it now at the end.
 </p>
 <div class="bs-example">
-0 1 2 3 4 5 6 / 3 >>
+1 2 3 4 5 6 7 / 3 >>
 </div>
 <div class="highlight">
-4 5 6 0 1 2 3
+5 6 7 1 2 3 4
 </div>
 
 
@@ -1147,13 +1147,19 @@ with everything before it now at the end.
 </dl>
 <p>
 The complete stack is displayed in a popup window.
-This is very useful for debugging AWL expressions.
-Each element on the stack is numbered.
+This is very useful for debugging AWL expressions,
+since you can put it anywhere in an expression.
+The pop-up will display the stack at the moment the
+command is encountered, 
+and then the system will continue processing the
+expression as usual.
+Each element on the stack is numbered,
+with 0 on the bottom of the stack.
 The <em>type</em> of each element is also displayed;
 this is typically either 
-<code>clist</code>
+<em>clist</em>
 or
-<code>olist</code>.
+<em>olist</em>.
 You can ignore this information,
 but it's useful to me in debugging 
 if there's a crash.
@@ -1212,6 +1218,18 @@ The first <var>c</var> elements of <b>A</b> are pushed
 onto the stack as a list,
 the the remaining elements of <b>A</b> are pushed on
 top of that as a second list.
+Thus after <b>A</b> is popped from the stack,
+two new lists are pushed back on.
+</p>
+<p>
+If the split point is before the beginning of
+the list (that is, <var>c</var> is less than 1),
+or if the split point is past the end of the list,
+then no splitting occurs and your original list
+is pushed back onto the stack.
+Note that in this case,
+<code>split</code> pushes only one new list
+onto the stack, not two.
 </p>
 <div class="bs-example">
 1 2 3 4 5 6 / 2 split
@@ -1308,18 +1326,23 @@ Red Blue Blue Blue Yellow Yellow Green Yellow Yellow Blue Blue Blue
 <dt>Shortcut:</dt><dd><code>:</code></dd>
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle-o"></i></dd>
-<dt>Wraps output:</dt><dd><i class="fa fa-circle-o"></i></dd>
+<dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Resizes inputs:</dt><dd><i class="fa fa-circle-o"></i></dd>
 </dl>
 <p>
 Each element of <b>A</b> is replaced with the list <b>B</b>,
 except the value of that element of <b>A</b> is added to
 each value of <b>B</b>.
+For example, if <b>A</b> is 2 3 and <b>B</b> is 3 1 2,
+then the new list would be 2+(3 1 2) 3+(3 1 2),
+or 5 3 4 6 4 5.
+If your values go outside of the domain,
+they will be wrapped around the ends as usual.
+</p>
+<p>
 Note that some weavers don't use list <b>B</b> as given,
 but subtract the first element of <b>B</b> from every
-element in the list, so that <b>B</b> begins with 0 and
-each subsequent element has the value of the original
-element minus the first.
+element in the list.
 Thus if <b>B</b> was given as 3 5 4 6,
 it would be replaced with 0 1 -1 2 when used in the command.
 AWL does <em>not</em> adopt this convention.
@@ -1327,13 +1350,13 @@ If you want your template to start with 0,
 simply start it with 0!
 </p>
 <p>
-Weaver also call this process <em>subarticulation</em>.
+Weavers also call this process <em>subarticulation</em>.
 </p>
 <div class="bs-example">
-0 1 2 3 / 0 3 1 :
+1 2 3 7 / 1 3 2 :
 </div>
 <div class="highlight">
-0 3 1 1 4 2 2 5 3 3 6 4
+2 4 3 3 5 4 4 6 5 8 2 1
 </div>
 
 
