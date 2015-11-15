@@ -172,7 +172,7 @@ It has a row of colored
 threads above it and a column of colored threads
 to its right.
 These thread extend down and left into the
-fabric.
+<b>fabric</b>.
 To control which thread goes on top and which
 goes under as the cloth is woven,
 you use the grids of black and white cells
@@ -184,13 +184,10 @@ and the <b>tie-up</b> sits to the upper right
 of the fabric.
 When a person actually weaves on a lom,
 these grids of black and white tell them how
-to physical set up the loom for each row
+to physically set up the loom for each row
 of woven cloth,
 and then how to manipulate the loom and the
-threads in order to get the desired weave.
-We have a much easier life with the computer,
-which can fill in all the squares of the fabric
-in any order at lightning speed.
+threads in order to weave the fabric properly.
 </p>
 
 <p><a name='rightSide'></a></p>
@@ -202,7 +199,7 @@ collectively called the <strong>draft</strong>.
 These checkerboards show you how your
 loom is set up,
 and the final fabric that results.
-The checkerboards (and the two strips of colors)
+These grids (and the two strips of colors)
 are created in response to the strings you
 type into the input boxes on the left hand side
 of the window.
@@ -216,8 +213,8 @@ a red box,
 that means the tie-up is too small for you to
 edit.
 You can make it larger on the screen by reducing
-the size of the fabric,
-by typing a smaller number into the <em>Fabric Size</em>
+the size of the fabric:
+type a smaller number into the <em>Fabric Size</em>
 control just above the left side of the fabric.
 </p>
 <p>
@@ -366,7 +363,7 @@ cells of their grids
 But when your drafts get really big,
 that becomes a tedious and error-prone process.
 And if you want to tweak your design by,
-say, repeating one section somewhere in the middle,
+say, expanding one section somewhere in the middle,
 you'd have a ton of clicking to do.
 </p>
 <p>
@@ -374,13 +371,14 @@ So instead, we create these number
 patterns with a little language designed explicitly
 for that.
 We'll get into the language in the next section.
-Here, we'll look at how to take each list of numbers
+Here, we'll look at how to take a list of numbers,
+like that created by the pattern language,
 and apply it to the draft.
 </p>
 <p>
 The key thing to this process is how we
 name the cells of each grid.
-And each grid is different!
+And each of the grids is different!
 That might seem crazy when you first encounter it, 
 but it's a good scheme that
 has been used for over a century.
@@ -435,9 +433,10 @@ moving from the left to the right.
 <p>
 The weft appears to the right of the fabric.
 We follow a similar scheme,
-only here the rule is that each row has a single
-black cell.
-So we start at the top row,
+only here it's the <em>row</em> that has
+a single black cell.
+The rule for the weft grid
+is to start at the top row,
 and count from the left to the right.
 The pattern in this example is the same
 as in the warp,
@@ -467,7 +466,9 @@ white or black,
 we need to somehow list every cell our pattern.
 So we just make a big list of 0's and 1's,
 one entry for each cell in the tie-up grid.
-In our system, <strong>1 is black</strong>
+Luminescence follows the
+standard convention for drafts
+that <strong>1 is black</strong>
 and <strong>0 is white</strong>.
 If you use computer-based colors a lot this
 may feel backwards.
@@ -499,6 +500,7 @@ Most of the time you'll be creating your
 patterns using the pattern-making language,
 and leaving all of this counting stuff up to
 the computer.
+But it does come in handy from time to time.
 </p>
 
 <p>
@@ -523,8 +525,9 @@ All of these patterns are repeated as
 needed.
 The tie-up pattern, for instance, is repeated
 until the entire tie-up grid is filled in
-(if the pattern is bigger than the grid,
-the excess is just ignored).
+(if the tie-up pattern happened to
+be bigger than the grid,
+the excess would just be ignored).
 The warp and weft patterns,
 and their colors,
 are repeated until they're providing
@@ -553,6 +556,13 @@ of the box to update the loom.
 The fabric will be automatically updated
 using the new draft.
 </p>
+<p>
+You create your expressions using a
+special pattern-making language 
+called AWL
+(Andrew's Weaving Language).
+This site supports version 2 of the language,
+with new commands and features.
 <p>
 You can see the result of your expressions
 in the black and white cells of the draft,
@@ -584,7 +594,7 @@ remember is this: <strong>put spaces around
 each number or color name</strong>.
 For example,
 to recreate Figure 3,
-you'd type <code>0 1 2 3 2 1</code>
+you'd type <code>1 2 3 4 3 2</code>
 into the <em>Warp Pattern</em> box.
 Note that each number is followed by a space,
 and there are no commas, periods, or
@@ -592,15 +602,18 @@ other characters. Just numbers and spaces.
 You'd type the same thing into the
 <em>Weft Pattern</em> box.
 You can even type <code>Topaz Grizzly</code>
-into the <em>Warp Colors</em> box because
-Luminescence knows those colors by name.
+into the <em>Warp Colors</em> box,
+because Luminescence knows those colors by name.
 Enter the weft colors and the tie-up,
 and you should get back Figure 3!
-If necessary, use the fields above the
+If it doesn't match,
+use the fields above the
 fabric to set
-<em>FabricSize</em> to 10, 
-and <em>Tie-Up Width</em> and <em>Tie-up Height</em> to 4.
-To make more fabric, just crank up the fabric size
+<em>Tie-Up Width</em> and <em>Tie-up Height</em> to 4.
+To exactly match the figure,
+set <em>FabricSize</em> to 10.
+To make more fabric (that is, a bigger swatch), 
+just crank up the fabric size
 to something like 100 or 200.
 </p>
 
@@ -636,8 +649,8 @@ I've retained all of them because some names might
 be more familiar to you than others.
 </p>
 <ul>
-<li><a href="BrowseColorsByName.html" target="_blank">Page of colors sorted by name</a></li>
-<li><a href="BrowseColorsByhue.html" target="_blank">Page of colors sorted by hue</a></li>
+<li><a href="BrowseColorsByName.html" target="_blank">Colors sorted by name</a></li>
+<li><a href="BrowseColorsByHue.html" target="_blank">Colors sorted by hue</a></li>
 </ul>
 <p>
 For example, a nice middle brown is
@@ -653,15 +666,21 @@ and they'd all identify the same color.
 Some names include characters
 like parentheses,
 digits, apostrophes, and dashes. 
-These are all part of the name,
+For example, there's
+<code>DarkLiver(horses)</code>,
+<code>Tiger'sEye</code>,
+and 
+<code>Violet-blue</code>.
+These characters are all part of the name,
 so be sure to include them.
 But always make sure that you type 
 in each color name
-a single word with <em>no spaces</em>.
-If you accidentally type a space,
+a single word with <strong>no spaces</strong>.
+If you accidentally include a space in a name,
 AWL will read it as two separate
-colors in a row to build a pattern
-For example, if you put a space in 
+colors,
+and try to make a pattern out of them.
+For example, if you put a space before the G in 
 <code>HarvestGold</code>, the system would look for a
 color named <code>Harvest</code> and it wouldn't find
 it, giving you black as a default.
@@ -671,7 +690,7 @@ an existing color.
 So instead of a single brownish color,
 you'd have a list of two colors,
 black and gold, which probably would not
-going to look the way you intended.
+produce the look the way you intended.
 The moral is to make sure all of your
 colors are single words without spaces!
 
@@ -726,6 +745,8 @@ The program turns those commands into a
 potentially huge pattern for you,
 and then fills in the loom grids instantly
 and flawlessly.
+It asl immediately redraws the fabric,
+so you can see what you've designed.
 This makes it fast and easy to experiment with 
 both big and small changes to your draft,
 whether you're perusing a vision,
@@ -734,7 +755,8 @@ or just messing around at random!
 </p>
 <p>
 The easiest AWL expression is just a list:
-enter your numbers (or colors) and
+enter your numbers (or colors) with
+spaces between them, and then
 press the arrow button to the right of
 the box you're in.
 But the real power of AWL comes from 
@@ -751,7 +773,7 @@ a bit over 800 numbers long,
 and the warp is just over 600.
 This means those two short expressions
 specify a piece of fabric a little larger
-than 800 wide and 600 tall
+than 800 threads wide and 600 threads tall
 (looms, both real and digital, just repeat
 this basic block over and over to make
 as large a fabric as you like).
@@ -924,13 +946,13 @@ It makes a new list by repeating each
 element of <b>B</b> the number of times
 given by the corresponding element of <b>A</b>.
 If
-<code><b>A</b>=2 3 4</code>
+<b>A</b>=<code>2 3 4</code>
 and
-<code><b>B</b>=1 5 8</code>,
+<b>B</b>=<code><b>1 5 8</code>,
 the result of <code><b>A</b> <b>B</b> block</b></code>  would be
 <code>1 1 5 5 5 8 8 8 8</code>.
-If <code><b>B</b>=yellow blue red</code>,
-the result of block would be
+If <b>B</b>=<code>yellow blue red</code>,
+the result of <code><b>A</b> <b>B</b> block</code>  would be
 <code>yellow yellow blue blue blue red red red red</code>.
 So for the <code>block</code> command,
 list <b>A</b> has to contain numbers,
@@ -962,14 +984,23 @@ in a row?
 Many AWL commands take two lists,
 so they expect to pop a list off the stack,
 and then another.
+We just saw that above with <code>block</code>,
+which needs to pop two lists off the stack
+in order to do its job.
 Suppose your first list is 
 <code>1 2 3</code> and your second is <code>9 8 7 6</code>.
 If you typed <code>1 2 3 9 8 7 6</code> into
 the input box,
 you'd be creating one list with seven elements.
-The trick is to call <code>push</code>
-between one list and another:
-<code>1 2 3 push 9 8 7 6</code> does the trick.
+The way to say, "I'm done with one list,
+and I'd like to start another"
+ is to call <code>push</code>
+after the first list.
+So
+<code>1 2 3 push 9 8 7 6</code> pushes
+the list <code>1 2 3</code> onto the stack,
+then builds the new list <code>9 8 7 6</code>
+on top of that.
 Now the stack holds two new elements
 (on top of whatever might have been there before):
 one entry with the list <code>1 2 3</code>,
@@ -980,7 +1011,7 @@ mistake, so if things go wrong for you,
 this is a good first thing to check for.
 Because you'll use <block>push</block> so much,
 there's a shortcut for it:
-the forward slash (technically called a <em>virgule</em>): <code>/</code>.
+the forward slash (also called a <em>virgule</em>): <code>/</code>.
 So you'll often see the above example written simply
 <code>1 2 3 / 9 8 7 6</code>.
 </p>
@@ -1054,7 +1085,44 @@ Note that if this is bigger than the tie-up,
 the tie-up will get automatically repeated
 internally to match your huge warp;
 this will usually give you surprising results.
-All of the above also holds for the weft.
+The same is true for the weft.
+</p>
+<p>
+When you create warp or weft values 
+that go outside the default range of 1 to 8,
+you'll probably want to adjust the size of
+the tie-up.
+Use the <em>Tie-up Width</em> and <em>Tie-up Height</em>
+controls located above the fabric.
+You'll often set these to match the size of the
+warp and width,
+but you don't have to.
+If the tie-up is too small in either
+dimension (or both),
+it will be automatically repeated internally
+as needed.
+If the tie-up is too big,
+the unused bits are just ignored.
+</p>
+<p>
+You'll sometimes find a published draft
+(or you'll make one of your own) where
+the warp and/or weft values don't start
+with 1.
+For example, the warp might contain
+values only from 3 to 6.
+The system will draw a warp that is
+6 boxes high (because we always start with 1),
+but only the top 4 rows will have any
+black cells in them.
+In this case,
+you'll probably want the tie-up to be at
+least 6 cells high.
+The useful parts of the tie-up will be the
+top 4 rows.
+The bottom 2 rows never get used, so you
+can leave them empty or fill them in with
+anything you like.
 </p>
 <p>
 You can control the size of the fabric by
@@ -1063,6 +1131,10 @@ just above the fabric.
 As you make the fabric larger,
 the individual cells in the draft necessarily
 get smaller.
+By the same logic,
+as the fabric gets smaller,
+the individual cells in the draft can be
+drawn larger.
 If you want to edit the tie-up interactively
 with mouse clicks,
 the cells have to be big enough for you to
@@ -1089,7 +1161,7 @@ that create <b>runs</b>.
 A run is a pass through the whole domain,
 going either up or down.
 For example,
-a run starting at 3 
+an upward run starting at 3 
 using the default domain
 is <code>3 4 5 6 7 8 1 2</code>.
 If the domain was instead [2, 6],
@@ -1682,17 +1754,17 @@ that get concatenated together, so you can make sure you haven't missed any.</li
 each input box's expression.</li>
 <li>Remember to push between lists when
 you're making them! This is an easy thing to forget.</li>
-<li>Make sure to keep track of your domain. It starts at [1,8] for both warp and
+<li>Keep track of your domain. It starts at [1,8] for both warp and
 weft. If you change it, that change stays in effect for the rest of that
 expression. You can always set it back to [1,8] if you want.
-<li>Make sure you have the tie-up sizes set the way you like. The tie-up doesn't
+<li>Set the tie-up sizes set the way you like. The tie-up doesn't
 automatically re-size to fit your warp or weft (that would make it much harder
 to experiment with your drafts), but it will repeat as needed when the 
 fabric is created. This can get confusing if the tie-up height is smaller
 than the size of the warp, or the width is less than the size of the weft.</li>
 <li>When in doubt, just type in your pattern explicitly;
 not everything has to be a clever AWL construction.
-For example, if you want the pattern <code>0 1 3 5 2</code>,
+For example, if you want the pattern <code>2 1 3 5 2</code>,
 it's probably easiest to just type that directly into the text area
 and move on.
 This is particularly useful for colors,
@@ -1744,17 +1816,16 @@ To flip a tie-up cell from black to white,
 or vice-versa, just click on it.
 </p>
 <p>
-If you see a red box, it means that your
+If you see a red box when you click, it means that your
 tie-up cells are too small to be edited 
-with any accuracy.
+accurately.
 To make all the cells in the draft bigger,
 including the tie-up,
 reduce the size of the fabric.
 Using an 8-by-8 tie-up, I find a fabric
 size of 50 gives me plenty of accuracy
-for editing, and shows me about 
-3 and a half repeats of the fabric's pattern in 
-each direction.
+for editing, and often shows me at
+least one repeat of the woven fabric.
 </p>
 
 <p><a name='savingAndLoading'></a></p>
@@ -1774,9 +1845,9 @@ I can't support them all.
 I chose to support a popular cloud service
 called <a href="https://db.tt/TeyvYvem" target="_blank">Dropbox</a>.
 They have a great reputation for privacy and reliability,
-and they offer you 3GB of storage off the bat for free.
-They stay in business by selling you more space than
-that if you need it.
+and they offer you 3GB of storage off the bat for free
+(they stay in business by selling you more space than
+that if you need it).
 </p>
 
 <h4>Saving The Fabric</h4>
@@ -1806,7 +1877,7 @@ set up.
 <p>
 Once you're set up with Dropbox,
 you save your draft
-but first giving it a name.
+by first giving it a name.
 Type the name you like
 in the text box at the very 
 top of the window,
@@ -1844,10 +1915,11 @@ or do anything else with them,
 just use your normal file-system
 browser to view the contents of the folder
 <code>Apps/Luminescence</code>,
-located inside your <code>Dropbox</code>
+located inside your Dropbox
 folder, which is
 probably located in your home directory.
-You can even read the .wif files with
+You can even read the .wif files saved
+there with
 any text editor that you like,
 since they're just plain text.
 </p>
@@ -1859,8 +1931,8 @@ click on
 <a href="https://db.tt/TeyvYvem" target="_blank">this link</a>
 to sign up for a free account
 (disclaimer: by using the link, rather than going to
-Dropbox directly, they give me some more storage.
-I use that space to develop apps like this.
+Dropbox directly, they give me some more storage
+as a thank-you for the referral.
 But you can go straight to 
 <a href="https://www.dropbox.com" target="blank">Dropbox</a> 
 if you prefer to bypass my link).
@@ -1873,7 +1945,7 @@ Your password and all of your files are yours
 and yours alone, and I never see any of it.
 I can't even find out if you ever use Dropbox
 or not, much less find out what you're doing or
-looking at your files.
+what files you're working with.
 Frankly, I like it this way;
 what you do with your computer is your business.
 </p>
@@ -2006,7 +2078,7 @@ Just drag the files back and forth as needed.
 </p>
 <p>
 If you want to save your drafts but you
-really don't want to use Dropbox,
+really don't want to use Dropbox at all,
 you can take a screenshot of your
 window, and then type everything back in
 from there to re-load the draft.
@@ -2014,7 +2086,7 @@ from there to re-load the draft.
 <h3>How do I share my drafts?</strong></h3>
 <p>
 The .wif files are just plain text files,
-sitting in the directoy
+sitting in the directory
 <code>Apps/Luminescence</code>
 in your Dropbox.
 Just share them as you'd share any text file!
@@ -2031,11 +2103,11 @@ You can find the specification
 <a href="http://www.mhsoft.com/wif/wif1-1.txt" target="_blank">here</a>.
 </p>
 <p>
-My loom writes simple WIF files that omit
+Luminescence writes simple WIF files that omit
 a lot of optional stuff,
 like thread spacing and thread thickness.
 If you're reading a WIF file with that
-information in it, my program just ignores that stuff
+information in it, Luminescence just ignores that stuff
 (which means it isn't included if you later
 save the file to the same or a different name).
 </p>
@@ -2044,8 +2116,7 @@ save the file to the same or a different name).
 in the warp columns and weft rows, but you said there
 should be only one in each column and row. What gives?</h3>
 <p>
-I am not a weaving expert,
-but my understanding is that those drafts are
+My understanding is that those drafts are
 for varieties of looms that don't have tie-ups.
 I don't support those kinds of drafts;
 if you try to read them in you'll find that I
@@ -2055,7 +2126,7 @@ row in the warp and weft.
 <p>
 In my experience, I've always been able convert one
 of those drafts into one that follows the
-format we use here, but I can't guarantee that's
+format we use here, but I don't guarantee that's
 always possible.
 </p>
 
@@ -2079,7 +2150,7 @@ For example, the shortcut for <code>twillr</code> is <code>t>></code>,
 all one word with no spaces.
 And if you want to concatenate three lists together,
 you'd write <code>, , ,</code> with a space between each comma.
-Leaving out those spaces, or including extra ones where they don't belong,
+Leaving out those spaces
 is an easy mistake to make.
 </p>
 
@@ -2122,7 +2193,7 @@ see the question above for a link to the format specification.
 This probably happened after you pressed one of the arrows
 to turn your AWL into a pattern for the loom.
 The truth is that there are a lot of ways that things can go
-wrong when we turn your AWL into a pattern.
+wrong when I turn your AWL into a pattern.
 I've tried to catch all of them,
 and to give you at least some information about where things
 went wrong.
@@ -2179,6 +2250,19 @@ var j = "om";
 document.write("<a href="+a+b+c+d+e+f+g+h+i+j+"?Subject=Luminescence>"+c+d+e+f+g+h+i+j+"</a>.");
 </script>
 </p>
+<p>
+If something's going wrong, please try to describe it as precisely as you can,
+and include enough information for me to replicate the problem on my end.
+A screenshot or .wif file would be great,
+along with a screenshot (or just the text) of any error message.
+</p>
+<p>
+I'd love to hear suggestions for making Luminescence better and
+more useful to you! Send them along.
+Do keep in mind, though, that this project is a labor of love and
+it's free,
+so it might take me a while to make changes.
+</p>
 
 <h3>Nice project. What else do you do?</h3>
 <p>
@@ -2188,7 +2272,7 @@ I write novels
 and
 <a href="http://www.amazon.com/dp/B00WNIPVH4" target="_blank">Bait</a> are all available on Amazon),
 
-You can see my online stuff at my personal site,
+You can see my online computer graphics research and artwork at my personal site,
 <a href="http://www.glassner.com" target="_blank">www.glassner.com</a>.
 You can also see more about my company,
 <em>The Imaginary Institute</em>, at
@@ -2306,7 +2390,8 @@ You can find those three columns in PDF form for free by going to
 <a href="http://www.glassner.com/computer-graphics/cga-columns/" target="_blank"">my CG&A columns page</a>,
 and scrolling down to the three columns starting with 
 called <em>Digital Weaving Part 1</em>.
-I later collected many of my CG&A columns,
+I later collected these and 
+many other columns,
 expanded and revised them,
 and assembled them into the book
 <a href="http://www.glassner.com/portfolio/morphs-mallards-and-montages/" target="_blank">Morphs, 
@@ -2316,7 +2401,7 @@ quite a bit for this online release:
 some commands have changed or been consolidated,
 and a bunch of new commands have been added.
 Full details of the current version are availabe
-in the <a href="AWLReference" target="_blank">AWL Reference</a>.
+in the <a href="AWLReference.html" target="_blank">AWL Reference</a>.
 </p>
 
 <div style="margin-bottom:50px;"></div>
