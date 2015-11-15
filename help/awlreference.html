@@ -1373,17 +1373,21 @@ Weavers also call this process <em>subarticulation</em>.
 </dl>
 <p>
 Make <var>d</var> copies of <b>A</b>,
-each time rotating it to the left by <var>c</var> steps
-(like <code>twillr</code>, but rotating right instead of left).
-This is very useful for making tie-ups that contain a
-1-row pattern that shifts one step left on each successive row;
-such tie-ups are often used to make twill fabrics.
+each time rotating it to the left by <var>c</var> steps.
+This command gets its name because it's very useful for
+making tie-up patterns that are characteristic of
+twill weaves.
+To make a twill tie-up,
+create a pattern that is as wide as one row
+of the tie-up, then use <code>twilll</code> to rotate it
+successively rotate it 1 step for each row of the tie-up,
+working up from the bottom.
 </p>
 <div class="bs-example">
-0 1 2 3 4 / 2 / 3 t>>
+1 2 3 4 5 / 2 / 3 t>>
 </div>
 <div class="highlight">
-0 1 2 3 4 2 3 4 0 1 4 0 1 2 3
+1 2 3 4 5 3 4 5 1 2 5 1 2 3 4
 </div>
 
 
@@ -1399,17 +1403,18 @@ such tie-ups are often used to make twill fabrics.
 </dl>
 <p>
 Make <var>d</var> copies of <b>A</b>,
-each time rotating it to the left by <var>c</var> steps
-(like <code>twilll</code>, but rotating left instead of right).
-This is very useful for making tie-ups that contain a
-1-row pattern that shifts one step left on each successive row;
-such tie-ups are often used to make twill fabrics.
+each time rotating it to the left by <var>c</var> steps.
+This is the counterpart of
+<code>twilll</code>, but rotates right instead of left.
+As discussed in <code>twilll</code>,
+this command makes it easy to create tie-ups
+that are like those used in twills.
 </p>
 <div class="bs-example">
-0 1 2 3 4 / 2 / 3 t>>
+1 2 3 4 5 / 2 / 3 t>>
 </div>
 <div class="highlight">
-0 1 2 3 4 3 4 0 1 2 1 2 3 4 0
+1 2 3 4 5 4 5 1 2 3 2 3 4 5 1
 </div>
 
 
@@ -1455,13 +1460,13 @@ Like <code>up</code>,
 but after counting up to the start of <b>B</b>
 it inserts <var>c</var> complete upward runs through
 the domain.
-The following example assumes the default domain of [0,7].
+The following example assumes the default domain of [1,8].
 </p>
 <div class="bs-example">
-2 3 / 6 / 2 &lt;l
+2 3 / 6 / 2 &lt;r
 </div>
 <div class="highlight">
-2 3 4 5 6 7 0 1 2 3 4 5 6 7 0 1 2 3 4 5 6
+2 3 4 5 6 7 8 1 2 3 4 5 6 7 8 1 2 3 4 5 6
 </div>
 
 
@@ -1474,7 +1479,7 @@ The following example assumes the default domain of [0,7].
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-star"></i></dd>
 </dl>
 <p>
 Create an alternating series of up and down runs.
@@ -1509,11 +1514,12 @@ The following example assumes the default domain of [0,7].
 <dt>List A is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>List B is numerical:</dt><dd><i class="fa fa-circle"></i></dd>
 <dt>Wraps output:</dt><dd><i class="fa fa-circle"></i></dd>
-<dt>Resizes inputs:</dt><dd><i class="fa fa-circle"></i></dd>
+<dt>Resizes inputs:</dt><dd><i class="fa fa-star"></i></dd>
 </dl>
 <p>
 This is just like <code>updown</code>,
-but after each generated run it inserts
+but after each generated ascending or
+descending section it inserts
 <var>c</var> full runs through the domain
 in the same direction.
 Like <code>updown</code>,
@@ -1521,10 +1527,10 @@ the two lists will be resized unless
 <b>A</b> is exactly 1 element longer than <b>B</b>.
 </p>
 <div class="bs-example">
-1 7 / 5 / 1 &lt;dl
+1 7 / 5 / 1 &lt;dr
 </div>
 <div class="highlight">
-1 2 3 4 5 6 7 0 1 2 3 4 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7
+1 2 3 4 5 6 7 8 1 2 3 4 5 4 3 2 1 8 7 6 5 4 3 2 1 8 7
 </div>
 
 
@@ -1565,10 +1571,10 @@ of elements in the list).
 Finds the largest value in list <b>A</b>.
 </p>
 <div class="bs-example">
-3 5 3 8 1 vmin
+3 5 3 8 1 vmax
 </div>
 <div class="highlight">
-1
+8
 </div>
 
 
@@ -1587,10 +1593,10 @@ Finds the largest value in list <b>A</b>.
 Finds the largest value in list <b>A</b>.
 </p>
 <div class="bs-example">
-3 5 3 8 1 vmax
+3 5 3 8 1 vmin
 </div>
 <div class="highlight">
-8
+1
 </div>
 
 <div style="margin-bottom:50px;"></div>
