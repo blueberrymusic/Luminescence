@@ -179,7 +179,10 @@ var DropboxClient = null;
 // when the user wants to save, or asks to load from Dropbox.
 function authorizeDropBox() {
 	// Browser-side applications do not use the API secret.
-	DropboxClient = new Dropbox.Client({ key: "0aa5l83w7a4bcb9" });
+
+	//DropboxClient = new Dropbox.Client({ key: "0aa5l83w7a4bcb9" });  // for AndrewsOnlineLoom
+	DropboxClient = new Dropbox.Client({ key: "h5moenkhykgznmt" });  // for Luminescent
+
 	DropboxClient.authenticate(function(error, DropboxClient) {
 		if (error) {
 			// Replace with a call to your own error-handling code.
