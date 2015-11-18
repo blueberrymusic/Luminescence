@@ -482,7 +482,7 @@ function currentDraftAsWIF() {
 
 	wifString += "[TEXT]\n";
 	wifString += "Title="+DraftName+"\n";
-	wifString += "Written by Luminescencev.10 at http://TK\n";
+	wifString += "Written by Luminescencev.10 at https://TK\n";
 	wifString += "; Creation "+Date()+"\n";
 	wifString += "\n";
 
