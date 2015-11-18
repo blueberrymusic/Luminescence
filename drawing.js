@@ -151,6 +151,9 @@ function drawWarp() {
 		Ctx.strokeStyle = rgb;
 		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
 	}
+	// draw the color box over the colors
+	Ctx.strokeStyle = "#888888";
+	Ctx.strokeRect(right-(FabricSize*SqSize), colorTop, FabricSize*SqSize, SqSize); 
 }
 
 function drawWeft() {
@@ -181,6 +184,9 @@ function drawWeft() {
 		Ctx.strokeStyle = rgb;
 		Ctx.strokeRect(colorLeft, top+(row*SqSize), SqSize, SqSize);
 	}
+	// draw the color box over the colors
+	Ctx.strokeStyle = "#888888";
+	Ctx.strokeRect(colorLeft, top, SqSize, FabricSize*SqSize);
 }
 
 function drawTieUp() {
