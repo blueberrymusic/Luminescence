@@ -184,7 +184,7 @@ The <b>weft</b> and its column of colors sits to
 the right,
 and the <b>tie-up</b> sits to the upper right
 of the fabric.
-When a person actually weaves on a lom,
+When a person actually weaves on a loom,
 these grids of black and white tell them how
 to physically set up the loom for each row
 of woven cloth,
@@ -480,7 +480,7 @@ only from top down. Here we're using
 Finally, we have the tie-up.
 Because each cell in the tie-up can be either
 white or black,
-we need to somehow list every cell our pattern.
+we need to somehow list every cell of our pattern.
 So we just make a big list of 0's and 1's,
 one entry for each cell in the tie-up grid.
 Luminescence follows the
@@ -522,7 +522,7 @@ But it does come in handy from time to time.
 
 <p>
 To summarize, the following list completely
-summarizes the draft in Figure 3,
+describes the draft in Figure 3,
 and thus also completely specifies the pattern
 of the fabric it leads to.
 If you want to share your draft with other weavers,
@@ -646,8 +646,8 @@ of colors using the AWL commands,
 or you can just enter one or a few colors
 by hand.
 There are three ways to identify each color;
-you can mix and match these as you like
-even in a single expression.
+you can mix and match these as you like,
+even within a single expression.
 </p>
 
 <h4>By Name</h4>
@@ -887,8 +887,8 @@ We pop the stack again,
 getting 5,
 and that goes on the left side
 of our traditional expression <code>5+3</code>.
-Note that the stack is now emptyh.
-So we evalute our two pieces of data using
+Note that the stack is now empty.
+So we evaluate our two pieces of data using
 the addition command,
 getting the result <code>8</code>.
 By convention,
@@ -1026,7 +1026,7 @@ is the list <code>9 8 7 6</code>.
 Forgetting to push between two lists is a common
 mistake, so if things go wrong for you,
 this is a good first thing to check for.
-Because you'll use <block>push</block> so much,
+Because you'll use <code>push</code> so much,
 there's a shortcut for it:
 the forward slash (also called a <em>virgule</em>): <code>/</code>.
 So you'll often see the above example written simply
@@ -1081,8 +1081,8 @@ depending on their inputs.
 For example, the <code>split</code> command
 splits the topmost list on the stack at the
 location you specify,
-and then pushes the first half of your input list,
-and then the second half.
+and then pushes the first part of your input list,
+and then the second part.
 But if your split location is before the beginning
 or after the end,
 then your input list doesn't get affected,
@@ -1092,7 +1092,7 @@ and it simply goes back on the stack unchanged.
 <h3>Draft Sizes</h3>
 <p>
 When your AWL is copied to the warp,
-it will draw a grid that starts at 1,
+Luminescence will draw a grid that starts at 1,
 but extends upwards as high as necessary
 to include your expression.
 So if your expression has the values 3 through 13,
@@ -1105,10 +1105,10 @@ this will usually give you surprising results.
 The same is true for the weft.
 </p>
 <p>
-When you create warp or weft values 
-that go outside the default range of 1 to 8,
+To prevent those surprises,
 you'll probably want to adjust the size of
-the tie-up.
+the tie-up so it's as big or bigger than
+the warp and weft patterns.
 Use the <em>Tie-up Width</em> and <em>Tie-up Height</em>
 controls located above the fabric.
 You'll often set these to match the size of the
@@ -1792,7 +1792,7 @@ where the lists are frequently just a single color.
 <p><a name='interface'></a></p>
 <h2>The Rest of the Interface</h2>
 
-<h3>Fabric and Tie-up Size</h3>
+<h3>Fabric Size and Tie-up Size</h3>
 <p>
 Just above the fabric there are three boxes for you to type in numbers.
 </p>
@@ -1800,6 +1800,12 @@ Just above the fabric there are three boxes for you to type in numbers.
 <li><strong>Fabric size:</strong> The fabric is always a square. This tells
 the program how big that square should be. The warp and weft patterns and
 colors are simply repeated as necessary to match the fabric's size.
+Note that if you make the fabric size <em>too</em> big,
+it will take a few moments to draw the fabric,
+plus your browser could run out of memory or suffer other problems.
+You shouldn't have any problems up to 1000, and you may be able
+to go much higher, but at some point it will become too much for
+your poor little browser to handle.
 </li>
 <li><strong>Tie-up width:</strong> </li>
 <li><strong>Tie-up height:</strong> You can make the tie-up any size you
@@ -2238,7 +2244,9 @@ with just a bit of <a http="https://jquery.com/" target="_blank">jQuery</a>.
 Working on my <a href="http://www.apple.com/imac/" target="_blank">iMac</a>,
 I used the <a href="https://en.wikipedia.org/wiki/Vi" target="_blank">vi</a>
 text editor inside of an <a "http:www.iterm2.com" target="_blank">iterm2</a>
-window.
+window,
+and debugged my Javascript using the Developer's Tools
+in <a http="https://www.google.com/chrome/" target="_blank">Google Chrome</a> .
 I used the 
 <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3.3</a>
 framework to help make responsive pages,
