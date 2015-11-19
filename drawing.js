@@ -36,6 +36,25 @@ function drawCanvas() {
 	var maxGap = Math.max(rightSquares, topSquares);
 	var numSquares = FabricSize + maxGap + 1;
 
+	// disable or enable the Show threads checkbox 
+	if (FabricSize < 100) {
+		if ($("#showThreadsCheckbox").prop('disabled')) {
+			// turn it on
+			$("#showThreadsCheckbox").prop('disabled', false);
+			$("#showThreadsLabel").css('color', '#000000');
+		} else {
+			var ff = 3;
+		}
+	} else { // turn it off
+		if ($("#showThreadsCheckbox").prop('disabled')) {
+			// we're already disabled
+			var dd = 3;
+		} else {
+			$("#showThreadsCheckbox").prop('disabled', true);
+			$("#showThreadsLabel").css('color', '#cccccc');
+		}
+	}
+
 	SqSize = CanvasSize / numSquares;
 
 	FabricRight = CanvasSize - (rightSquares* SqSize);
@@ -226,6 +245,12 @@ function drawFabric() {
 	var left = right - (FabricSize * SqSize);
 	var bottom = top + (FabricSize * SqSize);
 	var threadBorderColor = "#666666";
+	var showThreads = false;
+	if (!($("#showThreadsCheckbox").prop('disabled'))) {
+		showThreads = $('#showThreadsCheckbox').prop('checked');
+	} else {
+		var kk = 3;
+	}
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box
@@ -256,7 +281,6 @@ function drawFabric() {
 					warpOnTop = false;
 				}
 			}
-			var showThreads = $('#showThreadsCheckbox').prop('checked');
 			if (showThreads) {
 				var boxL = right-((col+1)*SqSize);
 				var boxT = top + (row*SqSize);
