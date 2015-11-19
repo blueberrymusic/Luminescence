@@ -105,6 +105,24 @@
 	font-size: 130%;
 }
 
+#fabricSizeLabel {
+	font-size: 110%;
+}
+
+#tieUpWidthLabel {
+	font-size: 110%;
+	margin-left: 20px;
+}
+
+#tieUpHeightLabel {
+	font-size: 110%;
+	margin-left: 20px;
+}
+
+#showThreadsLabel {
+	font-size: 110%;
+}
+
 .h4textspan {
 	font-size: 16px;
 	font-weight: bold; 

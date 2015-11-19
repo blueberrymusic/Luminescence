@@ -227,30 +227,64 @@
 			<!-- start of canvas section-->
 			<div class="col-sm-6">
 
-				<!-- push the canvas stuff down a bit so it's centered wrt left colum -->
-				<div class="row"><div class="col-sm-12"><p style="margin-top:0px; padding:0px;">&nbsp; </p></div></div>
-
 				<div class="row">
-
-					<div class="form-inline">
-						<div class="form-group">
-    						<label >Fabric size:</label>
-							<input type="number" id="fabricSizeInput" min="2" max="600" onchange="fabricSizeInputFunction()">
-  						</div>
-  						<div class="form-group">
-    						<label style="margin-left:30px;">Tie-up Width:</label>
-							<input type="number" id="tieUpWidthInput" min="2" max="50" onchange="tieUpWidthInputFunction()">
-  						</div>
-  						<div class="form-group">
-    						<label style="margin-left:20px;">Tie-up Height:</label>
-							<input type="number" id="tieUpHeightInput" min="2" max="50" onchange="tieUpHeightInputFunction()">
-  						</div>
-					</div>
-
-				</div> <!-- row -->
-				<div class="row">
-					<div class="row"><div class="col-sm-12"><p style="margin-top:10px;">&nbsp; </p></div></div>
+					<div class="row"><div class="col-sm-12" style="margin-top:10px;"></div></div>
 				</row> <!-- row -->
+
+
+<div class="row">
+	<div class="col-sm-4">
+		<div class="form-inline">  
+			<div class="form-group">
+				<label id="fabricSizeLabel"> Fabric size:</label>
+				<input type="number" id="fabricSizeInput" min="2" max="600" onchange="fabricSizeInputFunction()">
+			</div> <!-- form-group -->
+		</div> <!-- form-inline -->
+	</div> <!-- col-sm-4 -->
+
+	<div class="col-sm-5">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-inline">
+					<div class="form-group">
+						<label id="tieUpWidthLabel">Tie-Up Width:</label>
+						<input type="number" id="tieUpWidthInput" min="2" max="50" onchange="tieUpWidthInputFunction()">
+					</div> <!-- form-group -->
+				</div> <!-- form-inline -->
+			</div> <!-- col-sm-12 -->
+		</div> <!-- row -->
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="col-sm-12" style="margin-top:10px;"></div> <!-- spacer -->
+				</div> <!-- col-sm-12 -->
+			</div> <!-- row -->
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-inline">
+					<div class="form-group">
+						<label id="tieUpHeightLabel">Tie-Up Height:</label>
+						<input type="number" id="tieUpHeightInput" min="2" max="50" onchange="tieUpHeightInputFunction()">
+					</div> <!-- form-group -->
+				</div> <!-- form-inline -->
+			</div> <!-- col-sm-12 -->
+		</div> <!-- row -->
+	</div> <!-- row -->
+
+	<div class="col-sm-3">
+      <div class="checkbox">
+        <label id="showThreadsLabel"> <input type="checkbox" id="showThreadsCheckbox" onchange="showThreadsCheckboxFunction()"> <strong>Show threads</strong> </label>
+      </div> <!-- checkbox -->
+	</div> <!-- col-sm-3 -->
+
+</div> <!-- row -->
+
+
+				<div class="row">
+					<div class="row"><div class="col-sm-12" style="margin-top:20px;"></div></div>
+				</row> <!-- row -->
+
 				<div class="row">
 					<div class="col-sm-12">
 					<canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;">

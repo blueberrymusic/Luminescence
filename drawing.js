@@ -139,7 +139,7 @@ function drawWarp() {
 	for (var col=0; col<FabricSize; col++) {  
 		var cellNum = S[col % S.length];
 		cellNum = toWarpDomain(cellNum);
-		if (cellNum >= 0) {
+		if (cellNum > 0) {
 			Ctx.fillRect(right-((col+1)*SqSize), bottom-(cellNum*SqSize), SqSize, SqSize);
 		}
 	}
@@ -172,7 +172,7 @@ function drawWeft() {
 	for (var row=0; row<FabricSize; row++) {  
 		var cellNum = R[row % R.length];
 		cellNum = toWeftDomain(cellNum);
-		if (cellNum >= 0) {
+		if (cellNum > 0) {
 			Ctx.fillRect(left+((cellNum-1)*SqSize), top+(row*SqSize), SqSize, SqSize);
 		}
 	}
@@ -218,6 +218,103 @@ function drawTieUp() {
 	}
 }
 
+var ThreadWidth = .75;
+
+function drawFabric() {
+	var right = FabricRight;
+	var top = FabricTop;
+	var left = right - (FabricSize * SqSize);
+	var bottom = top + (FabricSize * SqSize);
+	var threadBorderColor = "#666666";
+	Ctx.strokeStyle = "#000000";
+	Ctx.lineWidth = 1;
+	// draw the box
+	Ctx.strokeRect(left, top, right-left, bottom-top);
+	// use the weaving equation to fill in the fabric
+	for (var row=0; row<FabricSize; row++) { 
+		for (var col=0; col<FabricSize; col++) {
+			var tieUpCol = R[row % R.length];
+			var tieUpRow = S[col % S.length];
+			tieUpCol--;   // fix for user's 1-based indexing
+			tieUpRow--;
+			tieUpCol = tieUpCol % TieUpWidth;
+			tieUpRow = tieUpRow % TieUpHeight;
+			var rgb = "rgb(0, 0, 0)";
+			var warpOnTop = true;
+			var warpRGB = WarpColors[col % WarpColors.length];
+			var weftRGB= WeftColors[row % WeftColors.length];
+			if (tieUpCol < 0) {
+				warpOnTop = true;
+			} else if (tieUpRow < 0) {
+				warpOnTop = false;
+			} else {
+				var tieUpIndex = (tieUpCol * TieUpHeight) + tieUpRow;
+				var tieUpVal = T[tieUpIndex % T.length];
+				if (tieUpVal === 1) {  // use warp color
+					warpOnTop = true;
+				} else { // use weft color
+					warpOnTop = false;
+				}
+			}
+			var showThreads = $('#showThreadsCheckbox').prop('checked');
+			if (showThreads) {
+				var boxL = right-((col+1)*SqSize);
+				var boxT = top + (row*SqSize);
+				var midX = boxL + (SqSize/2);
+				var midY = boxT + (SqSize/2);
+				var threadW2 = (ThreadWidth * SqSize)/2;
+				Ctx.fillStyle = "rgb(255,255,255)";
+				Ctx.fillRect(boxL, boxT, SqSize, SqSize);
+				if (warpOnTop) {
+					Ctx.fillStyle = weftRGB;
+					Ctx.fillRect(boxL, midY-threadW2, SqSize, 2*threadW2);
+					Ctx.strokeStyle = weftRGB;
+					Ctx.strokeRect(boxL, midY-threadW2, SqSize, 2*threadW2);
+
+					Ctx.strokeStyle = threadBorderColor;//"cccccc";
+					Ctx.beginPath(); Ctx.moveTo(boxL, midY-threadW2); Ctx.lineTo(boxL+SqSize, midY-threadW2); Ctx.stroke();
+					Ctx.beginPath(); Ctx.moveTo(boxL, midY+threadW2); Ctx.lineTo(boxL+SqSize, midY+threadW2); Ctx.stroke();
+
+					Ctx.fillStyle = warpRGB;
+					Ctx.fillRect(midX-threadW2, boxT, 2*threadW2, SqSize);
+					Ctx.strokeStyle = warpRGB;
+					Ctx.strokeRect(midX-threadW2, boxT, 2*threadW2, SqSize);
+
+					Ctx.strokeStyle = threadBorderColor;//"cccccc";
+					Ctx.beginPath(); Ctx.moveTo(midX-threadW2, boxT); Ctx.lineTo(midX-threadW2, boxT+SqSize); Ctx.stroke();
+					Ctx.beginPath(); Ctx.moveTo(midX+threadW2, boxT); Ctx.lineTo(midX+threadW2, boxT+SqSize); Ctx.stroke();
+				} else {
+					Ctx.fillStyle = warpRGB;
+					Ctx.fillRect(midX-threadW2, boxT, 2*threadW2, SqSize);
+					Ctx.strokeStyle = warpRGB;
+					Ctx.strokeRect(midX-threadW2, boxT, 2*threadW2, SqSize);
+
+					Ctx.strokeStyle = threadBorderColor;//"cccccc";
+					Ctx.beginPath(); Ctx.moveTo(midX-threadW2, boxT); Ctx.lineTo(midX-threadW2, boxT+SqSize); Ctx.stroke();
+					Ctx.beginPath(); Ctx.moveTo(midX+threadW2, boxT); Ctx.lineTo(midX+threadW2, boxT+SqSize); Ctx.stroke();
+
+					Ctx.fillStyle = weftRGB;
+					Ctx.fillRect(boxL, midY-threadW2, SqSize, 2*threadW2);
+					Ctx.strokeStyle = weftRGB;
+					Ctx.strokeRect(boxL, midY-threadW2, SqSize, 2*threadW2);
+
+					Ctx.strokeStyle = threadBorderColor;//"cccccc";
+					Ctx.beginPath(); Ctx.moveTo(boxL, midY-threadW2); Ctx.lineTo(boxL+SqSize, midY-threadW2); Ctx.stroke();
+					Ctx.beginPath(); Ctx.moveTo(boxL, midY+threadW2); Ctx.lineTo(boxL+SqSize, midY+threadW2); Ctx.stroke();
+				}
+			} else {
+
+			if (warpOnTop) { Ctx.fillStyle = warpRGB; Ctx.strokeStyle = warpRGB; }
+			          else { Ctx.fillStyle = weftRGB; Ctx.strokeStyle = weftRGB; }
+			Ctx.fillRect(right-((col+1)*SqSize), top+(row*SqSize), SqSize, SqSize);
+			Ctx.strokeRect(right-((col+1)*SqSize), top+(row*SqSize), SqSize, SqSize);
+
+			}
+		}
+	}
+}
+
+/* no threads, solid blocks
 function drawFabric() {
 	var right = FabricRight;
 	var top = FabricTop;
@@ -257,166 +354,5 @@ function drawFabric() {
 		}
 	}
 }
-
-/* These are the originals, warp on bottom, weft on right
-function drawWarp() { 
-	var right = FabricRight;
-	var top = FabricBottom + SqSize;
-	var left = right - (FabricSize * SqSize);
-	var bottom = top + ((WarpDMax+1) * SqSize);
-	var colorTop = top + ((WarpDMax+2) * SqSize);
-	Ctx.strokeStyle = "#000000";
-	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
-	// draw the filled-in boxes in the grid
-	Ctx.fillStyle = "rgb(0, 0, 0)";
-	for (var col=0; col<FabricSize; col++) {  
-		var cellNum = S[col % S.length];
-		cellNum = toWarpDomain(cellNum);
-		if (cellNum < 0) cellNum = 0;
-		Ctx.fillRect(right-((col+1)*SqSize), top+(cellNum*SqSize), SqSize, SqSize);
-	}
-	// draw the colors
-	for (var col=0; col<FabricSize; col++) {  
-		var rgb = WarpColors[col % WarpColors.length];
-		Ctx.fillStyle = rgb;
-		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
-		Ctx.strokeStyle = rgb;
-		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
-	}
-}
-
-function drawWeft() {
-	var bottom = FabricBottom;
-	var left = FabricRight + SqSize;
-	var top = bottom - (FabricSize * SqSize);
-	var right = left + ((WeftDMax+1) * SqSize);
-	var colorLeft = left + ((WeftDMax+2) * SqSize);
-	Ctx.strokeStyle = "#000000";
-	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
-	if (DrawGrid) {
-		for (var col=1; col<WeftDMax; col++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left+(col*SqSize), top);
-			Ctx.lineTo(left+(col*SqSize), bottom);
-			Ctx.stroke();
-		}
-		for (var row=1; row<FabricSize; row++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left,  top+(row*SqSize));
-			Ctx.lineTo(right, top+(row*SqSize));
-			Ctx.stroke();
-		}
-	}
-	// draw the filled-in boxes in the grid
-	Ctx.fillStyle = "rgb(0, 0, 0)";
-	for (var row=0; row<FabricSize; row++) {  
-		var cellNum = R[row % R.length];
-		cellNum = toWeftDomain(cellNum);
-		if (cellNum < 0) cellNum = 0;
-		Ctx.fillRect(left+(cellNum*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
-	}
-	// draw the colors
-	for (var row=0; row<FabricSize; row++) {  
-		var rgb = WeftColors[row % WeftColors.length];
-		Ctx.fillStyle = rgb;
-		Ctx.fillRect(colorLeft, bottom-((row+1)*SqSize), SqSize, SqSize);
-		Ctx.strokeStyle = rgb;
-		Ctx.strokeRect(colorLeft, bottom-((row+1)*SqSize), SqSize, SqSize);
-	}
-}
-
-function drawTieUp() {
-	var left = FabricRight + SqSize;
-	var top = FabricBottom + SqSize;
-	var right = left + (TieUpWidth * SqSize);
-	var bottom = top + (TieUpHeight * SqSize);
-	// save these so that ui.js can use them for clicks in the tie-up
-	TieUpL = left;
-	TieUpR = right;
-	TieUpT = top;
-	TieUpB = bottom;
-	Ctx.strokeStyle = "#000000";
-	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
-	if (DrawGrid) {
-		for (var col=1; col<TieUpHeight; col++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left+(col*SqSize), top);
-			Ctx.lineTo(left+(col*SqSize), bottom);
-			Ctx.stroke();
-		}
-		for (var row=1; row<TieUpWidth; row++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left,  top+(row*SqSize));
-			Ctx.lineTo(right, top+(row*SqSize));
-			Ctx.stroke();
-		}
-	}
-	// draw the filled-in boxes in the grid
-	Ctx.fillStyle = "rgb(0, 0, 0)";
-	var index = 0;
-	for (var row=0; row<TieUpHeight; row++) { 
-		for (var col=0; col<TieUpWidth; col++) {
-			if (T[index % T.length] !== 0) {
-				Ctx.fillRect(left+(col*SqSize), top+(row*SqSize), SqSize, SqSize);
-				Ctx.strokeRect(left+(col*SqSize), top+(row*SqSize), SqSize, SqSize);
-			}
-			index++;
-		}
-	}
-}
-
-function drawFabric() {
-	var right = FabricRight;
-	var bottom = FabricBottom;
-	var left = right - (FabricSize * SqSize);
-	var top = bottom - (FabricSize * SqSize);
-	Ctx.strokeStyle = "#000000";
-	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.beginPath();
-		Ctx.moveTo(left, top);
-		Ctx.lineTo(right, top);
-		Ctx.lineTo(right, bottom);
-		Ctx.lineTo(left, bottom);
-		Ctx.lineTo(left, top);
-		Ctx.stroke();
-	if (DrawGrid) {
-		for (var col=1; col<WarpDMax; col++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left+(col*SqSize), top);
-			Ctx.lineTo(left+(col*SqSize), bottom);
-			Ctx.stroke();
-		}
-		for (var row=1; row<WeftDMax; row++) {  
-			Ctx.beginPath();
-			Ctx.moveTo(left,  top+(row*SqSize));
-			Ctx.lineTo(right, top+(row*SqSize));
-			Ctx.stroke();
-		}
-	}
-	// use the weaving equation to fill in the fabric
-	for (var row=0; row<FabricSize; row++) { 
-		for (var col=0; col<FabricSize; col++) {
-			var tieUpCol = R[row % R.length];
-			var tieUpRow = S[col % S.length];
-			var tieUpVal = T[(tieUpRow * TieUpWidth) + tieUpCol];
-			var rgb = "rgb(0, 0, 0)";
-			if (tieUpVal === 1) {  // use warp color
-				rgb = WarpColors[col % WarpColors.length];
-			} else { // use weft color
-				rgb = WeftColors[row % WeftColors.length];
-			}
-			Ctx.fillStyle = rgb;
-			Ctx.fillRect(right-((col+1)*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
-			Ctx.strokeStyle = rgb;
-			Ctx.strokeRect(right-((col+1)*SqSize), bottom-((row+1)*SqSize), SqSize, SqSize);
-		}
-	}
-}
 */
+

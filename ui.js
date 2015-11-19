@@ -122,6 +122,10 @@ function tieUpHeightInputFunction() {
 	drawCanvas();
 }
 
+function showThreadsCheckboxFunction() {
+	drawCanvas();
+}
+
 function warpPatternButtonFunction() {
 	$('#warpPatternAWL').css("background-color", "#ffffff");
 	WarpPatternOutput = AWLtoString('#warpPatternAWL');
