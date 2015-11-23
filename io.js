@@ -9,18 +9,6 @@
 
 var LogIntoDropboxText = "Log into Dropbox";
 
-/* When we log into dropbox, the page is re-loaded with a new URL that
-contains authorization token information. When the page is re-loaded,
-it normally displays the default draft. This means that if we have a
-draft we like and try to save it, and need to log in, that draft will 
-be lost. So in that case we save the draft name and WIF text in these 
-variables, and set the Reload flag to true they'll be used instead
-of the default draft. Then we'll automatically try the save again.
-*/
-var AuthDropboxFilename = "";
-var AuthDropboxFiletext = "";
-var AuthDropboxReload = false;
-
 function buildLoadDraftDropdown() {
 	if (DropboxClient === null) {
 		buildLoadDraftDropdownWithDropboxFiles(null);
