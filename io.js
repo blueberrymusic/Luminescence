@@ -2,6 +2,7 @@
 // Draft saving and loading 
 ///////////////////////////////////////////////////////////////////////////
 
+var LocalStorageJSONName = "LuminanceCacheJSON";
 
 ///////////////////////////////////////////////////////////////////////////
 // Dropdown Responders
@@ -57,8 +58,51 @@ function buildLoadDraftDropdownWithDropboxFiles(fileList) {
 }
 
 ///////////////////////////////////////////////////////////////////////////
+// Check for Local Storage
+///////////////////////////////////////////////////////////////////////////
+
+function gotLocalStorage(){
+    var test = 'test';
+    try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
+
+function getJSONforCurrentDraft() {
+	var draft = [];
+	draft.push({ "field": "WarpAWL",      "value": $('#warpPatternAWL').val() });
+	draft.push({ "field": "WeftAWL",      "value": $('#weftPatternAWL').val() });
+	draft.push({ "field": "WarpColorAWL", "value": $('#warpColorAWL').val() });
+	draft.push({ "field": "WeftColorAWL", "value": $('#weftColorAWL').val() });
+	draft.push({ "field": "TieUpAWL",     "value": $('#tieUpAWL').val() });
+	draft.push({ "field": "FabricSize",   "value": $('#fabricSizeInput').val() });
+	draft.push({ "field": "TieUpWidth",   "value": $('#tieUpWidthInput').val() });
+	draft.push({ "field": "TieUpHeight",  "value": $('#tieUpHeightInput').val() });
+	var JSONDraft = JSON.stringify(draft);
+	return JSONDraft;
+}
+
+///////////////////////////////////////////////////////////////////////////
 // Load draft
 ///////////////////////////////////////////////////////////////////////////
+
+function loadStartupDraft(draftName) {
+	if (!gotLocalStorage()) {  // if no local storage, use default
+		loadDraft(draftName);
+	}
+	// do we have the cached JSON?
+	if (localStorage.getItem(LocalStorageJSONName) === null) {
+		loadDraft(draftName);
+	} else {
+		var jsonData = localStorage.getItem(LocalStorageJSONName);
+		loadDraftFromJSON("Unnamed", jsonData);
+		localStorage.removeItem(LocalStorageJSONName);
+	}
+}
 
 function loadDraft(draftName) {
 	if (draftName === LogIntoDropboxText) {
@@ -281,7 +325,19 @@ function getDropboxFileContents(filename, callback) {
 }
 
 function saveDropboxFile(filename, filetext, callback) {
-	if (DropboxClient === null) authorizeDropBox();
+	if (DropboxClient === null) {
+		if (gotLocalStorage()) {  // save what we have now
+			var currentJSON = getJSONforCurrentDraft();
+			localStorage.setItem(LocalStorageJSONName, currentJSON);
+		}
+		authorizeDropBox();
+	}
+	// if we get this far, then we're authorized
+	if (gotLocalStorage()) {  
+		if (localStorage.getItem(LocalStorageJSONName) !== null) {
+			localStorage.removeItem(LocalStorageJSONName);
+		}
+	}
 	DropboxClient.writeFile(filename, filetext, function(error, stat) {
 		if (error) {
 			return showDropboxError(error);  // Something went wrong.

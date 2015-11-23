@@ -24,7 +24,7 @@ $(function(){
 	buildColorKeyValueLists();
 
 	var defaultName = Presets[0][0];
-	loadDraft(defaultName);
+	loadStartupDraft(defaultName);
 	setupCanvasListener();
 });
 
