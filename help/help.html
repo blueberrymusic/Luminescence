@@ -52,7 +52,8 @@
 				<div class="page-header">
 
 <p>
-This is a quick-start guide to my online weaving program
+Hi! My name is <a href="http://www.glassner.com" target="_blank">Andrew Glassner</a>
+and this is a quick-start guide to my online weaving program
 <a href="../Luminescence.html" target="_blank">Luminescence</a>.
 </p>
 
@@ -867,7 +868,7 @@ So let's read <code>5 3 +</code>.
 We start with an empty stack.
 The first word is <code>5</code>.
 That's not a command,
-we we push it onto the stack,
+so we push it onto the stack,
 which now has just one element,
 the number 5.
 The next word is <code>3</code>.
@@ -950,8 +951,9 @@ pushes that result onto the stack when it's done.
 
 <h3>Numbers and Lists</h3>
 <p>
-AWL lists can be made up of either numbers or colors,
-but you can't mix them.
+AWL lists can be made up of either all
+numbers, all colors,
+or any mixture of the two.
 Many commands don't care what kind of list they get.
 For example, <code>reverse</code>
 simply pops a list off the stack,
@@ -963,7 +965,8 @@ do the same job.
 </p>
 <p>
 On the other hand, some commands require
-lists of numbers. 
+one or both of their inputs
+to be lists made exclusively of numbers. 
 For example,
 <code>block</code> takes two lists
 (we'll call them <b>A</b> and <b>B</b>).
@@ -980,14 +983,13 @@ If <b>B</b>=<code>yellow blue red</code>,
 the result of <code><b>A</b> <b>B</b> block</code>  would be
 <code>yellow yellow blue blue blue red red red red</code>.
 So for the <code>block</code> command,
-list <b>A</b> has to contain numbers,
-while list <b>B</b> can hold either numbers or colors.
+list <b>A</b> has to contain nothing but numbers,
+while list <b>B</b> can hold either numbers or colors
+or both.
 </p>
 <p>
-The table below identifies whether each 
-list must be made up of all numbers,
-or all colors,
-or either.
+The table below identifies whether any input
+lists must be made up of all numbers.
 </p>
 
 <h3>How To Enter Two Lists In A Row</h3>
@@ -2279,7 +2281,7 @@ both from <a href="https://www.google.com/fonts" target="_blank">Google fonts</a
 
 <h3>How can I reach you?</h3>
 <p>
-You can email at
+You can email me at
 <script>
 var a = "mai";
 var b = "lto:";

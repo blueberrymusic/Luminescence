@@ -238,7 +238,7 @@ var RawPresets = [
 "B 22 K 2 B 2 K 2 B 2 K 16 G 16 K 2 G 16 K 16 B 16 K 2 B 2 tartan",
 "B 22 K 2 B 2 K 2 B 2 K 16 G 16 K 2 G 16 K 16 B 16 K 2 B 2 tartan",
 "1 1 0 0 / 1 / 4 t<<",
-300, 4, 4],
+300, 4, 4]
 ];
 
 
