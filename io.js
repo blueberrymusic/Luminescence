@@ -116,7 +116,7 @@ function loadDraft(draftName) {
 		var psi = Presets[i];
 		var name = psi[0];
 		if (name === draftName) {
-			jsonData = psi[1]; 
+			var jsonData = psi[1]; 
 			foundIt = true;
 			loadDraftFromJSON(draftName, jsonData);
 		}
@@ -194,6 +194,12 @@ function saveButtonFunction() {
 
 	var wifFileContents = currentDraftAsWIF();
 	saveDropboxFile(DraftName, wifFileContents, wroteDropboxFile);
+	// if we get this far, then we wrote the file and can remove the cached version
+	if (gotLocalStorage()) {  
+		if (localStorage.getItem(LocalStorageJSONName) !== null) {
+			localStorage.removeItem(LocalStorageJSONName);
+		}
+	}
 
 }
 
@@ -332,12 +338,6 @@ function saveDropboxFile(filename, filetext, callback) {
 		}
 		authorizeDropBox();
 	}
-	// if we get this far, then we're authorized
-	if (gotLocalStorage()) {  
-		if (localStorage.getItem(LocalStorageJSONName) !== null) {
-			localStorage.removeItem(LocalStorageJSONName);
-		}
-	}
 	DropboxClient.writeFile(filename, filetext, function(error, stat) {
 		if (error) {
 			return showDropboxError(error);  // Something went wrong.
@@ -392,4 +392,3 @@ function saveDBfile(filename, filetext) {
 		}
 		alert("File saved as revision " + stat.versionTag);
 	});
-}
