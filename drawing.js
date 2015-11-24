@@ -28,6 +28,8 @@ function drawCanvas() {
 	var c = document.getElementById("myCanvas");
 	Ctx = c.getContext("2d");
 	Ctx.clearRect(0, 0, c.width, c.height);
+	Ctx.fillStyle = "rgb(255, 255, 255)";
+	Ctx.fillRect(0, 0, c.width, c.height);
 
 	CanvasSize  = Math.min(c.width, c.height);
 	getDomainSizes();

@@ -149,7 +149,7 @@ cryptic to you now, but will soon become second nature.
 <figure class="figure ">
   <img src="images/OverviewOfDigitalLoom.jpg" width="800" class="img-rounded center-block" alt="Overview of Luminescence.">
   <figcaption class="figure-caption text-center">
-Figure 1: Luminesence as it appears in Chrome, with major sections labeled.
+Figure 1: Luminescence as it appears in Chrome, with major sections labeled.
 </figcaption>
 </figure>
 
@@ -314,7 +314,7 @@ in each cell.
 This process is
 illustrated in Figure 2.
 We start with a cell in the fabric,
-marked with a black outine.
+marked with a black outline.
 </p>
 
 <figure class="figure ">
@@ -771,7 +771,7 @@ The program turns those commands into a
 potentially huge pattern for you,
 and then fills in the loom grids instantly
 and flawlessly.
-It asl immediately redraws the fabric,
+It also immediately redraws the fabric,
 so you can see what you've designed.
 This makes it fast and easy to experiment with 
 both big and small changes to your draft,
@@ -792,11 +792,11 @@ For example, look at the preset named
 <em>Long Green</em>.
 You can see the AWL expressions for the
 warp and left in the boxes on the left
-(don't worry about what how to read them
+(don't worry about what they mean
 right now, just notice how short they are).
 The warp expression makes a pattern
 a bit over 800 numbers long,
-and the warp is just over 600.
+and the weft is just over 600.
 This means those two short expressions
 specify a piece of fabric a little larger
 than 800 threads wide and 600 threads tall
@@ -852,6 +852,8 @@ to try to try to pop the top tray off an empty
 stack (since there are no trays to pop).
 </p>
 <p>
+Let's see how to use a stack to add two
+numbers.
 To add 5 and 3 we usually write <code>5+3</code>.
 But in a stack-based language,
 we write <code>5 3 +</code>.
@@ -917,10 +919,13 @@ The calculator example we gave above is
 a famous way to illustrate a stack language.
 And it's almost right for AWL,
 but with a twist.
-Our pieces of data are not number,
+Our pieces of data are not single numbers,
 but <strong>lists</strong>.
-They can be lists of numbers or lists of
-colors, but either way they're always lists.
+They can be lists of numbers,
+or lists of colors,
+or even lists that contain both
+numbers and colors,
+but either way they're always lists.
 In AWL, 
 a list has to have at least one element
 (that is, at least one number or color),
@@ -973,13 +978,20 @@ For example,
 It makes a new list by repeating each
 element of <b>B</b> the number of times
 given by the corresponding element of <b>A</b>.
-If
+For example, if
 <b>A</b>=<code>2 3 4</code>
 and
-<b>B</b>=<code><b>1 5 8</code>,
-the result of <code><b>A</b> <b>B</b> block</b></code>  would be
+<b>B</b>=<code>1 5 8</code>,
+then <code><b>A</b> <b>B</b> block</b></code>  
+tells the system
+that the first element of <b>B</b> (which is <code>1</code>)
+should be repeated 2 times,
+the second element of <b>B</b> (which is <code>5</code>)
+should be repeated 3 times,
+and so on.
+The result is then 
 <code>1 1 5 5 5 8 8 8 8</code>.
-If <b>B</b>=<code>yellow blue red</code>,
+If instead <b>B</b>=<code>yellow blue red</code>,
 the result of <code><b>A</b> <b>B</b> block</code>  would be
 <code>yellow yellow blue blue blue red red red red</code>.
 So for the <code>block</code> command,
@@ -1080,12 +1092,6 @@ it will push its result <code>3 2 1</code>
 onto the top of the stack.
 </p>
 <p>
-If a command produces two more lists,
-they get pushed back in the order given
-in the
-<a href="AWLReference.html" target="_blank">Full AWL Reference</a>.
-</p>
-<p>
 Some commands will push back either 1 or 2 lists,
 depending on their inputs.
 For example, the <code>split</code> command
@@ -1097,6 +1103,12 @@ But if your split location is before the beginning
 or after the end,
 then your input list doesn't get affected,
 and it simply goes back on the stack unchanged.
+</p>
+<p>
+If a command can produce multiple lists,
+they get pushed back in the order given
+in the
+<a href="AWLReference.html" target="_blank">Full AWL Reference</a>.
 </p>
 
 <h3>Draft Sizes</h3>
@@ -1130,6 +1142,10 @@ it will be automatically repeated internally
 as needed.
 If the tie-up is too big,
 the unused bits are just ignored.
+Luminescence doesn't automatically re-size
+the tie-up for you,
+because that would make it much harder to
+modify a draft as you're working on it.
 </p>
 <p>
 You'll sometimes find a published draft
@@ -1194,8 +1210,6 @@ is <code>3 4 5 6 7 8 1 2</code>.
 If the domain was instead [2, 6],
 then a run starting at 3 would be
 <code>3 4 5 6 2</code>.
-Most of these commands have the 
-word <code>run</code> in them.
 </p>
 </p>
 <p>
@@ -1210,8 +1224,8 @@ with the <code>domain</code> command.
 You can use this command to
 change the domain in the middle of an AWL expression.
 For example, if your warp has only 4 threads,
-you probably want to wrap around your up counts
-after 3. 
+you probably want to your upward runs to
+only go as high as 3, then continue on from 1.
 Many commands let you specify the start
 and end values for a run.
 For example, <code>up</code>
@@ -1229,16 +1243,28 @@ you'd write
 <code>1 / 4 domain 1 2 / 1 2 up</code>,
 which would produce
 <code>1 2 3 4 1 2</code>.
-Keep in mind that your new domain will remain
+</p>
+<p>
+When you change the domain,
+your new domain will remain
 in effect until you change it again.
 Each input box maintains its own domain,
 and it always starts out with the range [1,8].
+If you change the domain in an AWL expression,
+it has that value until you change it again.
+So you might use the default for the start of
+an expression, 
+change it to something smaller to produce
+shorter runs,
+then set it back to the default domain for the
+rest of your expression.
+You can change the domain as many times as you want
+in each expression.
 </p>
 <p>
 The domain is only used by the run-making
 commands to control the values they produce. 
-Everywhere else, you're free to use whatever
-values you like.
+The domain has no effect on the other commands.
 </p>
 
 <h3>Automatic Resizing</h3>
@@ -1289,11 +1315,11 @@ stand for single numbers
 (technically, a single number is also a list,
 but here we mean to indicate that this
 list must have only one element).
-A0 and AL refer to the first
-and last elements of list A (and B0 and BL do the
-same for list B).
-Ai refers to the i'th element of A,
-and Bi is the same for B.
+A1 and AL refer to the first
+and last elements of list <b>A</b> (and B1 and BL do the
+same for list <b>B</b>).
+Ai refers to the i'th element of <b>A</b>,
+and Bi is the same for <b>B</b>.
 </p>
 <p>
 The column headings have these meanings:
@@ -1416,7 +1442,7 @@ see the <a href="AWLReference.html" target="_blank">Full AWL Reference</a>.
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td> </td>
-	<td><b>A</b>, descending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
+	<td><b>A</b>, descending run from <b>A</b>L to <b>B</b>1, <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> downrun</td>
@@ -1695,7 +1721,7 @@ see the <a href="AWLReference.html" target="_blank">Full AWL Reference</a>.
 	<td><i class="fa fa-check"></i></td>
 	<td><i class="fa fa-check"></i></td>
 	<td> </td>
-	<td><b>A</b>, ascending run from <b>A</b>L to <b>B</b>0, <b>B</b></td>
+	<td><b>A</b>, ascending run from <b>A</b>L to <b>B</b>1, <b>B</b></td>
 </tr>
 <tr>
 	<td><b>A</b> <b>B</b> <var>c</var> uprun</td>
@@ -1769,15 +1795,20 @@ Start simple, and add small bits of complexity one step at a time.</li>
 <li>The output window will always show you what's left on top of the stack
 when your expression has been evaluated. </li>
 <li>A good way to experiment with AWL commands and get a feeling for them
-is to ignore the loom and the fabric. Just write little expressions in one
+is to ignore the fabric. Just write little expressions in one
 of the input windows and press the arrow,
-and see what it generates by looking at the output window below.
+and look at the pattern it generates on the loom.
+You can also see the numbers that make up that pattern
+by looking at the output window below.
 </li>
 <li>The <code>showStack</code> command is your friend. It will always
 show you the full stack as of the moment it's encountered. It's great
 at the end of long expressions where you make lots of little sublists
-that get concatenated together, so you can make sure you haven't missed any.</li>
-<li>The stack always starts out empty at the start of evalating
+that get concatenated together, so you can make sure you haven't missed any.
+You can also put it in the middle of an expression,
+and it will pop up an alert box with the stack when it's encountered.
+</li>
+<li>The stack always starts out empty at the start of evaluating
 each input box's expression.</li>
 <li>Remember to push between lists when
 you're making them! This is an easy thing to forget.</li>
@@ -1795,7 +1826,7 @@ For example, if you want the pattern <code>2 1 3 5 2</code>,
 it's probably easiest to just type that directly into the text area
 and move on.
 This is particularly useful for colors,
-where the lists are frequently just a single color.
+where the lists are frequently just one or two colors.
 </li>
 </ul>
 
@@ -1804,7 +1835,7 @@ where the lists are frequently just a single color.
 
 <h3>Fabric Size and Tie-up Size</h3>
 <p>
-Just above the fabric there are three boxes for you to type in numbers.
+Just above the fabric there are four boxes for you to type in numbers.
 </p>
 <ul>
 <li><strong>Fabric size:</strong> The fabric is always a square. This tells
@@ -1821,8 +1852,8 @@ your poor little browser to handle.
 <li><strong>Tie-up height:</strong> You can make the tie-up any size you
 like, as long as each dimension is at least 2 units.
 The data in the tie-up AWL input is used to fill in the grid
-starting at the top left and going right,
-then down a row and repeating left to right,
+starting at the bottom left and going up,
+then moving right one step and going up again,
 and so on.
 If there's more data in the tie-up pattern than is needed,
 the extra is just ignored.
@@ -1836,10 +1867,12 @@ it will be internally repeated as needed to match.
 <strong>Show threads:</strong> This is strictly a cosmetic
 choice that controls how Luminescence draws the fabric for you.
 Turning on this checkbox makes the threads a little narrower
-than the display cells, so it's easier to visualize them.
-The checkbox is disabed (it's grayed out) when the value of
+than the display cells, so it's easier to get the sense that
+these are individual threads, 
+rather than solid blocks of color.
+The checkbox is disabled (it's grayed out) when the value of
 <em>Fabric size</em> is 100 or more.
-The state of this checkbox is not saved or restored from
+The state of this checkbox is not saved to, or restored from,
 your saved drafts.
 </li>
 </ul>
@@ -1904,7 +1937,7 @@ One of these will be <em>Save Image As...</em>
 (or something close to that).
 Choose that,
 and you'll get a standard dialog box
-letting you put the image where you want it.
+that lets you put the image where you want it.
 The image is saved in the standard PNG format,
 which offers the highest quality.
 You can change that to JPG or anything else
@@ -2062,10 +2095,14 @@ each time you click a tie-up cell.
 Clicking on the tie-up often makes a lot of
 intuitive sense,
 particularly when the warp and weft are simple,
-like repeating trianglular waves.
-Clicking in the warp or weft is usually lot
-more unpredictable and harder to anticipate,
-so I find it much less useful.
+like repeating triangular waves.
+But I've found that clicking in the warp and
+weft produces changes that are much harder
+to anticipate.
+In addition,
+the goal of Luminescence is to help you create
+rich and interesting patterns using AWL, 
+not by endless clicking in the warp and weft grids.
 </p>
 <p>
 If you really want to twiddle individual
@@ -2147,10 +2184,10 @@ You can find the specification
 <a href="http://www.mhsoft.com/wif/wif1-1.txt" target="_blank">here</a>.
 </p>
 <p>
-Luminescence writes simple WIF files that omit
+Luminescence writes simple .wif files that omit
 a lot of optional stuff,
 like thread spacing and thread thickness.
-If you're reading a WIF file with that
+If you're reading a .wif file with that
 information in it, Luminescence just ignores that stuff
 (which means it isn't included if you later
 save the file to the same or a different name).
@@ -2205,7 +2242,8 @@ If things are going wrong, I find it easiest to write down the whole
 expression I'm working on, and then build it up again one step at a time.
 Type in one new piece of stuff to build the pattern, 
 and put a <code>showStack</code> command at the end.
-Between the stack and the output window,
+Using the stack, the output window,
+and the pattern in the corresponding grid on the loom,
 you should be able to see what you're making,
 and tune it up until it's right.
 When it's okay, move on and build the next chunk.
@@ -2266,7 +2304,7 @@ Working on my <a href="http://www.apple.com/imac/" target="_blank">iMac</a>,
 I used the <a href="https://en.wikipedia.org/wiki/Vi" target="_blank">vi</a>
 text editor inside of an <a "http:www.iterm2.com" target="_blank">iterm2</a>
 window,
-and debugged my Javascript using the Developer's Tools
+and debugged my Javascript using the Developer Tools
 in <a http="https://www.google.com/chrome/" target="_blank">Google Chrome</a> .
 I used the 
 <a href="http://getbootstrap.com/" target="_blank">Bootstrap 3.3</a>
@@ -2274,7 +2312,8 @@ framework to help make responsive pages,
 and the 
 <a href="https://github.com/dropbox/dropbox-js" target="_blank">dropbox.js</a>
 API for reading and writing to Dropbox.
-The body text is Open Sans, and
+In my documentation,
+the body text is Open Sans, and
 the headlines are in Ubuntu,
 both from <a href="https://www.google.com/fonts" target="_blank">Google fonts</a>.
 </p>
@@ -2297,9 +2336,14 @@ document.write("<a href="+a+b+c+d+e+f+g+h+i+j+"?Subject=Luminescence>"+c+d+e+f+g
 </script>
 </p>
 <p>
+More contact information is on my
+<a href="http://www.glassner.com" target="_blank">home page</a>.
+My Twitter handle is
+<a href="https://twitter.com/AndrewGlassner" target="_blank">@AndrewGlassner</a>.
+<p>
 If something's going wrong, please try to describe it as precisely as you can,
 and include enough information for me to replicate the problem on my end.
-A screenshot or .wif file would be great,
+A screenshot or .wif file of your input would be great,
 along with a screenshot (or just the text) of any error message.
 </p>
 <p>
@@ -2312,14 +2356,22 @@ so it might take me a while to make changes.
 
 <h3>Nice project. What else do you do?</h3>
 <p>
-I write novels 
-(<a href="http://www.amazon.com/dp/B00UO18KNY" target="_blank">Home Security</a>,
-<a href="http://www.amazon.com/dp/B00VAZBSZA" target="_blank">Freaks of Nurture</a>,
-and
-<a href="http://www.amazon.com/dp/B00WNIPVH4" target="_blank">Bait</a> are all available on Amazon),
-
+I've done a lot of 
+computer graphics,
+writing, art, and music.
+</p>
+<p>
 You can see my online computer graphics research and artwork at my personal site,
 <a href="http://www.glassner.com" target="_blank">www.glassner.com</a>.
+</p>
+<p>
+My novels 
+<a href="http://www.amazon.com/dp/B00UO18KNY" target="_blank">Home Security</a>,
+<a href="http://www.amazon.com/dp/B00VAZBSZA" target="_blank">Freaks of Nurture</a>,
+and
+<a href="http://www.amazon.com/dp/B00WNIPVH4" target="_blank">Bait</a> are all available on Amazon,
+</p>
+<p>
 You can also see more about my company,
 <em>The Imaginary Institute</em>, at
 <a href="http://www.imaginary-institute.com" target="_blank">www.imaginary-institute.com</a>,
@@ -2328,6 +2380,10 @@ their own interactive computer graphics.
 I also give talks, teach, and consult in computer graphics and storytelling.
 I'm always interested in fun new projects; feel free to contact me
 at the link just above!
+</p>
+<p>
+You can also follow me on Twitter at
+<a href="https://twitter.com/AndrewGlassner" target="_blank">@AndrewGlassner</a>.
 </p>
 
 <p><a name="furtherReading"></a></p>
@@ -2364,7 +2420,7 @@ but
 still seems up and offering a nice collection of drafts,
 and some (but not all) of the articles in the
 <a href="http://www.weavezine.com/" target="_blank">WeaveZine</a>
-archives have WIF files available.
+archives have .wif files available.
 Ralph E. Griswold is a famous collector of weaves and author
 on the subject.
 You can find a ton of information at 
@@ -2388,7 +2444,7 @@ were particularly valuable.
 For instance,
 the <code>growblock</code> operator is based on Griswold's
 paper, "Variations On A Shadow Weave."
-Luminescence uses AWL verion 2, which offers significant
+Luminescence uses AWL version 2, which offers significant
 improvements.
 </p>
 <p>
@@ -2448,7 +2504,7 @@ Please note that that I've improved the language
 quite a bit for this online release:
 some commands have changed or been consolidated,
 and a bunch of new commands have been added.
-Full details of the current version are availabe
+Full details of the current version are available
 in the <a href="AWLReference.html" target="_blank">AWL Reference</a>.
 </p>
 <p>

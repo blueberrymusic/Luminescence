@@ -296,7 +296,7 @@ your friends in school to pass notes,
 where (say) A goes to F, B goes to G, C goes to H, and so on.
 </p>
 <div class="bs-example">
-3 5 2 5 0 / 7 6 5 4 3 1 cipher
+3 5 2 5 1 / 7 orange red 4 3 1 cipher 
 </div>
 <div class="highlight">
 red 3 orange 3 7
@@ -1197,7 +1197,7 @@ you can use <code>rotater</code> or <code>rotatel</code>
 first, to get it into position.
 </p>
 <div class="bs-example">
-A B C D E F G H I J K L M N / 3 / 2 -sk
+A B C D E F G H I J K L M N / 3 / 2 ][
 </div>
 <div class="highlight">
 D E I J N
@@ -1346,8 +1346,8 @@ they will be wrapped around the ends as usual.
 Note that some weavers don't use list <b>B</b> as given,
 but subtract the first element of <b>B</b> from every
 element in the list.
-Thus if <b>B</b> was given as 3 5 4 6,
-it would be replaced with 0 1 -1 2 when used in the command.
+Thus if <b>B</b> was given as 3 4 1 5
+it would be replaced with 0 1 -2 2 when used in the command.
 AWL does <em>not</em> adopt this convention.
 If you want your template to start with 0, 
 simply start it with 0!
@@ -1387,7 +1387,7 @@ successively rotate it 1 step for each row of the tie-up,
 working up from the bottom.
 </p>
 <div class="bs-example">
-1 2 3 4 5 / 2 / 3 t>>
+1 2 3 4 5 / 2 / 3 t<<
 </div>
 <div class="highlight">
 1 2 3 4 5 3 4 5 1 2 5 1 2 3 4
