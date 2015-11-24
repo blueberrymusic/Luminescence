@@ -4,6 +4,7 @@
 
 AWLPrivateFieldString =  "[PRIVATE Luminescence InputFields]";
 
+var WIF_ID_DraftNameAWL   = "DraftNameAWL";
 var WIF_ID_WarpPatternAWL = "WarpPatternAWL";
 var WIF_ID_WeftPatternAWL = "WeftPatternAWL";
 var WIF_ID_WarpColorsAWL  = "WarpColorsAWL";
@@ -276,6 +277,7 @@ function convertGeneralWIFtoJSON(draftName, wifData) {
 	}
 
 	var draft = [];
+	draft.push({ "field": "DraftName",    "value": draftName });
 	draft.push({ "field": "WarpAWL",      "value": warpPatternString });
 	draft.push({ "field": "WeftAWL",      "value": weftPatternString });
 	draft.push({ "field": "WarpColorAWL", "value": warpColorString });
@@ -379,6 +381,7 @@ function getJSONfromWIFwithAWL(wifData) {
 		if (null !== thisSection.match(pvre)) {
 			gotContents = true;
 			var lines = thisSection.split(/[\n\r]/);
+			var draftNameString = getPrivateFieldFromWIF(WIF_ID_DraftNameAWL, lines);
 			var warpPatternString = getPrivateFieldFromWIF(WIF_ID_WarpPatternAWL, lines);
 			var weftPatternString = getPrivateFieldFromWIF(WIF_ID_WeftPatternAWL, lines);
 			var warpColorString = getPrivateFieldFromWIF(WIF_ID_WarpColorsAWL, lines);
@@ -396,6 +399,7 @@ function getJSONfromWIFwithAWL(wifData) {
 			}
 
 			var draft = [];
+			draft.push({ "field": "DraftName",    "value": draftNameString });
 			draft.push({ "field": "WarpAWL",      "value": warpPatternString });
 			draft.push({ "field": "WeftAWL",      "value": weftPatternString });
 			draft.push({ "field": "WarpColorAWL", "value": warpColorString });
@@ -453,6 +457,7 @@ function currentDraftAsWIF() {
 	wifString += "\n";
 
 	// get the draft inputs
+	var draftNameString = $('#draftNameInput').val();
 	var warpPatternString = $('#warpPatternAWL').val();
 	var weftPatternString = $('#weftPatternAWL').val();
 	var warpColorString = $('#warpColorAWL').val();
@@ -464,6 +469,7 @@ function currentDraftAsWIF() {
 
 	// First, write the private AWL section
 	wifString += "\n" + AWLPrivateFieldString +"\n";
+	wifString += WIF_ID_DraftNameAWL     + WIF_ID_Delimiter + draftNameString + "\n";
 	wifString += WIF_ID_WarpPatternAWL   + WIF_ID_Delimiter + warpPatternString + "\n";
 	wifString += WIF_ID_WeftPatternAWL   + WIF_ID_Delimiter + weftPatternString + "\n";
 	wifString += WIF_ID_WarpColorsAWL    + WIF_ID_Delimiter + warpColorString + "\n";
@@ -482,7 +488,9 @@ function currentDraftAsWIF() {
 
 	wifString += "[TEXT]\n";
 	wifString += "Title="+DraftName+"\n";
-	wifString += "Written by Luminescencev.10 at https://TK\n";
+	wifString += "Written by Luminescence v1.0\n";
+	wifString += ";  https://imaginary-institute.com/resources/Luminescence/Luminescence.html\n";
+	wifString += "Author= Andrew Glassner http://www.glassner.com\n";
 	wifString += "; Creation "+Date()+"\n";
 	wifString += "\n";
 

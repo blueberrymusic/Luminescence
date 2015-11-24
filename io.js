@@ -8,7 +8,7 @@ var LocalStorageJSONName = "LuminanceCacheJSON";
 // Dropdown Responders
 ///////////////////////////////////////////////////////////////////////////
 
-var LogIntoDropboxText = "Log into Dropbox";
+var LogIntoDropboxText = "Connect to Dropbox";
 
 function buildLoadDraftDropdown() {
 	if (DropboxClient === null) {
@@ -74,6 +74,7 @@ function gotLocalStorage(){
 
 function getJSONforCurrentDraft() {
 	var draft = [];
+	draft.push({ "field": "DraftName",    "value": $('#draftNameInput').val() });
 	draft.push({ "field": "WarpAWL",      "value": $('#warpPatternAWL').val() });
 	draft.push({ "field": "WeftAWL",      "value": $('#weftPatternAWL').val() });
 	draft.push({ "field": "WarpColorAWL", "value": $('#warpColorAWL').val() });
@@ -100,6 +101,7 @@ function loadStartupDraft(draftName) {
 	} else {
 		var jsonData = localStorage.getItem(LocalStorageJSONName);
 		loadDraftFromJSON("Unnamed", jsonData);
+		saveButtonFunction();
 		localStorage.removeItem(LocalStorageJSONName);
 	}
 }
@@ -132,12 +134,19 @@ function loadDraftFromWIF(draftName, wifData) {
 }
 
 function loadDraftFromJSON(draftName, jsonData) {
+	// update the name variable and display
+	DraftName = draftName;
+	$("input[name='draftNameInput']").val(DraftName);
+
 	var weaveData = JSON.parse(jsonData);
 	for (var i=0; i<weaveData.length; i++) {
 		var datum = weaveData[i];
 		var fieldName = datum['field'];
 		var value = datum['value'];
-		if (fieldName === "WarpAWL") {
+		if (fieldName === "DraftName") {
+			$('#draftNameInput').val(value);
+			DraftName = value;
+		} else if (fieldName === "WarpAWL") {
 			$('#warpPatternAWL').val(value);
 			WarpPatternOutput = AWLtoString('#warpPatternAWL');
 		} else if (fieldName === "WeftAWL") {
@@ -169,10 +178,6 @@ function loadDraftFromJSON(draftName, jsonData) {
 	// update the output area by forcing it to switch to WarpPattern
 	selectRadioButton("#WarpPatternRadio");
 
-	// update the name variable and display
-	DraftName = draftName;
-	$("input[name='draftNameInput']").val(DraftName);
-
 	drawCanvas();
 }
 
@@ -194,17 +199,17 @@ function saveButtonFunction() {
 
 	var wifFileContents = currentDraftAsWIF();
 	saveDropboxFile(DraftName, wifFileContents, wroteDropboxFile);
+
+}
+
+function wroteDropboxFile(fileName) {
+	//alert("wrote "+fileName+" to dropbox");
 	// if we get this far, then we wrote the file and can remove the cached version
 	if (gotLocalStorage()) {  
 		if (localStorage.getItem(LocalStorageJSONName) !== null) {
 			localStorage.removeItem(LocalStorageJSONName);
 		}
 	}
-
-}
-
-function wroteDropboxFile(fileName) {
-	//alert("wrote "+fileName+" to dropbox");
 	buildLoadDraftDropdown(); // rebuild the drop-down to include this new entry
 }
 
@@ -392,3 +397,4 @@ function saveDBfile(filename, filetext) {
 		}
 		alert("File saved as revision " + stat.versionTag);
 	});
+}

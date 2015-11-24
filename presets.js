@@ -7,6 +7,7 @@ function makePresets() {
 	for (var i=0; i<RawPresets.length; i++) {
 		var preset = RawPresets[i];
 		var draft = [];
+		draft.push({ "field": "DraftName",    "value": preset[0] });
 		draft.push({ "field": "WarpAWL",      "value": preset[1] });
 		draft.push({ "field": "WeftAWL",      "value": preset[2] });
 		draft.push({ "field": "WarpColorAWL", "value": preset[3] });
