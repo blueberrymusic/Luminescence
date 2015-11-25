@@ -206,7 +206,13 @@ function respondToMouseInCanvas(event) {
 		// from drawing.js, use TieUpL, TieUpR, TieUpT, TieUpB for sides of tie-up
 		var col = Math.floor((x-TieUpL)/(1.0*SqSize));
 		var row = Math.floor((TieUpB-y)/(1.0*SqSize));
-		var tieUpWords = TieUpOutput.split(' ');
+		var tieUpWords = TieUpOutput.trim();
+		tieUpWords = tieUpWords.split(' ');
+		var tieUpLength = TieUpWidth * TieUpHeight;
+		while (tieUpWords.length < tieUpLength) {
+			tieUpWords.push.apply(tieUpWords, tieUpWords);
+		}
+		tieUpWords = tieUpWords.slice(0, tieUpLength);
 		var entry = (col * TieUpHeight) + row;
 		if (tieUpWords[entry] === '0') {
 			tieUpWords[entry] = '1';
@@ -216,6 +222,7 @@ function respondToMouseInCanvas(event) {
 		var newTieUp = tieUpStringToBinaryAWL(tieUpWords);
  		$('#tieUpAWL').val(newTieUp);
 		TieUpOutput = AWLtoString('#tieUpAWL');
+		selectRadioButton("#TieUpRadio");
 		drawCanvas();
 	}
 }
