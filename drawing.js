@@ -1,14 +1,15 @@
 "use strict";
 
-var FabricSize = 120;  // The size of the fabric grid
-var Ctx;               // the graphics context
-var SqSize;            // size of each square in the canvas
-var CanvasSize;        // pixels on each side
-var DrawGrid = false;  // see the underlying grid, for debuggin
-var TieUpWidth = 8;    // width of tie-up
-var TieUpHeight = 8;   // height of tie-up
-var FabricRight;       // right side of fabric grid
-var FabricTop;         // bottom of fabric grid
+var FabricSize = 120;    // The size of the fabric grid
+var Ctx;                 // the graphics context
+var SqSize;              // size of each square in the canvas
+var CanvasSize;          // pixels on each side
+var DrawGrids = false;   // see the underlying grid
+var DrawThreads = false; // draw the fabric as threads
+var TieUpWidth = 8;      // width of tie-up
+var TieUpHeight = 8;     // height of tie-up
+var FabricRight;         // right side of fabric grid
+var FabricTop;           // bottom of fabric grid
 var TieUpL, TieUpR, TieUpT, TieUpB; // tie-up sides for use by ui.js
 
 /* 
@@ -38,23 +39,34 @@ function drawCanvas() {
 	var maxGap = Math.max(rightSquares, topSquares);
 	var numSquares = FabricSize + maxGap + 1;
 
-	// disable or enable the Show threads checkbox 
-	if (FabricSize < 100) {
+	// disable or enable the Show threads and Show grids checkboxes
+	if (FabricSize < 100) { // turn them on
 		if ($("#showThreadsCheckbox").prop('disabled')) {
-			// turn it on
 			$("#showThreadsCheckbox").prop('disabled', false);
 			$("#showThreadsLabel").css('color', '#000000');
-		} else {
-			var ff = 3;
-		}
-	} else { // turn it off
-		if ($("#showThreadsCheckbox").prop('disabled')) {
-			// we're already disabled
-			var dd = 3;
-		} else {
+		} 
+		if ($("#showGridsCheckbox").prop('disabled')) {
+			$("#showGridsCheckbox").prop('disabled', false);
+			$("#showGridsLabel").css('color', '#000000');
+		} 
+	} else { // turn them off
+		if (!$("#showThreadsCheckbox").prop('disabled')) {
 			$("#showThreadsCheckbox").prop('disabled', true);
 			$("#showThreadsLabel").css('color', '#cccccc');
 		}
+		if (!$("#showGridsCheckbox").prop('disabled')) {
+			$("#showGridsCheckbox").prop('disabled', true);
+			$("#showGridsLabel").css('color', '#cccccc');
+		}
+	}
+
+	DrawGrids = false;
+	if (!($("#showGridsCheckbox").prop('disabled'))) {
+		DrawGrids = $('#showGridsCheckbox').prop('checked');
+	}
+	DrawThreads = false;
+	if (!($("#showThreadsCheckbox").prop('disabled'))) {
+		DrawThreads = $('#showThreadsCheckbox').prop('checked');
 	}
 
 	SqSize = CanvasSize / numSquares;
@@ -153,8 +165,6 @@ function drawWarp() {
 	var colorTop = top - (2 * SqSize);
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
 	// draw the filled-in boxes in the grid
 	Ctx.fillStyle = "rgb(0, 0, 0)";
 	for (var col=0; col<FabricSize; col++) {  
@@ -172,10 +182,10 @@ function drawWarp() {
 		Ctx.strokeStyle = rgb;
 		Ctx.fillRect(right-((col+1)*SqSize), colorTop, SqSize, SqSize);
 	}
-	// draw the color box over the colors
-	Ctx.strokeStyle = "#888888";
-	Ctx.strokeRect(right-(FabricSize*SqSize), colorTop, FabricSize*SqSize, SqSize); 
+	drawBoxAndGrid(left, top, right-left, bottom-top);
+	drawBoxAndGrid(right-(FabricSize*SqSize), colorTop, FabricSize*SqSize, SqSize); 
 }
+
 
 function drawWeft() {
 	var left = FabricRight + SqSize;
@@ -186,8 +196,6 @@ function drawWeft() {
 	var colorLeft = right + SqSize;
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
 	// draw the filled-in boxes in the grid
 	Ctx.fillStyle = "rgb(0, 0, 0)";
 	for (var row=0; row<FabricSize; row++) {  
@@ -206,8 +214,8 @@ function drawWeft() {
 		Ctx.strokeRect(colorLeft, top+(row*SqSize), SqSize, SqSize);
 	}
 	// draw the color box over the colors
-	Ctx.strokeStyle = "#888888";
-	Ctx.strokeRect(colorLeft, top, SqSize, FabricSize*SqSize);
+	drawBoxAndGrid(left, top, right-left, bottom-top);
+	drawBoxAndGrid(colorLeft, top, SqSize, FabricSize*SqSize);
 }
 
 function drawTieUp() {
@@ -222,8 +230,6 @@ function drawTieUp() {
 	TieUpB = bottom;
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
 	// draw the filled-in boxes in the grid
 	Ctx.fillStyle = "rgb(0, 0, 0)";
 	var index = 0;
@@ -237,6 +243,7 @@ function drawTieUp() {
 			index++;
 		}
 	}
+	drawBoxAndGrid(left, top, right-left, bottom-top);
 }
 
 var ThreadWidth = .75;
@@ -247,16 +254,16 @@ function drawFabric() {
 	var left = right - (FabricSize * SqSize);
 	var bottom = top + (FabricSize * SqSize);
 	var threadBorderColor = "#666666";
-	var showThreads = false;
-	if (!($("#showThreadsCheckbox").prop('disabled'))) {
-		showThreads = $('#showThreadsCheckbox').prop('checked');
-	} else {
-		var kk = 3;
-	}
+	//var showThreads = false;
+	//if (!($("#showThreadsCheckbox").prop('disabled'))) {
+		//showThreads = $('#showThreadsCheckbox').prop('checked');
+	//} else {
+		//var kk = 3;
+	//}
 	Ctx.strokeStyle = "#000000";
 	Ctx.lineWidth = 1;
 	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
+	//Ctx.strokeRect(left, top, right-left, bottom-top);
 	// use the weaving equation to fill in the fabric
 	for (var row=0; row<FabricSize; row++) { 
 		for (var col=0; col<FabricSize; col++) {
@@ -283,7 +290,7 @@ function drawFabric() {
 					warpOnTop = false;
 				}
 			}
-			if (showThreads) {
+			if (DrawThreads) {
 				var boxL = right-((col+1)*SqSize);
 				var boxT = top + (row*SqSize);
 				var midX = boxL + (SqSize/2);
@@ -338,47 +345,23 @@ function drawFabric() {
 			}
 		}
 	}
+	drawBoxAndGrid(left, top, right-left, bottom-top);
 }
 
-/* no threads, solid blocks
-function drawFabric() {
-	var right = FabricRight;
-	var top = FabricTop;
-	var left = right - (FabricSize * SqSize);
-	var bottom = top + (FabricSize * SqSize);
-	Ctx.strokeStyle = "#000000";
+function drawBoxAndGrid(left, top, wid, hgt) {
+	Ctx.strokeStyle = "#888888";
 	Ctx.lineWidth = 1;
-	// draw the box
-	Ctx.strokeRect(left, top, right-left, bottom-top);
-	// use the weaving equation to fill in the fabric
-	for (var row=0; row<FabricSize; row++) { 
-		for (var col=0; col<FabricSize; col++) {
-			var tieUpCol = R[row % R.length];
-			var tieUpRow = S[col % S.length];
-			tieUpCol--;   // fix for user's 1-based indexing
-			tieUpRow--;
-			tieUpCol = tieUpCol % TieUpWidth;
-			tieUpRow = tieUpRow % TieUpHeight;
-			var rgb = "rgb(0, 0, 0)";
-			if (tieUpCol < 0) {
-				rgb = WarpColors[col % WarpColors.length];
-			} else if (tieUpRow < 0) {
-				rgb = WeftColors[row % WeftColors.length];
-			} else {
-				var tieUpIndex = (tieUpCol * TieUpHeight) + tieUpRow;
-				var tieUpVal = T[tieUpIndex % T.length];
-				if (tieUpVal === 1) {  // use warp color
-					rgb = WarpColors[col % WarpColors.length];
-				} else { // use weft color
-					rgb = WeftColors[row % WeftColors.length];
-				}
-			}
-			Ctx.fillStyle = rgb;
-			Ctx.fillRect(right-((col+1)*SqSize), top+(row*SqSize), SqSize, SqSize);
-			Ctx.strokeStyle = rgb;
-			Ctx.strokeRect(right-((col+1)*SqSize), top+(row*SqSize), SqSize, SqSize);
+	Ctx.strokeRect(left, top, wid, hgt);
+	if (DrawGrids) {
+		var x = left+SqSize;
+		while (x < left+wid) {
+			Ctx.beginPath(); Ctx.moveTo(x, top); Ctx.lineTo(x, top+hgt), Ctx.stroke();
+			x += SqSize;
+		}
+		var y = top+SqSize;
+		while (y < top+hgt) {
+			Ctx.beginPath(); Ctx.moveTo(left, y); Ctx.lineTo(left+wid, y), Ctx.stroke();
+			y += SqSize;
 		}
 	}
 }
-*/
-

@@ -126,6 +126,10 @@ function showThreadsCheckboxFunction() {
 	drawCanvas();
 }
 
+function showGridsCheckboxFunction() {
+	drawCanvas();
+}
+
 function warpPatternButtonFunction() {
 	$('#warpPatternAWL').css("background-color", "#ffffff");
 	WarpPatternOutput = AWLtoString('#warpPatternAWL');
